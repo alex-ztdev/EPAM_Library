@@ -10,6 +10,9 @@ public class DBManager {
 
     private static volatile DBManager dbm;
     private static final String URL = "db.url";
+    private static final String POOL_SIZE = "db.url";
+
+
 
     private DBManager() {}
 
@@ -26,7 +29,7 @@ public class DBManager {
         }
     }
 
-    public Connection open() {
+    public Connection get() {
         try{
             return DriverManager.getConnection(PropertiesUtil.get(URL));
         } catch (SQLException e) {
