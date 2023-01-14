@@ -31,7 +31,8 @@ public class AuthorDaoImpl implements AuthorDAO {
 
     @Override
     public Optional<Author> find(long id) {
-        try(var connection dbm.)
+//        try(var connection dbm.)
+        return Optional.empty();
     }
 
     @Override
