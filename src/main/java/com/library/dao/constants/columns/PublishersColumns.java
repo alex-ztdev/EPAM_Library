@@ -1,4 +1,4 @@
-package com.library.dao.constants;
+package com.library.dao.constants.columns;
 
 public interface PublishersColumns {
     String ID = "id";

@@ -5,6 +5,9 @@ public class Author {
     private String firstName;
     private String secondName;
 
+    public Author() {
+    }
+
     public Author(Long id, String firstName, String secondName) {
         this.id = id;
         this.firstName = firstName;
