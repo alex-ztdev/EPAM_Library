@@ -1,4 +1,4 @@
-package com.library.exception.dao;
+package com.library.exceptions;
 
 public class DaoException extends RuntimeException {
     public DaoException(Throwable cause) {
