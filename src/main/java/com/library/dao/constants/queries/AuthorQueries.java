@@ -6,3 +6,4 @@ public interface AuthorQueries {
     String INSERT_AUTHOR = "INSERT INTO AUTHORS (first_name, second_name) VALUES (?, ?)";
     String DELETE_AUTHOR_BY_ID = "DELETE * FROM Authors WHERE id = ?";
 }
+

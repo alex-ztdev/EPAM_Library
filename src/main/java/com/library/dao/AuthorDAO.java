@@ -11,7 +11,7 @@ public interface AuthorDAO {
 
     List<Author> findAll();
 
-    void save(Author entity);
+    Author save(Author entity);
 
     void update(Author entity);
 

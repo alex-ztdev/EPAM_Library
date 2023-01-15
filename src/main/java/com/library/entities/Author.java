@@ -1,17 +1,28 @@
 package com.library.entities;
 
+import java.time.LocalDate;
+
 public class Author {
     private Long id;
     private String firstName;
     private String secondName;
 
+    private LocalDate birthDate;
+
     public Author() {
     }
 
-    public Author(Long id, String firstName, String secondName) {
+    public Author(String firstName, String secondName, LocalDate birthDate) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthDate = birthDate;
+    }
+
+    public Author(Long id, String firstName, String secondName, LocalDate birthDate ) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
+        this.birthDate = birthDate;
     }
 
     public Long getId() {
@@ -36,6 +47,14 @@ public class Author {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override

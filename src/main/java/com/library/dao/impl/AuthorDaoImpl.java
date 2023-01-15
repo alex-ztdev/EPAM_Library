@@ -8,8 +8,10 @@ import com.library.dao.constants.queries.AuthorQueries;
 import com.library.entities.Author;
 import com.library.exceptions.DaoException;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +61,7 @@ public class AuthorDaoImpl implements AuthorDAO {
         author.setId(rs.getLong(AuthorsColumns.ID));
         author.setFirstName(rs.getString(AuthorsColumns.FIRST_NAME));
         author.setSecondName(rs.getString(AuthorsColumns.SECOND_NAME));
+        author.setBirthDate(rs.getDate(AuthorsColumns.BIRTH_DATE).toLocalDate());
         return author;
     }
 
@@ -79,8 +82,25 @@ public class AuthorDaoImpl implements AuthorDAO {
     }
 
     @Override
-    public void save(Author entity) {
+    public Author save(Author author) {
+        if(author == null) throw new IllegalArgumentException();
+        try (var connection = dbm.get()) {
+            try (var statement = connection.prepareStatement(AuthorQueries.INSERT_AUTHOR, Statement.RETURN_GENERATED_KEYS)) {
+                statement.setString(1,author.getFirstName());
+                statement.setString(2,author.getSecondName());
+                statement.setDate(3, Date.valueOf(author.getBirthDate()));
 
+                var rs = statement.executeUpdate();
+
+                var generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    author.setId(generatedKeys.getLong(1));
+                }
+            }
+            return author;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override

@@ -1,4 +1,5 @@
 import com.library.dao.impl.AuthorDaoImpl;
+import com.library.entities.Author;
 
 
 public class HelloWorldServlet {
@@ -7,5 +8,12 @@ public class HelloWorldServlet {
         var start = System.currentTimeMillis();
         authorsDao.findAll().forEach(System.out::println);
         System.out.println(System.currentTimeMillis()- start);
+
+
+        var authorToInsert = new Author();
+        authorToInsert.setFirstName("Amo");
+        authorToInsert.setSecondName("Gus");
+
+        authorsDao.save(authorToInsert);
     }
 }
