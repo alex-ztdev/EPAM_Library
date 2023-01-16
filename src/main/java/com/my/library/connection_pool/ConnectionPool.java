@@ -13,11 +13,11 @@ import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPool {
 
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
     private static final Integer POOL_SIZE = 10;
     private static ConnectionPool instance = new ConnectionPool();
 
-    private BlockingQueue<Connection> pool;
+    private BlockingQueue<ConnectionProxy> pool;
 
 
     private void initConnectionPool() {
@@ -27,7 +27,7 @@ public class ConnectionPool {
         for (i = 1; i <= POOL_SIZE; i++) {
             try {
                 Connection connection = ConnectionFactory.getConnection();
-                var isAdded = pool.add(connection);
+                var isAdded = pool.add((ConnectionProxy) connection);
                 logger.log(Level.INFO, "connection: " + connection + " is added to pool: " + isAdded);
             } catch (DaoException e) {
                 logger.log(Level.ERROR, "Failed to create connection!" + e.getLocalizedMessage(), e);
@@ -57,25 +57,33 @@ public class ConnectionPool {
         }
     }
 
-//    private Connection open() {
-//        try {
-//
-//            return;
-//        } catch (SQLException e) {
-//            throw new DBManagerException(e);
-//        }
-//    }
-
     public Connection get() {
+        Connection connection = null;
         try {
-            return pool.take();
+            connection = pool.take();
         } catch (InterruptedException e) {
-            //todo: handle exception
+            logger.log(Level.WARN, "Interrupted exception while getting connection!", e);
             Thread.currentThread().interrupt();
+        }
+        return connection;
+    }
+
+    void retrieveConnection(ConnectionProxy connection) {
+       var isPut =  pool.offer(connection);
+        if (!isPut) {
+            logger.log(Level.ERROR, "Error while retrieve connection");
+        }
+    }
+
+    public void destroyPool() {
+        int poolSize = pool.size();
+        for (int i = 0; i < poolSize; i++) {
             try {
-                throw new ConnectionPoolException();
-            } catch (ConnectionPoolException ex) {
-                throw new RuntimeException(ex);
+                var connection = pool.take();
+                connection.reallyClose();
+                logger.log(Level.INFO, "Connection " + connection +"is closed");
+            } catch (InterruptedException | SQLException e) {
+                logger.log(Level.ERROR, "Error while destroying pool");
             }
         }
     }

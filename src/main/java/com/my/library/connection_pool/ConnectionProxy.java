@@ -65,9 +65,13 @@ public class ConnectionProxy implements Connection {
 
     @Override
     public void close() throws SQLException {
-        //todo: implement close method
-        ConnectionPool.getInstance().;
+        ConnectionPool.getInstance().retrieveConnection(this);
     }
+
+    void reallyClose() throws SQLException {
+        realConnection.close();
+    }
+
 
     @Override
     public boolean isClosed() throws SQLException {
