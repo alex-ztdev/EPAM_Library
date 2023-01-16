@@ -1,6 +1,3 @@
-import com.my.library.connection_pool.ConnectionFactory;
-import com.my.library.utils.PropertiesUtil;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +21,7 @@ public class HelloWorldServlet {
 //        authorToInsert.setSecondName("Gus");
 //
 //        authorsDao.save(authorToInsert);
-        ConnectionFactory nes = new ConnectionFactory();
+
 
         Properties properties = new Properties();
 //        for (int i = 0; i < 1; i++) {

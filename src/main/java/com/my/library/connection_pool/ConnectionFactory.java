@@ -1,6 +1,5 @@
 package com.my.library.connection_pool;
 
-import com.my.library.exceptions.ConnectionPoolException;
 import com.my.library.exceptions.DaoException;
 import com.my.library.utils.PropertiesUtil;
 import org.apache.logging.log4j.Level;
@@ -14,7 +13,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionFactory {
+class ConnectionFactory {
     private static final Logger logger = LogManager.getRootLogger();
     private static final String DATABASE_PROPERTIES = "database.properties";
     private static final String PROPERTY_DRIVER = "db.driver";
@@ -53,17 +52,18 @@ public class ConnectionFactory {
         }
     }
 
-
-    Connection getConnection() {
-        try {
-            return DriverManager.getConnection(PropertiesUtil.get(URL),
-                    PropertiesUtil.get(USERNAME),
-                    PropertiesUtil.get(PASSWORD));
-        } catch (SQLException e) {
-//            throw new DaoException(e);
-        }
-        return null;
+    private ConnectionFactory() {
     }
+
+    static Connection getConnection() throws DaoException {
+        try {
+            return new ConnectionProxy(DriverManager.getConnection(URL, USERNAME, PASSWORD));
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+
 
 
 }
