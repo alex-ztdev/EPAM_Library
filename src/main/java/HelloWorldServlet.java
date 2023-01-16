@@ -1,5 +1,7 @@
 import com.my.library.connection_pool.ConnectionPool;
+import com.my.library.dao.BookDAO;
 import com.my.library.dao.impl.AuthorDaoImpl;
+import com.my.library.dao.impl.BookDaoImpl;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
@@ -32,7 +34,18 @@ public class HelloWorldServlet {
 //        } catch (DaoException e) {
 //            e.printStackTrace();
 //        }
-        ConnectionPool.getInstance().destroyPool();
+        try {
+            BookDaoImpl bookDao = BookDaoImpl.getInstance();
+            try {
+                bookDao.find(12).ifPresent(System.out::println);
+            } catch (DaoException e) {
+                throw new RuntimeException(e);
+            }
+
+        } finally {
+            ConnectionPool.getInstance().destroyPool();
+        }
+
 
     }
 }

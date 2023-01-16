@@ -58,6 +58,28 @@ public class Author {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Author author = (Author) o;
+
+        if (!authorId.equals(author.authorId)) return false;
+        if (!firstName.equals(author.firstName)) return false;
+        if (!secondName.equals(author.secondName)) return false;
+        return birthDate.equals(author.birthDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = authorId.hashCode();
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + secondName.hashCode();
+        result = 31 * result + birthDate.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Author{" +
                 "id=" + authorId +

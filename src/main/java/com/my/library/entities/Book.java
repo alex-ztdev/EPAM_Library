@@ -79,4 +79,45 @@ public class Book {
     public void setAvailable(boolean available) {
         isAvailable = available;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        if (pageNumber != book.pageNumber) return false;
+        if (isAvailable != book.isAvailable) return false;
+        if (!bookId.equals(book.bookId)) return false;
+        if (!title.equals(book.title)) return false;
+        if (!publisherTitle.equals(book.publisherTitle)) return false;
+        if (!genre.equals(book.genre)) return false;
+        return publicationDate.equals(book.publicationDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = bookId.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + publisherTitle.hashCode();
+        result = 31 * result + genre.hashCode();
+        result = 31 * result + pageNumber;
+        result = 31 * result + publicationDate.hashCode();
+        result = 31 * result + (isAvailable ? 1 : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", publisherTitle='" + publisherTitle + '\'' +
+                ", genre='" + genre + '\'' +
+                ", pageNumber=" + pageNumber +
+                ", publicationDate=" + publicationDate +
+                ", isAvailable=" + isAvailable +
+                '}';
+    }
 }

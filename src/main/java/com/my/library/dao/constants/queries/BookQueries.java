@@ -6,7 +6,7 @@ public interface BookQueries {
             	Books.id,
             	Books.title,
             	Publishers.title AS publisher,
-            	Book_Genres.title as book_title,
+            	Book_Genres.title as book_genre,
             	Books.page_number,
             	Books.publication_date,
             	Books.isAvailable
