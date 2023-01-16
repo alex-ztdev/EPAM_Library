@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
-public class ConnectionProxy implements Connection {
+class ConnectionProxy implements Connection {
     private Connection realConnection;
 
     public ConnectionProxy(Connection realConnection) {

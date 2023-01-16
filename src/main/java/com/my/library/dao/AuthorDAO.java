@@ -13,7 +13,5 @@ public interface AuthorDAO {
 
     Author save(Author entity) throws DaoException;
 
-    void update(Author entity);
-
-    void delete(Author entity);
+    boolean update(Author entity) throws DaoException;
 }

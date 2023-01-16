@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 class ConnectionFactory {
-    private static final Logger logger = LogManager.getRootLogger();
+    private static final Logger logger = LogManager.getLogger();
     private static final String DATABASE_PROPERTIES = "database.properties";
     private static final String PROPERTY_DRIVER = "db.driver";
     private static final String PROPERTY_URL = "db.url";
