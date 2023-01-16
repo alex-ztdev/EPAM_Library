@@ -8,14 +8,14 @@ public class Book {
     private String title;
     private String publisherTitle;
     private String genre;
-    private String pageNumber;
+    private int  pageNumber;
     private LocalDate publicationDate;
     private boolean isAvailable;
 
     public Book() {
     }
 
-    public Book(String title, String publisherTitle, String genre, String pageNumber, LocalDate publicationDate, boolean isAvailable) {
+    public Book(String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable) {
         this.title = title;
         this.publisherTitle = publisherTitle;
         this.genre = genre;
@@ -56,11 +56,11 @@ public class Book {
         this.genre = genre;
     }
 
-    public String getPageNumber() {
+    public int getPageNumber() {
         return pageNumber;
     }
 
-    public void setPageNumber(String pageNumber) {
+    public void setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
     }
 

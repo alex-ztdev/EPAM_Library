@@ -38,11 +38,11 @@ public class BookDaoImpl implements BookDAO {
     @Override
     public Optional<Book> find(long id) throws DaoException {
         Book book = null;
-        try (var connection = dbm.get()) {
-            try (var statement = connection.prepareStatement(BookQueries.GET_BOOK_BY_ID)) {
-                statement.setLong(1, id);
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(BookQueries.GET_BOOK_BY_ID)) {
+            statement.setLong(1, id);
 
-                var rs = statement.executeQuery();
+            try (var rs = statement.executeQuery();) {
                 if (rs.next()) {
                     book = buildBook(rs);
                 }
@@ -54,13 +54,15 @@ public class BookDaoImpl implements BookDAO {
     }
 
     private Book buildBook(ResultSet rs) throws SQLException {
-//        var book = new Book();
-//        book.setBookId(rs.getLong(BooksColumns.ID));
-//        book.setFirstName(rs.getString(BooksColumns.FIRST_NAME));
-//        book.setSecondName(rs.getString(BooksColumns.SECOND_NAME));
-//        book.setBirthDate(rs.getDate(BooksColumns.BIRTH_DATE).toLocalDate());
-//        return book;
-        return null;
+        var book = new Book();
+        book.setBookId(rs.getLong(BooksColumns.ID));
+        book.setTitle(rs.getString(BooksColumns.TITLE));
+        book.setPublisherTitle(rs.getString(BooksColumns.PUBLISHER));
+        book.setGenre(rs.getString(BooksColumns.GENRE));
+        book.setPageNumber(rs.getInt(BooksColumns.PAGE_NUMBER));
+        book.setPublicationDate(rs.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate());
+        book.setAvailable(rs.getBoolean(BooksColumns.IS_AVAILABLE));
+        return book;
     }
 
     @Override

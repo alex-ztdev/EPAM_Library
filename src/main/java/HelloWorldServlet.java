@@ -1,6 +1,7 @@
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.impl.AuthorDaoImpl;
 import com.my.library.entities.Author;
+import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,16 +22,16 @@ public class HelloWorldServlet {
 //        System.out.println(System.currentTimeMillis()- start);
 
 
-        var authorToInsert = new Author();
-        authorToInsert.setFirstName("Amo");
-        authorToInsert.setSecondName("Gus");
-        authorToInsert.setBirthDate(LocalDate.of(2000, 10, 2));
+//        var authorToInsert = new Book();
+//        authorToInsert.setFirstName("Amo");
+//        authorToInsert.setSecondName("Gus");
+//        authorToInsert.setBirthDate(LocalDate.of(2000, 10, 2));
 
-        try {
-            authorsDao.save(authorToInsert);
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            authorsDao.save(authorToInsert);
+//        } catch (DaoException e) {
+//            e.printStackTrace();
+//        }
         ConnectionPool.getInstance().destroyPool();
 
     }
