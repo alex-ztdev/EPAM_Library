@@ -16,6 +16,16 @@ public class Book {
     public Book() {
     }
 
+    public Book(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable) {
+        this.bookId = bookId;
+        this.title = title;
+        this.publisherTitle = publisherTitle;
+        this.genre = genre;
+        this.pageNumber = pageNumber;
+        this.publicationDate = publicationDate;
+        this.isAvailable = isAvailable;
+    }
+
     public Book(String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable) {
         this.title = title;
         this.publisherTitle = publisherTitle;

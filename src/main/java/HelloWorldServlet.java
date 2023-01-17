@@ -35,16 +35,21 @@ public class HelloWorldServlet {
 //        } catch (DaoException e) {
 //            e.printStackTrace();
 //        }
+
         try {
 
             try {
-//                System.out.println(authorsDao.find(1));
-//                authorsDao.findAll().forEach(System.out::println);
-//                authorsDao.update(new Author(1L, "New", "Name", LocalDate.of(2000, 2, 20)));
-//                System.out.println(authorsDao.find(1));
-//                var author = authorsDao.save(new Author("New2", "Name2", LocalDate.of(2000, 2, 20)));
-//                System.out.println(author);
-                authorsDao.getAuthorsBook(10).forEach(System.out::println);
+                var bookDao = BookDaoImpl.getInstance();
+//                bookDao.find(13).ifPresent(System.out::println);
+//                bookDao.findAll().forEach(x-> System.out.println(x));
+                var book = new Book(101L, "My title UPDATED 2.0!", "Hachette", "Satire", 129, LocalDate.now(), false);
+                System.out.println(bookDao.find(101L));
+
+//                bookDao.save(book);
+//                bookDao.findAll().forEach(System.out::println);
+                bookDao.update(book);
+                System.out.println(bookDao.find(book.getBookId()));
+
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }

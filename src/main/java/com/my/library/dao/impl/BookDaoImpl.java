@@ -53,75 +53,78 @@ public class BookDaoImpl implements BookDAO {
     }
 
     private Book buildBook(ResultSet rs) throws SQLException {
-        var book = new Book();
-        book.setBookId(rs.getLong(BooksColumns.ID));
-        book.setTitle(rs.getString(BooksColumns.TITLE));
-        book.setPublisherTitle(rs.getString(BooksColumns.PUBLISHER));
-        book.setGenre(rs.getString(BooksColumns.GENRE));
-        book.setPageNumber(rs.getInt(BooksColumns.PAGE_NUMBER));
-        book.setPublicationDate(rs.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate());
-        book.setAvailable(rs.getBoolean(BooksColumns.IS_AVAILABLE));
-        return book;
+        return new Book(rs.getLong(BooksColumns.ID),
+                rs.getString(BooksColumns.TITLE),
+                rs.getString(BooksColumns.PUBLISHER),
+                rs.getString(BooksColumns.GENRE),
+                rs.getInt(BooksColumns.PAGE_NUMBER),
+                rs.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate(),
+                rs.getBoolean(BooksColumns.IS_AVAILABLE));
+
     }
 
 
     @Override
     public List<Book> findAll() throws DaoException {
-//        List<Book> authorList = new ArrayList<>();
-//        try (var connection = dbm.get();
-//             var statement = connection.createStatement()) {
-//
-//            try (var rs = statement.executeQuery(BookQueries.GET_ALL_AUTHORS);) {
-//                while (rs.next()) {
-//                    authorList.add(buildBook(rs));
-//                }
-//            }
-//
-//        } catch (SQLException e) {
-//            throw new DaoException(e);
-//        }
-//        return authorList;
-        return null;
+        List<Book> bookList = new ArrayList<>();
+        try (var connection = dbm.get();
+             var statement = connection.createStatement()) {
+
+            try (var rs = statement.executeQuery(BookQueries.FIND_ALL_BOOKS)) {
+                while (rs.next()) {
+                    bookList.add(buildBook(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return bookList;
     }
 
     @Override
-    public Book save(Book author) throws DaoException {
-//        try (var connection = dbm.get();
-//             var statement = connection.prepareStatement(BookQueries.INSERT_AUTHOR, Statement.RETURN_GENERATED_KEYS)) {
-//
-//            statement.setString(1, author.getFirstName());
-//            statement.setString(2, author.getSecondName());
-//            statement.setDate(3, Date.valueOf(author.getBirthDate()));
-//
-//            statement.executeUpdate();
-//
-//            try (var generatedKeys = statement.getGeneratedKeys();) {
-//                if (generatedKeys.next()) {
-//                    author.setBookId(generatedKeys.getLong(1));
-//                }
-//            }
-//            return author;
-//        } catch (SQLException e) {
-//            throw new DaoException(e);
-//        }
-        return null;
+    public Book save(Book book) throws DaoException {
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(BookQueries.INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
+            int k = 1;
+            statement.setString(k++, book.getTitle());
+            statement.setString(k++, book.getPublisherTitle());
+            statement.setString(k++, book.getGenre());
+            statement.setInt(k++, book.getPageNumber());
+            statement.setDate(k++, Date.valueOf(book.getPublicationDate()));
+            statement.setBoolean(k, book.isAvailable());
+
+            statement.executeUpdate();
+            try (var keysRS = statement.getGeneratedKeys()) {
+                if (keysRS.next()) {
+                    book.setBookId(keysRS.getLong(1));
+                }
+            }
+            return book;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
-    public boolean update(Book author) throws DaoException {
-//        try (var connection = dbm.get();
-//             var statement = connection.prepareStatement(BookQueries.UPDATE_AUTHOR_BY_ID)) {
-//
-//            statement.setString(1, author.getFirstName());
-//            statement.setString(2, author.getSecondName());
-//            statement.setDate(3, Date.valueOf(author.getBirthDate()));
-//
-//            var updateRes = statement.executeUpdate();
-//            return updateRes == 1;
-//        } catch (SQLException e) {
-//            throw new DaoException(e);
-//        }
-        return false;
+    public boolean update(Book book) throws DaoException {
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(BookQueries.UPDATE_BOOK)) {
+            int k = 1;
+            statement.setString(k++, book.getTitle());
+            statement.setString(k++, book.getPublisherTitle());
+            statement.setString(k++, book.getGenre());
+            statement.setInt(k++, book.getPageNumber());
+            statement.setDate(k++, Date.valueOf(book.getPublicationDate()));
+            statement.setBoolean(k++, book.isAvailable());
+            statement.setLong(k, book.getBookId());
+
+            var updatedRows = statement.executeUpdate();
+
+            return updatedRows == 1;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
