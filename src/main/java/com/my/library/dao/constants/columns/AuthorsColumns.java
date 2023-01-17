@@ -5,4 +5,6 @@ public interface AuthorsColumns {
     String FIRST_NAME = "first_name";
     String SECOND_NAME = "second_name";
     String BIRTH_DATE = "birth_date";
+
+    String AUTHORS_BOOK_ID = "book_id";
 }

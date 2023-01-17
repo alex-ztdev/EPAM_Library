@@ -6,12 +6,10 @@ import com.my.library.dao.AuthorDAO;
 import com.my.library.dao.constants.columns.AuthorsColumns;
 import com.my.library.dao.constants.queries.AuthorQueries;
 import com.my.library.entities.Author;
+import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +38,7 @@ public class AuthorDaoImpl implements AuthorDAO {
     public Optional<Author> find(long id) throws DaoException {
         Author author = null;
         try (var connection = dbm.get()) {
-            try (var statement = connection.prepareStatement(AuthorQueries.GET_AUTHOR_BY_ID)) {
+            try (var statement = connection.prepareStatement(AuthorQueries.FIND_AUTHOR_BY_ID)) {
                 statement.setLong(1, id);
 
                 try(var rs = statement.executeQuery();){
@@ -55,13 +53,31 @@ public class AuthorDaoImpl implements AuthorDAO {
         return author == null ? Optional.empty() : Optional.of(author);
     }
 
-    private Author buildAuthor(ResultSet rs) throws SQLException {
-        var author = new Author();
-        author.setAuthorId(rs.getLong(AuthorsColumns.ID));
-        author.setFirstName(rs.getString(AuthorsColumns.FIRST_NAME));
-        author.setSecondName(rs.getString(AuthorsColumns.SECOND_NAME));
-        author.setBirthDate(rs.getDate(AuthorsColumns.BIRTH_DATE).toLocalDate());
-        return author;
+    private Author buildAuthor(ResultSet rs) throws SQLException, DaoException {
+        return new Author(rs.getLong(AuthorsColumns.ID),
+                rs.getString(AuthorsColumns.FIRST_NAME),
+                rs.getString(AuthorsColumns.SECOND_NAME),
+                rs.getDate(AuthorsColumns.BIRTH_DATE).toLocalDate(),
+                getAllAuthorsBooks(rs.getLong(AuthorsColumns.ID)));
+    }
+
+    private List<Book> getAllAuthorsBooks(long id) throws DaoException {
+        BookDaoImpl bookDao = BookDaoImpl.getInstance();
+        List<Book> bookList = new ArrayList<>();
+        try (Connection connection = dbm.get();
+             var statement = connection.prepareStatement(AuthorQueries.FIND_ALL_AUTHORS_BOOKS)) {
+            statement.setLong(1, id);
+
+            try (var rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Book book = bookDao.find(rs.getLong(AuthorsColumns.AUTHORS_BOOK_ID)).get();
+                    bookList.add(book);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return bookList;
     }
 
     @Override
@@ -70,7 +86,7 @@ public class AuthorDaoImpl implements AuthorDAO {
         try (var connection = dbm.get();
              var statement = connection.createStatement()) {
 
-            try (var rs = statement.executeQuery(AuthorQueries.GET_ALL_AUTHORS);) {
+            try (var rs = statement.executeQuery(AuthorQueries.FIND_ALL_AUTHORS);) {
                 while (rs.next()) {
                     authorList.add(buildAuthor(rs));
                 }

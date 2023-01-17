@@ -28,7 +28,7 @@ public class ConnectionPool {
             try {
                 Connection connection = ConnectionFactory.getConnection();
                 var isAdded = pool.add((ConnectionProxy) connection);
-                logger.log(Level.INFO, "connection: " + connection + " is added to pool: " + isAdded);
+                logger.log(Level.INFO, "connection: " + connection + " added to pool: " + isAdded);
             } catch (DaoException e) {
                 logger.log(Level.ERROR, "Failed to create connection!" + e.getLocalizedMessage(), e);
             }

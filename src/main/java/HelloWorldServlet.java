@@ -5,6 +5,7 @@ import com.my.library.dao.impl.BookDaoImpl;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,9 +36,14 @@ public class HelloWorldServlet {
 //            e.printStackTrace();
 //        }
         try {
-            BookDaoImpl bookDao = BookDaoImpl.getInstance();
+
             try {
-                bookDao.find(12).ifPresent(System.out::println);
+                authorsDao.findAll().forEach(x -> {
+                    if (x.getBookList().isEmpty()) {
+                        System.out.println(x);
+                    }
+                });
+
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }
