@@ -38,11 +38,7 @@ public class HelloWorldServlet {
         try {
 
             try {
-                authorsDao.findAll().forEach(x -> {
-                    if (x.getBookList().isEmpty()) {
-                        System.out.println(x);
-                    }
-                });
+                authorsDao.findAll().forEach(System.out::println);
 
             } catch (DaoException e) {
                 throw new RuntimeException(e);

@@ -1,7 +1,7 @@
 package com.my.library.dao.constants.queries;
 
 public interface BookQueries {
-    String GET_BOOK_BY_ID = """
+    String FIND_BOOK_BY_ID = """
             SELECT
             	Books.id,
             	Books.title,
@@ -15,6 +15,9 @@ public interface BookQueries {
             INNER JOIN Book_Genres ON Books.genre_id = Book_Genres.id
             WHERE Books.id=?
             """;
-
+    String FIND_BOOK_AUTHORS = """
+            SELECT author_id FROM Authors_Books
+            WHERE book_id =?
+            """;
 
 }

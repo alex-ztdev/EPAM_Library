@@ -2,15 +2,14 @@ package com.my.library.dao.impl;
 
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.BookDAO;
+import com.my.library.dao.constants.columns.AuthorsColumns;
 import com.my.library.dao.constants.columns.BooksColumns;
 import com.my.library.dao.constants.queries.BookQueries;
+import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +38,7 @@ public class BookDaoImpl implements BookDAO {
     public Optional<Book> find(long id) throws DaoException {
         Book book = null;
         try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.GET_BOOK_BY_ID)) {
+             var statement = connection.prepareStatement(BookQueries.FIND_BOOK_BY_ID)) {
             statement.setLong(1, id);
 
             try (var rs = statement.executeQuery();) {
@@ -55,6 +54,8 @@ public class BookDaoImpl implements BookDAO {
 
     private Book buildBook(ResultSet rs) throws SQLException {
         var book = new Book();
+
+
         book.setBookId(rs.getLong(BooksColumns.ID));
         book.setTitle(rs.getString(BooksColumns.TITLE));
         book.setPublisherTitle(rs.getString(BooksColumns.PUBLISHER));
@@ -64,6 +65,7 @@ public class BookDaoImpl implements BookDAO {
         book.setAvailable(rs.getBoolean(BooksColumns.IS_AVAILABLE));
         return book;
     }
+
 
     @Override
     public List<Book> findAll() throws DaoException {

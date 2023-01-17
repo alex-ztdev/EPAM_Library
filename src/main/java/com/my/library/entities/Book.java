@@ -2,13 +2,14 @@ package com.my.library.entities;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Book {
     private Long bookId;
     private String title;
     private String publisherTitle;
     private String genre;
-    private int  pageNumber;
+    private int pageNumber;
     private LocalDate publicationDate;
     private boolean isAvailable;
 

@@ -10,23 +10,20 @@ public class Author {
 
     private LocalDate birthDate;
 
-    private List<Book> bookList;
-
-
-
-    public Author(String firstName, String secondName, LocalDate birthDate, List<Book> bookList) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.birthDate = birthDate;
-        this.bookList = bookList;
+    public Author() {
     }
 
-    public Author(Long authorId, String firstName, String secondName, LocalDate birthDate, List<Book> bookList) {
+    public Author(Long authorId, String firstName, String secondName, LocalDate birthDate) {
         this.authorId = authorId;
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthDate = birthDate;
-        this.bookList = bookList;
+    }
+
+    public Author(String firstName, String secondName, LocalDate birthDate) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthDate = birthDate;
     }
 
     public Long getAuthorId() {
@@ -61,14 +58,6 @@ public class Author {
         this.birthDate = birthDate;
     }
 
-    public List<Book> getBookList() {
-        return bookList;
-    }
-
-    public void setBookList(List<Book> bookList) {
-        this.bookList = bookList;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,8 +68,7 @@ public class Author {
         if (!authorId.equals(author.authorId)) return false;
         if (!firstName.equals(author.firstName)) return false;
         if (!secondName.equals(author.secondName)) return false;
-        if (!birthDate.equals(author.birthDate)) return false;
-        return bookList.equals(author.bookList);
+        return birthDate.equals(author.birthDate);
     }
 
     @Override
@@ -89,7 +77,6 @@ public class Author {
         result = 31 * result + firstName.hashCode();
         result = 31 * result + secondName.hashCode();
         result = 31 * result + birthDate.hashCode();
-        result = 31 * result + bookList.hashCode();
         return result;
     }
 
@@ -100,7 +87,6 @@ public class Author {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", birthDate=" + birthDate +
-                ", bookList=" + bookList +
                 '}';
     }
 }
