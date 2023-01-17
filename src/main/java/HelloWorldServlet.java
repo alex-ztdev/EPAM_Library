@@ -7,6 +7,7 @@ import com.my.library.dao.impl.BookDaoImpl;
 import com.my.library.dao.impl.UserDaoImpl;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
+import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +44,7 @@ public class HelloWorldServlet  {
         try {
 
             try {
-//                var bookDao = BookDaoImpl.getInstance();
+                var bookDao = BookDaoImpl.getInstance();
 //                bookDao.find(13).ifPresent(System.out::println);
 //                bookDao.findAll().forEach(x-> System.out.println(x));
 //                var book = new Book(101L, "My title UPDATED 5.0!", "Hachette", "Satire", 129, LocalDate.now(), false, false);
@@ -59,12 +60,13 @@ public class HelloWorldServlet  {
 //
 //                bookDao.delete(10);
 //                System.out.println(bookDao.find(10));
-//                bookDao.getBookAuthors(100).forEach(System.out::println);
+                bookDao.getBookAuthors(1).forEach(System.out::println);
+                UserDaoImpl userDao = UserDaoImpl.getInstance();
+                var user = new User("mylogin", "password", UserRole.USER, UserStatus.NORMAL, "mymail@email.com", "+380985568753", "Name", "LastName", LocalDate.now());
 
-                var userDAO = UserDaoImpl.getInstance();
+                userDao.save(user);
 
-                userDAO.findAll().forEach(System.out::println);
-
+                System.out.println(user);
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }

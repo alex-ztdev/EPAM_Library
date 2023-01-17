@@ -11,9 +11,9 @@ public interface UserDAO {
 
     List<User> findAll() throws DaoException;
 
-    void save(User entity) throws DaoException;
+    void save(User user) throws DaoException;
 
-    boolean update(User entity) throws DaoException;
+    boolean update(User user) throws DaoException;
 
-    void block(User entity) throws DaoException;
+    void block(User user) throws DaoException;
 }

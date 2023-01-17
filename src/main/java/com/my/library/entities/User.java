@@ -20,6 +20,18 @@ public class User {
     public User() {
     }
 
+    public User(String login, String password, UserRole role, UserStatus status, String email, String phoneNumber, String firstName, String secondName, LocalDate birthDate) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.status = status;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthDate = birthDate;
+    }
+
     public User(Long userId, String login, String password, UserRole role, UserStatus status, String email, String phoneNumber, String firstName, String secondName, LocalDate birthDate) {
         this.userId = userId;
         this.login = login;

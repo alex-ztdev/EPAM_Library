@@ -9,8 +9,10 @@ import com.my.library.dao.constants.queries.UserQueries;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -87,17 +89,40 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public void save(User entity) throws DaoException{
+    public void save(User user) throws DaoException{
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(UserQueries.INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
+            int k = 1;
+            statement.setString(k++,user.getLogin());
+            statement.setString(k++,user.getPassword());
+            statement.setLong(k++,user.getRole().ordinal()+1);
+            statement.setLong(k++,user.getStatus().ordinal()+1);
+            statement.setString(k++, user.getEmail());
+            statement.setString(k++, user.getPhoneNumber());
+            statement.setString(k++, user.getFirstName());
+            statement.setString(k++, user.getSecondName());
+            statement.setDate(k, Date.valueOf(user.getBirthDate()));
 
+
+            statement.executeUpdate();
+
+            try (var genKey = statement.getGeneratedKeys()) {
+                if (genKey.next()) {
+                    user.setUserId(genKey.getLong(1));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
-    public boolean update(User entity) throws DaoException{
+    public boolean update(User user) throws DaoException{
         return false;
     }
 
     @Override
-    public void block(User entity) throws DaoException{
+    public void block(User user) throws DaoException{
 
     }
 }
