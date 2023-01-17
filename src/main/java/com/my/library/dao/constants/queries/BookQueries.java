@@ -35,4 +35,10 @@ public interface BookQueries {
             isAvailable=?
             WHERE id = ?
             """;
+
+    String SET_BOOK_TO_REMOVED = """
+            UPDATE Books SET
+            isAvailable=?
+            WHERE id = ?
+            """;
 }
