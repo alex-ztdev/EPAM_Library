@@ -40,15 +40,15 @@ public class HelloWorldServlet  {
 
             try {
                 var bookDao = BookDaoImpl.getInstance();
-//                bookDao.find(13).ifPresent(System.out::println);
-//                bookDao.findAll().forEach(x-> System.out.println(x));
-//                var book = new Book(101L, "My title UPDATED 5.0!", "Hachette", "Satire", 129, LocalDate.now(), false, false);
-//                System.out.println(bookDao.find(101L));
-//
-//                bookDao.save(book);
-//                bookDao.findAll().forEach(System.out::println);
-//                bookDao.update(book);
-//                System.out.println(bookDao.find(book.getBookId()));
+                bookDao.find(13).ifPresent(System.out::println);
+                bookDao.findAll().forEach(x-> System.out.println(x));
+                var book = new Book(101L, "My title UPDATED 5.0!", "Hachette", "Satire", 129, LocalDate.now(), false, false);
+                System.out.println(bookDao.find(101L));
+
+                bookDao.save(book);
+                bookDao.findAll().forEach(System.out::println);
+                bookDao.update(book);
+                System.out.println(bookDao.find(book.getBookId()));
 
 
 //                System.out.println(bookDao.find(10));

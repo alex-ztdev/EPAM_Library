@@ -12,7 +12,7 @@ public interface BookDAO {
 
     List<Book> findAll() throws DaoException;
 
-    Book save(Book book) throws DaoException;
+    void save(Book book) throws DaoException;
 
     boolean update(Book book) throws DaoException;
 

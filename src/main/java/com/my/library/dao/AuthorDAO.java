@@ -12,7 +12,7 @@ public interface AuthorDAO {
 
     List<Author> findAll() throws DaoException;
 
-    Author save(Author entity) throws DaoException;
+    void save(Author entity) throws DaoException;
 
     boolean update(Author entity) throws DaoException;
 

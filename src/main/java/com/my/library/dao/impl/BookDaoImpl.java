@@ -85,7 +85,7 @@ public class BookDaoImpl implements BookDAO {
     }
 
     @Override
-    public Book save(Book book) throws DaoException {
+    public void save(Book book) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(BookQueries.INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             int k = 1;
@@ -103,7 +103,7 @@ public class BookDaoImpl implements BookDAO {
                     book.setBookId(keysRS.getLong(1));
                 }
             }
-            return book;
+
         } catch (SQLException e) {
             throw new DaoException(e);
         }

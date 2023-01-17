@@ -12,7 +12,7 @@ public interface UserDAO {
 
     void save(User entity);
 
-    void update(User entity);
+    boolean update(User entity);
 
-    void delete(User entity);
+    void block(User entity);
 }

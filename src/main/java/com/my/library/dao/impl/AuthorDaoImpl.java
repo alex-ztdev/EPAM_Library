@@ -79,7 +79,7 @@ public class AuthorDaoImpl implements AuthorDAO {
     }
 
     @Override
-    public Author save(Author author) throws DaoException {
+    public void save(Author author) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(AuthorQueries.INSERT_AUTHOR, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -94,7 +94,6 @@ public class AuthorDaoImpl implements AuthorDAO {
                     author.setAuthorId(generatedKeys.getLong(1));
                 }
             }
-            return author;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
