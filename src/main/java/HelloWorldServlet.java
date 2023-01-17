@@ -9,6 +9,7 @@ import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,11 +63,15 @@ public class HelloWorldServlet  {
 //                System.out.println(bookDao.find(10));
                 bookDao.getBookAuthors(1).forEach(System.out::println);
                 UserDaoImpl userDao = UserDaoImpl.getInstance();
-                var user = new User("mylogin", "password", UserRole.USER, UserStatus.NORMAL, "mymail@email.com", "+380985568753", "Name", "LastName", LocalDate.now());
+                var user = userDao.find(10000).get();
 
+
+                user = new User("newLogin", DigestUtils.sha512Hex("user"), UserRole.USER, UserStatus.NORMAL, "mail", "123", "first", "sec", LocalDate.now());
                 userDao.save(user);
 
-                System.out.println(user);
+
+                System.out.println(userDao.find(user.getUserId()).get().getPassword().equals(userDao.find(10000).get().getPassword()));
+
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }

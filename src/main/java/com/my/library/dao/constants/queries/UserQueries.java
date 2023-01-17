@@ -20,4 +20,18 @@ public interface UserQueries {
             (login, password, role_id, status_id, email, phone_number, first_name, second_name, birth_date)
             VALUES(?,?,?,?,?,?,?,?,?)
             """;
+
+    String UPDATE_USER = """
+            UPDATE Users SET
+                login = ?,
+                password = ?,
+                role_id = ?,
+                status_id = ?,
+                email = ?,
+                phone_number = ?,
+                first_name = ?,
+                second_name = ?,
+                birth_date = ?
+            WHERE id = ?
+            """;
 }

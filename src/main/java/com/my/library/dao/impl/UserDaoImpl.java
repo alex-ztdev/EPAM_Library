@@ -118,7 +118,25 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public boolean update(User user) throws DaoException{
-        return false;
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(UserQueries.UPDATE_USER)) {
+            int k = 1;
+            statement.setString(k++,user.getLogin());
+            statement.setString(k++,user.getPassword());
+            statement.setLong(k++,user.getRole().ordinal()+1);
+            statement.setLong(k++,user.getStatus().ordinal()+1);
+            statement.setString(k++, user.getEmail());
+            statement.setString(k++, user.getPhoneNumber());
+            statement.setString(k++, user.getFirstName());
+            statement.setString(k++, user.getSecondName());
+            statement.setDate(k++, Date.valueOf(user.getBirthDate()));
+            statement.setLong(k, user.getUserId());
+
+            var res = statement.executeUpdate();
+            return res == 1;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
