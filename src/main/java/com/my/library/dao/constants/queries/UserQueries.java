@@ -34,4 +34,9 @@ public interface UserQueries {
                 birth_date = ?
             WHERE id = ?
             """;
+    String CHANGE_USER_STATUS_USER = """
+            UPDATE Users SET
+            status_id = ?
+            WHERE id = ?
+            """;
 }

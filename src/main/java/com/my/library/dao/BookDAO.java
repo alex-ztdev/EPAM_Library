@@ -16,7 +16,7 @@ public interface BookDAO {
 
     boolean update(Book book) throws DaoException;
 
-    void delete(long id) throws DaoException;
+    void delete(Book book) throws DaoException;
 
     List<Author> getBookAuthors(long id) throws DaoException;
 }

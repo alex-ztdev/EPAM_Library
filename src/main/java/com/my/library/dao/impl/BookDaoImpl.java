@@ -132,12 +132,12 @@ public class BookDaoImpl implements BookDAO {
     }
 
     @Override
-    public void delete(long id) throws DaoException {
+    public void delete(Book book) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
             int k = 1;
             statement.setBoolean(k++, true);
-            statement.setLong(k, id);
+            statement.setLong(k, book.getBookId());
 
             statement.executeUpdate();
 

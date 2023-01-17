@@ -141,6 +141,28 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public void block(User user) throws DaoException{
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
+            statement.setLong(1, UserStatus.BLOCKED.ordinal() + 1);
+            statement.setLong(2, user.getUserId());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+    public void unblock(User user) throws DaoException{
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
+
+            statement.setLong(1, UserStatus.NORMAL.ordinal() + 1);
+            statement.setLong(2, user.getUserId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 }

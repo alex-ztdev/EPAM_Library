@@ -61,17 +61,16 @@ public class HelloWorldServlet  {
 //
 //                bookDao.delete(10);
 //                System.out.println(bookDao.find(10));
-                bookDao.getBookAuthors(1).forEach(System.out::println);
+//                bookDao.getBookAuthors(1).forEach(System.out::println);
                 UserDaoImpl userDao = UserDaoImpl.getInstance();
                 var user = userDao.find(10000).get();
+                System.out.println(user);
+                user.setEmail("newMail");
 
+//                user = new User("newLogin", DigestUtils.sha512Hex("user"), UserRole.USER, UserStatus.NORMAL, "mail", "123", "first", "sec", LocalDate.now());
+                userDao.unblock(user);
 
-                user = new User("newLogin", DigestUtils.sha512Hex("user"), UserRole.USER, UserStatus.NORMAL, "mail", "123", "first", "sec", LocalDate.now());
-                userDao.save(user);
-
-
-                System.out.println(userDao.find(user.getUserId()).get().getPassword().equals(userDao.find(10000).get().getPassword()));
-
+                System.out.println(userDao.find(10000));
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }
