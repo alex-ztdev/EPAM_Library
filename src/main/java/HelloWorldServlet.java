@@ -1,9 +1,11 @@
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.BookDAO;
+import com.my.library.dao.OrderDAO;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.impl.AuthorDaoImpl;
 import com.my.library.dao.impl.BookDaoImpl;
+import com.my.library.dao.impl.OrderDaoImpl;
 import com.my.library.dao.impl.UserDaoImpl;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
@@ -62,15 +64,8 @@ public class HelloWorldServlet  {
 //                bookDao.delete(10);
 //                System.out.println(bookDao.find(10));
 //                bookDao.getBookAuthors(1).forEach(System.out::println);
-                UserDaoImpl userDao = UserDaoImpl.getInstance();
-                var user = userDao.find(10000).get();
-                System.out.println(user);
-                user.setEmail("newMail");
-
-//                user = new User("newLogin", DigestUtils.sha512Hex("user"), UserRole.USER, UserStatus.NORMAL, "mail", "123", "first", "sec", LocalDate.now());
-                userDao.unblock(user);
-
-                System.out.println(userDao.find(10000));
+                OrderDaoImpl orderDao = OrderDaoImpl.getInstance();
+                orderDao.find(100000).ifPresent(System.out::println);
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }
