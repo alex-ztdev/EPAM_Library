@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.util.Properties;
 
-public class HelloWorldServlet {
+public class HelloWorldServlet  {
     private static final Logger logger = LogManager.getLogger();
     public static void main(String[] args) {
         var authorsDao = AuthorDaoImpl.getInstance();
@@ -42,9 +42,9 @@ public class HelloWorldServlet {
                 var bookDao = BookDaoImpl.getInstance();
 //                bookDao.find(13).ifPresent(System.out::println);
 //                bookDao.findAll().forEach(x-> System.out.println(x));
-//                var book = new Book(101L, "My title UPDATED 2.0!", "Hachette", "Satire", 129, LocalDate.now(), false);
+//                var book = new Book(101L, "My title UPDATED 5.0!", "Hachette", "Satire", 129, LocalDate.now(), false, false);
 //                System.out.println(bookDao.find(101L));
-
+//
 //                bookDao.save(book);
 //                bookDao.findAll().forEach(System.out::println);
 //                bookDao.update(book);
@@ -52,10 +52,10 @@ public class HelloWorldServlet {
 
 
 //                System.out.println(bookDao.find(10));
-//
-//                bookDao.delete(10);
-//                System.out.println(bookDao.find(10));
-                bookDao.getBookAuthors(100).forEach(System.out::println);
+
+                bookDao.delete(10);
+                System.out.println(bookDao.find(10));
+//                bookDao.getBookAuthors(100).forEach(System.out::println);
 
             } catch (DaoException e) {
                 throw new RuntimeException(e);

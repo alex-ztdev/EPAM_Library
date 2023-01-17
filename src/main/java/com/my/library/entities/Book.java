@@ -13,10 +13,22 @@ public class Book {
     private LocalDate publicationDate;
     private boolean isAvailable;
 
+    private boolean isRemoved;
+
     public Book() {
     }
 
-    public Book(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable) {
+    public Book(String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable, boolean isRemoved) {
+        this.title = title;
+        this.publisherTitle = publisherTitle;
+        this.genre = genre;
+        this.pageNumber = pageNumber;
+        this.publicationDate = publicationDate;
+        this.isAvailable = isAvailable;
+        this.isRemoved = isRemoved;
+    }
+
+    public Book(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable, boolean isRemoved) {
         this.bookId = bookId;
         this.title = title;
         this.publisherTitle = publisherTitle;
@@ -24,15 +36,15 @@ public class Book {
         this.pageNumber = pageNumber;
         this.publicationDate = publicationDate;
         this.isAvailable = isAvailable;
+        this.isRemoved = isRemoved;
     }
 
-    public Book(String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable) {
-        this.title = title;
-        this.publisherTitle = publisherTitle;
-        this.genre = genre;
-        this.pageNumber = pageNumber;
-        this.publicationDate = publicationDate;
-        this.isAvailable = isAvailable;
+    public boolean isRemoved() {
+        return isRemoved;
+    }
+
+    public void setRemoved(boolean removed) {
+        isRemoved = removed;
     }
 
     public Long getBookId() {
@@ -100,6 +112,7 @@ public class Book {
 
         if (pageNumber != book.pageNumber) return false;
         if (isAvailable != book.isAvailable) return false;
+        if (isRemoved != book.isRemoved) return false;
         if (!bookId.equals(book.bookId)) return false;
         if (!title.equals(book.title)) return false;
         if (!publisherTitle.equals(book.publisherTitle)) return false;
@@ -116,6 +129,7 @@ public class Book {
         result = 31 * result + pageNumber;
         result = 31 * result + publicationDate.hashCode();
         result = 31 * result + (isAvailable ? 1 : 0);
+        result = 31 * result + (isRemoved ? 1 : 0);
         return result;
     }
 
@@ -129,6 +143,7 @@ public class Book {
                 ", pageNumber=" + pageNumber +
                 ", publicationDate=" + publicationDate +
                 ", isAvailable=" + isAvailable +
+                ", isRemoved=" + isRemoved +
                 '}';
     }
 }

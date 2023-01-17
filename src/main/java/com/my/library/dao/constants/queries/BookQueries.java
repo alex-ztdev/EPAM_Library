@@ -9,7 +9,8 @@ public interface BookQueries {
             	Book_Genres.title as book_genre,
             	Books.page_number,
             	Books.publication_date,
-            	Books.isAvailable
+            	Books.isAvailable,
+            	Books.isRemoved
             FROM Books
             INNER JOIN Publishers ON Books.publisher_id = Publishers.id
             INNER JOIN Book_Genres ON Books.genre_id = Book_Genres.id
@@ -19,10 +20,10 @@ public interface BookQueries {
 
     String INSERT_BOOK = """
             INSERT INTO Books
-            (title, publisher_id, genre_id, page_number, publication_date, isAvailable )
+            (title, publisher_id, genre_id, page_number, publication_date, isAvailable,isRemoved )
             VALUES
             (?, ( SELECT TOP(1) id FROM Publishers WHERE title=?),
-             ( SELECT TOP(1) id FROM Book_Genres WHERE title=?), ?,?,?)
+             ( SELECT TOP(1) id FROM Book_Genres WHERE title=?), ?,?,?,?)
             """;
 
     String UPDATE_BOOK = """
@@ -32,13 +33,14 @@ public interface BookQueries {
             genre_id=(SELECT TOP(1) id FROM Book_Genres WHERE title=?),
             page_number=?,
             publication_date=?,
-            isAvailable=?
+            isAvailable=?,
+            isRemoved=?
             WHERE id = ?
             """;
 
     String SET_BOOK_TO_REMOVED = """
             UPDATE Books SET
-            isAvailable=?
+            isRemoved=?
             WHERE id = ?
             """;
 

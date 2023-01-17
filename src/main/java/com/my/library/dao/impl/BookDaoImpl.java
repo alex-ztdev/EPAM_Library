@@ -60,7 +60,8 @@ public class BookDaoImpl implements BookDAO {
                 rs.getString(BooksColumns.GENRE),
                 rs.getInt(BooksColumns.PAGE_NUMBER),
                 rs.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate(),
-                rs.getBoolean(BooksColumns.IS_AVAILABLE));
+                rs.getBoolean(BooksColumns.IS_AVAILABLE),
+                rs.getBoolean(BooksColumns.IS_REMOVED));
 
     }
 
@@ -93,7 +94,8 @@ public class BookDaoImpl implements BookDAO {
             statement.setString(k++, book.getGenre());
             statement.setInt(k++, book.getPageNumber());
             statement.setDate(k++, Date.valueOf(book.getPublicationDate()));
-            statement.setBoolean(k, book.isAvailable());
+            statement.setBoolean(k++, book.isAvailable());
+            statement.setBoolean(k, book.isRemoved());
 
             statement.executeUpdate();
             try (var keysRS = statement.getGeneratedKeys()) {
@@ -118,6 +120,7 @@ public class BookDaoImpl implements BookDAO {
             statement.setInt(k++, book.getPageNumber());
             statement.setDate(k++, Date.valueOf(book.getPublicationDate()));
             statement.setBoolean(k++, book.isAvailable());
+            statement.setBoolean(k++, book.isRemoved());
             statement.setLong(k, book.getBookId());
 
             var updatedRows = statement.executeUpdate();
@@ -133,7 +136,7 @@ public class BookDaoImpl implements BookDAO {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
             int k = 1;
-            statement.setBoolean(k++, false);
+            statement.setBoolean(k++, true);
             statement.setLong(k, id);
 
             statement.executeUpdate();
@@ -163,5 +166,6 @@ public class BookDaoImpl implements BookDAO {
             throw new DaoException(e);
         }
     }
+
 
 }
