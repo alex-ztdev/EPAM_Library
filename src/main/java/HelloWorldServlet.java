@@ -1,7 +1,10 @@
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.BookDAO;
+import com.my.library.dao.constants.UserRole;
+import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.impl.AuthorDaoImpl;
 import com.my.library.dao.impl.BookDaoImpl;
+import com.my.library.dao.impl.UserDaoImpl;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
@@ -10,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class HelloWorldServlet  {
@@ -39,23 +43,27 @@ public class HelloWorldServlet  {
         try {
 
             try {
-                var bookDao = BookDaoImpl.getInstance();
-                bookDao.find(13).ifPresent(System.out::println);
-                bookDao.findAll().forEach(x-> System.out.println(x));
-                var book = new Book(101L, "My title UPDATED 5.0!", "Hachette", "Satire", 129, LocalDate.now(), false, false);
-                System.out.println(bookDao.find(101L));
-
-                bookDao.save(book);
-                bookDao.findAll().forEach(System.out::println);
-                bookDao.update(book);
-                System.out.println(bookDao.find(book.getBookId()));
-
-
+//                var bookDao = BookDaoImpl.getInstance();
+//                bookDao.find(13).ifPresent(System.out::println);
+//                bookDao.findAll().forEach(x-> System.out.println(x));
+//                var book = new Book(101L, "My title UPDATED 5.0!", "Hachette", "Satire", 129, LocalDate.now(), false, false);
+//                System.out.println(bookDao.find(101L));
+//
+//                bookDao.save(book);
+//                bookDao.findAll().forEach(System.out::println);
+//                bookDao.update(book);
+//                System.out.println(bookDao.find(book.getBookId()));
+//
+//
 //                System.out.println(bookDao.find(10));
-
-                bookDao.delete(10);
-                System.out.println(bookDao.find(10));
+//
+//                bookDao.delete(10);
+//                System.out.println(bookDao.find(10));
 //                bookDao.getBookAuthors(100).forEach(System.out::println);
+
+                var userDAO = UserDaoImpl.getInstance();
+
+                System.out.println(userDAO.find(10000));
 
             } catch (DaoException e) {
                 throw new RuntimeException(e);

@@ -1,35 +1,89 @@
 package com.my.library.dao.impl;
 
+import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.UserDAO;
+import com.my.library.dao.constants.UserRole;
+import com.my.library.dao.constants.UserStatus;
+import com.my.library.dao.constants.columns.UsersColumns;
+import com.my.library.dao.constants.queries.UserQueries;
 import com.my.library.entities.User;
+import com.my.library.exceptions.DaoException;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl implements UserDAO {
+    private static final ConnectionPool dbm = ConnectionPool.getInstance();
+    private static volatile UserDaoImpl INSTANCE;
 
-    @Override
-    public Optional<User> find(long id) {
-        return Optional.empty();
+    private UserDaoImpl() {
+    }
+
+    public static UserDaoImpl getInstance() {
+        UserDaoImpl instance = INSTANCE;
+        if (instance != null) {
+            return instance;
+        }
+        synchronized (UserDaoImpl.class) {
+            if (instance == null) {
+                instance = new UserDaoImpl();
+            }
+            return instance;
+        }
     }
 
     @Override
-    public List<User> findAll() {
+    public Optional<User> find(long id) throws DaoException {
+        User user = null;
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(UserQueries.FIND_USER_BY_ID)) {
+
+            statement.setLong(1, id);
+
+            try (var rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    user = buildUser(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return user == null ? Optional.empty() : Optional.of(user);
+    }
+
+    private User buildUser(ResultSet resultSet) throws SQLException {
+        return new User(resultSet.getLong(UsersColumns.ID),
+                resultSet.getString(UsersColumns.LOGIN),
+                resultSet.getString(UsersColumns.PASSWORD),
+                UserRole.values()[resultSet.getInt(UsersColumns.ROLE_ID) - 1],
+                UserStatus.values()[resultSet.getInt(UsersColumns.STATUS_ID) - 1],
+                resultSet.getString(UsersColumns.EMAIL),
+                resultSet.getString(UsersColumns.PHONE_NUMBER),
+                resultSet.getString(UsersColumns.FIRST_NAME),
+                resultSet.getString(UsersColumns.SECOND_NAME),
+                resultSet.getDate(UsersColumns.BIRTH_DATE).toLocalDate()
+        );
+    }
+
+    @Override
+    public List<User> findAll() throws DaoException{
         return null;
     }
 
     @Override
-    public void save(User entity) {
+    public void save(User entity) throws DaoException{
 
     }
 
     @Override
-    public boolean update(User entity) {
+    public boolean update(User entity) throws DaoException{
         return false;
     }
 
     @Override
-    public void block(User entity) {
+    public void block(User entity) throws DaoException{
 
     }
 }
