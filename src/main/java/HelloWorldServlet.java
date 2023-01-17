@@ -63,7 +63,7 @@ public class HelloWorldServlet  {
 
                 var userDAO = UserDaoImpl.getInstance();
 
-                System.out.println(userDAO.find(10000));
+                userDAO.findAll().forEach(System.out::println);
 
             } catch (DaoException e) {
                 throw new RuntimeException(e);

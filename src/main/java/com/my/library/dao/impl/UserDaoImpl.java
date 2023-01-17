@@ -11,6 +11,7 @@ import com.my.library.exceptions.DaoException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,7 +70,20 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public List<User> findAll() throws DaoException{
-        return null;
+        List<User> userList = new ArrayList<>();
+
+        try (var connection = dbm.get();
+             var statement = connection.createStatement()) {
+
+            try (var rs = statement.executeQuery(UserQueries.FIND_ALL_USERS)) {
+                while (rs.next()) {
+                    userList.add(buildUser(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return userList;
     }
 
     @Override
