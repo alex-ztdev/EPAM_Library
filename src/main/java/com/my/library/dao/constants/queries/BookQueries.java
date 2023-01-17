@@ -41,4 +41,9 @@ public interface BookQueries {
             isAvailable=?
             WHERE id = ?
             """;
+
+    String FIND_ALL_BOOKS_AUTHORS = """
+            SELECT author_id FROM Authors_Books
+            WHERE book_id =?
+            """;
 }

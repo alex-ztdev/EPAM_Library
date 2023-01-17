@@ -4,6 +4,7 @@ import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.BookDAO;
 import com.my.library.dao.constants.columns.AuthorsColumns;
 import com.my.library.dao.constants.columns.BooksColumns;
+import com.my.library.dao.constants.queries.AuthorQueries;
 import com.my.library.dao.constants.queries.BookQueries;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
@@ -130,13 +131,34 @@ public class BookDaoImpl implements BookDAO {
     @Override
     public void delete(long id) throws DaoException {
         try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.UPDATE_BOOK)) {
-            int k = 0;
+             var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
+            int k = 1;
             statement.setBoolean(k++, false);
             statement.setLong(k, id);
 
             statement.executeUpdate();
 
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<Author> getBookAuthors(long id) throws DaoException {
+        List<Author> authorsList = new ArrayList<>();
+
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(BookQueries.FIND_ALL_BOOKS_AUTHORS)) {
+            AuthorDaoImpl authorDao = AuthorDaoImpl.getInstance();
+
+            statement.setLong(1, id);
+
+            try (var rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    authorDao.find(rs.getLong(BooksColumns.AUTHOR_ID)).ifPresent(authorsList::add);
+                }
+            }
+            return authorsList;
         } catch (SQLException e) {
             throw new DaoException(e);
         }

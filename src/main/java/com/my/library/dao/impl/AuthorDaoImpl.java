@@ -118,7 +118,7 @@ public class AuthorDaoImpl implements AuthorDAO {
     }
 
     @Override
-    public List<Book> getAuthorsBook(long id) throws DaoException {
+    public List<Book> getAuthorBooks(long id) throws DaoException {
         List<Book> bookList = new ArrayList<>();
 
         try (var connection = dbm.get();
