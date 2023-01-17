@@ -38,8 +38,13 @@ public class HelloWorldServlet {
         try {
 
             try {
-                authorsDao.findAll().forEach(System.out::println);
-
+//                System.out.println(authorsDao.find(1));
+//                authorsDao.findAll().forEach(System.out::println);
+//                authorsDao.update(new Author(1L, "New", "Name", LocalDate.of(2000, 2, 20)));
+//                System.out.println(authorsDao.find(1));
+//                var author = authorsDao.save(new Author("New2", "Name2", LocalDate.of(2000, 2, 20)));
+//                System.out.println(author);
+                authorsDao.getAuthorsBook(10).forEach(System.out::println);
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }

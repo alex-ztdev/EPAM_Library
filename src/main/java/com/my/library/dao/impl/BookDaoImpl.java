@@ -54,8 +54,6 @@ public class BookDaoImpl implements BookDAO {
 
     private Book buildBook(ResultSet rs) throws SQLException {
         var book = new Book();
-
-
         book.setBookId(rs.getLong(BooksColumns.ID));
         book.setTitle(rs.getString(BooksColumns.TITLE));
         book.setPublisherTitle(rs.getString(BooksColumns.PUBLISHER));

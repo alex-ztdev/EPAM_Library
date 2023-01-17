@@ -117,4 +117,24 @@ public class AuthorDaoImpl implements AuthorDAO {
         }
     }
 
+    @Override
+    public List<Book> getAuthorsBook(long id) throws DaoException {
+        List<Book> bookList = new ArrayList<>();
+
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(AuthorQueries.FIND_ALL_AUTHORS_BOOKS)) {
+            BookDaoImpl bookDao = BookDaoImpl.getInstance();
+            statement.setLong(1, id);
+
+            try (var rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    bookDao.find(rs.getLong(AuthorsColumns.AUTHORS_BOOK_ID)).ifPresent(bookList::add);
+                }
+            }
+            return bookList;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 }
