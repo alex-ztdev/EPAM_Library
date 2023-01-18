@@ -46,7 +46,7 @@ public class HelloWorldServlet {
 //                System.out.println(bookDao.find(10));
 //                bookDao.getBookAuthors(1).forEach(System.out::println);
                 OrderDaoImpl orderDao = OrderDaoImpl.getInstance();
-                var order = orderDao.find(100000).get();
+
 //                orderDao.findAll().forEach(System.out::println);
                 UserDaoImpl userDao = UserDaoImpl.getInstance();
 //                var order = new Order(userDao.find(10000).get(),
@@ -56,10 +56,12 @@ public class HelloWorldServlet {
 //                        null
 //                );
 //                orderDao.save(order);
-                System.out.println(order);
-                order.setActualReturnDate(LocalDateTime.now());
-                orderDao.delete(order);
-                orderDao.find(order.getOrderId()).ifPresent(System.out::println);
+//                System.out.println(order);
+//                order.setActualReturnDate(LocalDateTime.now());
+//                orderDao.delete(order);
+//                orderDao.find(order.getOrderId()).ifPresent(System.out::println);
+
+                orderDao.getUsersOrders(10004).forEach(System.out::println);
 
             } catch (DaoException e) {
                 throw new RuntimeException(e);

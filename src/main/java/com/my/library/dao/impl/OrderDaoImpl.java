@@ -164,7 +164,9 @@ public class OrderDaoImpl implements OrderDAO {
             statement.setLong(1, user_id);
 
             try (var rs = statement.executeQuery()) {
-                orderList.add(buildOrder(rs));
+                while (rs.next()) {
+                    orderList.add(buildOrder(rs));
+                }
             }
             return orderList;
         } catch (SQLException e) {

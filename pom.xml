@@ -10,6 +10,7 @@
     <name>Library</name>
 
     <properties>
+        <encoding.type>UTF-8</encoding.type>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.18</maven.compiler.target>
         <maven.compiler.source>1.18</maven.compiler.source>
