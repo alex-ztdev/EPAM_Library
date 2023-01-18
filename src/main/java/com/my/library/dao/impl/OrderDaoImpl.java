@@ -12,6 +12,7 @@ import com.my.library.exceptions.DaoException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +69,7 @@ public class OrderDaoImpl implements OrderDAO {
             order.setBook(bookInOrder);
             order.setOrderStartDate(resultSet.getObject(OrdersColumns.ORDER_START_DATE, LocalDateTime.class));
             order.setOrderEndDate(resultSet.getObject(OrdersColumns.SUBSCRIPTION_END_DATE, LocalDateTime.class));
-            order.setActualReturnDate(resultSet.getObject(OrdersColumns.SUBSCRIPTION_END_DATE, LocalDateTime.class));
+            order.setActualReturnDate(resultSet.getObject(OrdersColumns.ACTUAL_RETURN_DATE, LocalDateTime.class));
 
             return order;
         } catch (SQLException e) {
@@ -78,7 +79,20 @@ public class OrderDaoImpl implements OrderDAO {
 
     @Override
     public List<Order> findAll() throws DaoException {
-        return null;
+        List<Order> orderList = new ArrayList<>();
+        try (var connection = dbm.get();
+             var statement = connection.createStatement()) {
+
+            try (var rs = statement.executeQuery(OrderQueries.FIND_ALL_ORDERS)) {
+                while (rs.next()) {
+                    orderList.add(buildOrder(rs));
+                }
+            }
+
+            return orderList;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override

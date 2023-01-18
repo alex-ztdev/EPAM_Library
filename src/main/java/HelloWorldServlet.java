@@ -20,32 +20,11 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class HelloWorldServlet  {
+public class HelloWorldServlet {
     private static final Logger logger = LogManager.getLogger();
+
     public static void main(String[] args) {
-        var authorsDao = AuthorDaoImpl.getInstance();
-//        var start = System.currentTimeMillis();
-//        try {
-//            authorsDao.findAll().forEach(System.out::println);
-//        } catch (DaoException e) {
-//            throw new RuntimeException(e);
-//        }
-//        System.out.println(System.currentTimeMillis()- start);
-
-
-//        var authorToInsert = new Book();
-//        authorToInsert.setFirstName("Amo");
-//        authorToInsert.setSecondName("Gus");
-//        authorToInsert.setBirthDate(LocalDate.of(2000, 10, 2));
-
-//        try {
-//            authorsDao.save(authorToInsert);
-//        } catch (DaoException e) {
-//            e.printStackTrace();
-//        }
-
         try {
-
             try {
                 var bookDao = BookDaoImpl.getInstance();
 //                bookDao.find(13).ifPresent(System.out::println);
@@ -66,6 +45,8 @@ public class HelloWorldServlet  {
 //                bookDao.getBookAuthors(1).forEach(System.out::println);
                 OrderDaoImpl orderDao = OrderDaoImpl.getInstance();
                 orderDao.find(100000).ifPresent(System.out::println);
+                orderDao.findAll().forEach(System.out::println);
+
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }
