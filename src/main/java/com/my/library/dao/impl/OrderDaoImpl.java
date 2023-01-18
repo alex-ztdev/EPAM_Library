@@ -11,6 +11,7 @@ import com.my.library.exceptions.DaoException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,12 +98,47 @@ public class OrderDaoImpl implements OrderDAO {
 
     @Override
     public void save(Order order) throws DaoException {
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(OrderQueries.INSERT_ORDER , Statement.RETURN_GENERATED_KEYS)) {
 
+            int k = 1;
+            statement.setLong(k++, order.getUser().getUserId());
+            statement.setLong(k++, order.getBook().getBookId());
+            statement.setObject(k++, order.getOrderStartDate());
+            statement.setObject(k++, order.getOrderEndDate());
+            statement.setObject(k, order.getActualReturnDate());
+
+            statement.executeUpdate();
+
+            try (var keys = statement.getGeneratedKeys()) {
+                if (keys.next()) {
+                    order.setOrderId(keys.getLong(1));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
     public boolean update(Order order) throws DaoException {
-        return false;
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(OrderQueries.UPDATE_ORDER)) {
+
+            int k = 1;
+            statement.setLong(k++, order.getUser().getUserId());
+            statement.setLong(k++, order.getBook().getBookId());
+            statement.setObject(k++, order.getOrderStartDate());
+            statement.setObject(k++, order.getOrderEndDate());
+            statement.setObject(k++, order.getActualReturnDate());
+            statement.setLong(k, order.getOrderId());
+
+            int rowsAffected = statement.executeUpdate();
+
+            return rowsAffected == 1;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override

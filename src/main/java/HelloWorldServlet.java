@@ -9,6 +9,7 @@ import com.my.library.dao.impl.OrderDaoImpl;
 import com.my.library.dao.impl.UserDaoImpl;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
+import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -44,8 +46,20 @@ public class HelloWorldServlet {
 //                System.out.println(bookDao.find(10));
 //                bookDao.getBookAuthors(1).forEach(System.out::println);
                 OrderDaoImpl orderDao = OrderDaoImpl.getInstance();
-                orderDao.find(100000).ifPresent(System.out::println);
-                orderDao.findAll().forEach(System.out::println);
+                var order = orderDao.find(100000).get();
+//                orderDao.findAll().forEach(System.out::println);
+                UserDaoImpl userDao = UserDaoImpl.getInstance();
+//                var order = new Order(userDao.find(10000).get(),
+//                        bookDao.find(13).get(),
+//                        LocalDateTime.of(2000, 2, 23, 19, 1),
+//                        LocalDateTime.of(2000, 3, 23, 19, 1),
+//                        null
+//                );
+//                orderDao.save(order);
+                System.out.println(order);
+                order.setActualReturnDate(LocalDateTime.now());
+                orderDao.update(order);
+                orderDao.find(order.getOrderId()).ifPresent(System.out::println);
 
             } catch (DaoException e) {
                 throw new RuntimeException(e);

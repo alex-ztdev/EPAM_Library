@@ -12,4 +12,19 @@ public interface OrderQueries {
             FROM Orders
             """;
     String FIND_ORDER_BY_ID = FIND_ALL_ORDERS + "WHERE id=?";
+    String INSERT_ORDER = """
+            INSERT INTO Orders (user_id, book_id, order_start_date, order_end_date, actual_return_date)
+            VALUES(?,?,?,?,?)
+            """;
+
+    String UPDATE_ORDER = """
+            UPDATE Orders
+            SET
+            user_id = ?,
+            book_id = ?,
+            order_start_date = ?,
+            order_end_date = ?,
+            actual_return_date=?
+            WHERE id =?
+            """;
 }
