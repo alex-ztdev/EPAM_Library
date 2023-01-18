@@ -99,7 +99,7 @@ public class OrderDaoImpl implements OrderDAO {
     @Override
     public void save(Order order) throws DaoException {
         try (var connection = dbm.get();
-             var statement = connection.prepareStatement(OrderQueries.INSERT_ORDER , Statement.RETURN_GENERATED_KEYS)) {
+             var statement = connection.prepareStatement(OrderQueries.INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)) {
 
             int k = 1;
             statement.setLong(k++, order.getUser().getUserId());
@@ -143,6 +143,15 @@ public class OrderDaoImpl implements OrderDAO {
 
     @Override
     public void delete(Order order) throws DaoException {
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(OrderQueries.DELETE_ORDER)) {
 
+            statement.setLong(1, order.getOrderId());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 }

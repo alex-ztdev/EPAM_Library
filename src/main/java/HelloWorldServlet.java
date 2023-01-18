@@ -58,7 +58,7 @@ public class HelloWorldServlet {
 //                orderDao.save(order);
                 System.out.println(order);
                 order.setActualReturnDate(LocalDateTime.now());
-                orderDao.update(order);
+                orderDao.delete(order);
                 orderDao.find(order.getOrderId()).ifPresent(System.out::println);
 
             } catch (DaoException e) {

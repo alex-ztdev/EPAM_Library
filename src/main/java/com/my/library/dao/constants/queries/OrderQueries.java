@@ -27,4 +27,8 @@ public interface OrderQueries {
             actual_return_date=?
             WHERE id =?
             """;
+    String DELETE_ORDER = """
+            DELETE FROM Orders
+            WHERE id = ?
+            """;
 }
