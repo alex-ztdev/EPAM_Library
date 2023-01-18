@@ -31,4 +31,5 @@ public interface OrderQueries {
             DELETE FROM Orders
             WHERE id = ?
             """;
+    String FIND_ALL_USER_ORDERS = FIND_ALL_ORDERS + "WHERE user_id = ?";
 }

@@ -154,4 +154,23 @@ public class OrderDaoImpl implements OrderDAO {
             throw new DaoException(e);
         }
     }
+
+    @Override
+    public List<Order> getUsersOrders(long user_id) throws DaoException {
+        List<Order> orderList = new ArrayList<>();
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(OrderQueries.FIND_ALL_USER_ORDERS)) {
+
+            statement.setLong(1, user_id);
+
+            try (var rs = statement.executeQuery()) {
+                orderList.add(buildOrder(rs));
+            }
+            return orderList;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+
 }

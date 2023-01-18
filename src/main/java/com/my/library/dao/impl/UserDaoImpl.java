@@ -6,6 +6,7 @@ import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.dao.constants.queries.UserQueries;
+import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 
@@ -153,6 +154,7 @@ public class UserDaoImpl implements UserDAO {
             throw new DaoException(e);
         }
     }
+    @Override
     public void unblock(User user) throws DaoException{
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
@@ -165,4 +167,6 @@ public class UserDaoImpl implements UserDAO {
             throw new DaoException(e);
         }
     }
+
+
 }

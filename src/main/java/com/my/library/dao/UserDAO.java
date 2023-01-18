@@ -1,5 +1,6 @@
 package com.my.library.dao;
 
+import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 
@@ -18,5 +19,6 @@ public interface UserDAO {
     void block(User user) throws DaoException;
 
     void unblock(User user) throws DaoException;
+
 
 }

@@ -18,4 +18,6 @@ public interface OrderDAO {
     boolean update(Order order) throws DaoException;
 
     void delete(Order order) throws DaoException;
+
+    List<Order> getUsersOrders(long user_id) throws DaoException;
 }

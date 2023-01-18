@@ -39,4 +39,8 @@ public interface UserQueries {
             status_id = ?
             WHERE id = ?
             """;
+
+
+
+
 }
