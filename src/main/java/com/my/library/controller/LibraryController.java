@@ -1,4 +1,4 @@
-package controller;
+package com.my.library.controller;
 
 import com.my.library.connection_pool.ConnectionPool;
 import jakarta.servlet.ServletException;
@@ -19,7 +19,6 @@ public class LibraryController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter pw = resp.getWriter().append("Hi");
         processRequest(req, resp);
     }
 
