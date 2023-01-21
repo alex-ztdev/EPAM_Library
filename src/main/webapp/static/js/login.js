@@ -36,17 +36,19 @@ document.addEventListener("DOMContentLoaded", () => {
         let username = document.getElementById('loginUsername').value;
         let password = document.getElementById('loginPassword').value;
 
-        const usernameRegex = /^\w+$/;
-
-        console.log(username);
-        console.log(password);
+        const usernameRegex = /^\w{3,30}$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
 
         if (!username.match(usernameRegex)) {
-            alert("validation failed false");
+            alert("username validation failed!");
             e.preventDefault();
             setFormMessage(loginForm, "error", "Invalid username/password combination");
 
-        }else{
+        }else if (!password.match(passwordRegex)) {
+            alert("password validation failed!");
+            e.preventDefault();
+
+        } else {
             alert("validations passed");
         }
 
