@@ -1,7 +1,6 @@
 package com.my.library.connection_pool;
 
 import com.my.library.exceptions.DaoException;
-import com.my.library.utils.PropertiesUtil;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
