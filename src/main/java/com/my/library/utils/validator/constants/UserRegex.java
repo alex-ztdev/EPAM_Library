@@ -4,7 +4,7 @@ public enum UserRegex {
     LOGIN("^\\w{3,30}$"),
     PASSWORD("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,}$"), //Minimum 5 characters, at least one letter and one number, no special chars
     EMAIL("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"),
-    NAME("");
+    NAME(""); //TODO: write name regex
 
     private final String regex;
 
