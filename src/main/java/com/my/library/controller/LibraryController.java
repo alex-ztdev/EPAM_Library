@@ -1,6 +1,9 @@
 package com.my.library.controller;
 
 import com.my.library.connection_pool.ConnectionPool;
+import com.my.library.exceptions.ServiceException;
+import com.my.library.services.UserService;
+import com.my.library.services.impl.UserServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -39,7 +42,13 @@ public class LibraryController extends HttpServlet {
 //            logger.error("Exception in Library Controller", e);
 //            response.sendRedirect(PageLocation.ERROR_PAGE);
 //        }
+        UserService userService = UserServiceImpl.getInstance();
 
+        try {
+            userService.authenticate(request.getParameter("login"), request.getParameter("password"));
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
