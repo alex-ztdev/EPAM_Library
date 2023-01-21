@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="fileName">/logs</Property>
+        <Property name="LOG_DIR">./logs</Property>
     </Properties>
     <Appenders>
         <Console name="ConsoleLog" target="SYSTEM_OUT">
             <PatternLayout pattern="[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %m%n"/>
         </Console>
-        <RollingFile name="FileLog" fileName="${fileName}/logs.log"
-                     filePattern="${fileName}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
-<!--                     filePattern="/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">-->
+        <RollingFile
+                name="FileLog"
+                fileName="${LOG_DIR}/application.log"
+                filePattern="${LOG_DIR}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log"
+                ignoreExceptions="false"
+        >
             <PatternLayout pattern="[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %m%n"/>
             <Policies>
-                <SizeBasedTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="10 MB"/>
             </Policies>
         </RollingFile>
@@ -24,3 +26,5 @@
         </Root>
     </Loggers>
 </Configuration>
+
+

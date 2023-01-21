@@ -10,5 +10,5 @@ public interface UsersColumns {
     String PHONE_NUMBER = "phone_number";
     String FIRST_NAME = "first_name";
     String SECOND_NAME = "second_name";
-    String BIRTH_DATE = "birth_date";
+    String BIRTH_DATE = "birth_date"; //FIXME: remove completely
 }

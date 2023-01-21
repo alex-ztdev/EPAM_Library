@@ -25,11 +25,11 @@
 </head>
 <body>
 <div class="container">
-    <form class="form" id="login" method="get" action="controller">
+    <form class="form" id="login" method="POST" action="controller">
         <h1 class="form__title">Login</h1>
         <div class="form__message form__message--error"></div>
         <div class="form__input-group">
-            <input id="loginUsername" name="username" type="text" class="form__input" autofocus placeholder="Username">
+            <input id="loginUsername" name="login" type="text" class="form__input" autofocus placeholder="Username">
             <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">
@@ -48,7 +48,7 @@
         <h1 class="form__title">Create Account</h1>
         <div class="form__message form__message--error"></div>
         <div class="form__input-group">
-            <input type="text" id="signupUsername" name="username" class="form__input" autofocus placeholder="Username">
+            <input type="text" id="signupUsername" name="login" class="form__input" autofocus placeholder="Username">
             <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">

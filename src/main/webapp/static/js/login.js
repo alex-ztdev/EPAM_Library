@@ -37,15 +37,17 @@ document.addEventListener("DOMContentLoaded", () => {
         let password = document.getElementById('loginPassword').value;
 
         const usernameRegex = /^\w{3,30}$/;
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/; //TODO: rewrite regex
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,30}$/; //TODO: rewrite regex
 
         if (!username.match(usernameRegex)) {
-            alert("username validation failed!");
-            e.preventDefault();
+            // alert("username validation failed!");
             setFormMessage(loginForm, "error", "Invalid username/password combination");
+            e.preventDefault();
+
 
         }else if (!password.match(passwordRegex)) {
-            alert("password should contain at least 5 characters, one uppercase  failed!");
+            // alert("password should contain at least 6 characters, one letter and digit");
+            setFormMessage(loginForm, "error", "Password should contain at least 6 characters, one letter and digit");
             e.preventDefault();
 
         } else {

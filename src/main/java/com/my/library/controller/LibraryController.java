@@ -1,6 +1,7 @@
 package com.my.library.controller;
 
 import com.my.library.connection_pool.ConnectionPool;
+import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
 import com.my.library.services.impl.UserServiceImpl;
@@ -45,7 +46,10 @@ public class LibraryController extends HttpServlet {
         UserService userService = UserServiceImpl.getInstance();
 
         try {
-            userService.authenticate(request.getParameter("login"), request.getParameter("password"));
+            var res = userService.authenticate(request.getParameter(UsersColumns.LOGIN), request.getParameter(UsersColumns.PASSWORD));
+            
+            System.out.println("Authentication: "  +(res ? "Successful!" : "Failed!"));
+            
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
