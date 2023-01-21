@@ -1,37 +1,34 @@
 package com.my.library.services.impl;
 
 import com.my.library.dao.UserDAO;
-import com.my.library.dao.impl.AuthorDaoImpl;
 import com.my.library.dao.impl.UserDaoImpl;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
-import com.my.library.services.Service;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.logging.log4j.Level;
+import com.my.library.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
-public class UserService implements Service<User> {
+public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
 
     private final UserDAO userDAO = UserDaoImpl.getInstance();
-    private static volatile UserService INSTANCE;
+    private static volatile UserServiceImpl INSTANCE;
 
-    private UserService() {
+    private UserServiceImpl() {
     }
 
-    public static UserService getInstance() {
-        UserService instance = INSTANCE;
+    public static UserServiceImpl getInstance() {
+        UserServiceImpl instance = INSTANCE;
         if (instance != null) {
             return instance;
         }
-        synchronized (UserService.class) {
+        synchronized (UserServiceImpl.class) {
             if (instance == null) {
-                instance = new UserService();
+                instance = new UserServiceImpl();
             }
             return instance;
         }
@@ -56,14 +53,18 @@ public class UserService implements Service<User> {
     }
 
     @Override
-    public void save(User entity) throws ServiceException {
-//        userDAO.save(entity);
+    public void save(User user) throws ServiceException {
 
     }
 
     @Override
-    public void update(User entity) throws ServiceException {
+    public void update(User user) throws ServiceException {
 
+    }
+
+    @Override
+    public boolean authenticate(String login, String password) throws ServiceException {
+        return false;
     }
 
 //    public static void main(String[] args) {
