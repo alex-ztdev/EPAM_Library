@@ -168,5 +168,25 @@ public class UserDaoImpl implements UserDAO {
         }
     }
 
+    @Override
+    public boolean authenticate(String login, String password) throws DaoException {
+        boolean isAuthorized = false;
+
+        try (var connection = dbm.get();
+        var statement = connection.prepareStatement(UserQueries.AUTHENTICATE_BY_LOGIN_PASSWORD)) {
+            statement.setString(1, login);
+
+            try (var rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    isAuthorized = password.equals(rs.getString(UsersColumns.PASSWORD));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return isAuthorized;
+    }
+
 
 }

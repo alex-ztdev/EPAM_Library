@@ -1,6 +1,5 @@
 package com.my.library.dao;
 
-import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 
@@ -20,5 +19,6 @@ public interface UserDAO {
 
     void unblock(User user) throws DaoException;
 
+    boolean authenticate(String login, String password) throws DaoException;
 
 }
