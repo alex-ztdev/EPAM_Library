@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -86,5 +87,18 @@ public class ConnectionPool {
                 logger.log(Level.ERROR, "Error while destroying pool");
             }
         }
+        deregisterDrivers();
+    }
+
+    private void deregisterDrivers() {
+        DriverManager.getDrivers().asIterator().forEachRemaining(driver->{
+            try {
+                DriverManager.deregisterDriver(driver);
+            } catch (SQLException e) {
+                logger.log(Level.ERROR, "Error while deregistrating drivers" + e.getMessage(), e);
+            }
+        });
     }
 }
+
+

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="fileName">./logs</Property>
+        <Property name="fileName">/logs</Property>
     </Properties>
     <Appenders>
         <Console name="ConsoleLog" target="SYSTEM_OUT">
@@ -12,7 +12,7 @@
 <!--                     filePattern="/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">-->
             <PatternLayout pattern="[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %m%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="10 MB"/>
             </Policies>
         </RollingFile>
