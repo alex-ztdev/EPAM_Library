@@ -6,6 +6,8 @@ import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
+import com.my.library.utils.validator.UserValidator;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.findAll();
         } catch (DaoException e) {
-            throw new ServiceException("Error while searching all users by id",e);
+            throw new ServiceException("Error while searching all users.", e);
         }
     }
 
@@ -64,11 +66,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean authenticate(String login, String password) throws ServiceException {
-        return false;
+        if (!UserValidator.isValidLogin(login) || !UserValidator.isValidPassword(password)) {
+            return false;
+        }
+        try {
+           return userDAO.authenticate(login, encryptPassword(password));
+        } catch (DaoException e) {
+            throw new ServiceException("Error in authenticate method in UserService", e);
+        }
     }
 
 //    public static void main(String[] args) {
 //        String sha256hex = DigestUtils.sha512Hex("admin");
 //        System.out.println(sha256hex);
 //    }
+
+    private String encryptPassword(String password) {
+        return DigestUtils.sha512Hex(password);
+    }
 }
