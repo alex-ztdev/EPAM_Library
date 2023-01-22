@@ -44,6 +44,7 @@ public interface UserQueries {
     String AUTHENTICATE_BY_LOGIN_PASSWORD = """
             SELECT password
             FROM Users 
-            WHERE login = ?;
+            WHERE login = ?
+            AND status_id !=2
             """;
 }
