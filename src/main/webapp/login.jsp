@@ -28,7 +28,7 @@
     <form class="form" id="login" method="POST" action="controller">
         <input name="command" type="hidden" value="login">
         <h1 class="form__title">Login</h1>
-        <div class="form__message form__message--error"></div>
+        <div class="form__message form__message--error">${requestScope.invalidLoginPassword}</div>
         <div class="form__input-group">
             <input id="loginUsername" name="login" type="text" class="form__input" autofocus placeholder="Username">
             <div class="form__input-error-message"></div>

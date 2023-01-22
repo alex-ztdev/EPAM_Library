@@ -11,6 +11,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,9 +74,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean authenticate(String login, String password) throws ServiceException {
+    public Optional<User> authenticate(String login, String password) throws ServiceException {
         if (!UserValidator.isValidLogin(login) || !UserValidator.isValidPassword(password)) {
-            return false;
+            return Optional.empty();
         }
         try {
            return userDAO.authenticate(login, encryptPassword(password));

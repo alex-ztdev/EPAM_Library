@@ -4,13 +4,8 @@ import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.CommandFactory;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.RedirectToPage;
-import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.exceptions.CommandException;
-import com.my.library.exceptions.ServiceException;
-import com.my.library.services.UserService;
-import com.my.library.services.impl.UserServiceImpl;
 import com.my.library.utils.Pages;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/controller")
 public class LibraryController extends HttpServlet {
@@ -52,14 +46,9 @@ public class LibraryController extends HttpServlet {
 
     private void direct(HttpServletRequest request, HttpServletResponse response, CommandResult commandResult) throws ServletException, IOException {
         switch (commandResult.getAction()) {
-            case FORWARD:
-                request.getRequestDispatcher(commandResult.getPage()).forward(request, response);
-                break;
-            case REDIRECT:
-                response.sendRedirect(commandResult.getPage());
-                break;
-            default:
-                response.sendRedirect(RedirectToPage.LOGIN_PAGE);
+            case FORWARD -> request.getRequestDispatcher(commandResult.getPage()).forward(request, response);
+            case REDIRECT -> response.sendRedirect(commandResult.getPage());
+            default -> response.sendRedirect(RedirectToPage.LOGIN_PAGE);
         }
     }
 

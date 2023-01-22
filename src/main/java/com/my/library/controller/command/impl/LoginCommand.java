@@ -27,13 +27,12 @@ public class LoginCommand implements Command {
         CommandResult res;
         try {
             if (userService.authenticate(login, password)) {
-                res = new CommandResult(Pages.PROFILE_PAGE);
-                request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Logged successfully!"); // FIXME: bundle msg to property file
+                res = new CommandResult(Pages.MAIN_PAGE);
                 logger.log(Level.INFO, "User: " + login + " logged successfully");
             }
             //FIXME: add error pages
             else {
-                res = new CommandResult(Pages.MAIN_PAGE);
+                res = new CommandResult(Pages.LOGIN_PAGE);
                 request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Logging failed!"); // FIXME: bundle msg to property file
                 logger.log(Level.INFO, "User: " + login + " logging failed");
             }

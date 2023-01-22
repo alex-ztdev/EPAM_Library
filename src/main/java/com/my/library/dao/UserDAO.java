@@ -19,6 +19,6 @@ public interface UserDAO {
 
     void unblock(User user) throws DaoException;
 
-    boolean authenticate(String login, String password) throws DaoException;
+    Optional<User> authenticate(String login, String password) throws DaoException;
 
 }

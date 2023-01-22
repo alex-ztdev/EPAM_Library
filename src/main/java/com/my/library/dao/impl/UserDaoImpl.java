@@ -6,7 +6,6 @@ import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.dao.constants.queries.UserQueries;
-import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 
@@ -72,7 +71,7 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public List<User> findAll() throws DaoException{
+    public List<User> findAll() throws DaoException {
         List<User> userList = new ArrayList<>();
 
         try (var connection = dbm.get();
@@ -90,14 +89,14 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public void save(User user) throws DaoException{
+    public void save(User user) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(UserQueries.INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             int k = 1;
-            statement.setString(k++,user.getLogin());
-            statement.setString(k++,user.getPassword());
-            statement.setLong(k++,user.getRole().ordinal()+1);
-            statement.setLong(k++,user.getStatus().ordinal()+1);
+            statement.setString(k++, user.getLogin());
+            statement.setString(k++, user.getPassword());
+            statement.setLong(k++, user.getRole().ordinal() + 1);
+            statement.setLong(k++, user.getStatus().ordinal() + 1);
             statement.setString(k++, user.getEmail());
             statement.setString(k++, user.getPhoneNumber());
             statement.setString(k++, user.getFirstName());
@@ -118,14 +117,14 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public boolean update(User user) throws DaoException{
+    public boolean update(User user) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(UserQueries.UPDATE_USER)) {
             int k = 1;
-            statement.setString(k++,user.getLogin());
-            statement.setString(k++,user.getPassword());
-            statement.setLong(k++,user.getRole().ordinal()+1);
-            statement.setLong(k++,user.getStatus().ordinal()+1);
+            statement.setString(k++, user.getLogin());
+            statement.setString(k++, user.getPassword());
+            statement.setLong(k++, user.getRole().ordinal() + 1);
+            statement.setLong(k++, user.getStatus().ordinal() + 1);
             statement.setString(k++, user.getEmail());
             statement.setString(k++, user.getPhoneNumber());
             statement.setString(k++, user.getFirstName());
@@ -141,7 +140,7 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public void block(User user) throws DaoException{
+    public void block(User user) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
@@ -154,8 +153,9 @@ public class UserDaoImpl implements UserDAO {
             throw new DaoException(e);
         }
     }
+
     @Override
-    public void unblock(User user) throws DaoException{
+    public void unblock(User user) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
@@ -169,23 +169,23 @@ public class UserDaoImpl implements UserDAO {
     }
 
     @Override
-    public boolean authenticate(String login, String password) throws DaoException {
-        boolean isAuthorized = false;
-
+    public Optional<User> authenticate(String login, String password) throws DaoException {
+        User res = null;
         try (var connection = dbm.get();
-        var statement = connection.prepareStatement(UserQueries.AUTHENTICATE_BY_LOGIN_PASSWORD)) {
+             var statement = connection.prepareStatement(UserQueries.AUTHENTICATE_BY_LOGIN_PASSWORD)) {
             statement.setString(1, login);
+            statement.setString(1, password);
 
             try (var rs = statement.executeQuery()) {
                 if (rs.next()) {
-                    isAuthorized = password.equals(rs.getString(UsersColumns.PASSWORD));
+                    res = buildUser(rs);
                 }
             }
 
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        return isAuthorized;
+        return res == null ? Optional.empty() : Optional.of(res);
     }
 
 
