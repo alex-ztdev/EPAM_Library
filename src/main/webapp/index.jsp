@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-
+  <a href="controller?command=login">Login</a>
 </body>
 </html>
