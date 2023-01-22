@@ -8,7 +8,7 @@ public class DefaultCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        //TODO: implement execute method
+        //TODO: implement default command execute method
         return null;
     }
 }
