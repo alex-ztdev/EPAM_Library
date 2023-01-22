@@ -1,5 +1,8 @@
 function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
+    if(messageElement.textContent === 12){
+
+    }
 
     messageElement.textContent = message;
     messageElement.classList.remove("form__message--success", "form__message--error");
@@ -48,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
 
         }else{
-            setFormMessage(loginForm, "success", "Validation passed!"); //FIXME: remove msg
+            // setFormMessage(loginForm, "success", "Validation passed!"); //FIXME: remove msg
         }
     });
 

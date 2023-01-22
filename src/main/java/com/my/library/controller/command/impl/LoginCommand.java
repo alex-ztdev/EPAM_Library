@@ -4,6 +4,7 @@ import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.UserConstants;
+import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
@@ -26,16 +27,28 @@ public class LoginCommand implements Command {
         UserService userService = UserServiceImpl.getInstance();
         CommandResult res;
         try {
-            if (userService.authenticate(login, password)) {
-                res = new CommandResult(Pages.MAIN_PAGE);
-                logger.log(Level.INFO, "User: " + login + " logged successfully");
-            }
-            //FIXME: add error pages
-            else {
+            var userContainer = userService.authenticate(login, password);
+
+            if (userContainer.isEmpty()) {
                 res = new CommandResult(Pages.LOGIN_PAGE);
-                request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Logging failed!"); // FIXME: bundle msg to property file
+                request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Invalid username/password combination"); // FIXME: bundle msg to property file
                 logger.log(Level.INFO, "User: " + login + " logging failed");
+            } else {
+                var user = userContainer.get();
+
+                if (user.getStatus() == UserStatus.BLOCKED) {
+                    res = new CommandResult(Pages.LOGIN_PAGE);
+                    request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Logging failed!"); // FIXME: bundle msg to property file
+                    logger.log(Level.INFO, "User: " + login + " is blocked!");
+                }
+                //TODO: add error pages
+                else {
+                    res = new CommandResult(Pages.MAIN_PAGE);
+                    logger.log(Level.INFO, "User: " + login + " logged successfully");
+                }
             }
+
+
         } catch (ServiceException e) {
             throw new CommandException("Error while executing LoginCommand.", e);
         }
