@@ -33,13 +33,13 @@ public class LoginCommand implements Command {
 
             if (userContainer.isEmpty()) {
                 res = new CommandResult(Pages.LOGIN_PAGE);
-                request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Invalid username/password combination"); // FIXME: bundle msg to property file
+                request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, UserConstants.CONTENT_FROM_RESOURCES); // FIXME: bundle msg to property file
                 logger.log(Level.INFO, "User: " + login + " logging failed");
             } else {
                 var user = userContainer.get();
                 if (user.getStatus() == UserStatus.BLOCKED) {
                     res = new CommandResult(Pages.LOGIN_PAGE);
-                    request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Logging failed!"); // FIXME: bundle msg to property file
+                    request.setAttribute(UserConstants.USER_IS_BLOCKED, UserConstants.CONTENT_FROM_RESOURCES); // FIXME: bundle msg to property file
                     logger.log(Level.INFO, "User: " + login + " is blocked!");
                 }
                 //TODO: add error pages

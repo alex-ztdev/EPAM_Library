@@ -28,7 +28,8 @@ public class SessionListenerImpl implements HttpSessionListener, HttpSessionAttr
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent sbe) {
-        logger.log(Level.INFO, "Session id:" +sbe.getSession().getId() +" attribute user added: " + "user_id=" +((User)sbe.getSession().getAttribute(UserConstants.USER_IN_SESSION)).getUserId());
+        logger.log(Level.INFO, "Session id:" +sbe.getSession().getId() +" attribute user added: " + "user_id="
+                +((User)sbe.getSession().getAttribute(UserConstants.USER_IN_SESSION)).getUserId());
     }
 
     @Override
@@ -38,6 +39,7 @@ public class SessionListenerImpl implements HttpSessionListener, HttpSessionAttr
 
     @Override
     public void attributeReplaced(HttpSessionBindingEvent sbe) {
-        logger.log(Level.INFO, "Session id:" +sbe.getSession().getId() +" attributeReplaced: " + sbe.getSession().getAttribute(UsersColumns.LOGIN));
+        logger.log(Level.INFO, "Session id:" +sbe.getSession().getId() +" attribute replaced: "+ "user_id:"
+                +((User)sbe.getSession().getAttribute(UserConstants.USER_IN_SESSION)).getUserId() );
     }
 }

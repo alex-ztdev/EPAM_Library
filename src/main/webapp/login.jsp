@@ -9,7 +9,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<fmt:bundle basename="locale">${sessionScope.language}</fmt:bundle>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : 'ua'}" scope="session" />
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="locale"/>
+
+<html>
 <head>
     <meta charset="UTF-8"/>
     <title>Library login</title>
@@ -20,8 +25,15 @@
 <div class="container">
     <form class="form" id="login" method="POST" action="controller">
         <input name="command" type="hidden" value="login">
-        <h1 class="form__title">Login</h1>
-        <div class="form__message form__message--error">${requestScope.invalidLoginPassword}</div>
+        <h1 class="form__title"><fmt:message key="element.login"/></h1>
+        <div class="form__message form__message--error">
+                <c:if test="${not empty requestScope.invalidLoginPassword}">
+                        <fmt:message key="loginForm.msg.loginError"/>
+                </c:if>
+                <c:if test="${not empty requestScope.isBlocked}">
+                    <fmt:message key="loginForm.msg.userIsBlocked"/>
+                </c:if>
+        </div>
         <div class="form__input-group">
             <input id="loginUsername" name="login" type="text" class="form__input" autofocus placeholder="Username">
             <div class="form__input-error-message"></div>
