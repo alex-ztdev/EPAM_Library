@@ -1,5 +1,6 @@
 package com.my.library.utils.builder;
 
+import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.entities.User;
@@ -22,4 +23,11 @@ public class UserBuilder {
         return null;
     }
 
+    public User buildNewUser(HttpServletRequest request) {
+        String login = request.getParameter(UserConstants.LOGIN);
+        String password = request.getParameter(UserConstants.PASSWORD);
+        String email = request.getParameter(UserConstants.EMAIL);
+        String phone = request.getParameter(UserConstants.EMAIL);
+        return null; //TODO: implement buildNewUser
+    }
 }

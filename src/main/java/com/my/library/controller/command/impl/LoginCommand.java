@@ -22,8 +22,8 @@ public class LoginCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        String login = request.getParameter(UsersColumns.LOGIN);
-        String password = request.getParameter(UsersColumns.PASSWORD);
+        String login = request.getParameter(UserConstants.LOGIN);
+        String password = request.getParameter(UserConstants.PASSWORD);
         UserService userService = UserServiceImpl.getInstance();
         HttpSession session = request.getSession();
 

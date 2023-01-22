@@ -74,6 +74,10 @@
             <input type="password" class="form__input" autofocus placeholder="<fmt:message key="registrationForm.confirmPassword"/>">
             <div class="form__input-error-message"></div>
         </div>
+        <div class="form__input-group">
+            <input type="text" class="form__input" autofocus placeholder="<fmt:message key="registrationForm.phone"/>">
+            <div class="form__input-error-message"></div>
+        </div>
         <button class="form__button" type="submit"><fmt:message key="registrationForm.btn.create"/></button>
         <p class="form__text">
             <a class="form__link" href="./" id="linkLogin"><fmt:message key="registrationForm.btn.signIn"/></a>
