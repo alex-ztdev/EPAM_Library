@@ -13,5 +13,5 @@ public interface Service<T> {
 
     void save(T entity) throws ServiceException;
 
-    void update(T entity) throws ServiceException;
+    boolean update(T entity) throws ServiceException;
 }
