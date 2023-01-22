@@ -15,6 +15,6 @@
     <title>Title</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/Library/login.jsp">Login</a>
+<a href="/Library/login.jsp">Login</a>
 </body>
 </html>

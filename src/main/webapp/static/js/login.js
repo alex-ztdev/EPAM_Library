@@ -35,18 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.addEventListener("submit", e => {
         let username = document.getElementById('loginUsername').value;
         let password = document.getElementById('loginPassword').value;
-
+        let locale = document.documentElement.lang;
+        console.log(locale);
         const usernameRegex = /^\w{3,30}$/;
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,30}$/; //TODO: rewrite regex
 
-        if (!username.match(usernameRegex)) {
-            setFormMessage(loginForm, "error", "Invalid username");
+        if (!password.match(passwordRegex)) {
+            setFormMessage(loginForm, "error", locale === 'en' ? en.login_error_msg : ua.login_error_msg);
             e.preventDefault();
-
-        } else if (!password.match(passwordRegex)) {
-            setFormMessage(loginForm, "error", "Invalid username/password combination");
-            e.preventDefault();
-
         }
     });
 
