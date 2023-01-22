@@ -40,21 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,30}$/; //TODO: rewrite regex
 
         if (!username.match(usernameRegex)) {
-            // alert("username validation failed!");
+            setFormMessage(loginForm, "error", "Invalid username");
+            e.preventDefault();
+
+        } else if (!password.match(passwordRegex)) {
             setFormMessage(loginForm, "error", "Invalid username/password combination");
             e.preventDefault();
 
-
-        }else if (!password.match(passwordRegex)) {
-            // alert("password should contain at least 6 characters, one letter and digit");
-            setFormMessage(loginForm, "error", "Password should contain at least 6 characters, one letter and digit");
-            e.preventDefault();
-
-        } else {
-            alert("validations passed");
+        }else{
+            setFormMessage(loginForm, "success", "Validation passed!"); //FIXME: remove msg
         }
-
-        // setFormMessage(loginForm, "error", "Invalid username/password combination");
     });
 
     createAccountForm.addEventListener("submit", e => {
@@ -67,6 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.target.id === "signupUsername" && e.target.value.length > 0 && e.target.value.length < 10) {
                 setInputError(inputElement, "Username must be at least 10 characters in length");
             }
+            // else if (e.target.id = "sig") {
+            // }
         });
 
         inputElement.addEventListener("input", e => {
