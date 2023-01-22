@@ -10,9 +10,13 @@ import com.my.library.services.UserService;
 import com.my.library.services.impl.UserServiceImpl;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class LoginCommand implements Command {
-
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
@@ -22,11 +26,13 @@ public class LoginCommand implements Command {
         CommandResult res;
         try {
             if (userService.authenticate(login, password)) {
-                res = new CommandResult(Pages.LOGIN_PAGE);
+                res = new CommandResult(Pages.PROFILE_PAGE);
+                logger.log(Level.INFO, "User: " + login + " logged successfully");
             }
             //FIXME: add error pages
-            else{
+            else {
                 res = new CommandResult(Pages.MAIN_PAGE);
+                logger.log(Level.INFO, "User: " + login + " logging failed");
             }
         } catch (ServiceException e) {
             throw new CommandException("Error while executing LoginCommand.", e);

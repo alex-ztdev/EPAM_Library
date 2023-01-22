@@ -43,6 +43,7 @@ public class LibraryController extends HttpServlet {
         var action = CommandFactory.createCommand(command);
         try {
             var commandRes = action.execute(request);
+            direct(request, response, commandRes);
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Command exception while processingRequest", e);
             response.sendRedirect(Pages.ERROR_PAGE);
@@ -62,9 +63,9 @@ public class LibraryController extends HttpServlet {
         }
     }
 
-        @Override
-        public void destroy () {
-            ConnectionPool.getInstance().destroyPool();
-            super.destroy();
-        }
+    @Override
+    public void destroy() {
+        ConnectionPool.getInstance().destroyPool();
+        super.destroy();
     }
+}
