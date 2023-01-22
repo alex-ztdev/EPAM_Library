@@ -174,7 +174,7 @@ public class UserDaoImpl implements UserDAO {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(UserQueries.AUTHENTICATE_BY_LOGIN_PASSWORD)) {
             statement.setString(1, login);
-            statement.setString(1, password);
+            statement.setString(2, password);
 
             try (var rs = statement.executeQuery()) {
                 if (rs.next()) {
