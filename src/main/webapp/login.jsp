@@ -6,23 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<fmt:bundle basename="locale">${sessionScope.language}</fmt:bundle>
 <head>
-  <meta charset="UTF-8" />
-  <title>Library login</title>
-  <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
-  />
-
-  <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Muli"
-  />
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/login.css">
-  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/login.js"></script>
-
+    <meta charset="UTF-8"/>
+    <title>Library login</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/login.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/login.js"></script>
 </head>
 <body>
 <div class="container">
@@ -35,10 +27,11 @@
             <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">
-            <input id="loginPassword" name="password" type="password" class="form__input" autofocus placeholder="Password">
+            <input id="loginPassword" name="password" type="password" class="form__input" autofocus
+                   placeholder="Password">
             <div class="form__input-error-message"></div>
         </div>
-        <button class="form__button" type="submit" >Continue</button>
+        <button class="form__button" type="submit">Continue</button>
         <p class="form__text">
             <a href="#" class="form__link">Forgot your password?</a>
         </p>
@@ -65,7 +58,7 @@
             <input type="password" class="form__input" autofocus placeholder="Confirm password">
             <div class="form__input-error-message"></div>
         </div>
-        <button class="form__button" type="submit" >Continue</button>
+        <button class="form__button" type="submit">Continue</button>
         <p class="form__text">
             <a class="form__link" href="./" id="linkLogin">Already have an account? Sign in</a>
         </p>
