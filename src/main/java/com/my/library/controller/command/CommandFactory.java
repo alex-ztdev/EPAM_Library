@@ -11,7 +11,7 @@ public class CommandFactory {
         this.serviceFactory = new ServiceFactory();
     }
 
-    public Command createCommand(String command) {
+    public static Command createCommand(String command) {
         Command res;
         switch (command) {
             case CommandTypes.LOGIN -> res = new LoginCommand();
