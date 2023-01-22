@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
@@ -27,11 +28,13 @@ public class LoginCommand implements Command {
         try {
             if (userService.authenticate(login, password)) {
                 res = new CommandResult(Pages.PROFILE_PAGE);
+                request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Logged successfully!"); // FIXME: bundle msg to property file
                 logger.log(Level.INFO, "User: " + login + " logged successfully");
             }
             //FIXME: add error pages
             else {
                 res = new CommandResult(Pages.MAIN_PAGE);
+                request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Logging failed!"); // FIXME: bundle msg to property file
                 logger.log(Level.INFO, "User: " + login + " logging failed");
             }
         } catch (ServiceException e) {
