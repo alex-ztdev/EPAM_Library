@@ -2,6 +2,7 @@ package com.my.library.controller.listener;
 
 import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.dao.constants.columns.UsersColumns;
+import com.my.library.entities.User;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpSessionAttributeListener;
 import jakarta.servlet.http.HttpSessionBindingEvent;
@@ -18,7 +19,6 @@ public class SessionListenerImpl implements HttpSessionListener, HttpSessionAttr
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         logger.log(Level.INFO, "Session created: " + se.getSession().getId());
-//        + se.getSession().getAttribute(UsersColumns.LOGIN)
     }
 
     @Override
@@ -28,7 +28,7 @@ public class SessionListenerImpl implements HttpSessionListener, HttpSessionAttr
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent sbe) {
-        logger.log(Level.INFO, "Session id:" +sbe.getSession().getId() +" attributeAdded: " + sbe.getSession().getAttribute(UserConstants.USER_IN_SESSION));
+        logger.log(Level.INFO, "Session id:" +sbe.getSession().getId() +" attribute user added: " + "user_id=" +((User)sbe.getSession().getAttribute(UserConstants.USER_IN_SESSION)).getUserId());
     }
 
     @Override
