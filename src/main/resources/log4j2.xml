@@ -9,7 +9,7 @@
         </Console>
         <RollingFile
                 name="FileLog"
-                fileName="${LOG_DIR}/application.log"
+                fileName="${LOG_DIR}/library.log"
                 filePattern="${LOG_DIR}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log"
                 ignoreExceptions="false"
         >

@@ -32,28 +32,8 @@ public class LibraryController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String command = request.getParameter(COMMAND_NAME);
-
-//        try (CommandFactory factory = new CommandFactory()) {
-//            Command action = factory.create(command);
-//            CommandResult commandResult = action.execute(request, response);
-//            dispatch(request, response, commandResult);
-//        } catch (ServiceException e) {
-//            logger.error("Exception in Library Controller", e);
-//            response.sendRedirect(PageLocation.ERROR_PAGE);
-//        }
-        UserService userService = UserServiceImpl.getInstance();
-
-        try {
-            var res = userService.authenticate(request.getParameter(UsersColumns.LOGIN), request.getParameter(UsersColumns.PASSWORD));
-            
-            System.out.println("Authentication: "  +(res ? "Successful!" : "Failed!"));
-            
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        }
-
+        
     }
 
     @Override

@@ -26,6 +26,7 @@
 <body>
 <div class="container">
     <form class="form" id="login" method="POST" action="controller">
+        <input name="command" type="hidden" value="login">
         <h1 class="form__title">Login</h1>
         <div class="form__message form__message--error"></div>
         <div class="form__input-group">
