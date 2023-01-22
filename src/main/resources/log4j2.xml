@@ -12,6 +12,7 @@
                 fileName="${LOG_DIR}/library.log"
                 filePattern="${LOG_DIR}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log"
                 ignoreExceptions="false"
+                append="true"
         >
             <PatternLayout pattern="[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} %c{1}:%L - %m%n"/>
             <Policies>

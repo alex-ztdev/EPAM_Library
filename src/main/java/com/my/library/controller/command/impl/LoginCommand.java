@@ -2,7 +2,6 @@ package com.my.library.controller.command.impl;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
-import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
@@ -12,6 +11,7 @@ import com.my.library.services.UserService;
 import com.my.library.services.impl.UserServiceImpl;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +25,8 @@ public class LoginCommand implements Command {
         String login = request.getParameter(UsersColumns.LOGIN);
         String password = request.getParameter(UsersColumns.PASSWORD);
         UserService userService = UserServiceImpl.getInstance();
+        HttpSession session = request.getSession();
+
         CommandResult res;
         try {
             var userContainer = userService.authenticate(login, password);
@@ -35,7 +37,6 @@ public class LoginCommand implements Command {
                 logger.log(Level.INFO, "User: " + login + " logging failed");
             } else {
                 var user = userContainer.get();
-
                 if (user.getStatus() == UserStatus.BLOCKED) {
                     res = new CommandResult(Pages.LOGIN_PAGE);
                     request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, "Logging failed!"); // FIXME: bundle msg to property file
@@ -44,11 +45,10 @@ public class LoginCommand implements Command {
                 //TODO: add error pages
                 else {
                     res = new CommandResult(Pages.MAIN_PAGE);
+                    session.setAttribute(UserConstants.USER_IN_SESSION, user);
                     logger.log(Level.INFO, "User: " + login + " logged successfully");
                 }
             }
-
-
         } catch (ServiceException e) {
             throw new CommandException("Error while executing LoginCommand.", e);
         }
