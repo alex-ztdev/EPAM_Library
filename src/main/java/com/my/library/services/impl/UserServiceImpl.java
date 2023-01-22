@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.find(id);
         } catch (DaoException e) {
-            throw new ServiceException("Error while searching user by id:" + e.getMessage(), e);
+            throw new ServiceException("Error while searching user by id", e);
         }
     }
 
@@ -50,13 +50,17 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.findAll();
         } catch (DaoException e) {
-            throw new ServiceException("Error while searching all users.", e);
+            throw new ServiceException("Error while searching all users in UserService", e);
         }
     }
 
     @Override
     public void save(User user) throws ServiceException {
-
+        try {
+            userDAO.save(user);
+        } catch (DaoException e) {
+            throw new ServiceException("Error in save method in UserService", e);
+        }
     }
 
     @Override
@@ -75,11 +79,6 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error in authenticate method in UserService", e);
         }
     }
-
-//    public static void main(String[] args) {
-//        String sha256hex = DigestUtils.sha512Hex("admin");
-//        System.out.println(sha256hex);
-//    }
 
     private String encryptPassword(String password) {
         return DigestUtils.sha512Hex(password);
