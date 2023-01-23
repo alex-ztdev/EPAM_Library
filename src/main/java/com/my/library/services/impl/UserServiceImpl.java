@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) throws ServiceException {
         try {
+            user.setPassword(encryptPassword(user.getPassword()));
             userDAO.save(user);
         } catch (DaoException e) {
             throw new ServiceException("Error in save method in UserService", e);

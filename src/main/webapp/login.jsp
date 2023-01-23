@@ -61,7 +61,11 @@
         <div class="form__message form__message--error"></div>
         <div class="form__input-group">
             <input type="text" id="signupUsername" name="regLogin" class="form__input" required autofocus placeholder="<fmt:message key="commonForm.username"/>">
-            <div class="form__input-error-message"></div>
+            <div class="form__input-error-message">
+                <c:if test="${not empty requestScope.validationList.regInvalidLogin}">
+                    <fmt:message key="registrationForm.registration"/>
+                </c:if>
+            </div>
         </div>
         <div class="form__input-group">
             <input type="text"  id="signupEmail" class="form__input" name="regEmail" required autofocus placeholder="<fmt:message key="registrationForm.email"/>">

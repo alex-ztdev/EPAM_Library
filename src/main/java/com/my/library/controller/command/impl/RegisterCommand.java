@@ -43,10 +43,10 @@ public class RegisterCommand implements Command {
 
                 logger.log(Level.DEBUG, "User validator return: " + validation);
 
-
                 if (validation.isEmpty()) {
                     userService.save(user);
-                    res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
+                    request.setAttribute(UserConstants.REG_FORM, "");
+                    res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
                 } else {
                     request.setAttribute(UserConstants.VALIDATION_LIST, validation);
                     request.setAttribute(UserConstants.REG_FORM, UserConstants.REG_FORM);
@@ -55,7 +55,7 @@ public class RegisterCommand implements Command {
             }
             else {
                 request.setAttribute(UserConstants.REG_FORM, UserConstants.REG_FORM);
-                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT); //TODO: redirect to forward&
+                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT); //TODO: redirect to forward
             }
 
         } catch (ServiceException e) {

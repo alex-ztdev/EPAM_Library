@@ -226,6 +226,7 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public Optional<User> findByPhone(String phone) throws DaoException {
+
         User user = null;
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(UserQueries.FIND_BY_PHONE)) {

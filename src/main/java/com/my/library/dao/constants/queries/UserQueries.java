@@ -39,11 +39,10 @@ public interface UserQueries {
             WHERE id = ?
             """;
 
-
     String AUTHENTICATE_BY_LOGIN_PASSWORD = FIND_ALL_USERS +"WHERE login=? AND password=?";
     String FIND_BY_LOGIN = FIND_ALL_USERS + "WHERE login=?";
     String FIND_BY_EMAIL = FIND_ALL_USERS + "WHERE email=?";
-    String FIND_BY_PHONE = FIND_ALL_USERS + "WHERE phone=?";
+    String FIND_BY_PHONE = FIND_ALL_USERS + "WHERE phone_number=?";
 
 
 }

@@ -48,8 +48,8 @@ public class LibraryController extends HttpServlet {
 
     private void direct(HttpServletRequest request, HttpServletResponse response, CommandResult commandResult) throws ServletException, IOException {
         switch (commandResult.getAction()) {
-            case FORWARD -> request.getRequestDispatcher(commandResult.getPage()).forward(request, response);
-            case REDIRECT -> response.sendRedirect(commandResult.getPage());
+            case FORWARD -> getServletContext().getRequestDispatcher(commandResult.getPage()).forward(request, response);
+            case REDIRECT -> response.sendRedirect(request.getContextPath() + commandResult.getPage());
             default -> response.sendRedirect(RedirectToPage.LOGIN_PAGE);
         }
     }

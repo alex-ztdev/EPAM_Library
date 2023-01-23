@@ -37,9 +37,9 @@ public class UserBuilder {
         String password = request.getParameter(UserConstants.REG_PASSWORD);
         String confPassword = request.getParameter(UserConstants.REG_CONF_PASSWORD);
 
-        if (login == null || email == null || firstName == null || secondName == null || password == null || confPassword == null) {
+        if (login.isEmpty() || email.isEmpty() || firstName.isEmpty() || secondName.isEmpty() || password.isEmpty() || confPassword.isEmpty() || !password.equals(confPassword)) {
             return Optional.empty();
         }
-        return Optional.of(new User(login, password, UserRole.USER, UserStatus.NORMAL, email, phoneNumber, firstName, secondName));
+        return Optional.of(new User(login, password, UserRole.USER, UserStatus.NORMAL, email, phoneNumber.isEmpty() ? null : phoneNumber, firstName, secondName));
     }
 }
