@@ -190,7 +190,7 @@ public class UserDaoImpl implements UserDAO {
     public Optional<User> findByLogin(String login) throws DaoException {
         User user = null;
         try (var connection = dbm.get();
-        var statement = connection.prepareStatement(UserQueries.FIND_BY_LOGIN)) {
+             var statement = connection.prepareStatement(UserQueries.FIND_BY_LOGIN)) {
 
             statement.setString(1, login);
 
@@ -226,7 +226,21 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public Optional<User> findByPhone(String phone) throws DaoException {
-        return Optional.empty();
+        User user = null;
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(UserQueries.FIND_BY_PHONE)) {
+
+            statement.setString(1, phone);
+
+            try (var rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    user = buildUser(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return user == null ? Optional.empty() : Optional.of(user);
     }
 
 //    String msg = "User with such ";
