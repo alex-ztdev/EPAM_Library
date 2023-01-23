@@ -5,6 +5,8 @@
 <fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale"/>
 
+
+
 <html lang="${sessionScope.language}">
 <html>
 <head>
@@ -14,40 +16,8 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <div class="left-header">
-            <a class="active" href="#home">Home</a>
-            <a href="#books">Books</a>
-            <a href="#authors">Authors</a>
-            <a href="#orders">Orders</a>
-            <a href="#librarians">Librarians</a>
-            <a href="#users">Users</a>
-        </div>
+    <jsp:include page="/pages/header.jsp"/>
 
-        <div class="right-header">
-            <div class="search-container">
-                <form action="#search_action">
-                    <input type="text" placeholder="Search.." name="search" />
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
-
-            <div class="languages">
-                <div class="switch">
-                    <input
-                            id="language-toggle"
-                            class="check-toggle check-toggle-round-flat"
-                            type="checkbox"
-                    />
-                    <label for="language-toggle"></label>
-                    <span class="on">UA</span>
-                    <span class="off">EN</span>
-                </div>
-            </div>
-            <a href="#profile">Profile</a>
-            <a href="#logout">Logout</a>
-        </div>
-    </div>
 
     <div class="main-content"></div>
 
