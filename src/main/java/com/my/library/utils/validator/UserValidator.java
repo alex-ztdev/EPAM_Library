@@ -97,4 +97,16 @@ public class UserValidator {
         if (name == null || name.isEmpty()) return false;
         return Pattern.matches(UserRegex.NAME.getRegex(), name);
     }
+
+    public static void setParameters(HttpServletRequest request, List<String> validationList) {
+        if (validationList.contains(UserConstants.USER_EMAIL_ALREADY_EXISTS)) {
+            request.setAttribute(UserConstants.USER_EMAIL_ALREADY_EXISTS, UserConstants.USER_EMAIL_ALREADY_EXISTS);
+        }
+        if (validationList.contains(UserConstants.USER_LOGIN_ALREADY_EXISTS)) {
+            request.setAttribute(UserConstants.USER_LOGIN_ALREADY_EXISTS, UserConstants.USER_LOGIN_ALREADY_EXISTS);
+        }
+        if (validationList.contains(UserConstants.USER_PHONE_ALREADY_EXISTS)) {
+            request.setAttribute(UserConstants.USER_PHONE_ALREADY_EXISTS, UserConstants.USER_PHONE_ALREADY_EXISTS);
+        }
+    }
 }

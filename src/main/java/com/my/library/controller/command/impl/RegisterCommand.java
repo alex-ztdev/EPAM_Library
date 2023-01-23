@@ -22,6 +22,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+import static com.my.library.utils.validator.UserValidator.setParameters;
+
 public class RegisterCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -49,6 +51,7 @@ public class RegisterCommand implements Command {
                     res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
                 } else {
                     request.setAttribute(UserConstants.VALIDATION_LIST, validation);
+                    setParameters(request, validation);
                     request.setAttribute(UserConstants.REG_FORM, UserConstants.REG_FORM);
                     res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
                 }

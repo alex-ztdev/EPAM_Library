@@ -27,7 +27,6 @@ public class UserBuilder {
     }
 
     public Optional<User> buildNewUser(HttpServletRequest request) {
-        //TODO: change forms
         String login = request.getParameter(UserConstants.REG_LOGIN);
         String email = request.getParameter(UserConstants.REG_EMAIL);
         String phoneNumber = request.getParameter(UserConstants.REG_PHONE);
