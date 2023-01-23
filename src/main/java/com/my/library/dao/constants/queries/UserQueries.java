@@ -10,15 +10,14 @@ public interface UserQueries {
                 email,
                 phone_number,
                 first_name,
-                second_name,
-                birth_date
+                second_name
             FROM Users
             """;
     String FIND_USER_BY_ID = FIND_ALL_USERS + "WHERE id=?";
     String INSERT_USER = """
             INSERT INTO Users
-            (login, password, role_id, status_id, email, phone_number, first_name, second_name, birth_date)
-            VALUES(?,?,?,?,?,?,?,?,?)
+            (login, password, role_id, status_id, email, phone_number, first_name, second_name)
+            VALUES(?,?,?,?,?,?,?,?)
             """;
 
     String UPDATE_USER = """
@@ -30,8 +29,7 @@ public interface UserQueries {
                 email = ?,
                 phone_number = ?,
                 first_name = ?,
-                second_name = ?,
-                birth_date = ?
+                second_name = ?
             WHERE id = ?
             """;
     String CHANGE_USER_STATUS_USER = """

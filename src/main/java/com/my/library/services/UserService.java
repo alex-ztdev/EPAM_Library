@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface UserService extends Service<User> {
     Optional<User> authenticate(String login, String password) throws ServiceException;
 
+
 }

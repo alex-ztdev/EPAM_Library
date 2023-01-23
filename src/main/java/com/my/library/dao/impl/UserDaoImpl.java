@@ -2,6 +2,7 @@ package com.my.library.dao.impl;
 
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.UserDAO;
+import com.my.library.dao.constants.Constraints;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
@@ -65,8 +66,7 @@ public class UserDaoImpl implements UserDAO {
                 resultSet.getString(UsersColumns.EMAIL),
                 resultSet.getString(UsersColumns.PHONE_NUMBER),
                 resultSet.getString(UsersColumns.FIRST_NAME),
-                resultSet.getString(UsersColumns.SECOND_NAME),
-                resultSet.getDate(UsersColumns.BIRTH_DATE).toLocalDate()
+                resultSet.getString(UsersColumns.SECOND_NAME)
         );
     }
 
@@ -100,9 +100,7 @@ public class UserDaoImpl implements UserDAO {
             statement.setString(k++, user.getEmail());
             statement.setString(k++, user.getPhoneNumber());
             statement.setString(k++, user.getFirstName());
-            statement.setString(k++, user.getSecondName());
-            statement.setDate(k, Date.valueOf(user.getBirthDate()));
-
+            statement.setString(k, user.getSecondName());
 
             statement.executeUpdate();
 
@@ -129,7 +127,6 @@ public class UserDaoImpl implements UserDAO {
             statement.setString(k++, user.getPhoneNumber());
             statement.setString(k++, user.getFirstName());
             statement.setString(k++, user.getSecondName());
-            statement.setDate(k++, Date.valueOf(user.getBirthDate()));
             statement.setLong(k, user.getUserId());
 
             var res = statement.executeUpdate();
@@ -187,6 +184,35 @@ public class UserDaoImpl implements UserDAO {
         }
         return res == null ? Optional.empty() : Optional.of(res);
     }
+
+    @Override
+    public Optional<User> findByLogin(String login) throws DaoException {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) throws DaoException {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findByPhone(String phone) throws DaoException {
+        return Optional.empty();
+    }
+
+//    String msg = "User with such ";
+//    String defaultMsg = msg;
+//
+//            if (e.getMessage().contains(Constraints.UQ_USER_LOGIN)) {
+//        msg += "login ";
+//    }
+//            if (e.getMessage().contains(Constraints.UQ_USER_EMAIL)) {
+//        msg += "email ";
+//    }
+//            if (e.getMessage().contains(Constraints.UQ_USER_PHONE_NUMBER)) {
+//        msg += "phone number ";
+//    }
+//    String s = defaultMsg.equals(msg) ? "Error in UserDao while saving user" : msg + "already exists";
 
 
 }

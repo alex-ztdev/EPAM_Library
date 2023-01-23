@@ -15,12 +15,11 @@ public class User {
     private String phoneNumber;
     private String firstName;
     private String secondName;
-    private LocalDate birthDate;
 
     public User() {
     }
 
-    public User(String login, String password, UserRole role, UserStatus status, String email, String phoneNumber, String firstName, String secondName, LocalDate birthDate) {
+    public User(String login, String password, UserRole role, UserStatus status, String email, String phoneNumber, String firstName, String secondName) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -29,10 +28,9 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.birthDate = birthDate;
     }
 
-    public User(Long userId, String login, String password, UserRole role, UserStatus status, String email, String phoneNumber, String firstName, String secondName, LocalDate birthDate) {
+    public User(Long userId, String login, String password, UserRole role, UserStatus status, String email, String phoneNumber, String firstName, String secondName) {
         this.userId = userId;
         this.login = login;
         this.password = password;
@@ -42,7 +40,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.birthDate = birthDate;
+
     }
 
     public Long getUserId() {
@@ -117,15 +115,6 @@ public class User {
         this.secondName = secondName;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,10 +128,9 @@ public class User {
         if (role != user.role) return false;
         if (status != user.status) return false;
         if (!email.equals(user.email)) return false;
-        if (!phoneNumber.equals(user.phoneNumber)) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
         if (!firstName.equals(user.firstName)) return false;
-        if (!secondName.equals(user.secondName)) return false;
-        return birthDate.equals(user.birthDate);
+        return secondName.equals(user.secondName);
     }
 
     @Override
@@ -153,26 +141,9 @@ public class User {
         result = 31 * result + role.hashCode();
         result = 31 * result + status.hashCode();
         result = 31 * result + email.hashCode();
-        result = 31 * result + phoneNumber.hashCode();
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + firstName.hashCode();
         result = 31 * result + secondName.hashCode();
-        result = 31 * result + birthDate.hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", status=" + status +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", birthDate=" + birthDate +
-                '}';
     }
 }

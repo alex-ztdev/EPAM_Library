@@ -88,4 +88,7 @@ public class UserServiceImpl implements UserService {
     private String encryptPassword(String password) {
         return DigestUtils.sha512Hex(password);
     }
+
+
+
 }
