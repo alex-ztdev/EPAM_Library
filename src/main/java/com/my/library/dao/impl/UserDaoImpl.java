@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public class UserDaoImpl implements UserDAO {
     private static final ConnectionPool dbm = ConnectionPool.getInstance();
@@ -187,7 +188,21 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public Optional<User> findByLogin(String login) throws DaoException {
-        return Optional.empty();
+        User user = null;
+        try (var connection = dbm.get();
+        var statement = connection.prepareStatement(UserQueries.FIND_BY_LOGIN)) {
+
+            statement.setString(1, login);
+
+            try (var rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    user = buildUser(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return user == null ? Optional.empty() : Optional.of(user);
     }
 
     @Override

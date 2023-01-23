@@ -2,7 +2,8 @@ package com.my.library.dao.constants.queries;
 
 public interface UserQueries {
     String FIND_ALL_USERS = """
-            SELECT id,
+            SELECT
+                id,
                 login,
                 password,
                 role_id,
@@ -40,4 +41,9 @@ public interface UserQueries {
 
 
     String AUTHENTICATE_BY_LOGIN_PASSWORD = FIND_ALL_USERS +"WHERE login=? AND password=?";
+    String FIND_BY_LOGIN = FIND_ALL_USERS + "WHERE login=?";
+    String FIND_BY_EMAIL = FIND_ALL_USERS + "WHERE email=?";
+    String FIND_BY_PHONE = FIND_ALL_USERS + "WHERE phone=?";
+
+
 }
