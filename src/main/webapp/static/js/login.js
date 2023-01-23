@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.querySelector("#login");
     const createAccountForm = document.querySelector("#createAccount");
 
+
     document.querySelector("#linkCreateAccount").addEventListener("click", e => {
         e.preventDefault();
         loginForm.classList.add("form--hidden");
@@ -40,14 +41,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const usernameRegex = /^\w{3,30}$/;
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,30}$/; //TODO: rewrite regex
 
-        if (!password.match(passwordRegex)) {
+        if (!password.match(passwordRegex) || !username.match(usernameRegex)) {
             setFormMessage(loginForm, "error", locale === 'en' ? en.login_error_msg : ua.login_error_msg);
             e.preventDefault();
         }
     });
 
     createAccountForm.addEventListener("submit", e => {
-        e.preventDefault();
+
 
     });
 
@@ -55,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inputElement.addEventListener("blur", e => {
             if (e.target.id === "signupUsername" && e.target.value.length > 0 && e.target.value.length < 10) {
                 setInputError(inputElement, "Username must be at least 10 characters in length");
+                e.preventDefault();
             }
             // else if (e.target.id = "sig") {
             // }
@@ -64,7 +66,19 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInputError(inputElement);
         });
     });
+    const flag = document.querySelector("#registration_flag");
+    if (flag.textContent === 'regForm') {
+        document.querySelector("#linkCreateAccount").click();
+        // console.log(document.querySelector("#linkCreateAccount"))
+    }
 });
+
+
+
+
+// if (currFormContent === 'regForm') {
+//     document.querySelector("#linkCreateAccount").click();
+// }
 
 // function loginFormValidation() {
 //     let username = document.getElementById('loginUsername').value;

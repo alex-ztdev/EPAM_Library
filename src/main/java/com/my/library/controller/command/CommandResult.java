@@ -30,4 +30,12 @@ public class CommandResult {
     public void setAction(CommandDirection action) {
         this.action = action;
     }
+
+    @Override
+    public String toString() {
+        return "CommandResult{" +
+                "page='" + page + '\'' +
+                ", action=" + action +
+                '}';
+    }
 }

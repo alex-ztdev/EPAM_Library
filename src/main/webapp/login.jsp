@@ -53,7 +53,8 @@
             <a class="form__link" href="./" id="linkCreateAccount"><fmt:message key="loginForm.btn.createAccount"/></a>
         </p>
     </form>
-    <form class="form form--hidden" id="createAccount">
+    <form class="form form--hidden" id="createAccount"  action="controller" method="post">
+        <input name="command" type="hidden" value="registration">
         <h1 class="form__title">
             <fmt:message key="registrationForm.registration"/>
         </h1>
@@ -83,6 +84,7 @@
             <a class="form__link" href="./" id="linkLogin"><fmt:message key="registrationForm.btn.signIn"/></a>
         </p>
     </form>
+    <div id="registration_flag" hidden>${requestScope.regForm}</div>
 </div>
 </body>
 </html>

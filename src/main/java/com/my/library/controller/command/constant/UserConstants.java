@@ -8,6 +8,7 @@ public interface UserConstants {
     String REG_INVALID_EMAIL = "regInvalidEmail";
     String REG_INVALID_PHONE = "regInvalidPhone";
     String REG_INVALID_NAME = "regInvalidName";
+    String REG_FORM = "regForm";
     String USER_IS_BLOCKED = "isBlocked";
     String USER_IN_SESSION = "user";
 
