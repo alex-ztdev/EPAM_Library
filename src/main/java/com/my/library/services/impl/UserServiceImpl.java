@@ -12,7 +12,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +80,7 @@ public class UserServiceImpl implements UserService {
             return Optional.empty();
         }
         try {
-           return userDAO.authenticate(login, encryptPassword(password));
+            return userDAO.authenticate(login, encryptPassword(password));
         } catch (DaoException e) {
             throw new ServiceException("Error in authenticate method in UserService", e);
         }
@@ -89,7 +88,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<String> canBeRegistered(User user) throws ServiceException {
-        List<String> exceptionsList = new ArrayList<>();
+        List<String> exceptionsList = UserValidator.validateUserParameters(user);
+        if (!exceptionsList.isEmpty()) {
+            return exceptionsList;
+        }
         try {
             if (userDAO.findByEmail(user.getEmail()).isPresent()) {
                 exceptionsList.add(UserConstants.USER_EMAIL_ALREADY_EXISTS);
@@ -109,7 +111,4 @@ public class UserServiceImpl implements UserService {
     private String encryptPassword(String password) {
         return DigestUtils.sha512Hex(password);
     }
-
-
-
 }

@@ -1,6 +1,8 @@
 package com.my.library.utils.validator;
 
+import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.dao.constants.columns.UsersColumns;
+import com.my.library.entities.User;
 import com.my.library.utils.validator.constants.UserRegex;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -43,19 +45,55 @@ public class UserValidator {
         return validationList;
     }
 
+    public static List<String> validateUserParameters(User user) {
+        List<String> validationList = new ArrayList<>();
+
+        String login = user.getLogin();
+        String email = user.getEmail();
+        String phoneNumber = user.getPhoneNumber();
+        String firstName = user.getFirstName();
+        String secondName = user.getSecondName();
+        String password = user.getPassword();
+
+        if (!isValidLogin(login) ) {
+            validationList.add(UserConstants.REG_INVALID_LOGIN);
+        }if (!isValidLogin(password) ) {
+            validationList.add(UserConstants.REG_INVALID_PASSWORD);
+        }
+        if (!isValidEmail(email)) {
+            validationList.add(UserConstants.REG_INVALID_EMAIL);
+        }
+        if (!isValidPhone(phoneNumber)) {
+            validationList.add(UserConstants.REG_INVALID_PHONE);
+        }
+        if (!isValidName(firstName) || !isValidName(secondName)) { //FIXME: split into first and sec
+            validationList.add(UserConstants.REG_INVALID_NAME);
+        }
+        return validationList;
+    }
+
+    private static boolean isValidPhone(String phone) {
+        if (phone == null) return false;
+        return Pattern.matches(UserRegex.PHONE.getRegex(), phone);
+    }
+
     public static boolean isValidLogin(String login) {
+        if(login == null) return false;
         return Pattern.matches(UserRegex.LOGIN.getRegex(), login);
     }
 
     public static boolean isValidPassword(String password) {
+        if(password == null) return false;
         return Pattern.matches(UserRegex.PASSWORD.getRegex(), password);
     }
 
     public static boolean isValidEmail(String email) {
+        if(email == null) return false;
         return Pattern.matches(UserRegex.EMAIL.getRegex(), email);
     }
 
     public static boolean isValidName(String name) {
+        if(name == null) return false;
         return Pattern.matches(UserRegex.NAME.getRegex(), name);
     }
 }

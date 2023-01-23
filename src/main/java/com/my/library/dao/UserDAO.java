@@ -22,7 +22,9 @@ public interface UserDAO {
     Optional<User> authenticate(String login, String password) throws DaoException;
 
     Optional<User> findByLogin(String login) throws DaoException;
+
     Optional<User> findByEmail(String email) throws DaoException;
+
     Optional<User> findByPhone(String phone) throws DaoException;
 
 
