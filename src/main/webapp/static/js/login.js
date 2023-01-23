@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 setInputError(inputElement, locale === 'en' ? en.registration_password_validation_error_msg : ua.registration_password_validation_error_msg);
                 e.preventDefault();
             }
-
             if (e.target.id === "firstName" && !e.target.value.match(nameRegex)) {
                 console.log("first name ERROR");
                 setInputError(inputElement, locale === 'en' ? en.registration_invalid_first_name_error_msg : ua.registration_invalid_first_name_error_msg);
