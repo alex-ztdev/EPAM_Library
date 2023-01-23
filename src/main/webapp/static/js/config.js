@@ -9,6 +9,6 @@ const en = {
     registration_invalid_second_name_error_msg: 'Second name must contain from 1 to 30 latin letters or special symbols like ,.\'-',
 }
 
-const ua={
+const ua = {
     login_error_msg: 'Неправильний логін/пароль'
 }
