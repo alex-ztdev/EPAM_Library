@@ -5,6 +5,8 @@ const nameRegex = /^[a-zA-Z ,.'\-]{1,30}$/;
 const phoneRegex = /^\d{12}$/;
 
 
+// TODO: add form save to localStorage
+
 function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
 
