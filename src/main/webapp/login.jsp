@@ -58,25 +58,27 @@
         <h1 class="form__title">
             <fmt:message key="registrationForm.registration"/>
         </h1>
+
+        <div class="form__input-error-message"></div>
         <div class="form__message form__message--error"></div>
         <div class="form__input-group">
-            <input type="text" id="signupUsername" name="login" class="form__input" autofocus placeholder="<fmt:message key="commonForm.username"/>">
+            <input type="text" id="signupUsername" name="regLogin" class="form__input" required autofocus placeholder="<fmt:message key="commonForm.username"/>">
             <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">
-            <input type="text" class="form__input" name="email" autofocus placeholder="<fmt:message key="registrationForm.email"/>">
+            <input type="text"  id="signupEmail" class="form__input" name="regEmail" required autofocus placeholder="<fmt:message key="registrationForm.email"/>">
             <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">
-            <input type="password" class="form__input" name="password" autofocus placeholder="<fmt:message key="commonForm.password"/>">
+            <input type="password" id="signupPassword" class="form__input" name="regPassword"  required autofocus placeholder="<fmt:message key="commonForm.password"/>">
             <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">
-            <input type="password" class="form__input" autofocus placeholder="<fmt:message key="registrationForm.confirmPassword"/>">
+            <input type="password" id="signupConfirmPassword" class="form__input" name="regConfirmPassword" required autofocus placeholder="<fmt:message key="registrationForm.confirmPassword"/>">
             <div class="form__input-error-message"></div>
         </div>
         <div class="form__input-group">
-            <input type="text" class="form__input" autofocus placeholder="<fmt:message key="registrationForm.phone"/>">
+            <input type="text" id="signupPhone" class="form__input" name="regPhone" autofocus placeholder="<fmt:message key="registrationForm.phone"/>">
             <div class="form__input-error-message"></div>
         </div>
         <button class="form__button" type="submit"><fmt:message key="registrationForm.btn.create"/></button>

@@ -1,3 +1,10 @@
+const usernameRegex = /^\w{3,30}$/;
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,30}$/;
+const emailRegex = /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
+const nameRegex = /^[a-z ,.'\-]{1,30}$/;
+const phoneRegex = /^[\d]{12}$/;
+
+
 function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
 
@@ -37,9 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let username = document.getElementById('loginUsername').value;
         let password = document.getElementById('loginPassword').value;
         let locale = document.documentElement.lang;
-        console.log(locale);
-        const usernameRegex = /^\w{3,30}$/;
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,30}$/; //TODO: rewrite regex
+
 
         if (!password.match(passwordRegex) || !username.match(usernameRegex)) {
             setFormMessage(loginForm, "error", locale === 'en' ? en.login_error_msg : ua.login_error_msg);
@@ -49,17 +54,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     createAccountForm.addEventListener("submit", e => {
 
-
     });
 
     document.querySelectorAll(".form__input").forEach(inputElement => {
         inputElement.addEventListener("blur", e => {
-            if (e.target.id === "signupUsername" && e.target.value.length > 0 && e.target.value.length < 10) {
-                setInputError(inputElement, "Username must be at least 10 characters in length");
+            let locale = document.documentElement.lang;
+
+            if (e.target.id === "signupUsername" && !e.target.value.match(usernameRegex)) {
+                console.log("signupUsername ERROR");
+                setInputError(inputElement, locale === 'en' ? en.registration_login_error_msg : ua.registration_login_error_msg);
                 e.preventDefault();
             }
-            // else if (e.target.id = "sig") {
-            // }
+            if (e.target.id === "signupEmail" && !e.target.value.match(emailRegex)) {
+                console.log("signupEmail ERROR");
+                setInputError(inputElement, locale === 'en' ? en.registration_email_error_msg : ua.registration_email_error_msg);
+                e.preventDefault();
+            }
+            if (e.target.id === "signupPhone" && e.target.value && !e.target.value.match(phoneRegex)) {
+                console.log("signupPhone ERROR");
+                setInputError(inputElement, locale === 'en' ? en.registration_phone_error_msg : ua.registration_phone_error_msg);
+                e.preventDefault();
+            }
+            if (e.target.id === "signupPassword" && !e.target.value.match(passwordRegex)) {
+                console.log("signupPassword ERROR");
+                setInputError(inputElement, locale === 'en' ? en.registration_password_validation_error_msg : ua.registration_password_validation_error_msg);
+                e.preventDefault();
+            }
+
+
+            if (e.target.id === "signupConfirmPassword") {
+                if(document.querySelector('#signupPassword').value !== document.querySelector('#signupConfirmPassword').value) {
+                    setInputError(inputElement, locale === 'en' ? en.registration_passwords_match_error_msg : ua.registration_passwords_match_error_msg);
+                    e.preventDefault();
+                }
+            }
         });
 
         inputElement.addEventListener("input", e => {
@@ -69,31 +97,5 @@ document.addEventListener("DOMContentLoaded", () => {
     const flag = document.querySelector("#registration_flag");
     if (flag.textContent === 'regForm') {
         document.querySelector("#linkCreateAccount").click();
-        // console.log(document.querySelector("#linkCreateAccount"))
     }
 });
-
-
-
-
-// if (currFormContent === 'regForm') {
-//     document.querySelector("#linkCreateAccount").click();
-// }
-
-// function loginFormValidation() {
-//     let username = document.getElementById('loginUsername').value;
-//     let password = document.getElementById('loginPassword').value;
-//
-//     const usernameRegex = /^\w+$/;
-//
-//     console.log(username);
-//     console.log(password);
-//
-//     if (!username.match(usernameRegex)) {
-//         alert("validation failed false");
-//         // returnToPreviousPage()
-//         return false;
-//     }
-//     alert("validations passed");
-//     return true;
-// }
