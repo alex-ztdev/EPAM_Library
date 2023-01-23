@@ -13,6 +13,7 @@
     <meta charset="UTF-8" />
     <title>Library Main</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index.css" />
+
 </head>
 <body>
 <div class="container">
@@ -22,14 +23,11 @@
 
     <div class="footer">
         <div class="footer-elements">
-            <a href="#about_page">About</a>
+            <a href="#about_page"><fmt:message key="footer.common.about"/></a>
             <a href="https://github.com/alex-ztdev">GitHub</a>
         </div>
     </div>
 </div>
 </body>
-<script
-        src="https://kit.fontawesome.com/d117408745.js"
-        crossorigin="anonymous"
-></script>
+
 </html>

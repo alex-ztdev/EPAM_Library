@@ -17,6 +17,10 @@
 <fmt:setBundle basename="locale"/>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/header.css"/>
+<script
+        src="https://kit.fontawesome.com/d117408745.js"
+        crossorigin="anonymous"
+></script>
 
 <div class="header">
     <div class="left-header">
@@ -24,14 +28,14 @@
         <a href="controller?command=profile"><fmt:message key="header.common.books"/></a>
         <a href="controller?command=authors"><fmt:message key="header.common.authors"/></a>
         <a href="controller?command=user_orders"><fmt:message key="header.user.order"/></a>
-        <a href="controller?command=librarians_list">Librarians</a>
-        <a href="#users">Users</a>
+        <a href="controller?command=librarians_list"><fmt:message key="header.admin.librarians"/></a>
+        <a href="#users"><fmt:message key="header.admin.users"/></a>
     </div>
 
     <div class="right-header">
         <div class="search-container">
             <form action="#search_action">
-                <input type="text" placeholder="Search.." name="search"/>
+                <input type="text" placeholder="<fmt:message key="header.common.search"/>" name="search"/>
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
@@ -49,7 +53,8 @@
             </form>
         </div>
 
-        <a href="#profile">Profile</a>
-        <a href="#logout">Logout</a>
+        <a href="#profile"><fmt:message key="header.common.profile"/></a>
+        <a href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="header.common.login"/></a>
+        <a href="#logout"><fmt:message key="header.common.logout"/></a>
     </div>
 </div>

@@ -3,8 +3,11 @@ package com.my.library.controller.command.constant;
 public interface CommandTypes {
     String REGISTRATION = "registration";
     String LOGIN = "login";
+    String CHANGE_LANGUAGE = "change_language";
+
+
     String LOGOUT = "logout";
-    String CHANGE_LANGUAGE = "change__language";
+
     String PROFILE = "profile";
     String DEFAULT_COMMAND = "Illegal Command";
 
