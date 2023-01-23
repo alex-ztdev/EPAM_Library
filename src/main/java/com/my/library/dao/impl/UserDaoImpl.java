@@ -207,7 +207,21 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public Optional<User> findByEmail(String email) throws DaoException {
-        return Optional.empty();
+        User user = null;
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(UserQueries.FIND_BY_EMAIL)) {
+
+            statement.setString(1, email);
+
+            try (var rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    user = buildUser(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return user == null ? Optional.empty() : Optional.of(user);
     }
 
     @Override
