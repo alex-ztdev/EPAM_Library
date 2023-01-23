@@ -118,11 +118,11 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
 
         User user = (User) o;
 
-        if (!userId.equals(user.userId)) return false;
+        if (userId != null ? !userId.equals(user.userId) : user.userId != null) return false;
         if (!login.equals(user.login)) return false;
         if (!password.equals(user.password)) return false;
         if (role != user.role) return false;
@@ -135,7 +135,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = userId.hashCode();
+        int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + login.hashCode();
         result = 31 * result + password.hashCode();
         result = 31 * result + role.hashCode();

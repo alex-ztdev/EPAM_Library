@@ -58,8 +58,6 @@
         <h1 class="form__title">
             <fmt:message key="registrationForm.registration"/>
         </h1>
-
-        <div class="form__input-error-message"></div>
         <div class="form__message form__message--error"></div>
         <div class="form__input-group">
             <input type="text" id="signupUsername" name="regLogin" class="form__input" required autofocus placeholder="<fmt:message key="commonForm.username"/>">

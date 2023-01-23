@@ -31,7 +31,7 @@ public class RegisterCommand implements Command {
         UserService userService = UserServiceImpl.getInstance();
 
 //        CommandResult res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
-        CommandResult res = null;
+        CommandResult res;
         try {
             Optional<User> userOptional = new UserBuilder().buildNewUser(request);
 
@@ -40,10 +40,22 @@ public class RegisterCommand implements Command {
             if (userOptional.isPresent()) {
                 var user = userOptional.get();
                 List<String> validation = userService.canBeRegistered(user);
+
+                logger.log(Level.DEBUG, "User validator return: " + validation);
+
+
+                if (validation.isEmpty()) {
+                    userService.save(user);
+                    res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
+                } else {
+                    request.setAttribute(UserConstants.VALIDATION_LIST, validation);
+                    request.setAttribute(UserConstants.REG_FORM, UserConstants.REG_FORM);
+                    res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
+                }
             }
             else {
                 request.setAttribute(UserConstants.REG_FORM, UserConstants.REG_FORM);
-                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
+                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT); //TODO: redirect to forward&
             }
 
         } catch (ServiceException e) {

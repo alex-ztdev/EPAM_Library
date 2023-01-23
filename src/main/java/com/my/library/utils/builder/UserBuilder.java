@@ -28,15 +28,16 @@ public class UserBuilder {
 
     public Optional<User> buildNewUser(HttpServletRequest request) {
         //TODO: change forms
-        String login = request.getParameter(UsersColumns.LOGIN);
-        String email = request.getParameter(UsersColumns.EMAIL);
-        String phoneNumber = request.getParameter(UsersColumns.PHONE_NUMBER);
+        String login = request.getParameter(UserConstants.REG_LOGIN);
+        String email = request.getParameter(UserConstants.REG_EMAIL);
+        String phoneNumber = request.getParameter(UserConstants.REG_PHONE);
 
-        String firstName = request.getParameter(UsersColumns.FIRST_NAME);
-        String secondName = request.getParameter(UsersColumns.SECOND_NAME);
-        String password = request.getParameter(UsersColumns.PASSWORD);
+        String firstName = request.getParameter(UserConstants.REG_FIRST_NAME);
+        String secondName = request.getParameter(UserConstants.REG_SECOND_NAME);
+        String password = request.getParameter(UserConstants.REG_PASSWORD);
+        String confPassword = request.getParameter(UserConstants.REG_CONF_PASSWORD);
 
-        if (login == null || email == null || firstName == null || secondName == null || password == null) {
+        if (login == null || email == null || firstName == null || secondName == null || password == null || confPassword == null) {
             return Optional.empty();
         }
         return Optional.of(new User(login, password, UserRole.USER, UserStatus.NORMAL, email, phoneNumber, firstName, secondName));
