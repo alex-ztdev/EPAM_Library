@@ -2,16 +2,19 @@ package com.my.library.utils.builder;
 
 import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.dao.constants.UserRole;
+import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.entities.User;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Optional;
 
 public class UserBuilder {
     //TODO: implement buildUserForUpdate
     public User buildUserForUpdate(HttpServletRequest request) {
         String id = request.getParameter(UsersColumns.ID);
-        String name = request.getParameter(UsersColumns.FIRST_NAME);
-        String lastName = request.getParameter(UsersColumns.SECOND_NAME);
+        String firstName = request.getParameter(UsersColumns.FIRST_NAME);
+        String secondName = request.getParameter(UsersColumns.SECOND_NAME);
         String email = request.getParameter(UsersColumns.EMAIL);
         String login = request.getParameter(UsersColumns.LOGIN);
         String phoneNumber = request.getParameter(UsersColumns.PHONE_NUMBER);
@@ -23,11 +26,18 @@ public class UserBuilder {
         return null;
     }
 
-    public User buildNewUser(HttpServletRequest request) {
-        String login = request.getParameter(UserConstants.LOGIN);
-        String password = request.getParameter(UserConstants.PASSWORD);
-        String email = request.getParameter(UserConstants.EMAIL);
-        String phone = request.getParameter(UserConstants.EMAIL);
-        return null; //TODO: implement buildNewUser
+    public Optional<User> buildNewUser(HttpServletRequest request) {
+        String login = request.getParameter(UsersColumns.LOGIN);
+        String email = request.getParameter(UsersColumns.EMAIL);
+        String phoneNumber = request.getParameter(UsersColumns.PHONE_NUMBER);
+
+        String firstName = request.getParameter(UsersColumns.FIRST_NAME);
+        String secondName = request.getParameter(UsersColumns.SECOND_NAME);
+        String password = request.getParameter(UsersColumns.PASSWORD);
+
+        if (login == null || email == null || firstName == null || secondName == null || password == null) {
+            return Optional.empty();
+        }
+        return Optional.of(new User(login, password, UserRole.USER, UserStatus.NORMAL, email, phoneNumber, firstName, secondName));
     }
 }

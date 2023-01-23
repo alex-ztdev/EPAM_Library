@@ -17,40 +17,22 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 public class RegisterCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-//        UserService userService = UserServiceImpl.getInstance();
-//        HttpSession session = request.getSession();
-//
-//        CommandResult res;
-//        try {
-//            var userContainer = userService.authenticate(login, password);
-//
-//            if (userContainer.isEmpty()) {
-//                res = new CommandResult(Pages.LOGIN_PAGE);
-//                request.setAttribute(UserConstants.INVALID_LOGIN_PASSWORD, UserConstants.CONTENT_FROM_RESOURCES); // FIXME: bundle msg to property file
-//                logger.log(Level.INFO, "User: " + login + " logging failed");
-//            } else {
-//                var user = userContainer.get();
-//                if (user.getStatus() == UserStatus.BLOCKED) {
-//                    res = new CommandResult(Pages.LOGIN_PAGE);
-//                    request.setAttribute(UserConstants.USER_IS_BLOCKED, UserConstants.CONTENT_FROM_RESOURCES); // FIXME: bundle msg to property file
-//                    logger.log(Level.INFO, "User: " + login + " is blocked!");
-//                }
-//                //TODO: add error pages
-//                else {
-//                    res = new CommandResult(Pages.MAIN_PAGE);
-//                    session.setAttribute(UserConstants.USER_IN_SESSION, user);
-//                    logger.log(Level.INFO, "User: " + login + " logged successfully");
-//                }
-//            }
-//        } catch (ServiceException e) {
-//            throw new CommandException("Error while executing LoginCommand.", e);
-//        }
-//        return res;
-        return null;
+        UserService userService = UserServiceImpl.getInstance();
+
+        CommandResult res;
+        try {
+            UserBuilder
+            List<String> validation = userService.canBeRegistered();
+        } catch (ServiceException e) {
+            throw new CommandException("Error while executing RegisterCommand.", e);
+        }
+        return res;
     }
 }
