@@ -1,5 +1,6 @@
 package com.my.library.services.impl;
 
+import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.dao.UserDAO;
 import com.my.library.dao.impl.UserDaoImpl;
 import com.my.library.entities.User;
@@ -12,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,6 +84,25 @@ public class UserServiceImpl implements UserService {
            return userDAO.authenticate(login, encryptPassword(password));
         } catch (DaoException e) {
             throw new ServiceException("Error in authenticate method in UserService", e);
+        }
+    }
+
+    @Override
+    public List<String> canBeRegistered(User user) throws ServiceException {
+        List<String> exceptionsList = new ArrayList<>();
+        try {
+            if (userDAO.findByEmail(user.getEmail()).isPresent()) {
+                exceptionsList.add(UserConstants.USER_EMAIL_ALREADY_EXISTS);
+            }
+            if (userDAO.findByLogin(user.getLogin()).isPresent()) {
+                exceptionsList.add(UserConstants.USER_LOGIN_ALREADY_EXISTS);
+            }
+            if (user.getPhoneNumber() != null && userDAO.findByPhone(user.getPhoneNumber()).isPresent()) {
+                exceptionsList.add(UserConstants.USER_PHONE_ALREADY_EXISTS);
+            }
+            return exceptionsList;
+        } catch (DaoException e) {
+            throw new ServiceException("Error while checking if user with such data already exists", e);
         }
     }
 

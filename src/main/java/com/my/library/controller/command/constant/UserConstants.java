@@ -6,6 +6,10 @@ public interface UserConstants {
     String USER_IS_BLOCKED = "isBlocked";
     String USER_IN_SESSION = "user";
 
+    String USER_EMAIL_ALREADY_EXISTS = "emailAlreadyExists";
+    String USER_LOGIN_ALREADY_EXISTS = "loginAlreadyExists";
+    String USER_PHONE_ALREADY_EXISTS = "phoneAlreadyExists";
+
 
     String ID = "id";
     String LOGIN = "login";
