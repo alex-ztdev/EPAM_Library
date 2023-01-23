@@ -1,8 +1,8 @@
 const usernameRegex = /^\w{3,30}$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,30}$/;
 const emailRegex = /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
-const nameRegex = /^[a-z ,.'\-]{1,30}$/;
-const phoneRegex = /^[\d]{12}$/;
+const nameRegex = /^[a-zA-Z ,.'\-]{1,30}$/;
+const phoneRegex = /^\d{12}$/;
 
 
 function setFormMessage(formElement, type, message) {
@@ -81,9 +81,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.preventDefault();
             }
 
+            if (e.target.id === "firstName" && !e.target.value.match(nameRegex)) {
+                console.log("first name ERROR");
+                setInputError(inputElement, locale === 'en' ? en.registration_invalid_first_name_error_msg : ua.registration_invalid_first_name_error_msg);
+                e.preventDefault();
+            }
+            if (e.target.id === "secondName" && !e.target.value.match(nameRegex)) {
+                console.log("second name ERROR");
+                setInputError(inputElement, locale === 'en' ? en.registration_invalid_second_name_error_msg : ua.registration_invalid_second_name_error_msg);
+                e.preventDefault();
+            }
 
             if (e.target.id === "signupConfirmPassword") {
-                if(document.querySelector('#signupPassword').value !== document.querySelector('#signupConfirmPassword').value) {
+                if (document.querySelector('#signupPassword').value !== document.querySelector('#signupConfirmPassword').value) {
                     setInputError(inputElement, locale === 'en' ? en.registration_passwords_match_error_msg : ua.registration_passwords_match_error_msg);
                     e.preventDefault();
                 }

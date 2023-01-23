@@ -6,6 +6,8 @@ const en = {
     registration_name_error_msg: 'Invalid name format',
     registration_password_validation_error_msg: 'Invalid password format',
     registration_passwords_match_error_msg: 'Passwords doesn\'t match!',
+    registration_invalid_first_name_error_msg: 'Invalid first name format!',
+    registration_invalid_second_name_error_msg: 'Invalid second name format!',
 }
 
 const ua={

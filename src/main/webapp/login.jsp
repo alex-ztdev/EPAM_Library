@@ -81,6 +81,14 @@
             <input type="text" id="signupPhone" class="form__input" name="regPhone" autofocus placeholder="<fmt:message key="registrationForm.phone"/>">
             <div class="form__input-error-message"></div>
         </div>
+        <div class="form__input-group">
+            <input type="text" id="firstName" class="form__input" name="regFirstName" required autofocus placeholder="<fmt:message key="registrationForm.firstName"/>">
+            <div class="form__input-error-message"></div>
+        </div>
+        <div class="form__input-group">
+            <input type="text" id="secondName" class="form__input" name="regSecondName" required autofocus placeholder="<fmt:message key="registrationForm.secondName"/>">
+            <div class="form__input-error-message"></div>
+        </div>
         <button class="form__button" type="submit"><fmt:message key="registrationForm.btn.create"/></button>
         <p class="form__text">
             <a class="form__link" href="./" id="linkLogin"><fmt:message key="registrationForm.btn.signIn"/></a>
