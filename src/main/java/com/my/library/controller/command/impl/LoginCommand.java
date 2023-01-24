@@ -2,6 +2,7 @@ package com.my.library.controller.command.impl;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
+import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
@@ -46,7 +47,7 @@ public class LoginCommand implements Command {
                 }
                 //TODO: add error pages
                 else {
-                    res = new CommandResult(Pages.MAIN_PAGE);
+                    res = new CommandResult(Pages.MAIN_PAGE, CommandDirection.REDIRECT);
                     session.setAttribute(UserConstants.USER_IN_SESSION, user);
                     logger.log(Level.INFO, "User: " + login + " logged successfully");
                 }

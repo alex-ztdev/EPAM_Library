@@ -1,4 +1,84 @@
-('A Daughter of the Snows', 199, 9, '2018-4-3', 5),
+USE Library
+
+INSERT INTO Book_Genres
+VALUES
+	('Science fiction'),
+	('Satire'),
+	('Drama'),
+	('Action and Adventure'),
+	('Romance'),
+	('Mystery'),
+	('Horror'),
+	('Health'),
+	('Guide'),
+	('Diaries'),
+	('Comics'),
+	('Diaries'),
+	('Journals'),
+	('Biographies'),
+	('Fantasy'),
+	('History'),
+	('Science'),
+	('Art'),
+	('Other')
+
+
+	
+INSERT INTO Publishers
+	VALUES
+	('Harper Collins'),
+	('Simon & Schuster'),
+	('Macmillan'),
+	('Hachette'),
+	('Penguin Random House')
+
+INSERT INTO Authors 
+VALUES 
+	('William Dean', 'Howells', '1837-03-01'),
+	('Frederic', 'Brown', '1906-10-29'),
+	('Jack', 'London', '1876-01-12'),
+	('Albert', 'Blaisdell', '1946-09-06'),
+	('Ellis', 'Butler', '1869-12-05'),
+	('Arthur', 'Machen', '1863-03-03'),
+	('Titus', 'Lucretius', '0025-02-02'),
+	('Rabindranath', 'Tagore', '1861-05-07'),
+	('Isaac', 'Asimov', '1920-01-02'),
+	('Charles', 'Dickens', '1812-02-07'),
+	('Ralph Waldo', 'Emerson', '1803-05-25'),
+	('Dorothy', 'Canfield', '1879-02-17'),
+	('Givoanni', 'Boccaccio', '1313-06-16'),
+	('George', 'Orwell', '1903-06-25'),
+	('Publius', 'Ovid', '0050-02-02'),
+	('Robert Louis', 'Stevenson', '1850-11-03'),
+	('Virginia', 'Woolf', '1882-01-25'),
+	('George', 'Eliot', '1819-11-22'),
+	('Amelia B.', 'Edwards', '1831-06-07'),
+	('Fyodor', 'Dostoevsky', '1821-11-11'),
+	('Emily', 'Dickinson', '1830-12-10'),
+	('Edna', 'Ferber', '1885-08-15'),
+	('Joseph Sheridan', 'LeFanu', '1814-08-28'),
+	('John', 'DosPassos', '1896-01-14'),
+	('Ruth', 'Stuart', '1849-05-21'),
+	('Vladimir', 'Nabokov', '1899-04-22'),
+	('Johanna', 'Spyri', '1827-06-12'),
+	('Ernest', 'Dowson', '1867-08-02'),
+	('Mary Hallock', 'Foote', '1847-11-09'),
+	('Zane', 'Grey', '1872-01-31'),
+	('H. P.', 'Lovecraft', '1890-08-20'),
+	('Samuel', 'Pepys', '1633-02-23'),
+	('Kate Dickinson', 'Sweetser', '1870-09-07'),
+	('William', 'Lampton', '1753-01-20'),
+	('Mother', 'Goose', '1900-01-01'),
+	('Eleanor Hallowell', 'Abbott', '1872-09-22'),
+	('Kate', 'Quinn', '1981-11-30'),
+	('Dray', 'Stephanie', '1971-02-04'),
+	('Laura Croghan', 'Kamoie', '1970-08-27')
+
+	
+
+INSERT INTO Books (title, page_number,genre_id, publication_date, publisher_id)
+VALUES
+	('A Daughter of the Snows', 199, 9, '2018-4-3', 5),
 	('The Near East: 10,000 Years of History', 298, 13, '2018-10-8', 3),
 	('The Cocoon: A Rest-Cure Comedy', 90, 12, '2015-2-9', 2),
 	('The Freakshow Murders', 321, 3, '2020-9-18', 2),
@@ -81,7 +161,7 @@
 	('The Last Trail', 116, 14, '2018-1-18', 2),
 	('The Fredric Brown Megapack', 324, 16, '2020-2-17', 4),
 	('The Decameron: Selected Tales', 337, 17, '2019-4-17', 1),
-	('Th bent twig', 367, 3, '2015-7-20', 4),
+	('The bent twig', 367, 3, '2015-7-20', 4),
 	('Things near and far', 199, 6, '2018-2-5', 2),
 	('The Story of Salome', 316, 11, '2021-10-11', 1),
 	('The Destruction of Our Children', 104, 9, '2015-7-19', 5),
@@ -98,3 +178,150 @@
 	('The White People and Other Weird Stories', 100, 15, '2015-2-13', 1),
 	('The Diary of Samuel Pepys: A Selection', 271, 3, '2015-9-9', 4),
 	('Ribbons of Scarlet',560 , 5, '2018-02-09', 4);
+
+
+
+INSERT INTO Authors_Books (book_id, author_id)
+	VALUES 
+	(1, 3),
+	(2, 9),
+	(3, 25),
+	(4, 2),
+	(5, 19),
+	(6, 10),
+	(7, 1),
+	(8, 35),
+	(9, 19),
+	(10, 7),
+	(11, 24),
+	(12, 29),
+	(13, 24),
+	(14, 9),
+	(15, 1),
+	(16, 29),
+	(17, 22),
+	(18, 3),
+	(19, 1),
+	(20, 8),
+	(21, 4),
+	(22, 13),
+	(23, 22),
+	(24, 19),
+	(25, 16),
+	(26, 25),
+	(27, 2),
+	(28, 29),
+	(29, 35),
+	(30, 9),
+	(31, 36),
+	(32, 1),
+	(33, 2),
+	(34, 11),
+	(35, 35),
+	(36, 35),
+	(37, 30),
+	(38, 32),
+	(39, 20),
+	(40, 23),
+	(41, 22),
+	(42, 2),
+	(43, 1),
+	(44, 6),
+	(45, 3),
+	(46, 8),
+	(47, 10),
+	(48, 10),
+	(49, 13),
+	(50, 5),
+	(51, 10),
+	(52, 19),
+	(53, 36),
+	(54, 13),
+	(55, 20),
+	(56, 8),
+	(57, 19),
+	(58, 3),
+	(59, 27),
+	(60, 32),
+	(61, 21),
+	(62, 8),
+	(63, 3),
+	(64, 17),
+	(65, 6),
+	(66, 36),
+	(67, 1),
+	(68, 12),
+	(69, 29),
+	(70, 1),
+	(71, 10),
+	(72, 1),
+	(73, 18),
+	(74, 13),
+	(75, 4),
+	(76, 36),
+	(77, 9),
+	(78, 1),
+	(79, 17),
+	(80, 20),
+	(81, 30),
+	(82, 2),
+	(83, 13),
+	(84, 12),
+	(85, 6),
+	(86, 19),
+	(87, 5),
+	(88, 8),
+	(89, 20),
+	(90, 25),
+	(91, 15),
+	(92, 8),
+	(93, 36),
+	(94, 8),
+	(95, 3),
+	(96, 11),
+	(97, 6),
+	(98, 6),
+	(99, 32),
+	(100, 37),
+	(100, 38),
+	(100, 39)
+
+INSERT INTO Roles
+(title)
+VALUES
+	('User'),
+	('Librarian'),
+	('Administrator')
+
+INSERT INTO User_Statuses
+	VALUES 
+	('normal'),
+	('blocked')
+
+
+
+INSERT INTO Users
+VALUES
+	('user', '70e9b857aca8d91bc6407f76262723939ea25cdaf74644820afffd28cfdba12d84121fd225a1c7bdac0c7d9116e04a08bde682716e43d24ac31436b8eb8f575a',
+	1, 1 , 'usermail@gmail.com','+98234982938', 'alex', 'jhones')
+
+--password: user123
+
+INSERT INTO Users
+VALUES
+	('admin', '7fcf4ba391c48784edde599889d6e3f1e47a27db36ecc050cc92f259bfac38afad2c68a1ae804d77075e8fb722503f3eca2b2c1006ee6f6c7b7628cb45fffd1d',
+	3, 1 , 'admin@gmail.com','+8248282234', 'max', 'payne')
+
+--password: admin123
+
+
+INSERT INTO Orders
+	VALUES 
+	(10000, 1, GETDATE(),DATEADD(MONTH,1 , GETDATE()), NULL),
+	(10000, 2, GETDATE(),DATEADD(MONTH,1 , GETDATE()), NULL),
+	(10000, 3, GETDATE(),DATEADD(MONTH,1 , GETDATE()), NULL),
+	(10000, 42, GETDATE(),DATEADD(MONTH,1 , GETDATE()), NULL),
+	(10000, 100, GETDATE(),DATEADD(MONTH,1 , GETDATE()), NULL)
+
+use Library
+use master

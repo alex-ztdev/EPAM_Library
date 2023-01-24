@@ -23,7 +23,9 @@
 <div class="container">
     <jsp:include page="/pages/header.jsp"/>
 
-    <div class="main-content"></div>
+    <div class="main-content">
+
+    </div>
 
     <div class="footer">
         <div class="footer-elements">

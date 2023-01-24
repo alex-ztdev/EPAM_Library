@@ -56,6 +56,6 @@
 
         <a href="#profile"><fmt:message key="header.common.profile"/></a>
         <a href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="header.common.login"/></a>
-        <a href="#logout"><fmt:message key="header.common.logout"/></a>
+        <a href="controller?command=logout"><fmt:message key="header.common.logout"/></a>
     </div>
 </div>

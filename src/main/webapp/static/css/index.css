@@ -29,15 +29,14 @@ body {
 }
 
 .main-content {
-    background-color: rgb(255, 231, 194);
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
+    /*background-color: rgb(255, 231, 194);*/
+    opacity: 0.2;
     flex: 1 1 auto;
 }
-
-
-/* -------------------------------------header------------------------------------------- */
-
-/* -------------------------------------/language switcher------------------------------------------- */
-/* -------------------------------------/header------------------------------------------- */
 
 
 /* -------------------------------------footer------------------------------------------- */
