@@ -1,10 +1,7 @@
 package com.my.library.controller.command;
 
 import com.my.library.controller.command.constant.CommandTypes;
-import com.my.library.controller.command.impl.ChangeLanguageCommand;
-import com.my.library.controller.command.impl.LoginCommand;
-import com.my.library.controller.command.impl.LogoutCommand;
-import com.my.library.controller.command.impl.RegisterCommand;
+import com.my.library.controller.command.impl.*;
 import com.my.library.services.ServiceFactory;
 
 public class CommandFactory {
@@ -21,7 +18,7 @@ public class CommandFactory {
             case CommandTypes.LOGOUT -> res = new LogoutCommand();
             case CommandTypes.REGISTRATION -> res = new RegisterCommand();
             case CommandTypes.CHANGE_LANGUAGE -> res = new ChangeLanguageCommand();
-            default -> res = null;
+            default -> res = new DefaultCommand();
         }
         return res;
     }

@@ -21,6 +21,7 @@ import java.io.IOException;
 @WebServlet("/controller")
 public class LibraryController extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
@@ -35,7 +36,7 @@ public class LibraryController extends HttpServlet {
         String command = request.getParameter(CommandTypes.COMMAND_PARAMETER);
         var action = CommandFactory.createCommand(command);
 
-        logger.log(Level.DEBUG, "Command " + (action == null ? "'empty command'" : action.getClass().getSimpleName()) + " was received");
+        logger.log(Level.DEBUG, "Command " + action.getClass().getSimpleName() + " was received");
         try {
             var commandRes = action.execute(request);
             direct(request, response, commandRes);
@@ -47,7 +48,8 @@ public class LibraryController extends HttpServlet {
 
     private void direct(HttpServletRequest request, HttpServletResponse response, CommandResult commandResult) throws ServletException, IOException {
         switch (commandResult.getAction()) {
-            case FORWARD -> getServletContext().getRequestDispatcher(commandResult.getPage()).forward(request, response);
+            case FORWARD ->
+                    getServletContext().getRequestDispatcher(commandResult.getPage()).forward(request, response);
             case REDIRECT -> response.sendRedirect(request.getContextPath() + commandResult.getPage());
             default -> response.sendRedirect(RedirectToPage.LOGIN_PAGE);
         }

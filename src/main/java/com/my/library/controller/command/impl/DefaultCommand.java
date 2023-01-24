@@ -2,13 +2,14 @@ package com.my.library.controller.command.impl;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
+import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class DefaultCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        //TODO: implement default command execute method
-        return null;
+        return new CommandResult(Pages.MAIN_PAGE, CommandDirection.FORWARD);
     }
 }
