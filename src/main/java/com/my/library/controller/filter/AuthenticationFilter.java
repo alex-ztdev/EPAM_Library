@@ -3,6 +3,7 @@ package com.my.library.controller.filter;
 import com.my.library.controller.command.constant.GeneralCommands;
 import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.entities.User;
+import com.my.library.utils.Pages;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,9 +50,13 @@ public class AuthenticationFilter implements Filter {
             chain.doFilter(servletRequest, servletResponse);
         } else {
             if (user == null) {
-
+                response.sendRedirect(Pages.NOT_AUTHORIZED);
+                logger.log(Level.DEBUG, "No user in session! Tried to execute: " + command);
             }
-            logger.log(Level.DEBUG, "No user in session!");
+            else{
+                //TODO: implement admin, librarian, user, (unknown?)
+            }
+
         }
     }
 

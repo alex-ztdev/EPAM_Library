@@ -54,10 +54,4 @@ public class LibraryController extends HttpServlet {
             default -> response.sendRedirect(RedirectToPage.LOGIN_PAGE);
         }
     }
-
-    @Override
-    public void destroy() {
-        ConnectionPool.getInstance().destroyPool();
-        super.destroy();
-    }
 }
