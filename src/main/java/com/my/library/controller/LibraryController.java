@@ -3,7 +3,7 @@ package com.my.library.controller;
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.CommandFactory;
 import com.my.library.controller.command.CommandResult;
-import com.my.library.controller.command.constant.CommandTypes;
+import com.my.library.controller.command.constant.GeneralCommands;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.exceptions.CommandException;
 import com.my.library.utils.Pages;
@@ -33,7 +33,7 @@ public class LibraryController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String command = request.getParameter(CommandTypes.COMMAND_PARAMETER);
+        String command = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
         var action = CommandFactory.createCommand(command);
 
         logger.log(Level.DEBUG, "Command " + action.getClass().getSimpleName() + " was received");

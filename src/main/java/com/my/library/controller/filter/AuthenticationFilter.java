@@ -1,6 +1,6 @@
 package com.my.library.controller.filter;
 
-import com.my.library.controller.command.constant.CommandTypes;
+import com.my.library.controller.command.constant.GeneralCommands;
 import com.my.library.controller.command.constant.UserConstants;
 import com.my.library.entities.User;
 import jakarta.servlet.*;
@@ -13,9 +13,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebFilter("/controller?command=register")
 public class AuthenticationFilter implements Filter {
+    private final static List<String> GENERAL_COMMANDS = List.of(
+            GeneralCommands.CHANGE_LANGUAGE,
+            GeneralCommands.LOGIN,
+            GeneralCommands.LOGOUT,
+            GeneralCommands.REGISTRATION,
+            GeneralCommands.ALL_BOOKS_LIST,
+            GeneralCommands.BOOK_PAGE,
+            GeneralCommands.SEARCH_BOOK,
+            GeneralCommands.SORT_BOOKS
+    );
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -32,13 +43,15 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(UserConstants.USER_IN_SESSION);
 
-        String command = request.getParameter(CommandTypes.COMMAND_PARAMETER);
+        String command = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
 
-        if (user == null) {
-            logger.log(Level.DEBUG, "No user in session!");
-
-        }else {
+        if (GENERAL_COMMANDS.contains(command)) {
             chain.doFilter(servletRequest, servletResponse);
+        } else {
+            if (user == null) {
+
+            }
+            logger.log(Level.DEBUG, "No user in session!");
         }
     }
 

@@ -1,12 +1,10 @@
 package com.my.library.controller.command.constant;
 
-public interface CommandTypes {
+public interface GeneralCommands {
     String COMMAND_PARAMETER = "command";
     String REGISTRATION = "registration";
     String LOGIN = "login";
     String CHANGE_LANGUAGE = "change_language";
-
-
     String LOGOUT = "logout";
 
     String PROFILE = "profile";
@@ -32,15 +30,15 @@ public interface CommandTypes {
 //    String ADMIN_REMOVE_BOOK = "admin__remove__book";
 //    String ADMIN_REMOVE_USER = "admin__remove__user";
 //
-//    //User
-//    String DISPLAY_BOOK = "display__book";
-//    String CONFIRM_ORDER = "confirm__order";
-//    String USER_ORDER = "user__order";
-//
-//    //Book
-//    String VIEW_BOOK = "view__book";
-//    String ORDER_BOOK = "order__book";
-//    String SEARCH_BOOK = "search__book";
-//    String SORT_BOOK = "sort__book";
+    //User
+    String ALL_BOOKS_LIST = "book_list";
+    String CONFIRM_ORDER = "confirm__order";
+    String USER_ORDER = "user__order";
+
+    //Book
+    String BOOK_PAGE = "book_page";
+    String ORDER_BOOK = "order__book";
+    String SEARCH_BOOK = "search_book";
+    String SORT_BOOKS = "sort_books";
 
 }

@@ -10,6 +10,7 @@ public class DefaultCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        return new CommandResult(Pages.MAIN_PAGE, CommandDirection.FORWARD);
+        //FIXME: redirect to error page?
+        return new CommandResult(Pages.MAIN_PAGE, CommandDirection.REDIRECT);
     }
 }
