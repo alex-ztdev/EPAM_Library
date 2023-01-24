@@ -3,6 +3,7 @@ package com.my.library.controller;
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.CommandFactory;
 import com.my.library.controller.command.CommandResult;
+import com.my.library.controller.command.constant.CommandTypes;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.exceptions.CommandException;
 import com.my.library.utils.Pages;
@@ -20,8 +21,6 @@ import java.io.IOException;
 @WebServlet("/controller")
 public class LibraryController extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
-    private static final String COMMAND_NAME = "command";
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
@@ -33,10 +32,10 @@ public class LibraryController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String command = request.getParameter(COMMAND_NAME);
+        String command = request.getParameter(CommandTypes.COMMAND_PARAMETER);
         var action = CommandFactory.createCommand(command);
 
-        logger.log(Level.DEBUG, "Command " + action.getClass().getSimpleName() + " was received");
+        logger.log(Level.DEBUG, "Command " + (action == null ? "'empty command'" : action.getClass().getSimpleName()) + " was received");
         try {
             var commandRes = action.execute(request);
             direct(request, response, commandRes);

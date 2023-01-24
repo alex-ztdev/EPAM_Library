@@ -1,6 +1,7 @@
 package com.my.library.controller.command.constant;
 
 public interface CommandTypes {
+    String COMMAND_PARAMETER = "command";
     String REGISTRATION = "registration";
     String LOGIN = "login";
     String CHANGE_LANGUAGE = "change_language";
