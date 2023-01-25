@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class UserValidator {
-    public static List<String> validateUserParameters(HttpServletRequest request) {
+    public List<String> validateUserParameters(HttpServletRequest request) {
 
         List<String> validationList = new ArrayList<>();
         String firstName = request.getParameter(UsersColumns.FIRST_NAME);
@@ -45,7 +45,7 @@ public class UserValidator {
         return validationList;
     }
 
-    public static List<String> validateUserParameters(User user) {
+    public List<String> validateUserParameters(User user) {
         List<String> validationList = new ArrayList<>();
 
         String login = user.getLogin();

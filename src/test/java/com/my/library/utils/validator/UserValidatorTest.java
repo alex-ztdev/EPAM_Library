@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//TODO: implement tests
 class UserValidatorTest {
 
     @Test
@@ -12,7 +13,6 @@ class UserValidatorTest {
 
     @Test
     void isValidLogin() {
-
     }
 
     @Test

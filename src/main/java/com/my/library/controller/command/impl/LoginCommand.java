@@ -8,6 +8,7 @@ import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
+import com.my.library.services.ServiceFactory;
 import com.my.library.services.UserService;
 import com.my.library.services.impl.UserServiceImpl;
 import com.my.library.utils.Pages;
@@ -27,7 +28,7 @@ public class LoginCommand implements Command {
         String login = request.getParameter(UserConstants.LOGIN);
         String password = request.getParameter(UserConstants.PASSWORD);
 
-        UserService userService = UserServiceImpl.getInstance();
+        UserService userService = new ServiceFactory().getUserService();
         HttpSession session = request.getSession();
 
         CommandResult res;

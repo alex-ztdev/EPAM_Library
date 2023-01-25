@@ -19,23 +19,10 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
 
-    private final UserDAO userDAO = UserDaoImpl.getInstance();
-    private static volatile UserServiceImpl INSTANCE;
+    private final UserDAO userDAO;
 
-    private UserServiceImpl() {
-    }
-
-    public static UserServiceImpl getInstance() {
-        UserServiceImpl instance = INSTANCE;
-        if (instance != null) {
-            return instance;
-        }
-        synchronized (UserServiceImpl.class) {
-            if (instance == null) {
-                instance = new UserServiceImpl();
-            }
-            return instance;
-        }
+    public UserServiceImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     @Override
@@ -89,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<String> canBeRegistered(User user) throws ServiceException {
-        List<String> exceptionsList = UserValidator.validateUserParameters(user);
+        List<String> exceptionsList = new UserValidator().validateUserParameters(user);
         if (!exceptionsList.isEmpty()) {
             return exceptionsList;
         }

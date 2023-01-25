@@ -9,6 +9,7 @@ import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
+import com.my.library.services.ServiceFactory;
 import com.my.library.services.UserService;
 import com.my.library.services.impl.UserServiceImpl;
 import com.my.library.utils.Pages;
@@ -30,7 +31,7 @@ public class RegisterCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "Registration command invoked");
-        UserService userService = UserServiceImpl.getInstance();
+        UserService userService = new ServiceFactory().getUserService();
 
 //        CommandResult res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
         CommandResult res;
