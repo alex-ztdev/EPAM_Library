@@ -1,7 +1,7 @@
 package com.my.library.controller.command;
 
 import com.my.library.controller.command.constant.GeneralCommands;
-import com.my.library.controller.command.impl.*;
+import com.my.library.controller.command.impl.common.*;
 import com.my.library.services.ServiceFactory;
 
 public class CommandFactory {

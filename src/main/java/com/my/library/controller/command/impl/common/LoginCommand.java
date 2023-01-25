@@ -1,4 +1,4 @@
-package com.my.library.controller.command.impl;
+package com.my.library.controller.command.impl.common;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
@@ -28,8 +28,6 @@ public class LoginCommand implements Command {
 
         UserService userService = new ServiceFactory().getUserService();
         HttpSession session = request.getSession();
-
-        logger.log(Level.DEBUG,"Attribute jakarta: " + request.getAttribute("jakarta.servlet.forward.request_uri"));
 
         CommandResult res;
         try {

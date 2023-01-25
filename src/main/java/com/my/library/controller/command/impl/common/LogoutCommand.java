@@ -1,4 +1,4 @@
-package com.my.library.controller.command.impl;
+package com.my.library.controller.command.impl.common;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
