@@ -2,7 +2,6 @@ package com.my.library.dao.impl;
 
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.UserDAO;
-import com.my.library.dao.constants.Constraints;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
@@ -10,14 +9,12 @@ import com.my.library.dao.constants.queries.UserQueries;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 
 public class UserDaoImpl implements UserDAO {
     private static final ConnectionPool dbm = ConnectionPool.getInstance();
