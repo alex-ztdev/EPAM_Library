@@ -1,6 +1,6 @@
 package com.my.library.controller.command.constant;
 
-public interface UserConstants {
+public interface UserParameters {
     String CONTENT_FROM_RESOURCES = "This string will be replaced with data from property file";
     String INVALID_LOGIN_PASSWORD = "invalidLoginPassword";
     String REG_INVALID_LOGIN = "regInvalidLogin";

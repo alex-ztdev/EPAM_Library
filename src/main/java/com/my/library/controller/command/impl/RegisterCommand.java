@@ -3,19 +3,15 @@ package com.my.library.controller.command.impl;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
-import com.my.library.controller.command.constant.UserConstants;
-import com.my.library.dao.constants.UserStatus;
-import com.my.library.dao.constants.columns.UsersColumns;
+import com.my.library.controller.command.constant.UserParameters;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.ServiceFactory;
 import com.my.library.services.UserService;
-import com.my.library.services.impl.UserServiceImpl;
 import com.my.library.utils.Pages;
 import com.my.library.utils.builder.UserBuilder;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,17 +44,17 @@ public class RegisterCommand implements Command {
 
                 if (validation.isEmpty()) {
                     userService.save(user);
-                    request.setAttribute(UserConstants.REG_FORM, "");
-                    res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
+                    request.setAttribute(UserParameters.REG_FORM, "");
+                    res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
                 } else {
-                    request.setAttribute(UserConstants.VALIDATION_LIST, validation);
+                    request.setAttribute(UserParameters.VALIDATION_LIST, validation);
                     setParameters(request, validation);
-                    request.setAttribute(UserConstants.REG_FORM, UserConstants.REG_FORM);
+                    request.setAttribute(UserParameters.REG_FORM, UserParameters.REG_FORM);
                     res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
                 }
             }
             else {
-                request.setAttribute(UserConstants.REG_FORM, UserConstants.REG_FORM);
+                request.setAttribute(UserParameters.REG_FORM, UserParameters.REG_FORM);
                 res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT); //TODO: redirect to forward
             }
 

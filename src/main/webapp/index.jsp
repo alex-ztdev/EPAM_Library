@@ -3,20 +3,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : 'en'}"
-       scope="session"/>
+<%--<c:set var="language"--%>
+<%--       value="${not empty param.language ? param.language : not empty language ? language : 'en'}"--%>
+<%--       scope="session"/>--%>
 
-<fmt:setLocale value="${language}"/>
+<fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale"/>
 
 
-<html lang="${language}">
-<html>
+<html lang="${sessionScope.language}">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Library Main</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index.css"/>
 
 </head>
 <body>
@@ -27,12 +26,7 @@
 
     </div>
 
-    <div class="footer">
-        <div class="footer-elements">
-            <a href="#about_page"><fmt:message key="footer.common.about"/></a>
-            <a href="https://github.com/alex-ztdev">GitHub</a>
-        </div>
-    </div>
+    <jsp:include page="/pages/footer.jsp"/>
 </div>
 </body>
 

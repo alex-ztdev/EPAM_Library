@@ -1,0 +1,29 @@
+.footer {
+    background-color: #00518f;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer .footer-elements{
+    color:#ccc;
+}
+
+
+.footer a {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.footer a:hover {
+    background-color: #ddd;
+    color: black;
+}

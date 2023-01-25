@@ -1,6 +1,6 @@
 package com.my.library.utils.builder;
 
-import com.my.library.controller.command.constant.UserConstants;
+import com.my.library.controller.command.constant.UserParameters;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;
@@ -27,14 +27,14 @@ public class UserBuilder {
     }
 
     public Optional<User> buildNewUser(HttpServletRequest request) {
-        String login = request.getParameter(UserConstants.REG_LOGIN);
-        String email = request.getParameter(UserConstants.REG_EMAIL);
-        String phoneNumber = request.getParameter(UserConstants.REG_PHONE);
+        String login = request.getParameter(UserParameters.REG_LOGIN);
+        String email = request.getParameter(UserParameters.REG_EMAIL);
+        String phoneNumber = request.getParameter(UserParameters.REG_PHONE);
 
-        String firstName = request.getParameter(UserConstants.REG_FIRST_NAME);
-        String secondName = request.getParameter(UserConstants.REG_SECOND_NAME);
-        String password = request.getParameter(UserConstants.REG_PASSWORD);
-        String confPassword = request.getParameter(UserConstants.REG_CONF_PASSWORD);
+        String firstName = request.getParameter(UserParameters.REG_FIRST_NAME);
+        String secondName = request.getParameter(UserParameters.REG_SECOND_NAME);
+        String password = request.getParameter(UserParameters.REG_PASSWORD);
+        String confPassword = request.getParameter(UserParameters.REG_CONF_PASSWORD);
 
         if (login.isEmpty() || email.isEmpty() || firstName.isEmpty() || secondName.isEmpty() || password.isEmpty() || confPassword.isEmpty() || !password.equals(confPassword)) {
             return Optional.empty();

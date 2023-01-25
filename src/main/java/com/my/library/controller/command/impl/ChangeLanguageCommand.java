@@ -13,7 +13,7 @@ public class ChangeLanguageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         String language = request.getParameter(LANGUAGE_PARAMETER);
-        request.setAttribute(LANGUAGE_PARAMETER, language);
-        return new CommandResult(Pages.MAIN_PAGE, CommandDirection.FORWARD);
+        request.getSession().setAttribute(LANGUAGE_PARAMETER, language);
+        return new CommandResult(Pages.MAIN_PAGE, CommandDirection.REDIRECT);
     }
 }

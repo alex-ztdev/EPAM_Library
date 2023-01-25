@@ -1,6 +1,6 @@
 package com.my.library.utils.validator;
 
-import com.my.library.controller.command.constant.UserConstants;
+import com.my.library.controller.command.constant.UserParameters;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.entities.User;
 import com.my.library.utils.validator.constants.UserRegex;
@@ -56,20 +56,20 @@ public class UserValidator {
         String password = user.getPassword();
 
         if (!isValidLogin(login)) {
-            validationList.add(UserConstants.REG_INVALID_LOGIN);
+            validationList.add(UserParameters.REG_INVALID_LOGIN);
         }
         if (!isValidLogin(password)) {
-            validationList.add(UserConstants.REG_INVALID_PASSWORD);
+            validationList.add(UserParameters.REG_INVALID_PASSWORD);
         }
         if (!isValidEmail(email)) {
-            validationList.add(UserConstants.REG_INVALID_EMAIL);
+            validationList.add(UserParameters.REG_INVALID_EMAIL);
         }
         if (phoneNumber != null && !phoneNumber.isEmpty() && !isValidPhone(phoneNumber)) {
             System.out.println(phoneNumber);
-            validationList.add(UserConstants.REG_INVALID_PHONE);
+            validationList.add(UserParameters.REG_INVALID_PHONE);
         }
         if (!isValidName(firstName) || !isValidName(secondName)) { //FIXME: split into first and sec
-            validationList.add(UserConstants.REG_INVALID_NAME);
+            validationList.add(UserParameters.REG_INVALID_NAME);
         }
         return validationList;
     }
@@ -99,14 +99,14 @@ public class UserValidator {
     }
 
     public static void setParameters(HttpServletRequest request, List<String> validationList) {
-        if (validationList.contains(UserConstants.USER_EMAIL_ALREADY_EXISTS)) {
-            request.setAttribute(UserConstants.USER_EMAIL_ALREADY_EXISTS, UserConstants.USER_EMAIL_ALREADY_EXISTS);
+        if (validationList.contains(UserParameters.USER_EMAIL_ALREADY_EXISTS)) {
+            request.setAttribute(UserParameters.USER_EMAIL_ALREADY_EXISTS, UserParameters.USER_EMAIL_ALREADY_EXISTS);
         }
-        if (validationList.contains(UserConstants.USER_LOGIN_ALREADY_EXISTS)) {
-            request.setAttribute(UserConstants.USER_LOGIN_ALREADY_EXISTS, UserConstants.USER_LOGIN_ALREADY_EXISTS);
+        if (validationList.contains(UserParameters.USER_LOGIN_ALREADY_EXISTS)) {
+            request.setAttribute(UserParameters.USER_LOGIN_ALREADY_EXISTS, UserParameters.USER_LOGIN_ALREADY_EXISTS);
         }
-        if (validationList.contains(UserConstants.USER_PHONE_ALREADY_EXISTS)) {
-            request.setAttribute(UserConstants.USER_PHONE_ALREADY_EXISTS, UserConstants.USER_PHONE_ALREADY_EXISTS);
+        if (validationList.contains(UserParameters.USER_PHONE_ALREADY_EXISTS)) {
+            request.setAttribute(UserParameters.USER_PHONE_ALREADY_EXISTS, UserParameters.USER_PHONE_ALREADY_EXISTS);
         }
     }
 }

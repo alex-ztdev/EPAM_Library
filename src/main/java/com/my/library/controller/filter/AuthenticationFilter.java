@@ -1,7 +1,7 @@
 package com.my.library.controller.filter;
 
 import com.my.library.controller.command.constant.GeneralCommands;
-import com.my.library.controller.command.constant.UserConstants;
+import com.my.library.controller.command.constant.UserParameters;
 import com.my.library.entities.User;
 import com.my.library.utils.Pages;
 import jakarta.servlet.*;
@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
-@WebFilter("/controller?command=register")
+@WebFilter("/controller")
 public class AuthenticationFilter implements Filter {
     private final static List<String> GENERAL_COMMANDS = List.of(
             GeneralCommands.CHANGE_LANGUAGE,
@@ -42,7 +42,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(UserConstants.USER_IN_SESSION);
+        User user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         String command = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
 

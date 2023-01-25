@@ -1,8 +1,7 @@
 package com.my.library.services.impl;
 
-import com.my.library.controller.command.constant.UserConstants;
+import com.my.library.controller.command.constant.UserParameters;
 import com.my.library.dao.UserDAO;
-import com.my.library.dao.impl.UserDaoImpl;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
@@ -12,7 +11,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +47,8 @@ public class UserServiceImpl implements UserService {
             if (canBeRegistered(user).isEmpty()) {
                 user.setPassword(encryptPassword(user.getPassword()));
                 userDAO.save(user);
+            } else {
+                throw new ServiceException("User already exists!" + canBeRegistered(user));
             }
         } catch (DaoException e) {
             throw new ServiceException("Error in save method in UserService", e);
@@ -84,13 +84,13 @@ public class UserServiceImpl implements UserService {
         }
         try {
             if (userDAO.findByEmail(user.getEmail()).isPresent()) {
-                exceptionsList.add(UserConstants.USER_EMAIL_ALREADY_EXISTS);
+                exceptionsList.add(UserParameters.USER_EMAIL_ALREADY_EXISTS);
             }
             if (userDAO.findByLogin(user.getLogin()).isPresent()) {
-                exceptionsList.add(UserConstants.USER_LOGIN_ALREADY_EXISTS);
+                exceptionsList.add(UserParameters.USER_LOGIN_ALREADY_EXISTS);
             }
             if (user.getPhoneNumber() != null && userDAO.findByPhone(user.getPhoneNumber()).isPresent()) {
-                exceptionsList.add(UserConstants.USER_PHONE_ALREADY_EXISTS);
+                exceptionsList.add(UserParameters.USER_PHONE_ALREADY_EXISTS);
             }
             return exceptionsList;
         } catch (DaoException e) {
