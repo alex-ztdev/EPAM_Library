@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: 0;
-    background: #684242;
+    /*background: #684242;*/
 }
 
 /* .container,
@@ -34,7 +34,7 @@ body {
     background-size: cover;
     overflow:hidden;
     /*background-color: rgb(255, 231, 194);*/
-    opacity: 0.2;
+
     flex: 1 1 auto;
 }
 

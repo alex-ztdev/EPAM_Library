@@ -5,6 +5,7 @@ body {
 }
 
 .login-container {
+
     --color-primary: #009579;
     --color-primary-dark: #007f67;
     --color-secondary: #252c6a;
@@ -13,14 +14,19 @@ body {
     --border-radius: 4px;
 
     margin: 0;
+    min-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-size: cover;
     font-size: 18px;
     justify-self: center;
     align-self: center;
     flex: 1 1 auto;
+
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
 }
 
 .container {

@@ -26,7 +26,7 @@
 <div class="header">
     <div class="left-header">
         <a class="active" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="header.common.home"/></a>
-        <a href="controller?command=profile"><fmt:message key="header.common.books"/></a>
+        <a href="controller?command=books_list"><fmt:message key="header.common.books"/></a>
         <a href="controller?command=authors"><fmt:message key="header.common.authors"/></a>
         <a href="controller?command=user_orders"><fmt:message key="header.user.order"/></a>
         <a href="controller?command=librarians_list"><fmt:message key="header.admin.librarians"/></a>

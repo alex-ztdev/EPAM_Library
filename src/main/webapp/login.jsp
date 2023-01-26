@@ -118,5 +118,6 @@
         <div id="registration_flag" hidden>${requestScope.regForm}</div>
     </div>
 </div>
+<jsp:include page="/pages/footer.jsp"/>
 </body>
 </html>
