@@ -2,6 +2,7 @@ package com.my.library.dao.impl;
 
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.BookDAO;
+import com.my.library.dao.constants.OrderTypes;
 import com.my.library.dao.constants.columns.BooksColumns;
 import com.my.library.dao.constants.queries.BookQueries;
 import com.my.library.entities.Author;
@@ -67,12 +68,17 @@ public class BookDaoImpl implements BookDAO {
 
 
     @Override
-    public List<Book> findAll() throws DaoException {
+    public List<Book> findAll(int start, int fetchNext, OrderTypes orderBy) throws DaoException {
         List<Book> bookList = new ArrayList<>();
         try (var connection = dbm.get();
-             var statement = connection.createStatement()) {
+             var statement = connection.prepareStatement(BookQueries.FIND_ALL_BOOKS_PAGINATION)) {
 
-            try (var rs = statement.executeQuery(BookQueries.FIND_ALL_BOOKS)) {
+            int k = 1;
+            statement.setString(k++, orderBy.getOrderBy());
+            statement.setInt(k++, start);
+            statement.setInt(k, fetchNext);
+
+            try (var rs = statement.executeQuery()) {
                 while (rs.next()) {
                     bookList.add(buildBook(rs));
                 }
@@ -133,11 +139,19 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public void delete(Book book) throws DaoException {
+        if (book != null) {
+            book.setRemoved(true);
+            deleteById(book.getBookId());
+        }
+    }
+
+    @Override
+    public void deleteById(long id) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
             int k = 1;
             statement.setBoolean(k++, true);
-            statement.setLong(k, book.getBookId());
+            statement.setLong(k, id);
 
             statement.executeUpdate();
 

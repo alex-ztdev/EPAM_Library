@@ -1,6 +1,8 @@
 .footer {
     background-color: #00518f;
-    height: 10%;
+    /*min-height: 20px;*/
+    /*max-height: 100px;*/
+    height: 8%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;

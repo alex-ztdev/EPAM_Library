@@ -48,4 +48,12 @@ public interface BookQueries {
             SELECT author_id FROM Authors_Books
             WHERE book_id =?
             """;
+
+
+    String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS+ """
+            WHERE isAvailable = 1
+            ORDER BY ?
+            OFFSET (?-1) ROWS
+            FETCH NEXT ? ROWS ONLY
+            """;
 }

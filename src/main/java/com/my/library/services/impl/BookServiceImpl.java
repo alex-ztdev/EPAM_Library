@@ -1,7 +1,7 @@
 package com.my.library.services.impl;
 
 import com.my.library.dao.BookDAO;
-import com.my.library.dao.UserDAO;
+import com.my.library.dao.constants.OrderTypes;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
@@ -23,30 +23,54 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void delete(Book book) throws ServiceException {
-//        try () {
-//
-//        } catch (DaoException e) {
-//
-//        }
+        try{
+            bookDAO.delete(book);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while deleting book in BookServiceImpl", e);
+        }
+    }
+    public void deleteById(long id) throws ServiceException {
+        try{
+            bookDAO.deleteById(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while deleting book by id in BookServiceImpl", e);
+        }
     }
 
     @Override
     public Optional<Book> find(long id) throws ServiceException {
-        return Optional.empty();
+        try{
+            return bookDAO.find(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while deleting book in BookServiceImpl", e);
+        }
     }
 
     @Override
     public List<Book> findAll() throws ServiceException {
+        try{
+            return bookDAO.findAll(1, Integer.MAX_VALUE, OrderTypes.BY_TITLE);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while deleting book in BookServiceImpl", e);
+        }
+    }
+
+    @Override
+    public List<Book> findAll(int pageNum) throws ServiceException {
         return null;
     }
 
     @Override
-    public void save(Book entity) throws ServiceException {
-
+    public void save(Book book) throws ServiceException {
+        try{
+            bookDAO.save(book);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while saving book BookService", e);
+        }
     }
 
     @Override
-    public boolean update(Book entity) throws ServiceException {
+    public boolean update(Book book) throws ServiceException {
         return false;
     }
 }
