@@ -21,5 +21,5 @@ public interface BookDAO {
 
     void deleteById(long id) throws DaoException;
 
-    List<Author> getBookAuthors(long id) throws DaoException;
+    Optional<Author> getBooksAuthor(long id) throws DaoException;
 }

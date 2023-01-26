@@ -1,7 +1,8 @@
 package com.my.library.dao.constants.queries;
 
 public interface BookQueries {
-    String FIND_ALL_BOOKS= """
+    //language=TSQL
+    String FIND_ALL_BOOKS = """
             SELECT
             	Books.id,
             	Books.title,
@@ -17,7 +18,7 @@ public interface BookQueries {
             """;
     String FIND_BOOK_BY_ID = FIND_ALL_BOOKS + "WHERE Books.id=?";
 
-
+    //language=TSQL
     String INSERT_BOOK = """
             INSERT INTO Books
             (title, publisher_id, genre_id, page_number, publication_date, isAvailable,isRemoved )
@@ -25,7 +26,7 @@ public interface BookQueries {
             (?, ( SELECT TOP(1) id FROM Publishers WHERE title=?),
              ( SELECT TOP(1) id FROM Book_Genres WHERE title=?), ?,?,?,?)
             """;
-
+    //language=TSQL
     String UPDATE_BOOK = """
             UPDATE Books SET
             title= ?,
@@ -38,19 +39,21 @@ public interface BookQueries {
             WHERE id = ?
             """;
 
+    //language=TSQL
     String SET_BOOK_TO_REMOVED = """
             UPDATE Books SET
             isRemoved=?
             WHERE id = ?
             """;
 
+    //language=TSQL
     String FIND_ALL_BOOKS_AUTHORS = """
-            SELECT author_id FROM Authors_Books
-            WHERE book_id =?
+            SELECT author_id FROM Books
+            WHERE id =?
             """;
 
-
-    String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS+ """
+    //language=TSQL
+    String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
             WHERE isAvailable = 1
             ORDER BY ?
             OFFSET (?-1) ROWS

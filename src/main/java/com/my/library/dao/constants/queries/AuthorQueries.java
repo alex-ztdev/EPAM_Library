@@ -10,7 +10,7 @@ public interface AuthorQueries {
     //language=TSQL
     String UPDATE_AUTHOR_BY_ID = "UPDATE Authors SET first_name = ?, second_name = ?, birth_date=? WHERE id = ?";
 
-    String FIND_ALL_AUTHORS_BOOKS = "SELECT book_id FROM Authors_Books WHERE author_id = ?";
+    String FIND_ALL_AUTHORS_BOOKS = "SELECT id FROM BOOKS WHERE author_id = ?";
 
 }
 

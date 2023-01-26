@@ -161,8 +161,8 @@ public class BookDaoImpl implements BookDAO {
     }
 
     @Override
-    public List<Author> getBookAuthors(long id) throws DaoException {
-        List<Author> authorsList = new ArrayList<>();
+    public Optional<Author> getBooksAuthor(long id) throws DaoException {
+        Optional<Author> author = Optional.empty();
 
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(BookQueries.FIND_ALL_BOOKS_AUTHORS)) {
@@ -171,13 +171,13 @@ public class BookDaoImpl implements BookDAO {
             statement.setLong(1, id);
 
             try (var rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    authorDao.find(rs.getLong(BooksColumns.AUTHOR_ID)).ifPresent(authorsList::add);
+                if(rs.next()) {
+                    author = authorDao.find(rs.getLong(BooksColumns.AUTHOR_ID));
                 }
             }
-            return authorsList;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+        return author;
     }
 }
