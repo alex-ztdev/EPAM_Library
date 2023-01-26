@@ -2,15 +2,16 @@ package com.my.library.dao.impl;
 
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.BookDAO;
-import com.my.library.dao.constants.columns.AuthorsColumns;
 import com.my.library.dao.constants.columns.BooksColumns;
-import com.my.library.dao.constants.queries.AuthorQueries;
 import com.my.library.dao.constants.queries.BookQueries;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 
-import java.sql.*;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +63,6 @@ public class BookDaoImpl implements BookDAO {
                 rs.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate(),
                 rs.getBoolean(BooksColumns.IS_AVAILABLE),
                 rs.getBoolean(BooksColumns.IS_REMOVED));
-
     }
 
 
@@ -166,6 +166,4 @@ public class BookDaoImpl implements BookDAO {
             throw new DaoException(e);
         }
     }
-
-
 }
