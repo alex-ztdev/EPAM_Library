@@ -22,10 +22,10 @@ public interface BookQueries {
     //language=TSQL
     String INSERT_BOOK = """
             INSERT INTO Books
-            (title, publisher_id, genre_id, page_number, publication_date, isAvailable,isRemoved )
+            (title, publisher_id, genre_id, page_number, publication_date, isAvailable,isRemoved, author_id )
             VALUES
             (?, ( SELECT TOP(1) id FROM Publishers WHERE title=?),
-             ( SELECT TOP(1) id FROM Book_Genres WHERE title=?), ?,?,?,?)
+             ( SELECT TOP(1) id FROM Book_Genres WHERE title=?), ?,?,?,?, ?)
             """;
     //language=TSQL
     String UPDATE_BOOK = """
@@ -48,7 +48,7 @@ public interface BookQueries {
             """;
 
     //language=TSQL
-    String FIND_ALL_BOOKS_AUTHORS = """
+    String FIND_ALL_BOOKS_AUTHOR = """
             SELECT author_id FROM Books
             WHERE id =?
             """;
@@ -56,7 +56,7 @@ public interface BookQueries {
     //language=TSQL
     String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
             WHERE isAvailable = 1
-            ORDER BY ?
+            ORDER BY %s
             OFFSET (?-1) ROWS
             FETCH NEXT ? ROWS ONLY
             """;

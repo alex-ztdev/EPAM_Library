@@ -74,11 +74,12 @@ public class BookDaoImpl implements BookDAO {
     @Override
     public List<Book> findAll(int start, int fetchNext, OrderTypes orderBy) throws DaoException {
         List<Book> bookList = new ArrayList<>();
+
+        String query = String.format(BookQueries.FIND_ALL_BOOKS_PAGINATION, orderBy.getOrderBy());
         try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.FIND_ALL_BOOKS_PAGINATION)) {
+             var statement = connection.prepareStatement(query)) {
 
             int k = 1;
-            statement.setString(k++, orderBy.getOrderBy());
             statement.setInt(k++, start);
             statement.setInt(k, fetchNext);
 
@@ -105,7 +106,8 @@ public class BookDaoImpl implements BookDAO {
             statement.setInt(k++, book.getPageNumber());
             statement.setDate(k++, Date.valueOf(book.getPublicationDate()));
             statement.setBoolean(k++, book.isAvailable());
-            statement.setBoolean(k, book.isRemoved());
+            statement.setBoolean(k++, book.isRemoved());
+            statement.setLong(k, book.getAuthor().getAuthorId());
 
             statement.executeUpdate();
             try (var keysRS = statement.getGeneratedKeys()) {
@@ -169,7 +171,7 @@ public class BookDaoImpl implements BookDAO {
         Optional<Author> author = Optional.empty();
 
         try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.FIND_ALL_BOOKS_AUTHORS)) {
+             var statement = connection.prepareStatement(BookQueries.FIND_ALL_BOOKS_AUTHOR)) {
             AuthorDaoImpl authorDao = AuthorDaoImpl.getInstance();
 
             statement.setLong(1, id);

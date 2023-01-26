@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 
 
 class UserServiceImplTest {
@@ -39,7 +38,7 @@ class UserServiceImplTest {
                     "380661111111",
                     "John", "Smith"),
             new User(3L, "jimLogin",
-                    "jimnpass123", UserRole.ADMINISTRATOR,
+                    "jimnpass123", UserRole.ADMIN,
                     UserStatus.NORMAL, "jim@gmail.com",
                     "380662222222",
                     "Jim", "Johns")
@@ -47,7 +46,7 @@ class UserServiceImplTest {
 
     private final List<User> usersToSave = Arrays.asList(
             new User("validLogin",
-                    "validPassword123", UserRole.ADMINISTRATOR,
+                    "validPassword123", UserRole.ADMIN,
                     UserStatus.NORMAL, "valid_mail@gmail.com",
                     "380111111111",
                     "Mike", "Tyson")
@@ -55,7 +54,7 @@ class UserServiceImplTest {
 
     private final List<User> invalidUsers = Arrays.asList(
             new User("mikeLogin",
-                    "mikenpass", UserRole.ADMINISTRATOR,
+                    "mikenpass", UserRole.ADMIN,
                     UserStatus.NORMAL, "mike@gmail.com",
                     "380662222222",
                     "Mike", "Tyson")
@@ -92,7 +91,6 @@ class UserServiceImplTest {
         Mockito.doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByEmail(validUsersList.get(0).getEmail());
         Mockito.doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByEmail(validUsersList.get(1).getEmail());
         Mockito.doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByEmail(validUsersList.get(2).getEmail());
-
 
     }
 

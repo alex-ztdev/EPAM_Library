@@ -26,11 +26,39 @@
 <div class="header">
     <div class="left-header">
         <a class="active" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="header.common.home"/></a>
-        <a href="controller?command=books_list"><fmt:message key="header.common.books"/></a>
-        <a href="controller?command=authors"><fmt:message key="header.common.authors"/></a>
-        <a href="controller?command=user_orders"><fmt:message key="header.user.order"/></a>
-        <a href="controller?command=librarians_list"><fmt:message key="header.admin.librarians"/></a>
-        <a href="#users"><fmt:message key="header.admin.users"/></a>
+
+
+<%--        <a href="controller?command=authors"><fmt:message key="header.common.authors"/></a>--%>
+
+        <a href="controller?command=books-list"><fmt:message key="header.common.books"/></a>
+
+        <c:choose>
+            <%-- Menu bar for reader only--%>
+            <c:when test="${sessionScope.user.role eq 'USER'}">
+
+                <a href="controller?command=books-list"><fmt:message key="header.user.order"/></a>
+            </c:when>
+            <%-- Menu bar for Admin or Librarian only--%>
+            <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">
+                <a href="controller?command=users-list"><fmt:message key="header.admin.users"/></a>
+                <a href="controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
+            </c:when>
+            <c:when test="${sessionScope.user.role eq 'ADMIN'}">
+                <a href="controller?command=users-list"><fmt:message key="header.admin.users"/></a>
+                <a href="controller?command=librarians-list"><fmt:message key="header.admin.librarians"/></a>
+                <a href="controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
+            </c:when>
+
+
+        </c:choose>
+
+<%--        <a href="controller?command=books_list"><fmt:message key="header.common.books"/></a>--%>
+
+<%--        <a href="controller?command=user_orders"><fmt:message key="header.user.order"/></a>--%>
+
+<%--        <a href="controller?command=librarians_list"><fmt:message key="header.admin.librarians"/></a>--%>
+
+<%--        <a href="#users"><fmt:message key="header.admin.users"/></a>--%>
     </div>
 
     <div class="right-header">
@@ -54,8 +82,15 @@
             </form>
         </div>
 
-        <a href="#profile"><fmt:message key="header.common.profile"/></a>
-        <a href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="header.common.login"/></a>
-        <a href="controller?command=logout"><fmt:message key="header.common.logout"/></a>
+
+        <c:choose>
+            <c:when test="${sessionScope.user == null}">
+                <a href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="header.common.login"/></a>
+            </c:when>
+            <c:otherwise>
+                <a href="controller?command=profile" class="active"><fmt:message key="header.common.profile"/></a>
+                <a href="controller?command=logout"><fmt:message key="header.common.logout"/></a>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
