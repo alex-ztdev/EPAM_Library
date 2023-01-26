@@ -1,6 +1,7 @@
 package com.my.library.dao.impl;
 
 import com.my.library.connection_pool.ConnectionPool;
+import com.my.library.dao.AuthorDAO;
 import com.my.library.dao.BookDAO;
 import com.my.library.dao.constants.OrderTypes;
 import com.my.library.dao.constants.columns.BooksColumns;
@@ -20,6 +21,8 @@ import java.util.Optional;
 public class BookDaoImpl implements BookDAO {
     private static final ConnectionPool dbm = ConnectionPool.getInstance();
     private static volatile BookDaoImpl INSTANCE;
+
+    private final AuthorDAO authorDAO = AuthorDaoImpl.getInstance();
 
     private BookDaoImpl() {
     }
@@ -55,13 +58,14 @@ public class BookDaoImpl implements BookDAO {
         return book == null ? Optional.empty() : Optional.of(book);
     }
 
-    private Book buildBook(ResultSet rs) throws SQLException {
+    private Book buildBook(ResultSet rs) throws SQLException, DaoException {
         return new Book(rs.getLong(BooksColumns.ID),
                 rs.getString(BooksColumns.TITLE),
                 rs.getString(BooksColumns.PUBLISHER),
                 rs.getString(BooksColumns.GENRE),
                 rs.getInt(BooksColumns.PAGE_NUMBER),
                 rs.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate(),
+                authorDAO.find(rs.getLong(BooksColumns.AUTHOR_ID)).orElse(Author.UNKNOWN_AUTHOR),
                 rs.getBoolean(BooksColumns.IS_AVAILABLE),
                 rs.getBoolean(BooksColumns.IS_REMOVED));
     }

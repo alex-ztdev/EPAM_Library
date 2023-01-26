@@ -4,9 +4,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Author {
+    public static final Author UNKNOWN_AUTHOR = new Author("Unknown", "Unknown");
     private Long authorId;
     private String firstName;
     private String secondName;
+
+    private Author(String firstName, String secondName) {
+        this.firstName = firstName;
+        this.secondName = firstName;
+    }
+
+
 
     private LocalDate birthDate;
 

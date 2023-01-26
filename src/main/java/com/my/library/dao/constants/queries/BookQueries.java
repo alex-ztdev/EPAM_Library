@@ -11,7 +11,8 @@ public interface BookQueries {
             	Books.page_number,
             	Books.publication_date,
             	Books.isAvailable,
-            	Books.isRemoved
+            	Books.isRemoved,
+            	Books.author_id
             FROM Books
             INNER JOIN Publishers ON Books.publisher_id = Publishers.id
             INNER JOIN Book_Genres ON Books.genre_id = Book_Genres.id

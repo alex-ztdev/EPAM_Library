@@ -11,40 +11,33 @@ public class Book {
     private String genre;
     private int pageNumber;
     private LocalDate publicationDate;
+
+    private Author author;
     private boolean isAvailable;
 
     private boolean isRemoved;
 
-    public Book() {
-    }
-
-    public Book(String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable, boolean isRemoved) {
+    public Book(String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, Author author, boolean isAvailable, boolean isRemoved) {
         this.title = title;
         this.publisherTitle = publisherTitle;
         this.genre = genre;
         this.pageNumber = pageNumber;
         this.publicationDate = publicationDate;
+        this.author = author;
         this.isAvailable = isAvailable;
         this.isRemoved = isRemoved;
     }
 
-    public Book(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, boolean isAvailable, boolean isRemoved) {
+    public Book(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, Author author, boolean isAvailable, boolean isRemoved) {
         this.bookId = bookId;
         this.title = title;
         this.publisherTitle = publisherTitle;
         this.genre = genre;
         this.pageNumber = pageNumber;
         this.publicationDate = publicationDate;
+        this.author = author;
         this.isAvailable = isAvailable;
         this.isRemoved = isRemoved;
-    }
-
-    public boolean isRemoved() {
-        return isRemoved;
-    }
-
-    public void setRemoved(boolean removed) {
-        isRemoved = removed;
     }
 
     public Long getBookId() {
@@ -95,12 +88,28 @@ public class Book {
         this.publicationDate = publicationDate;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
     public boolean isAvailable() {
         return isAvailable;
     }
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    public boolean isRemoved() {
+        return isRemoved;
+    }
+
+    public void setRemoved(boolean removed) {
+        isRemoved = removed;
     }
 
     @Override
@@ -117,7 +126,8 @@ public class Book {
         if (!title.equals(book.title)) return false;
         if (!publisherTitle.equals(book.publisherTitle)) return false;
         if (!genre.equals(book.genre)) return false;
-        return publicationDate.equals(book.publicationDate);
+        if (!publicationDate.equals(book.publicationDate)) return false;
+        return author.equals(book.author);
     }
 
     @Override
@@ -128,6 +138,7 @@ public class Book {
         result = 31 * result + genre.hashCode();
         result = 31 * result + pageNumber;
         result = 31 * result + publicationDate.hashCode();
+        result = 31 * result + author.hashCode();
         result = 31 * result + (isAvailable ? 1 : 0);
         result = 31 * result + (isRemoved ? 1 : 0);
         return result;
@@ -142,6 +153,7 @@ public class Book {
                 ", genre='" + genre + '\'' +
                 ", pageNumber=" + pageNumber +
                 ", publicationDate=" + publicationDate +
+                ", author=" + author +
                 ", isAvailable=" + isAvailable +
                 ", isRemoved=" + isRemoved +
                 '}';
