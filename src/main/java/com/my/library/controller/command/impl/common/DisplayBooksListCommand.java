@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class DisplayBooksListCommand implements Command {
-    private static final int RECORDS_PER_PAGE = 15;
+    private static final int RECORDS_PER_PAGE = 14;
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
@@ -53,6 +53,7 @@ public class DisplayBooksListCommand implements Command {
             request.setAttribute(Parameters.ORDER_BY, orderBy.toString());
             request.setAttribute(Parameters.BOOKS_TOTAL_PAGES, totalPages);
             request.setAttribute(Parameters.BOOKS_LIST, booksList);
+            request.setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
 
         } catch (ServiceException e) {
             throw new CommandException(e);

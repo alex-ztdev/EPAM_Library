@@ -40,7 +40,7 @@
                 </tr>
                 <c:forEach var="booksList" items="${requestScope.booksList}" varStatus="loop">
                     <tr>
-                        <td> ${loop.count} </td>
+                        <td> ${loop.count + (requestScope.page - 1) * requestScope.booksPerPage} </td>
                         <td> ${booksList.title} </td>
                         <td> ${booksList.genre} </td>
                         <td> ${booksList.author.firstName}${booksList.author.secondName} </td>
@@ -60,7 +60,41 @@
                     </tr>
                 </c:forEach>
             </table>
+
+
+
         </div>
+        <div class="pages_container">
+            <%--For displaying Previous link except for the 1st page --%>
+            <c:if test="${requestScope.page != 1}">
+                <td><a href="controller?command=books-list&page=${requestScope.page - 1}">Previous</a></td>
+            </c:if>
+            <%--For displaying Page numbers.
+                The when condition does not display a link for the current page--%>
+            <table>
+                <tr>
+                    <c:forEach begin="1" end="${requestScope.totalPages}" var="i">
+                        <c:choose>
+                            <c:when test="${requestScope.page eq i}">
+                                <td>${i}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><a href="controller?command=books-list&page=${i}">${i}</a></td>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </tr>
+            </table>
+
+            <%--For displaying Next link --%>
+            <c:if test="${requestScope.page lt requestScope.totalPages}">
+                <td><a href="controller?command=books-list&page=${requestScope.page + 1}">Next</a></td>
+            </c:if>
+
+        </div>
+
+
+
     </div>
 </div>
 
