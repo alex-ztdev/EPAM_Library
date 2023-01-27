@@ -26,17 +26,14 @@
 <div class="header">
     <div class="left-header">
         <a class="active" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="header.common.home"/></a>
-
-
 <%--        <a href="controller?command=authors"><fmt:message key="header.common.authors"/></a>--%>
 
         <a href="controller?command=books-list"><fmt:message key="header.common.books"/></a>
 
         <c:choose>
-            <%-- Menu bar for reader only--%>
+            <%-- Menu bar for reader only--%>s
             <c:when test="${sessionScope.user.role eq 'USER'}">
-
-                <a href="controller?command=books-list"><fmt:message key="header.user.order"/></a>
+                <a href="controller?command=user-orders"><fmt:message key="header.user.order"/></a>
             </c:when>
             <%-- Menu bar for Admin or Librarian only--%>
             <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">

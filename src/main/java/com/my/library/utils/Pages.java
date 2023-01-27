@@ -7,4 +7,5 @@ public interface Pages {
     String PROFILE_PAGE = "/pages/profile.jsp";
 
     String NOT_AUTHORIZED = "/pages/not_authorized.jsp";
+    String BOOKS_LIST = "/pages/books.jsp";
 }
