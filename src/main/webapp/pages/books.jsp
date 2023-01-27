@@ -17,82 +17,45 @@
     <meta charset="UTF-8"/>
     <title>Books</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/books.css"/>
-<%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index.css"/>--%>
+    <%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index.css"/>--%>
+
+
 </head>
 <body>
 <jsp:include page="header.jsp"/>
 
 <div class="container">
-    <div class="main-content" >
+    <div class="main-content">
         <div class="books_list_container">
             <table class="books_table">
                 <tr>
-                    <td>
-                        <h2><fmt:message key="books.common.label.counter"/></h2>
-                    </td>
-                    <td>
-                        <h2><fmt:message key="books.common.label.book_title"/></h2>
-                    </td>
-                    <td>
-                        <h2><fmt:message key="books.common.label.genre"/></h2>
-                    </td>
-                    <td>
-                        <h2><fmt:message key="books.common.label.author"/></h2>
-                    </td>
-                    <td>
-                        <h2><fmt:message key="books.common.label.publisher"/></h2>
-                    </td>
-                    <td>
-                        <h2><fmt:message key="books.common.label.pages"/></h2>
-                    </td>
-                    <td>
-                        <h2><fmt:message key="books.common.label.publication_date"/></h2>
-                        <%--                    <fmt:formatDate value="${booksList.publicationDate}" type="date"/>--%>
-                    </td>
-                    <td>
-                        <h2><fmt:message key="books.common.label.available"/></h2
-                    </td>
+                    <th><fmt:message key="books.common.label.counter"/></th>
+                    <th><fmt:message key="books.common.label.book_title"/></th>
+                    <th><fmt:message key="books.common.label.genre"/></th>
+                    <th><fmt:message key="books.common.label.author"/></th>
+                    <th><fmt:message key="books.common.label.publisher"/></th>
+                    <th><fmt:message key="books.common.label.pages"/></th>
+                    <th><fmt:message key="books.common.label.publication_date"/></th>
+                    <th><fmt:message key="books.common.label.available"/></th>
                 </tr>
-
-
                 <c:forEach var="booksList" items="${requestScope.booksList}" varStatus="loop">
                     <tr>
-                        <td>
-                            <h2> ${loop.count}</h2>
-                        </td>
-                        <td>
-                            <h2> ${booksList.title}</h2>
-                        </td>
-                        <td>
-                            <h2>${booksList.genre}</h2>
-                        </td>
-                        <td>
-                            <h2>${booksList.author.firstName}${booksList.author.secondName}</h2>
-                        </td>
-                        <td>
-                            <h2>${booksList.publisherTitle}</h2>
-                        </td>
-                        <td>
-                            <h2>${booksList.pageNumber}</h2>
-                        </td>
-                        <td>
-                                ${booksList.publicationDate}
-                                <%--                    <fmt:formatDate value="${booksList.publicationDate}" type="date"/>--%>
-                        </td>
+                        <td> ${loop.count} </td>
+                        <td> ${booksList.title} </td>
+                        <td> ${booksList.genre} </td>
+                        <td> ${booksList.author.firstName}${booksList.author.secondName} </td>
+                        <td> ${booksList.publisherTitle} </td>
+                        <td> ${booksList.pageNumber} </td>
+                        <td> ${booksList.publicationDate} </td>
                         <td>
                             <c:choose>
                                 <c:when test="${booksList.isAvailable}">
-                                    <h2>
-                                        <fmt:message key="books.common.available"/>
-                                    </h2>
+                                    <fmt:message key="books.common.available"/>
                                 </c:when>
                                 <c:otherwise>
-                                    <h2>
-                                        <fmt:message key="books.common.unavailable"/>
-                                    </h2>
+                                    <fmt:message key="books.common.unavailable"/>
                                 </c:otherwise>
                             </c:choose>
-
                         </td>
                     </tr>
                 </c:forEach>

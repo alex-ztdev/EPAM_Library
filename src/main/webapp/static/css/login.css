@@ -2,6 +2,7 @@ body {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
+
 }
 
 .login-container {
@@ -40,11 +41,11 @@ body {
     font-size: 18px;
 }
 
-.container,
-.form__input,
-.form__button {
-    font: 500 1rem 'Quicksand', sans-serif;
-}
+/*.container,*/
+/*.form__input,*/
+/*.form__button {*/
+/*    font: 500 1rem 'Quicksand', sans-serif;*/
+/*}*/
 
 .form--hidden {
     display: none;

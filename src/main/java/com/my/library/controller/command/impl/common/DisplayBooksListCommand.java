@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class DisplayBooksListCommand implements Command {
-    private static final int RECORDS_PER_PAGE = 10;
+    private static final int RECORDS_PER_PAGE = 20;
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
