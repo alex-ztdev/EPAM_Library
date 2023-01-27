@@ -27,7 +27,7 @@ public class RegisterCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "Registration command invoked");
-        UserService userService = new ServiceFactory().getUserService();
+        UserService userService = ServiceFactory.getUserService();
 
 //        CommandResult res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
         CommandResult res;

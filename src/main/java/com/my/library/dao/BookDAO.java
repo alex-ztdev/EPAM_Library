@@ -1,7 +1,7 @@
 package com.my.library.dao;
 
-import com.my.library.dao.constants.OrderTypes;
-import com.my.library.entities.Author;
+import com.my.library.controller.command.constant.BooksOrderDir;
+import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 
@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface BookDAO {
     Optional<Book> find(long id) throws DaoException;
 
-    List<Book> findAll(int start, int fetchNext, OrderTypes orderBy) throws DaoException;
+    List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, BooksOrderDir dir) throws DaoException;
 
     void save(Book book) throws DaoException;
 

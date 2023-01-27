@@ -1,7 +1,8 @@
 package com.my.library.services.impl;
 
+import com.my.library.controller.command.constant.BooksOrderDir;
 import com.my.library.dao.BookDAO;
-import com.my.library.dao.constants.OrderTypes;
+import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
@@ -49,15 +50,19 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findAll() throws ServiceException {
         try{
-            return bookDAO.findAll(1, Integer.MAX_VALUE, OrderTypes.BY_TITLE);
+            return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, BooksOrderDir.ASC);
         } catch (DaoException e) {
-            throw new ServiceException("Error while deleting book in BookServiceImpl", e);
+            throw new ServiceException("Error while default findAll in BookServiceImpl", e);
         }
     }
 
     @Override
-    public List<Book> findAll(int pageNum) throws ServiceException {
-        return null;
+    public List<Book> findAll(int from, int to, BooksOrderTypes orderBy, BooksOrderDir dir) throws ServiceException {
+        try {
+            return bookDAO.findAll(from, to, orderBy, dir);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while findAll method with parameters in BookServiceImpl",e);
+        }
     }
 
     @Override

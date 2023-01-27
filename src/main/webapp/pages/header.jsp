@@ -31,7 +31,7 @@
         <a href="controller?command=books-list"><fmt:message key="header.common.books"/></a>
 
         <c:choose>
-            <%-- Menu bar for reader only--%>s
+            <%-- Menu bar for reader only--%>
             <c:when test="${sessionScope.user.role eq 'USER'}">
                 <a href="controller?command=user-orders"><fmt:message key="header.user.order"/></a>
             </c:when>

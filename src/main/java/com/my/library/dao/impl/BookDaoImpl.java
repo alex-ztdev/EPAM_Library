@@ -1,9 +1,10 @@
 package com.my.library.dao.impl;
 
 import com.my.library.connection_pool.ConnectionPool;
+import com.my.library.controller.command.constant.BooksOrderDir;
 import com.my.library.dao.AuthorDAO;
 import com.my.library.dao.BookDAO;
-import com.my.library.dao.constants.OrderTypes;
+import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.columns.BooksColumns;
 import com.my.library.dao.constants.queries.BookQueries;
 import com.my.library.entities.Author;
@@ -72,10 +73,10 @@ public class BookDaoImpl implements BookDAO {
 
 
     @Override
-    public List<Book> findAll(int start, int fetchNext, OrderTypes orderBy) throws DaoException {
+    public List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, BooksOrderDir dir) throws DaoException {
         List<Book> bookList = new ArrayList<>();
 
-        String query = String.format(BookQueries.FIND_ALL_BOOKS_PAGINATION, orderBy.getOrderBy());
+        String query = String.format(BookQueries.FIND_ALL_BOOKS_PAGINATION, orderBy.getOrderBy(), dir);
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(query)) {
 

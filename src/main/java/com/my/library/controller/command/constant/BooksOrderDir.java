@@ -1,5 +1,6 @@
 package com.my.library.controller.command.constant;
 
-public interface UserCommands {
-
+public enum BooksOrderDir {
+    ASC,
+    DESC
 }

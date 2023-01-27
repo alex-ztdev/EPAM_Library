@@ -1,7 +1,9 @@
 package com.my.library.controller.filter;
 
 import com.my.library.controller.command.constant.GeneralCommands;
+import com.my.library.controller.command.constant.LibrarianCommands;
 import com.my.library.controller.command.constant.UserParameters;
+import com.my.library.dao.constants.UserRole;
 import com.my.library.entities.User;
 import com.my.library.utils.Pages;
 import jakarta.servlet.*;
@@ -18,16 +20,28 @@ import java.util.List;
 
 @WebFilter("/controller")
 public class AuthenticationFilter implements Filter {
-    private final static List<String> GENERAL_COMMANDS = List.of(
+    private static final List<String> GENERAL_COMMANDS = List.of(
             GeneralCommands.CHANGE_LANGUAGE,
             GeneralCommands.LOGIN,
             GeneralCommands.LOGOUT,
             GeneralCommands.REGISTRATION,
             GeneralCommands.ALL_BOOKS_LIST,
-            GeneralCommands.BOOK_PAGE,
+            GeneralCommands.BOOKS_LIST,
             GeneralCommands.SEARCH_BOOK,
             GeneralCommands.SORT_BOOKS
     );
+
+    private static final List<String> LIBRARIAN_COMMANDS = List.of(
+            //TODO: Add Librarian commands
+//            LibrarianCommands.CHANGE_LANGUAGE,
+//            LibrarianCommands.
+    );
+    private static final List<String> USER_COMMANDS = List.of(
+            //TODO: Add User commands
+//            LibrarianCommands.CHANGE_LANGUAGE,
+//            LibrarianCommands.
+    );
+
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -52,9 +66,15 @@ public class AuthenticationFilter implements Filter {
             if (user == null) {
                 response.sendRedirect(Pages.NOT_AUTHORIZED);
                 logger.log(Level.DEBUG, "No user in session! Tried to execute: " + command);
-            }
-            else{
+            } else {
                 //TODO: implement admin, librarian, user, (unknown?)
+
+                if (user.getRole() == UserRole.LIBRARIAN && LIBRARIAN_COMMANDS.contains(command)) {
+                    chain.doFilter(servletRequest, servletResponse);
+                } else if (user.getRole() == UserRole.USER &&  USER_COMMANDS.contains(command)) {
+                    chain.doFilter(servletRequest, servletResponse);
+                }
+
             }
 
         }

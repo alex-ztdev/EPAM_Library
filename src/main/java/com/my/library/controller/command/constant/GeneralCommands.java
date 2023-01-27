@@ -3,14 +3,17 @@ package com.my.library.controller.command.constant;
 public interface GeneralCommands {
     String COMMAND_PARAMETER = "command";
     String REGISTRATION = "registration";
+
     String LOGIN = "login";
     String CHANGE_LANGUAGE = "change_language";
     String LOGOUT = "logout";
 
+    String BOOKS_LIST = "books-list";
+
     String PROFILE = "profile";
     String DEFAULT_COMMAND = "Illegal Command";
 
-//    String ADMINISTRATION_BOOK_STORE = "administration__book__store";
+    //    String ADMINISTRATION_BOOK_STORE = "administration__book__store";
 //    String ADMINISTRATION_EDIT_BOOK = "administration__edit__book";
 //    String ADMINISTRATION_UPDATE_BOOK = "administration__update__book";
 //

@@ -6,11 +6,6 @@ import com.my.library.controller.command.impl.common.*;
 import com.my.library.services.ServiceFactory;
 
 public class CommandFactory {
-    private final ServiceFactory serviceFactory;
-
-    public CommandFactory() {
-        this.serviceFactory = new ServiceFactory();
-    }
 
     public static Command createCommand(String command) {
         Command res;
@@ -19,7 +14,7 @@ public class CommandFactory {
             case GeneralCommands.LOGOUT -> res = new LogoutCommand();
             case GeneralCommands.REGISTRATION -> res = new RegisterCommand();
             case GeneralCommands.CHANGE_LANGUAGE -> res = new ChangeLanguageCommand();
-            case UserCommands.BOOKS_LIST -> res = new DisplayBooksListCommand();
+            case GeneralCommands.BOOKS_LIST -> res = new DisplayBooksListCommand();
             default -> res = new DefaultCommand();
         }
         return res;

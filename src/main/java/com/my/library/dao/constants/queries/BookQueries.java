@@ -55,11 +55,11 @@ public interface BookQueries {
 
     //language=TSQL
     String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
-            WHERE isAvailable = 1
-            ORDER BY %s
-            OFFSET (?-1) ROWS
+            WHERE isRemoved = 0
+            ORDER BY %s %s
+            OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
     //language=TSQL
-    String COUNT_BOOK_RECORDS = "SELECT COUNT(id) FROM Books";
+    String COUNT_BOOK_RECORDS = "SELECT COUNT(id) FROM Books WHERE isRemoved=0";
 }

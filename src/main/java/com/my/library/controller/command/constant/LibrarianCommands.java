@@ -1,5 +1,4 @@
 package com.my.library.controller.command.constant;
 
-public interface UserCommands {
-
+public interface LibrarianCommands {
 }

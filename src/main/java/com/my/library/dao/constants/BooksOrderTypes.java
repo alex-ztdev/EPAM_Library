@@ -1,8 +1,8 @@
 package com.my.library.dao.constants;
 
-public enum OrderTypes {
+public enum BooksOrderTypes {
     BY_ID("Books.id"),
-    BY_TITLE("title"),
+    BY_TITLE("Books.title"),
 
     BY_PUBLISHER("publisher"),
     BY_AUTHOR("author"),
@@ -11,7 +11,7 @@ public enum OrderTypes {
 
     private final String orderBy;
 
-    OrderTypes(String orderBy) {
+    BooksOrderTypes(String orderBy) {
         this.orderBy = orderBy;
     }
 

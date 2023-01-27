@@ -20,13 +20,15 @@ import org.apache.logging.log4j.Logger;
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
+
+    //TODO: Make case insensitive
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "login command invoked");
         String login = request.getParameter(UserParameters.LOGIN);
         String password = request.getParameter(UserParameters.PASSWORD);
 
-        UserService userService = new ServiceFactory().getUserService();
+        UserService userService = ServiceFactory.getUserService();
         HttpSession session = request.getSession();
 
         CommandResult res;
