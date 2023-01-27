@@ -61,6 +61,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public int countBooks() throws ServiceException {
+        try {
+            return bookDAO.countBooks();
+        } catch (DaoException e) {
+            throw new ServiceException("Error while counting books in BookServiceImpl",e);
+        }
+    }
+
+    @Override
     public void save(Book book) throws ServiceException {
         try{
             bookDAO.save(book);

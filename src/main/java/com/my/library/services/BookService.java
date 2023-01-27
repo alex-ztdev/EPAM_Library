@@ -11,5 +11,8 @@ public interface BookService extends Service<Book> {
     void deleteById(long id) throws ServiceException;
 
     List<Book> findAll(int pageNum) throws ServiceException;
+
+    int countBooks() throws ServiceException;
+
 }
 

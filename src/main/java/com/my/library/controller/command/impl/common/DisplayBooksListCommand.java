@@ -13,8 +13,11 @@ public class DisplayBooksListCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        if (request.getParameter(Parameters.BOOKS_LIST_CURR_PAGE) != null) {
+        int currPage = 1;
+        var reqCurrPage = request.getParameter(Parameters.BOOKS_LIST_CURR_PAGE);
 
+        if (reqCurrPage != null && !reqCurrPage.isBlank()) {
+            currPage = Integer.parseInt(reqCurrPage);
         }
         return new CommandResult(Pages.BOOKS_LIST, CommandDirection.FORWARD);
     }
