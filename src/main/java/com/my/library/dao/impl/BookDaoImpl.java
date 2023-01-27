@@ -167,23 +167,18 @@ public class BookDaoImpl implements BookDAO {
     }
 
     @Override
-    public Optional<Author> getBooksAuthor(long id) throws DaoException {
-        Optional<Author> author = Optional.empty();
-
+    public int countBooks() throws DaoException {
         try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.FIND_ALL_BOOKS_AUTHOR)) {
-            AuthorDaoImpl authorDao = AuthorDaoImpl.getInstance();
+             var statement = connection.createStatement()) {
 
-            statement.setLong(1, id);
-
-            try (var rs = statement.executeQuery()) {
-                if(rs.next()) {
-                    author = authorDao.find(rs.getLong(BooksColumns.AUTHOR_ID));
-                }
+            try (var rs = statement.executeQuery(BookQueries.COUNT_BOOK_RECORDS)) {
+                rs.next();
+                return rs.getInt(1);
             }
         } catch (SQLException e) {
             throw new DaoException(e);
         }
-        return author;
     }
+
+
 }

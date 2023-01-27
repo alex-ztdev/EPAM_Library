@@ -60,4 +60,6 @@ public interface BookQueries {
             OFFSET (?-1) ROWS
             FETCH NEXT ? ROWS ONLY
             """;
+    //language=TSQL
+    String COUNT_BOOK_RECORDS = "SELECT COUNT(id) FROM Books";
 }
