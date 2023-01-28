@@ -4,6 +4,7 @@ import com.my.library.controller.command.constant.AdminCommands;
 import com.my.library.controller.command.constant.GeneralCommands;
 import com.my.library.controller.command.constant.UserCommands;
 import com.my.library.controller.command.impl.admin.RemoveBookCommand;
+import com.my.library.controller.command.impl.admin.RestoreBookCommand;
 import com.my.library.controller.command.impl.common.*;
 import com.my.library.services.ServiceFactory;
 
@@ -18,6 +19,7 @@ public class CommandFactory {
             case GeneralCommands.CHANGE_LANGUAGE -> res = new ChangeLanguageCommand();
             case GeneralCommands.BOOKS_LIST -> res = new DisplayBooksListCommand();
             case AdminCommands.REMOVE_BOOK -> res = new RemoveBookCommand();
+            case AdminCommands.RESTORE_BOOK -> res = new RestoreBookCommand();
             default -> res = new DefaultCommand();
         }
         return res;

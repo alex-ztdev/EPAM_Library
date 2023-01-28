@@ -93,6 +93,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public void restore(long id) throws ServiceException {
+        try {
+            bookDAO.restore(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while exec restore method in BookServiceImpl",e);
+        }
+    }
+
+    @Override
     public void save(Book book) throws ServiceException {
         try{
             bookDAO.save(book);

@@ -39,7 +39,7 @@ public interface BookQueries {
     //language=TSQL
     String SET_BOOK_TO_REMOVED = """
             UPDATE Storage SET
-            isRemoved=?
+            isRemoved=1
             WHERE book_id = ?
             """;
 
@@ -84,6 +84,12 @@ public interface BookQueries {
     //language=TSQL
     String GET_QUANTITY = """
             SELECT quantity FROM Storage WHERE book_id=?
+            """;
+    //language=TSQL
+    String RESTORE_BOOK = """
+            UPDATE Storage 
+            SET isRemoved=0
+            WHERE book_id=?
             """;
 
 }

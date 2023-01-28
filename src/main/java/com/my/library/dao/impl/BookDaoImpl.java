@@ -151,7 +151,6 @@ public class BookDaoImpl implements BookDAO {
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
             int k = 1;
-            statement.setBoolean(k++, true);
             statement.setLong(k, id);
 
             statement.executeUpdate();
@@ -202,6 +201,20 @@ public class BookDaoImpl implements BookDAO {
                 rs.next();
                 return rs.getInt(BooksColumns.QUANTITY);
             }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public void restore(long id) throws DaoException {
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(BookQueries.RESTORE_BOOK)) {
+
+            statement.setLong(1, id);
+
+            statement.executeUpdate();
+
         } catch (SQLException e) {
             throw new DaoException(e);
         }
