@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.common;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
@@ -12,6 +13,7 @@ import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
 import com.my.library.utils.builder.UserBuilder;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +31,18 @@ public class RegisterCommand implements Command {
         logger.log(Level.DEBUG, "Registration command invoked");
         UserService userService = ServiceFactory.getUserService();
 
-//        CommandResult res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.FORWARD);
+
+
+        HttpSession session = request.getSession();
+
+        logger.log(Level.DEBUG, "RegisterCommand: set curr page: " + Pages.LOGIN_PAGE);
+
+        //TODO: Make transition to registration page after language swap
+        // (add regForm parameter to session than remove it when logged successfully,
+        // probably wouldn't work, because of transition to other pages... )
+        session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.LOGIN_PAGE);
+
+
         CommandResult res;
         try {
             Optional<User> userOptional = new UserBuilder().buildNewUser(request);
@@ -47,6 +60,7 @@ public class RegisterCommand implements Command {
                     request.setAttribute(UserParameters.REG_FORM, "");
                     res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
                 } else {
+                    //TODO: Save all validation errors in session!
                     request.setAttribute(UserParameters.VALIDATION_LIST, validation);
                     setParameters(request, validation);
                     request.setAttribute(UserParameters.REG_FORM, UserParameters.REG_FORM);
