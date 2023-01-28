@@ -74,4 +74,14 @@ public interface BookQueries {
 
     //language=TSQL
     String COUNT_NOT_REMOVED_BOOK_RECORDS = COUNT_ALL_BOOK_RECORDS + "WHERE isRemoved=0";
+
+    //language=TSQL
+    String IS_REMOVED_BOOK = """
+            SELECT isRemoved FROM Storage WHERE book_id=?
+            """;
+    //language=TSQL
+    String GET_QUANTITY = """
+            SELECT quantity FROM Storage WHERE book_id=?
+            """;
+
 }

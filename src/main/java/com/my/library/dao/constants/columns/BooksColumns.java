@@ -10,4 +10,5 @@ public interface BooksColumns {
     String IS_AVAILABLE = "isAvailable";
     String AUTHOR_ID = "author_id";
     String IS_REMOVED = "isRemoved";
+    String QUANTITY = "quantity";
 }

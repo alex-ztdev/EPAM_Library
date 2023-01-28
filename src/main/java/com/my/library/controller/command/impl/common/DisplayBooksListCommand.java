@@ -5,6 +5,8 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.*;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.UserRole;
+import com.my.library.dto.BookDTO;
+import com.my.library.dto.BookMapper;
 import com.my.library.entities.Book;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
@@ -45,9 +47,14 @@ public class DisplayBooksListCommand implements Command {
         boolean includeRemoved = user != null && user.getRole() == UserRole.ADMIN;
 
         try {
-            List<Book> booksList = bookService.findAll((currPage - 1) * RECORDS_PER_PAGE,
-                    RECORDS_PER_PAGE, orderBy, orderDir, includeRemoved
+            List<Book> booksList = bookService.findAll(
+                    (currPage - 1) * RECORDS_PER_PAGE,
+                    RECORDS_PER_PAGE, orderBy,
+                    orderDir, includeRemoved
             );
+
+            List<BookDTO> bookDTOList = new BookMapper().getDTOList(booksList);
+
             int totalRecords = bookService.countBooks(includeRemoved);
             int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
 
@@ -55,7 +62,7 @@ public class DisplayBooksListCommand implements Command {
             request.setAttribute(Parameters.ORDER_DIRECTION, orderDir.toString());
             request.setAttribute(Parameters.ORDER_BY, orderBy.toString());
             request.setAttribute(Parameters.BOOKS_TOTAL_PAGES, totalPages);
-            request.setAttribute(Parameters.BOOKS_LIST, booksList);
+            request.setAttribute(Parameters.BOOKS_LIST, bookDTOList);
             request.setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
 
         } catch (ServiceException e) {

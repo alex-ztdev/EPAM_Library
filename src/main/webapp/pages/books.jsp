@@ -113,14 +113,14 @@
                         <td> ${booksList.title} </td>
                         <td> ${booksList.genre} </td>
                             <%--TODO: transfer book to BookDTO with authors fullName --%>
-                        <td> ${booksList.author.firstName}${booksList.author.secondName} </td>
+                        <td> ${booksList.authorFullName} </td>
                         <td> ${booksList.publisherTitle} </td>
                         <td> ${booksList.pageNumber} </td>
                         <td> ${booksList.publicationDate} </td>
                         <td>
                             <c:choose>
-                                <c:when test="${booksList.isAvailable}">
-                                    <fmt:message key="books.common.available"/>
+                                <c:when test="${booksList.copies gt 0}">
+                                    ${booksList.copies}
                                 </c:when>
                                 <c:otherwise>
                                     <fmt:message key="books.common.unavailable"/>

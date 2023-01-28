@@ -75,6 +75,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public boolean isRemoved(long id) throws ServiceException {
+        try {
+            return bookDAO.isRemoved(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while exec isRemoved method in BookServiceImpl",e);
+        }
+    }
+
+    @Override
+    public int getQuantity(long id) throws ServiceException {
+        try {
+            return bookDAO.getQuantity(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while exec getQuantity method in BookServiceImpl",e);
+        }
+    }
+
+    @Override
     public void save(Book book) throws ServiceException {
         try{
             bookDAO.save(book);

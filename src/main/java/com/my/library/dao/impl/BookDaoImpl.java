@@ -175,5 +175,37 @@ public class BookDaoImpl implements BookDAO {
         }
     }
 
+    @Override
+    public boolean isRemoved(long id) throws DaoException {
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(BookQueries.IS_REMOVED_BOOK)) {
+
+            statement.setLong(1, id);
+
+            try (var rs = statement.executeQuery()) {
+                rs.next();
+                return rs.getBoolean(BooksColumns.IS_REMOVED);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public int getQuantity(long id) throws DaoException {
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(BookQueries.GET_QUANTITY)) {
+
+            statement.setLong(1, id);
+
+            try (var rs = statement.executeQuery()) {
+                rs.next();
+                return rs.getInt(BooksColumns.QUANTITY);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 
 }
