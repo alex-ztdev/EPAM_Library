@@ -42,7 +42,6 @@ body {
 
 
 .books_table {
-    /*flex: 1 1 auto;*/
     border-collapse: collapse;
     border: 1px solid #000000;
     padding: 8px;
@@ -54,6 +53,27 @@ body {
     border: 1px solid #000000;
     padding: 10px;
 }
+
+.books_table th {
+
+    background-color: #3964d9;
+    color: white;
+}
+
+.books_table th  a{
+    color: white;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.books_table th.active {
+    background-color: #2f1973;
+    color: white;
+}
+
+.books_table th:hover:not(.active) {background-color: #502faf;}
+
 
 .books_table tr:nth-child(odd) {
     background-color: rgba(78, 126, 248, 0.8);
@@ -67,12 +87,7 @@ body {
     background-color: #4561b9;
 }
 
-.books_table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    background-color: #3964d9;
-    color: white;
-}
+
 
 .books_table td {
     padding: 10px 20px;

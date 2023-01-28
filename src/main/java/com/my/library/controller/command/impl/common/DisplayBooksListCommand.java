@@ -35,10 +35,10 @@ public class DisplayBooksListCommand implements Command {
             currPage = Integer.parseInt(reqCurrPage);
         }
         if (reqOrderDir != null && !reqOrderDir.isBlank()) {
-            orderDir = BooksOrderDir.valueOf(reqOrderDir);
+            orderDir = BooksOrderDir.valueOf(reqOrderDir.toUpperCase());
         }
         if (reqOrderBy != null && !reqOrderBy.isBlank()) {
-            orderBy = BooksOrderTypes.valueOf(reqOrderBy);
+            orderBy = BooksOrderTypes.valueOf(reqOrderBy.toUpperCase());
         }
 
         try {
