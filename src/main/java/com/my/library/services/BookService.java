@@ -12,9 +12,9 @@ public interface BookService extends Service<Book> {
 
     void deleteById(long id) throws ServiceException;
 
-    List<Book> findAll(int from, int to, BooksOrderTypes orderBy, BooksOrderDir dir) throws ServiceException;
+    List<Book> findAll(int from, int to, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws ServiceException;
 
-    int countBooks() throws ServiceException;
+    int countBooks(boolean includeRemoved) throws ServiceException;
 
 }
 

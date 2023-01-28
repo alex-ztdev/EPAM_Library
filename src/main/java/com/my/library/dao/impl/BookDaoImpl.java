@@ -66,17 +66,16 @@ public class BookDaoImpl implements BookDAO {
                 rs.getString(BooksColumns.GENRE),
                 rs.getInt(BooksColumns.PAGE_NUMBER),
                 rs.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate(),
-                authorDAO.find(rs.getLong(BooksColumns.AUTHOR_ID)).orElse(Author.UNKNOWN_AUTHOR),
-                rs.getBoolean(BooksColumns.IS_AVAILABLE),
-                rs.getBoolean(BooksColumns.IS_REMOVED));
+                authorDAO.find(rs.getLong(BooksColumns.AUTHOR_ID)).orElse(Author.UNKNOWN_AUTHOR));
     }
 
 
     @Override
-    public List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, BooksOrderDir dir) throws DaoException {
+    public List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws DaoException {
         List<Book> bookList = new ArrayList<>();
+        var unformattedQ = includeRemoved ? BookQueries.FIND_ALL_BOOKS_PAGINATION : BookQueries.FIND_ALL_NOT_REMOVED_BOOKS_PAGINATION;
 
-        String query = String.format(BookQueries.FIND_ALL_BOOKS_PAGINATION, orderBy.getOrderBy(), dir);
+        String query = String.format(unformattedQ, orderBy.getOrderBy(), dir);
         try (var connection = dbm.get();
              var statement = connection.prepareStatement(query)) {
 
@@ -106,8 +105,6 @@ public class BookDaoImpl implements BookDAO {
             statement.setString(k++, book.getGenre());
             statement.setInt(k++, book.getPageNumber());
             statement.setDate(k++, Date.valueOf(book.getPublicationDate()));
-            statement.setBoolean(k++, book.isAvailable());
-            statement.setBoolean(k++, book.isRemoved());
             statement.setLong(k, book.getAuthor().getAuthorId());
 
             statement.executeUpdate();
@@ -132,8 +129,6 @@ public class BookDaoImpl implements BookDAO {
             statement.setString(k++, book.getGenre());
             statement.setInt(k++, book.getPageNumber());
             statement.setDate(k++, Date.valueOf(book.getPublicationDate()));
-            statement.setBoolean(k++, book.isAvailable());
-            statement.setBoolean(k++, book.isRemoved());
             statement.setLong(k, book.getBookId());
 
             var updatedRows = statement.executeUpdate();
@@ -147,7 +142,6 @@ public class BookDaoImpl implements BookDAO {
     @Override
     public void delete(Book book) throws DaoException {
         if (book != null) {
-            book.setRemoved(true);
             deleteById(book.getBookId());
         }
     }
@@ -168,11 +162,11 @@ public class BookDaoImpl implements BookDAO {
     }
 
     @Override
-    public int countBooks() throws DaoException {
+    public int countBooks(boolean includeRemoved) throws DaoException {
         try (var connection = dbm.get();
              var statement = connection.createStatement()) {
 
-            try (var rs = statement.executeQuery(BookQueries.COUNT_BOOK_RECORDS)) {
+            try (var rs = statement.executeQuery(includeRemoved ? BookQueries.COUNT_ALL_BOOK_RECORDS : BookQueries.COUNT_NOT_REMOVED_BOOK_RECORDS)) {
                 rs.next();
                 return rs.getInt(1);
             }

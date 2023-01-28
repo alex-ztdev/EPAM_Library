@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface BookDAO {
     Optional<Book> find(long id) throws DaoException;
 
-    List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, BooksOrderDir dir) throws DaoException;
+    List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws DaoException;
 
     void save(Book book) throws DaoException;
 
@@ -21,5 +21,5 @@ public interface BookDAO {
 
     void deleteById(long id) throws DaoException;
 
-    int countBooks() throws DaoException;
+    int countBooks(boolean includeRemoved) throws DaoException;
 }

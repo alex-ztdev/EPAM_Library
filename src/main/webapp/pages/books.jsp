@@ -97,7 +97,6 @@
                         </c:otherwise>
                     </c:choose>
 
-
                     <th><fmt:message key="books.common.label.author"/> <i class="fa fa-sort" aria-hidden="true"></i>
                     </th>
                     <th><fmt:message key="books.common.label.publisher"/> <i class="fa fa-sort" aria-hidden="true"></i>

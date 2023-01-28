@@ -10,8 +10,6 @@ public interface BookQueries {
             	Book_Genres.title as book_genre,
             	Books.page_number,
             	Books.publication_date,
-            	Books.isAvailable,
-            	Books.isRemoved,
             	Books.author_id
             FROM Books
             INNER JOIN Publishers ON Books.publisher_id = Publishers.id
@@ -22,10 +20,10 @@ public interface BookQueries {
     //language=TSQL
     String INSERT_BOOK = """
             INSERT INTO Books
-            (title, publisher_id, genre_id, page_number, publication_date, isAvailable,isRemoved, author_id )
+            (title, publisher_id, genre_id, page_number, publication_date, author_id )
             VALUES
             (?, ( SELECT TOP(1) id FROM Publishers WHERE title=?),
-             ( SELECT TOP(1) id FROM Book_Genres WHERE title=?), ?,?,?,?, ?)
+             ( SELECT TOP(1) id FROM Book_Genres WHERE title=?), ?,?,?)
             """;
     //language=TSQL
     String UPDATE_BOOK = """
@@ -34,17 +32,15 @@ public interface BookQueries {
             publisher_id= (SELECT TOP(1) id FROM Publishers WHERE title=?),
             genre_id=(SELECT TOP(1) id FROM Book_Genres WHERE title=?),
             page_number=?,
-            publication_date=?,
-            isAvailable=?,
-            isRemoved=?
+            publication_date=?
             WHERE id = ?
             """;
 
     //language=TSQL
     String SET_BOOK_TO_REMOVED = """
-            UPDATE Books SET
+            UPDATE Storage SET
             isRemoved=?
-            WHERE id = ?
+            WHERE book_id = ?
             """;
 
     //language=TSQL
@@ -54,12 +50,28 @@ public interface BookQueries {
             """;
 
     //language=TSQL
-    String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
+    String FIND_ALL_NOT_REMOVED_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
+            INNER JOIN Storage S on Books.id = S.book_id
             WHERE isRemoved = 0
             ORDER BY %s %s
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
+  //language=TSQL
+    String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
+            INNER JOIN Storage S on Books.id = S.book_id
+            ORDER BY %s %s
+            OFFSET ? ROWS
+            FETCH NEXT ? ROWS ONLY
+            """;
+
+
     //language=TSQL
-    String COUNT_BOOK_RECORDS = "SELECT COUNT(id) FROM Books WHERE isRemoved=0";
+    String COUNT_ALL_BOOK_RECORDS = """
+    SELECT COUNT(Books.id) FROM Books
+    INNER JOIN Storage S on Books.id = S.book_id
+    """;
+
+    //language=TSQL
+    String COUNT_NOT_REMOVED_BOOK_RECORDS = COUNT_ALL_BOOK_RECORDS + "WHERE isRemoved=0";
 }

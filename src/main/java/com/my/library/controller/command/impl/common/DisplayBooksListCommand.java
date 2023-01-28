@@ -2,11 +2,11 @@ package com.my.library.controller.command.impl.common;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
-import com.my.library.controller.command.constant.BooksOrderDir;
-import com.my.library.controller.command.constant.CommandDirection;
-import com.my.library.controller.command.constant.Parameters;
+import com.my.library.controller.command.constant.*;
 import com.my.library.dao.constants.BooksOrderTypes;
+import com.my.library.dao.constants.UserRole;
 import com.my.library.entities.Book;
+import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
@@ -40,12 +40,15 @@ public class DisplayBooksListCommand implements Command {
         if (reqOrderBy != null && !reqOrderBy.isBlank()) {
             orderBy = BooksOrderTypes.valueOf(reqOrderBy.toUpperCase());
         }
+        var user = (User) request.getSession().getAttribute(UserParameters.USER_IN_SESSION);
+
+        boolean includeRemoved = user != null && user.getRole() == UserRole.ADMIN;
 
         try {
             List<Book> booksList = bookService.findAll((currPage - 1) * RECORDS_PER_PAGE,
-                    RECORDS_PER_PAGE, orderBy, orderDir
+                    RECORDS_PER_PAGE, orderBy, orderDir, includeRemoved
             );
-            int totalRecords = bookService.countBooks();
+            int totalRecords = bookService.countBooks(includeRemoved);
             int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
 
             request.setAttribute(Parameters.BOOKS_LIST_CURR_PAGE, currPage);

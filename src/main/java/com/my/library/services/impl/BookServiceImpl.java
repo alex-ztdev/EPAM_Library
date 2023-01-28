@@ -50,25 +50,25 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findAll() throws ServiceException {
         try{
-            return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, BooksOrderDir.ASC);
+            return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, BooksOrderDir.ASC, false);
         } catch (DaoException e) {
             throw new ServiceException("Error while default findAll in BookServiceImpl", e);
         }
     }
 
     @Override
-    public List<Book> findAll(int from, int to, BooksOrderTypes orderBy, BooksOrderDir dir) throws ServiceException {
+    public List<Book> findAll(int from, int to, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws ServiceException {
         try {
-            return bookDAO.findAll(from, to, orderBy, dir);
+            return bookDAO.findAll(from, to, orderBy, dir, includeRemoved);
         } catch (DaoException e) {
             throw new ServiceException("Error while findAll method with parameters in BookServiceImpl",e);
         }
     }
 
     @Override
-    public int countBooks() throws ServiceException {
+    public int countBooks(boolean includeRemoved) throws ServiceException {
         try {
-            return bookDAO.countBooks();
+            return bookDAO.countBooks(includeRemoved);
         } catch (DaoException e) {
             throw new ServiceException("Error while counting books in BookServiceImpl",e);
         }

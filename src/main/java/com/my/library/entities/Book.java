@@ -2,7 +2,6 @@ package com.my.library.entities;
 
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Book {
     private Long bookId;
@@ -11,24 +10,20 @@ public class Book {
     private String genre;
     private int pageNumber;
     private LocalDate publicationDate;
-
     private Author author;
-    private boolean isAvailable;
 
-    private boolean isRemoved;
 
-    public Book(String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, Author author, boolean isAvailable, boolean isRemoved) {
+    public Book(String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, Author author) {
         this.title = title;
         this.publisherTitle = publisherTitle;
         this.genre = genre;
         this.pageNumber = pageNumber;
         this.publicationDate = publicationDate;
         this.author = author;
-        this.isAvailable = isAvailable;
-        this.isRemoved = isRemoved;
+
     }
 
-    public Book(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, Author author, boolean isAvailable, boolean isRemoved) {
+    public Book(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, Author author) {
         this.bookId = bookId;
         this.title = title;
         this.publisherTitle = publisherTitle;
@@ -36,8 +31,7 @@ public class Book {
         this.pageNumber = pageNumber;
         this.publicationDate = publicationDate;
         this.author = author;
-        this.isAvailable = isAvailable;
-        this.isRemoved = isRemoved;
+
     }
 
     public Long getBookId() {
@@ -96,22 +90,6 @@ public class Book {
         this.author = author;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    public boolean isRemoved() {
-        return isRemoved;
-    }
-
-    public void setRemoved(boolean removed) {
-        isRemoved = removed;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,29 +98,28 @@ public class Book {
         Book book = (Book) o;
 
         if (pageNumber != book.pageNumber) return false;
-        if (isAvailable != book.isAvailable) return false;
-        if (isRemoved != book.isRemoved) return false;
-        if (!bookId.equals(book.bookId)) return false;
-        if (!title.equals(book.title)) return false;
-        if (!publisherTitle.equals(book.publisherTitle)) return false;
-        if (!genre.equals(book.genre)) return false;
-        if (!publicationDate.equals(book.publicationDate)) return false;
-        return author.equals(book.author);
+        if (bookId != null ? !bookId.equals(book.bookId) : book.bookId != null) return false;
+        if (title != null ? !title.equals(book.title) : book.title != null) return false;
+        if (publisherTitle != null ? !publisherTitle.equals(book.publisherTitle) : book.publisherTitle != null)
+            return false;
+        if (genre != null ? !genre.equals(book.genre) : book.genre != null) return false;
+        if (publicationDate != null ? !publicationDate.equals(book.publicationDate) : book.publicationDate != null)
+            return false;
+        return author != null ? author.equals(book.author) : book.author == null;
     }
 
     @Override
     public int hashCode() {
-        int result = bookId.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + publisherTitle.hashCode();
-        result = 31 * result + genre.hashCode();
+        int result = bookId != null ? bookId.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (publisherTitle != null ? publisherTitle.hashCode() : 0);
+        result = 31 * result + (genre != null ? genre.hashCode() : 0);
         result = 31 * result + pageNumber;
-        result = 31 * result + publicationDate.hashCode();
-        result = 31 * result + author.hashCode();
-        result = 31 * result + (isAvailable ? 1 : 0);
-        result = 31 * result + (isRemoved ? 1 : 0);
+        result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
         return result;
     }
+
 
     @Override
     public String toString() {
@@ -154,16 +131,6 @@ public class Book {
                 ", pageNumber=" + pageNumber +
                 ", publicationDate=" + publicationDate +
                 ", author=" + author +
-                ", isAvailable=" + isAvailable +
-                ", isRemoved=" + isRemoved +
                 '}';
-    }
-
-    public boolean getIsAvailable() {
-        return isAvailable;
-    }
-
-    public void setIsAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
     }
 }
