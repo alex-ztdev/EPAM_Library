@@ -1,5 +1,6 @@
 package com.my.library.controller.filter;
 
+import com.my.library.controller.command.constant.AdminCommands;
 import com.my.library.controller.command.constant.GeneralCommands;
 import com.my.library.controller.command.constant.LibrarianCommands;
 import com.my.library.controller.command.constant.UserParameters;
@@ -41,6 +42,11 @@ public class AuthenticationFilter implements Filter {
 //            LibrarianCommands.CHANGE_LANGUAGE,
 //            LibrarianCommands.
     );
+    private static final List<String> ADMIN_COMMANDS = List.of(
+            AdminCommands.REMOVE_BOOK,
+            AdminCommands.RESTORE_BOOK
+    );
+
 
 
     private static final Logger logger = LogManager.getLogger();
@@ -70,11 +76,15 @@ public class AuthenticationFilter implements Filter {
                 //TODO: implement admin, librarian, user, (unknown?)
 
                 if (user.getRole() == UserRole.LIBRARIAN && LIBRARIAN_COMMANDS.contains(command)) {
+                    logger.log(Level.DEBUG, "Librarian: " + user.getUserId() +" executed: " + command);
                     chain.doFilter(servletRequest, servletResponse);
-                } else if (user.getRole() == UserRole.USER &&  USER_COMMANDS.contains(command)) {
+                } else if (user.getRole() == UserRole.USER && USER_COMMANDS.contains(command)) {
+                    logger.log(Level.DEBUG, "User: " + user.getUserId() +" executed: " + command);
+                    chain.doFilter(servletRequest, servletResponse);
+                } else if (user.getRole() == UserRole.ADMIN && ADMIN_COMMANDS.contains(command)) {
+                    logger.log(Level.DEBUG, "Admin: " + user.getUserId() +" executed: " + command);
                     chain.doFilter(servletRequest, servletResponse);
                 }
-
             }
 
         }

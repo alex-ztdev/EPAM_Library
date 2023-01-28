@@ -8,6 +8,7 @@ public interface Parameters {
     String BOOKS_LIST = "booksList";
     String BOOKS_PER_PAGE = "booksPerPage";
     String ORDER_BY = "order_by";
+    String BOOK_ID = "book_id";
 
 
     String ORDER_DIRECTION = "order_dir";
