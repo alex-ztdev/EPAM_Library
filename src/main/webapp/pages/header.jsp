@@ -28,6 +28,7 @@
 
 <div class="header">
     <div class="left-header">
+
         <a class="active" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="header.common.home"/></a>
 <%--        <a href="controller?command=authors"><fmt:message key="header.common.authors"/></a>--%>
 

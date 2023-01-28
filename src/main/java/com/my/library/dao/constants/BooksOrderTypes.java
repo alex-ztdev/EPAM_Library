@@ -9,7 +9,8 @@ public enum BooksOrderTypes {
     BY_GENRE("book_genre"),
     BY_PUBLICATION_DATE("publication_date"),
     BY_PAGES("Books.page_number"),
-    BY_COPIES("S.quantity");
+    BY_COPIES("S.quantity"),
+    BY_REMOVED("S.isRemoved");
 
     private final String orderBy;
 
