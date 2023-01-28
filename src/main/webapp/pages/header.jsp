@@ -86,7 +86,7 @@
 
         <c:choose>
             <c:when test="${sessionScope.user == null}">
-                <a href="${pageContext.request.contextPath}/login.jsp"><fmt:message key="header.common.login"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=login"><fmt:message key="header.common.login"/></a>
             </c:when>
             <c:otherwise>
                 <a href="controller?command=profile"><fmt:message key="header.common.profile"/></a>

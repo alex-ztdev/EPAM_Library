@@ -3,7 +3,9 @@ package com.my.library.controller.command.impl.common;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
-import com.my.library.controller.command.constant.UserParameters;
+import com.my.library.controller.command.constant.RedirectToPage;
+import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
@@ -19,17 +21,23 @@ import org.apache.logging.log4j.Logger;
 
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-
+    private final UserService userService = ServiceFactory.getUserService();
 
     //TODO: Make case insensitive
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        logger.log(Level.DEBUG, "login command invoked");
+        logger.log(Level.DEBUG, "LoginCommand invoked");
         String login = request.getParameter(UserParameters.LOGIN);
         String password = request.getParameter(UserParameters.PASSWORD);
 
-        UserService userService = ServiceFactory.getUserService();
         HttpSession session = request.getSession();
+
+
+        logger.log(Level.DEBUG, "LoginCommand: set curr page: " + Pages.LOGIN_PAGE);
+        session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.LOGIN_PAGE);
+        if (login == null || login.isBlank() || password == null || password.isBlank()) {
+            return new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
+        }
 
         CommandResult res;
         try {

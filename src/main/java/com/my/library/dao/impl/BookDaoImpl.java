@@ -219,6 +219,4 @@ public class BookDaoImpl implements BookDAO {
             throw new DaoException(e);
         }
     }
-
-
 }

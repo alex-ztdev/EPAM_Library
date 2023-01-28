@@ -1,9 +1,8 @@
 package com.my.library.controller.filter;
 
-import com.my.library.controller.command.constant.AdminCommands;
-import com.my.library.controller.command.constant.GeneralCommands;
-import com.my.library.controller.command.constant.LibrarianCommands;
-import com.my.library.controller.command.constant.UserParameters;
+import com.my.library.controller.command.constant.commands.AdminCommands;
+import com.my.library.controller.command.constant.commands.GeneralCommands;
+import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.entities.User;
 import com.my.library.utils.Pages;

@@ -1,4 +1,4 @@
-package com.my.library.controller.command.constant;
+package com.my.library.controller.command.constant.commands;
 
 public interface GeneralCommands {
     String COMMAND_PARAMETER = "command";

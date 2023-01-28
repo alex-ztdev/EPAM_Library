@@ -1,9 +1,8 @@
 package com.my.library.controller;
 
-import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.CommandFactory;
 import com.my.library.controller.command.CommandResult;
-import com.my.library.controller.command.constant.GeneralCommands;
+import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.exceptions.CommandException;
 import com.my.library.utils.Pages;

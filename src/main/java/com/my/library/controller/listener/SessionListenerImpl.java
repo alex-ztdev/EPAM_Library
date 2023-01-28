@@ -1,10 +1,7 @@
 package com.my.library.controller.listener;
 
-import com.my.library.controller.command.constant.UserParameters;
-import com.my.library.entities.User;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpSessionAttributeListener;
-import jakarta.servlet.http.HttpSessionBindingEvent;
 import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 import org.apache.logging.log4j.Level;

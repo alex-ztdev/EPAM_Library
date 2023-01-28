@@ -3,7 +3,7 @@ package com.my.library.controller.command.impl.admin;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
-import com.my.library.controller.command.constant.Parameters;
+import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;

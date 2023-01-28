@@ -1,6 +1,6 @@
 package com.my.library.utils.validator;
 
-import com.my.library.controller.command.constant.UserParameters;
+import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.entities.User;
 import com.my.library.utils.validator.constants.UserRegex;

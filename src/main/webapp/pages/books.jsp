@@ -30,6 +30,8 @@
 
 
 <div class="container">
+
+    ${sessionScope.par}
     <div class="main-content">
         <div class="books_list_container">
             <table class="books_table">

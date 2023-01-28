@@ -1,4 +1,4 @@
-package com.my.library.controller.command.constant;
+package com.my.library.controller.command.constant.commands;
 
 public interface AdminCommands {
     String REMOVE_BOOK = "remove-book";

@@ -1,12 +1,10 @@
 package com.my.library.controller.command;
 
-import com.my.library.controller.command.constant.AdminCommands;
-import com.my.library.controller.command.constant.GeneralCommands;
-import com.my.library.controller.command.constant.UserCommands;
+import com.my.library.controller.command.constant.commands.AdminCommands;
+import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.impl.admin.RemoveBookCommand;
 import com.my.library.controller.command.impl.admin.RestoreBookCommand;
 import com.my.library.controller.command.impl.common.*;
-import com.my.library.services.ServiceFactory;
 
 public class CommandFactory {
 

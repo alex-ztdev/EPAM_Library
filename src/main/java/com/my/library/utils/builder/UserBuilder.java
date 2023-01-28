@@ -1,6 +1,6 @@
 package com.my.library.utils.builder;
 
-import com.my.library.controller.command.constant.UserParameters;
+import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.dao.constants.columns.UsersColumns;

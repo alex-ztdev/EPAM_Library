@@ -1,4 +1,4 @@
-package com.my.library.controller.command.constant;
+package com.my.library.controller.command.constant.parameters;
 
 public interface Parameters {
     String LOCALE = "language";
@@ -9,7 +9,6 @@ public interface Parameters {
     String BOOKS_PER_PAGE = "booksPerPage";
     String ORDER_BY = "order_by";
     String BOOK_ID = "book_id";
-
-
+    String PREVIOUS_PAGE = "previous_page";
     String ORDER_DIRECTION = "order_dir";
 }

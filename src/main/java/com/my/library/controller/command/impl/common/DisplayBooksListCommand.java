@@ -3,6 +3,8 @@ package com.my.library.controller.command.impl.common;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.*;
+import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dto.BookDTO;
@@ -19,11 +21,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class DisplayBooksListCommand implements Command {
-    private static final int RECORDS_PER_PAGE = 14;
+    private static final int RECORDS_PER_PAGE = 15;
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         BookService bookService = ServiceFactory.getBookService();
+
         int currPage = 1;
 
         BooksOrderDir orderDir = BooksOrderDir.ASC;
@@ -68,6 +71,8 @@ public class DisplayBooksListCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
+        request.getSession().setAttribute(Parameters.PREVIOUS_PAGE,
+                String.format(RedirectToPage.BOOKS_PAGE_WITH_PARAMETERS, orderBy, orderDir, currPage));
 
         return new CommandResult(Pages.BOOKS_LIST, CommandDirection.FORWARD);
     }

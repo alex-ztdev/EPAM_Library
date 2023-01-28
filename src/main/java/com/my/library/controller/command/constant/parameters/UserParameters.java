@@ -1,4 +1,4 @@
-package com.my.library.controller.command.constant;
+package com.my.library.controller.command.constant.parameters;
 
 public interface UserParameters {
     String CONTENT_FROM_RESOURCES = "This string will be replaced with data from property file";
