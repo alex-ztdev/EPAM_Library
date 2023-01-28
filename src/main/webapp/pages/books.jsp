@@ -67,19 +67,17 @@
         <div class="pages_container">
             <%--For displaying Previous link except for the 1st page --%>
             <c:if test="${requestScope.page != 1}">
-                <td><a href="controller?command=books-list&page=${requestScope.page - 1}">Previous</a></td>
+                <a href="controller?command=books-list&page=${requestScope.page - 1}">&laquo;</a>
             </c:if>
             <%--For displaying Page numbers.
                 The when condition does not display a link for the current page--%>
-            <table>
-                <tr>
                     <c:forEach begin="1" end="${requestScope.totalPages}" var="i">
                         <c:choose>
                             <c:when test="${requestScope.page eq i}">
-                                <td>${i}</td>
+                                <a href="controller?command=books-list&page=${i}" class="active"> ${i}</a>
                             </c:when>
                             <c:otherwise>
-                                <td><a href="controller?command=books-list&page=${i}">${i}</a></td>
+                                <a href="controller?command=books-list&page=${i}">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
@@ -88,7 +86,7 @@
 
             <%--For displaying Next link --%>
             <c:if test="${requestScope.page lt requestScope.totalPages}">
-                <td><a href="controller?command=books-list&page=${requestScope.page + 1}">Next</a></td>
+                <a href="controller?command=books-list&page=${requestScope.page + 1}">&raquo;</a>
             </c:if>
 
         </div>
