@@ -258,28 +258,28 @@
                     <c:when test="${order_by eq 'BY_REMOVED'}">
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
-                    <th class="active">
-                        <a href="controller?command=books-list&order_by=by_removed&order_dir=desc">
-                            <fmt:message key="books.admin.label.removed"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
-                    </th>
+                        <th class="active">
+                            <a href="controller?command=books-list&order_by=by_removed&order_dir=desc">
+                                <fmt:message key="books.admin.label.removed"/>
+                                <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                            </a>
+                        </th>
                     </c:when>
                     <c:otherwise>
-                    <th class="active">
-                        <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
-                            <fmt:message key="books.admin.label.removed"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
-                    </th>
+                        <th class="active">
+                            <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
+                                <fmt:message key="books.admin.label.removed"/>
+                                <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                            </a>
+                        </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
-                    <th class="active">
+                    <th>
                         <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
                             <fmt:message key="books.admin.label.removed"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                            <i class="fa fa-sort" aria-hidden="true"></i>
                         </a>
                     </th>
                     </c:otherwise>
