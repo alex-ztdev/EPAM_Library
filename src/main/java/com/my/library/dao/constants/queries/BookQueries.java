@@ -51,6 +51,7 @@ public interface BookQueries {
 
     //language=TSQL
     String FIND_ALL_NOT_REMOVED_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
+            INNER JOIN Authors A on A.id = Books.author_id
             INNER JOIN Storage S on Books.id = S.book_id
             WHERE isRemoved = 0
             ORDER BY %s %s
@@ -59,6 +60,7 @@ public interface BookQueries {
             """;
   //language=TSQL
     String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
+            INNER JOIN Authors A on A.id = Books.author_id
             INNER JOIN Storage S on Books.id = S.book_id
             ORDER BY %s %s
             OFFSET ? ROWS

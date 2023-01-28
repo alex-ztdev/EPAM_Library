@@ -5,9 +5,11 @@ public enum BooksOrderTypes {
     BY_TITLE("Books.title"),
 
     BY_PUBLISHER("publisher"),
-    BY_AUTHOR("author"),
+    BY_AUTHOR("A.first_name +' '+ A.second_name"),
     BY_GENRE("book_genre"),
-    BY_PUBLICATION_DATE("publication_date");
+    BY_PUBLICATION_DATE("publication_date"),
+    BY_PAGES("Books.page_number"),
+    BY_COPIES("S.quantity");
 
     private final String orderBy;
 
