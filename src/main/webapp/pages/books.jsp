@@ -276,10 +276,10 @@
                     </c:choose>
                     </c:when>
                     <c:otherwise>
-                    <th>
+                    <th class="active">
                         <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
                             <fmt:message key="books.admin.label.removed"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
+                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                         </a>
                     </th>
                     </c:otherwise>
@@ -313,15 +313,36 @@
                         <c:choose>
                             <c:when test="${booksList.isRemoved}">
                                 <td class="removed-book">
-                                    <fmt:message key="books.admin.msg.removed"/>
+                                    <style>
+                                        .removed-book:hover a p.label:after {
+                                            content: '<fmt:message key="books.admin.action.restore"/>';
+                                        }
+                                        .removed-book:hover a p.label span {
+                                            display: none;
+                                        }
+                                    </style>
+                                    <div class="removed-book-div">
+                                        <a class="remove-link" href="controller?command=restore-book&book_id=${booksList.bookId}">
+                                            <p class="label"><span class="align"><fmt:message key="books.admin.msg.removed"/></span></p>
+                                        </a>
+                                    </div>
                                 </td>
                             </c:when>
                             <c:otherwise>
                                 <td class="present-book">
-                                    <a href="controller?command=unblock-book&book_id=${booksList.bookId}}" >
-                                        <fmt:message key="books.admin.msg.present"/>
-                                    </a>
-
+                                    <style>
+                                        .present-book:hover a p.label:after {
+                                            content: '<fmt:message key="books.admin.action.remove"/>';
+                                        }
+                                        .present-book:hover a p.label span {
+                                            display: none;
+                                        }
+                                    </style>
+                                    <div class="removed-book-div">
+                                        <a class="remove-link" href="controller?command=remove-book&book_id=${booksList.bookId}">
+                                            <p class="label"><span class="align"><fmt:message key="books.admin.msg.present"/></span></p>
+                                        </a>
+                                    </div>
                                 </td>
                             </c:otherwise>
                         </c:choose>

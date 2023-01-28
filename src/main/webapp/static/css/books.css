@@ -60,7 +60,7 @@ body {
     color: white;
 }
 
-.books_table th  a{
+.books_table td a, th a{
     color: white;
     display: block;
     height: 100%;
@@ -96,6 +96,14 @@ body {
 }
 .present-book {
     background: #238323;
+}
+
+.removed-book:hover {
+    background: #35d035;
+
+}
+.present-book:hover {
+    background: #c95635;
 }
 
 .pages_container{
