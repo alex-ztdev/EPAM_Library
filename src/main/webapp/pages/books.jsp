@@ -21,10 +21,7 @@
     <title>Books</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/books.css"/>
     <%--    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/index.css"/>--%>
-    <script
-            src="https://kit.fontawesome.com/d117408745.js"
-            crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/e83e8567ce.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -45,7 +42,7 @@
                                     <th class="active">
                                         <a href="controller?command=books-list&order_by=by_title&order_dir=desc">
                                             <fmt:message key="books.common.label.book_title"/>
-                                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                                         </a>
                                     </th>
                                 </c:when>
@@ -53,7 +50,7 @@
                                     <th class="active">
                                         <a href="controller?command=books-list&order_by=by_title&order_dir=asc">
                                             <fmt:message key="books.common.label.book_title"/>
-                                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
                                         </a>
                                     </th>
                                 </c:otherwise>
@@ -69,8 +66,38 @@
                         </c:otherwise>
                     </c:choose>
 
+                    <c:choose>
+                        <c:when test="${order_by eq 'BY_GENRE'}">
+                            <c:choose>
+                                <c:when test="${order_dir eq 'ASC'}">
+                                    <th class="active">
+                                        <a href="controller?command=books-list&order_by=by_genre&order_dir=desc">
+                                            <fmt:message key="books.common.label.genre"/>
+                                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                        </a>
+                                    </th>
+                                </c:when>
+                                <c:otherwise>
+                                    <th class="active">
+                                        <a href="controller?command=books-list&order_by=by_genre&order_dir=asc">
+                                            <fmt:message key="books.common.label.genre"/>
+                                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                        </a>
+                                    </th>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <th>
+                                <a href="controller?command=books-list&order_by=by_genre&order_dir=asc">
+                                    <fmt:message key="books.common.label.genre"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </th>
+                        </c:otherwise>
+                    </c:choose>
 
-                    <th><fmt:message key="books.common.label.genre"/> <i class="fa fa-sort" aria-hidden="true"></i></th>
+
                     <th><fmt:message key="books.common.label.author"/> <i class="fa fa-sort" aria-hidden="true"></i>
                     </th>
                     <th><fmt:message key="books.common.label.publisher"/> <i class="fa fa-sort" aria-hidden="true"></i>
