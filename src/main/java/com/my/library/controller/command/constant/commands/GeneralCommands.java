@@ -10,6 +10,7 @@ public interface GeneralCommands {
 
     String BOOKS_LIST = "books-list";
 
+    String HOME = "home";
     String PROFILE = "profile";
     String DEFAULT_COMMAND = "Illegal Command";
 

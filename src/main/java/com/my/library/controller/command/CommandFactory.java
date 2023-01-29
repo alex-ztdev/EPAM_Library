@@ -15,6 +15,7 @@ public class CommandFactory {
             case GeneralCommands.LOGOUT -> res = new LogoutCommand();
             case GeneralCommands.REGISTRATION -> res = new RegisterCommand();
             case GeneralCommands.CHANGE_LANGUAGE -> res = new ChangeLanguageCommand();
+            case GeneralCommands.HOME -> res = new HomeCommand();
             case GeneralCommands.BOOKS_LIST -> res = new DisplayBooksListCommand();
             case AdminCommands.REMOVE_BOOK -> res = new RemoveBookCommand();
             case AdminCommands.RESTORE_BOOK -> res = new RestoreBookCommand();

@@ -1,5 +1,6 @@
 package com.my.library.controller.filter;
 
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.constant.parameters.UserParameters;
@@ -28,7 +29,8 @@ public class AuthenticationFilter implements Filter {
             GeneralCommands.ALL_BOOKS_LIST,
             GeneralCommands.BOOKS_LIST,
             GeneralCommands.SEARCH_BOOK,
-            GeneralCommands.SORT_BOOKS
+            GeneralCommands.SORT_BOOKS,
+            GeneralCommands.HOME
     );
 
     private static final List<String> LIBRARIAN_COMMANDS = List.of(
@@ -65,11 +67,15 @@ public class AuthenticationFilter implements Filter {
 
         String command = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
 
-        if (GENERAL_COMMANDS.contains(command)) {
+        if (command == null || !ADMIN_COMMANDS.contains(command) && !USER_COMMANDS.contains(command) && !GENERAL_COMMANDS.contains(command) && !LIBRARIAN_COMMANDS.contains(command)) {
+            logger.log(Level.DEBUG, "Unknown command: " +command + " was received");
+            //TODO: add wrong command page
+            response.sendError(404);
+        }else if (GENERAL_COMMANDS.contains(command)) {
             chain.doFilter(servletRequest, servletResponse);
         } else {
             if (user == null) {
-                response.sendRedirect(Pages.NOT_AUTHORIZED);
+                response.sendRedirect(request.getContextPath() + Pages.NOT_AUTHORIZED);
                 logger.log(Level.DEBUG, "No user in session! Tried to execute: " + command);
             } else {
                 //TODO: implement admin, librarian, user, (unknown?)
@@ -83,9 +89,10 @@ public class AuthenticationFilter implements Filter {
                 } else if (user.getRole() == UserRole.ADMIN && ADMIN_COMMANDS.contains(command)) {
                     logger.log(Level.DEBUG, "Admin: " + user.getUserId() +" executed: " + command);
                     chain.doFilter(servletRequest, servletResponse);
+                } else {
+                    response.sendRedirect(request.getContextPath() + Pages.NOT_AUTHORIZED);
                 }
             }
-
         }
     }
 

@@ -1,0 +1,42 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
+}
+
+.msg-container{
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: center;
+}
+.messages{
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    background: #1C2127;
+    padding: 20px 40px;
+}
+
+.message{
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    color: white;
+    font-weight: 500;
+}
+.message2{
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    color: white;
+    font-weight: 300;
+    width: 360px;
+}

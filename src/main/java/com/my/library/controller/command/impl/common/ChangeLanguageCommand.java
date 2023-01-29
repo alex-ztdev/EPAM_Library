@@ -19,6 +19,8 @@ public class ChangeLanguageCommand implements Command {
         session.setAttribute(LANGUAGE_PARAMETER, language);
 
         var prev_page = (String)session.getAttribute(Parameters.PREVIOUS_PAGE);
+        //TODO:implement default page?
+//        session.removeAttribute(Parameters.PREVIOUS_PAGE);
 
         return new CommandResult(prev_page == null || prev_page.isBlank() ? Pages.MAIN_PAGE : prev_page, CommandDirection.REDIRECT);
     }

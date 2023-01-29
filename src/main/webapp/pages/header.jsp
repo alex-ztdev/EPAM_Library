@@ -29,25 +29,25 @@
 <div class="header">
     <div class="left-header">
 
-        <a class="active" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="header.common.home"/></a>
+        <a class="active" href="${pageContext.request.contextPath}/controller?command=home"><fmt:message key="header.common.home"/></a>
 <%--        <a href="controller?command=authors"><fmt:message key="header.common.authors"/></a>--%>
 
-        <a href="controller?command=books-list"><fmt:message key="header.common.books"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=books-list"><fmt:message key="header.common.books"/></a>
 
         <c:choose>
             <%-- Menu bar for reader only--%>
             <c:when test="${sessionScope.user.role eq 'USER'}">
-                <a href="controller?command=user-orders"><fmt:message key="header.user.order"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=user-orders"><fmt:message key="header.user.order"/></a>
             </c:when>
             <%-- Menu bar for Admin or Librarian only--%>
             <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">
-                <a href="controller?command=users-list"><fmt:message key="header.admin.users"/></a>
-                <a href="controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=users-list"><fmt:message key="header.admin.users"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
             </c:when>
             <c:when test="${sessionScope.user.role eq 'ADMIN'}">
-                <a href="controller?command=users-list"><fmt:message key="header.admin.users"/></a>
-                <a href="controller?command=librarians-list"><fmt:message key="header.admin.librarians"/></a>
-                <a href="controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=users-list"><fmt:message key="header.admin.users"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=librarians-list"><fmt:message key="header.admin.librarians"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
             </c:when>
 
 
@@ -72,7 +72,7 @@
 
 
         <div class="languages">
-            <form method="POST" action="controller">
+            <form method="POST" action="${pageContext.request.contextPath}/controller">
                 <input type="hidden" name="command" value="change_language"/>
                 <button class="language_button" type="submit" name="language"
                         value="ua"><fmt:message key="header.language.ua"/>
