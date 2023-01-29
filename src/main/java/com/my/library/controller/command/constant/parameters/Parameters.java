@@ -12,4 +12,6 @@ public interface Parameters {
     String BOOK_ID = "book_id";
     String PREVIOUS_PAGE = "previous_page";
     String ORDER_DIRECTION = "order_dir";
+    String GENRES_LIST = "genres_list";
+    String PUBLISHERS_LIST = "publishers_list";
 }

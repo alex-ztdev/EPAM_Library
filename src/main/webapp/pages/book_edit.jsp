@@ -26,7 +26,7 @@
 
 <div class="container">
   <div class="main-content">
-    <p class="operation-title">Update Book</p>
+    <p class="operation-title"><fmt:message key="admin.books.edit.form.title"/></p>
     <form action="controller" method="post">
       <input name="command" type="hidden" value="update-book">
       <div class="elem-group">
@@ -75,15 +75,24 @@
       <div class="elem-group inlined">
         <label for="genre-selection"><fmt:message key="admin.books.edit.form.label.select.genre"/></label>
         <select id="genre-selection" name="genre_preference" required>
-          <option value="${requestScope.book.genre}">${requestScope.book.genre}</option>
-          <option value="connecting">Connecting</option>
+          <c:if test="${not empty requestScope.book.genre }">
+            <option value="${requestScope.book.genre}">${requestScope.book.genre}</option>
+          </c:if>
+          <c:forEach var="genres" items="${requestScope.genres_list}" varStatus="loop">
+            <option value="${genres.genreId}">${genres.title}</option>
+          </c:forEach>
+
         </select>
       </div>
       <div class="elem-group inlined">
         <label for="publisher-selection"><fmt:message key="admin.books.edit.form.label.select.publisher"/></label>
         <select id="publisher-selection" name="publisher" required>
-          <option value="${requestScope.book.publisherTitle}">${requestScope.book.publisherTitle}</option>
-          <option value="connecting">Connecting</option>
+            <c:if test="${not empty requestScope.book.publisherTitle }">
+                <option value="${requestScope.book.publisherTitle}">${requestScope.book.publisherTitle}</option>
+            </c:if>
+            <c:forEach var="publishers" items="${requestScope.publishers_list}" varStatus="loop">
+                <option value="${publishers.publisherId}">${publishers.title}</option>
+            </c:forEach>
         </select>
       </div>
       <div class="elem-group">
@@ -93,7 +102,7 @@
                 id="copies"
                 name="total_copies"
                 placeholder="2"
-                min="1"
+                min="0"
                 value="${requestScope.book.copies}"
                 required
         />
@@ -108,7 +117,7 @@
                 id="pages"
                 name="pages"
                 placeholder="100"
-                min="0"
+                min="1"
                 value="${requestScope.book.pageNumber}"
                 required
         />

@@ -7,6 +7,8 @@ import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dto.BookMapper;
 import com.my.library.entities.Book;
+import com.my.library.entities.Genre;
+import com.my.library.entities.Publisher;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
@@ -18,6 +20,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.text.html.Option;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
 
 public class UpdateBookRedirectCommand implements Command {
@@ -51,8 +55,25 @@ public class UpdateBookRedirectCommand implements Command {
             }
 
             var bookDTO = new BookMapper().toDTO(book.get(), bookService.getQuantity(bookId), bookService.isRemoved(bookId));
+            var genresList = ServiceFactory.getGenreService().findAll();
+            var publishersList = ServiceFactory.getPublisherService().findAll();
+
+            publishersList = publishersList.stream()
+                    .filter(publisher -> !publisher.getTitle().equals(bookDTO.getPublisherTitle()))
+                    .sorted(Comparator.comparing(Publisher::getTitle))
+                    .toList();
+
+            genresList = genresList.stream()
+                    .filter(genre -> !genre.getTitle().equals(bookDTO.getGenre()))
+                    .sorted(Comparator.comparing(Genre::getTitle))
+                    .toList();
+
+
 
             request.setAttribute(Parameters.BOOKS_DTO, bookDTO);
+            request.setAttribute(Parameters.GENRES_LIST, genresList);
+            request.setAttribute(Parameters.PUBLISHERS_LIST, publishersList);
+
             return new CommandResult(Pages.BOOK_EDIT);
         } catch (ServiceException e) {
             throw new CommandException("Error while finding book by id while executing UpdateBookRedirectCommand",e);
