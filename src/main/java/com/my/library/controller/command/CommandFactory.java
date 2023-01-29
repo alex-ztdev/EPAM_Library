@@ -2,10 +2,7 @@ package com.my.library.controller.command;
 
 import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
-import com.my.library.controller.command.impl.admin.AddBookRedirectCommand;
-import com.my.library.controller.command.impl.admin.RemoveBookCommand;
-import com.my.library.controller.command.impl.admin.RestoreBookCommand;
-import com.my.library.controller.command.impl.admin.UpdateBookRedirectCommand;
+import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
 
 public class CommandFactory {
@@ -23,6 +20,7 @@ public class CommandFactory {
             case AdminCommands.RESTORE_BOOK -> res = new RestoreBookCommand();
             case AdminCommands.ADD_BOOK_REDIRECT -> res = new AddBookRedirectCommand();
             case AdminCommands.UPDATE_BOOK_REDIRECT -> res = new UpdateBookRedirectCommand();
+            case AdminCommands.UPDATE_BOOK -> res = new UpdateBookCommand();
             default -> res = new DefaultCommand();
         }
         return res;

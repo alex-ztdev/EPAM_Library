@@ -12,10 +12,14 @@
 <%--<c:set var="language" value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"--%>
 <%--       scope="session"/>--%>
 
-<fmt:setLocale value="${sessionScope.language}"/>
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
+       scope="session"/>
+
+<fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
-<html lang="${sessionScope.language}">
+<html lang="${language}">
 <head>
     <meta charset="UTF-8"/>
     <title>Library login</title>

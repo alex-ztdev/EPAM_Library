@@ -9,12 +9,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<fmt:setLocale value="${sessionScope.language}"/>
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
+       scope="session"/>
+
+<fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
-
-
-<html lang="${sessionScope.language}">
+<html lang="${language}">
 <head>
   <meta charset="UTF-8"/>
   <title>Library Main</title>
@@ -29,6 +31,7 @@
     <p class="operation-title"><fmt:message key="admin.books.edit.form.title"/></p>
     <form action="controller" method="post">
       <input name="command" type="hidden" value="update-book">
+      <input name="book_id" type="hidden" value="${requestScope.book.bookId}">
       <div class="elem-group">
         <label for="bookTitle"><fmt:message key="admin.books.edit.form.label.book.title"/></label>
         <input
@@ -74,12 +77,12 @@
       </div>
       <div class="elem-group inlined">
         <label for="genre-selection"><fmt:message key="admin.books.edit.form.label.select.genre"/></label>
-        <select id="genre-selection" name="genre_preference" required>
+        <select id="genre-selection" name="genre" required>
           <c:if test="${not empty requestScope.book.genre }">
             <option value="${requestScope.book.genre}">${requestScope.book.genre}</option>
           </c:if>
           <c:forEach var="genres" items="${requestScope.genres_list}" varStatus="loop">
-            <option value="${genres.genreId}">${genres.title}</option>
+            <option value="${genres.title}">${genres.title}</option>
           </c:forEach>
 
         </select>
@@ -91,7 +94,7 @@
                 <option value="${requestScope.book.publisherTitle}">${requestScope.book.publisherTitle}</option>
             </c:if>
             <c:forEach var="publishers" items="${requestScope.publishers_list}" varStatus="loop">
-                <option value="${publishers.publisherId}">${publishers.title}</option>
+                <option value="${publishers.title}">${publishers.title}</option>
             </c:forEach>
         </select>
       </div>
@@ -129,7 +132,7 @@
         <input
                 type="date"
                 id="publication-date"
-                name="publication"
+                name="publication_date"
                 value="${requestScope.book.publicationDate}"
                 required
         />

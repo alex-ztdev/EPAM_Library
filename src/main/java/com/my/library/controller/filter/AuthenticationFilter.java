@@ -48,7 +48,8 @@ public class AuthenticationFilter implements Filter {
             AdminCommands.REMOVE_BOOK,
             AdminCommands.RESTORE_BOOK,
             AdminCommands.ADD_BOOK_REDIRECT,
-            AdminCommands.UPDATE_BOOK_REDIRECT
+            AdminCommands.UPDATE_BOOK_REDIRECT,
+            AdminCommands.UPDATE_BOOK
     );
 
     private static final Logger logger = LogManager.getLogger();

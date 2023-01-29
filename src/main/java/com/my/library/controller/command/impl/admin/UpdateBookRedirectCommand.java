@@ -3,7 +3,6 @@ package com.my.library.controller.command.impl.admin;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
-import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dto.BookMapper;
 import com.my.library.entities.Book;
@@ -19,8 +18,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.text.html.Option;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Optional;
 
@@ -44,7 +41,7 @@ public class UpdateBookRedirectCommand implements Command {
             logger.log(Level.DEBUG,"UpdateBookCommand: empty book_id: " + reqBookId);
             return new CommandResult(request.getContextPath() + Pages.ERROR_PAGE, CommandDirection.REDIRECT);
         }
-        Optional<Book> book = Optional.empty();
+        Optional<Book> book;
         try {
             book = bookService.find(bookId);
 
@@ -68,8 +65,7 @@ public class UpdateBookRedirectCommand implements Command {
                     .sorted(Comparator.comparing(Genre::getTitle))
                     .toList();
 
-
-
+            //TODO: change to session scope?
             request.setAttribute(Parameters.BOOKS_DTO, bookDTO);
             request.setAttribute(Parameters.GENRES_LIST, genresList);
             request.setAttribute(Parameters.PUBLISHERS_LIST, publishersList);
