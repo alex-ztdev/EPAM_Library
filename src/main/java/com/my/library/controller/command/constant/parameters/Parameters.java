@@ -6,6 +6,7 @@ public interface Parameters {
     String BOOKS_LIST_CURR_PAGE = "page";
     String BOOKS_TOTAL_PAGES = "totalPages";
     String BOOKS_LIST = "booksList";
+    String BOOKS_DTO= "book";
     String BOOKS_PER_PAGE = "booksPerPage";
     String ORDER_BY = "order_by";
     String BOOK_ID = "book_id";

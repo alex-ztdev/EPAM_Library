@@ -41,6 +41,10 @@ public class RemoveBookCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Error occurred while executing RemoveBookCommand!",e);
         }
+        //TODO: implement redirection to the same page after removed or retrieved command.
+        // Make separate method to retrieve orderBy/orderDir/currPage method...
+//        request.getSession().setAttribute(Parameters.PREVIOUS_PAGE,
+//                String.format(RedirectToPage.BOOKS_PAGE_WITH_PARAMETERS, orderBy, orderDir, currPage));
 
         return new CommandResult(RedirectToPage.BOOKS_PAGE);
     }

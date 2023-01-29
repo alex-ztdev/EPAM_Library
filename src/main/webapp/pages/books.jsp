@@ -28,7 +28,6 @@
 <body>
 <jsp:include page="header.jsp"/>
 
-
 <div class="container">
     <div class="main-content">
         <div class="books_list_container">
