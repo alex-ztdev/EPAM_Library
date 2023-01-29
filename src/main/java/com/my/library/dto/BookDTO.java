@@ -11,19 +11,21 @@ public class BookDTO {
     private String genre;
     private int pageNumber;
     private LocalDate publicationDate;
-    private String authorFullName;
+    private String authorFirstName;
+    private String authorSecondName;
 
     private boolean isRemoved;
     private int copies;
 
-    public BookDTO(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, String authorFullName, boolean isRemoved, int copies) {
+    public BookDTO(Long bookId, String title, String publisherTitle, String genre, int pageNumber, LocalDate publicationDate, String authorFirstName, String authorSecondName, boolean isRemoved, int copies) {
         this.bookId = bookId;
         this.title = title;
         this.publisherTitle = publisherTitle;
         this.genre = genre;
         this.pageNumber = pageNumber;
         this.publicationDate = publicationDate;
-        this.authorFullName = authorFullName;
+        this.authorFirstName = authorFirstName;
+        this.authorSecondName = authorSecondName;
         this.isRemoved = isRemoved;
         this.copies = copies;
     }
@@ -76,12 +78,20 @@ public class BookDTO {
         this.publicationDate = publicationDate;
     }
 
-    public String getAuthorFullName() {
-        return authorFullName;
+    public String getAuthorFirstName() {
+        return authorFirstName;
     }
 
-    public void setAuthorFullName(String authorFullName) {
-        this.authorFullName = authorFullName;
+    public String getAuthorSecondName() {
+        return authorSecondName;
+    }
+
+    public void setAuthorFirstName(String authorFirstName) {
+        this.authorFirstName = authorFirstName;
+    }
+
+    public void setAuthorSecondName(String authorSecondName) {
+        this.authorSecondName = authorSecondName;
     }
 
     public boolean getIsRemoved() {
@@ -109,7 +119,8 @@ public class BookDTO {
                 ", genre='" + genre + '\'' +
                 ", pageNumber=" + pageNumber +
                 ", publicationDate=" + publicationDate +
-                ", authorFullName='" + authorFullName + '\'' +
+                ", authorFirstName='" + authorFirstName + '\'' +
+                ", authorSecondName='" + authorSecondName + '\'' +
                 ", isRemoved=" + isRemoved +
                 ", copies=" + copies +
                 '}';

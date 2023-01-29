@@ -8,15 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
-<fmt:setLocale value="${sessionScope.language}"/>
-<fmt:setBundle basename="locale"/>
+
 
 <c:set var="order_by" scope="request" value="${requestScope.order_by}"/>
 <c:set var="order_dir" scope="request" value="${requestScope.order_dir}"/>
 <c:set var="userRole" scope="request" value="${sessionScope.user.role}"/>
 
-<html lang="${sessionScope.language}">
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
+       scope="session"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="locale"/>
+
+<html lang="${language}">
 <head>
     <meta charset="UTF-8"/>
     <title>Books</title>
@@ -298,7 +305,9 @@
                     <td> ${loop.count + (requestScope.page - 1) * requestScope.booksPerPage} </td>
                     <td> ${booksList.title} </td>
                     <td> ${booksList.genre} </td>
-                    <td> ${booksList.authorFullName} </td>
+                    <td> ${booksList.authorFirstName} ${booksList.authorSecondName}
+
+                    </td>
                     <td> ${booksList.publisherTitle} </td>
                     <td> ${booksList.pageNumber} </td>
                     <td> ${booksList.publicationDate} </td>

@@ -11,7 +11,7 @@
 
 
 <c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : 'en'}"
+       value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
        scope="session"/>
 
 <fmt:setLocale value="${language}"/>

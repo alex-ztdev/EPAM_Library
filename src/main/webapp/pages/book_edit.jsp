@@ -13,6 +13,7 @@
 <fmt:setBundle basename="locale"/>
 
 
+
 <html lang="${sessionScope.language}">
 <head>
   <meta charset="UTF-8"/>
@@ -29,71 +30,71 @@
     <form action="controller" method="post">
       <input name="command" type="hidden" value="update-book">
       <div class="elem-group">
-        <label for="bookTitle">Book title</label>
+        <label for="bookTitle"><fmt:message key="admin.books.edit.form.label.book.title"/></label>
         <input
                 type="text"
                 id="bookTitle"
                 name="book_title"
-                placeholder="book_title_fmt"
+                placeholder="<fmt:message key="admin.books.edit.form.placeholder.title"/>"
                 pattern="^['a-zA-Z?!,.а-яА-ЯёЁ0-9\s]{1,350}$"
-                title="Title should contain no more than 350 letters, digits or special symbols like '!,."
-                value=""
+                title="<fmt:message key="admin.books.edit.form.validation.msg.title"/>"
+                value="${requestScope.book.title}"
                 required
         />
         <div class="error-msg-container"></div>
       </div>
 
       <div class="elem-group inlined">
-        <label for="firstName">Author's first name</label>
+        <label for="firstName"><fmt:message key="admin.books.edit.form.label.author.first.name"/></label>
         <input
                 type="text"
                 id="firstName"
                 name="first_name"
-                placeholder="John"
+                placeholder="<fmt:message key="admin.books.edit.form.placeholder.first.name"/>"
                 pattern="^['a-zA-Z?а-яА-ЯёЁ]{1,50}$"
-                title="Name should contain no more than 50 letters or special symbols like '"
-                value=""
+                title="<fmt:message key="admin.books.edit.form.validation.msg.name"/>"
+                value="${requestScope.book.authorFirstName}"
                 required
         />
         <div class="error-msg-container"></div>
       </div>
       <div class="elem-group inlined">
-        <label for="secondName">Author's second name</label>
+        <label for="secondName"><fmt:message key="admin.books.edit.form.label.author.second.name"/></label>
         <input
                 type="text"
                 id="secondName"
                 name="second_name"
-                placeholder="Smith"
+                placeholder="<fmt:message key="admin.books.edit.form.placeholder.second.name"/>"
                 pattern="^['a-zA-Z?а-яА-ЯёЁ]{1,50}$"
-                title="Name should contain no more than 50 letters or special symbols like '"
-                value=""
+                title="<fmt:message key="admin.books.edit.form.validation.msg.name"/>"
+                value="${requestScope.book.authorSecondName}"
                 required
         />
         <div class="error-msg-container"></div>
       </div>
       <div class="elem-group inlined">
-        <label for="genre-selection">Select genre</label>
+        <label for="genre-selection"><fmt:message key="admin.books.edit.form.label.select.genre"/></label>
         <select id="genre-selection" name="genre_preference" required>
-          <option value="">Choose a Genre from the List</option>
+          <option value="${requestScope.book.genre}">${requestScope.book.genre}</option>
           <option value="connecting">Connecting</option>
         </select>
       </div>
       <div class="elem-group inlined">
-        <label for="publisher-selection">Select Publisher</label>
+        <label for="publisher-selection"><fmt:message key="admin.books.edit.form.label.select.publisher"/></label>
         <select id="publisher-selection" name="publisher" required>
-          <option value="">Choose a Publisher from the List</option>
+          <option value="${requestScope.book.publisherTitle}">${requestScope.book.publisherTitle}</option>
           <option value="connecting">Connecting</option>
         </select>
       </div>
       <div class="elem-group">
-        <label for="copies">Copies</label>
+        <label for="copies"><fmt:message key="admin.books.edit.form.label.copies"/></label>
         <input
                 type="number"
                 id="copies"
                 name="total_copies"
                 placeholder="2"
                 min="1"
-                value=""
+                value="${requestScope.book.copies}"
                 required
         />
         <div class="error-msg-container"></div>
@@ -101,28 +102,30 @@
 
       <hr />
       <div class="elem-group inlined">
-        <label for="pages">Page Number</label>
+        <label for="pages"><fmt:message key="admin.books.edit.form.label.pages"/></label>
         <input
                 type="number"
                 id="pages"
                 name="pages"
                 placeholder="100"
-                min="1"
+                min="0"
+                value="${requestScope.book.pageNumber}"
                 required
         />
         <div class="error-msg-container"></div>
       </div>
 
       <div class="elem-group inlined">
-        <label for="publication-date">Publication Date</label>
+        <label for="publication-date"><fmt:message key="admin.books.edit.form.label.publication.date"/></label>
         <input
                 type="date"
                 id="publication-date"
                 name="publication"
+                value="${requestScope.book.publicationDate}"
                 required
         />
       </div>
-      <button type="submit">Book The Rooms</button>
+      <button type="submit"><fmt:message key="admin.books.edit.form.label.submit.btn"/></button>
     </form>
   </div>
 </div>

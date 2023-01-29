@@ -30,7 +30,7 @@ public class BookMapper {
                 book.getGenre(),
                 book.getPageNumber(),
                 book.getPublicationDate(),
-                book.getAuthor().getFirstName() +" " + book.getAuthor().getSecondName(),
+                book.getAuthor().getFirstName(), book.getAuthor().getSecondName(),
                 isRemoved,
                 copies);
     }
