@@ -21,6 +21,5 @@ public interface BookService extends Service<Book> {
     int getQuantity(long id) throws ServiceException;
 
     void restore(long id) throws ServiceException;
-
 }
 

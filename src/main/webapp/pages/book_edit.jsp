@@ -36,7 +36,7 @@
                 id="bookTitle"
                 name="book_title"
                 placeholder="<fmt:message key="admin.books.edit.form.placeholder.title"/>"
-                pattern="^['a-zA-Z?!,.а-яА-ЯёЁ0-9\s]{1,350}$"
+                pattern="^['a-zA-Z?!,.а-яА-ЯёЁ0-9\s-]{1,350}$"
                 title="<fmt:message key="admin.books.edit.form.validation.msg.title"/>"
                 value="${requestScope.book.title}"
                 required
