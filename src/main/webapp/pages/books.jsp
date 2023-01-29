@@ -30,8 +30,6 @@
 
 
 <div class="container">
-
-    ${sessionScope.par}
     <div class="main-content">
         <div class="books_list_container">
             <table class="books_table">
@@ -286,6 +284,11 @@
                     </th>
                     </c:otherwise>
                     </c:choose>
+
+                    <th>
+                        <fmt:message key="books.admin.action.update"/>
+                    </th>
+
                     </c:if>
 
 
@@ -348,6 +351,15 @@
                                 </td>
                             </c:otherwise>
                         </c:choose>
+
+                        <td>
+                            <div class="update-book-div">
+                                <a class="remove-link" href="controller?command=update-book-redirect&book_id=${booksList.bookId}">
+                                    <fmt:message key="books.admin.action.update"/>
+                                </a>
+                            </div>
+
+                        </td>
                     </c:if>
                 </tr>
                 </c:forEach>

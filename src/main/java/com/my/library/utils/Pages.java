@@ -9,4 +9,5 @@ public interface Pages {
 
     String NOT_AUTHORIZED = "/pages/not_authorized.jsp";
     String BOOKS_LIST = "/pages/books.jsp";
+    String UNSUPPORTED_COMMAND = "/pages/error/400.jsp";
 }

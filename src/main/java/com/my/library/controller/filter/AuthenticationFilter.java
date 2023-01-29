@@ -46,10 +46,10 @@ public class AuthenticationFilter implements Filter {
     );
     private static final List<String> ADMIN_COMMANDS = List.of(
             AdminCommands.REMOVE_BOOK,
-            AdminCommands.RESTORE_BOOK
+            AdminCommands.RESTORE_BOOK,
+            AdminCommands.ADD_BOOK_REDIRECT,
+            AdminCommands.UPDATE_BOOK_REDIRECT
     );
-
-
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -70,9 +70,8 @@ public class AuthenticationFilter implements Filter {
 
         if (command == null || !ADMIN_COMMANDS.contains(command) && !USER_COMMANDS.contains(command) && !GENERAL_COMMANDS.contains(command) && !LIBRARIAN_COMMANDS.contains(command)) {
             logger.log(Level.DEBUG, "Unknown command: " +command + " was received");
-            //TODO: add wrong command page
-            session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.ERROR_PAGE);
-            response.sendError(404);
+            session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.UNSUPPORTED_COMMAND);
+            response.sendError(400);
         }else if (GENERAL_COMMANDS.contains(command)) {
             chain.doFilter(servletRequest, servletResponse);
         } else {
