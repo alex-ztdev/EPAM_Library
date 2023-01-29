@@ -53,11 +53,10 @@ public class AuthorDaoImpl implements AuthorDAO {
         return author == null ? Optional.empty() : Optional.of(author);
     }
 
-    private Author buildAuthor(ResultSet rs) throws SQLException, DaoException {
+    private Author buildAuthor(ResultSet rs) throws SQLException {
         return new Author(rs.getLong(AuthorsColumns.ID),
                 rs.getString(AuthorsColumns.FIRST_NAME),
-                rs.getString(AuthorsColumns.SECOND_NAME),
-                rs.getDate(AuthorsColumns.BIRTH_DATE).toLocalDate());
+                rs.getString(AuthorsColumns.SECOND_NAME));
     }
 
     @Override
@@ -85,7 +84,6 @@ public class AuthorDaoImpl implements AuthorDAO {
 
             statement.setString(1, author.getFirstName());
             statement.setString(2, author.getSecondName());
-            statement.setDate(3, Date.valueOf(author.getBirthDate()));
 
             statement.executeUpdate();
 
@@ -106,7 +104,6 @@ public class AuthorDaoImpl implements AuthorDAO {
 
             statement.setString(1, author.getFirstName());
             statement.setString(2, author.getSecondName());
-            statement.setDate(3, Date.valueOf(author.getBirthDate()));
             statement.setLong(4, author.getAuthorId());
 
             var updateRes = statement.executeUpdate();

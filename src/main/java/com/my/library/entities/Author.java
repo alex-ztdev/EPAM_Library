@@ -14,24 +14,10 @@ public class Author {
         this.secondName = firstName;
     }
 
-
-
-    private LocalDate birthDate;
-
-    public Author() {
-    }
-
-    public Author(Long authorId, String firstName, String secondName, LocalDate birthDate) {
+    public Author(Long authorId, String firstName, String secondName) {
         this.authorId = authorId;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.birthDate = birthDate;
-    }
-
-    public Author(String firstName, String secondName, LocalDate birthDate) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.birthDate = birthDate;
     }
 
     public Long getAuthorId() {
@@ -58,14 +44,6 @@ public class Author {
         this.secondName = secondName;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,18 +51,16 @@ public class Author {
 
         Author author = (Author) o;
 
-        if (!authorId.equals(author.authorId)) return false;
-        if (!firstName.equals(author.firstName)) return false;
-        if (!secondName.equals(author.secondName)) return false;
-        return birthDate.equals(author.birthDate);
+        if (authorId != null ? !authorId.equals(author.authorId) : author.authorId != null) return false;
+        if (firstName != null ? !firstName.equals(author.firstName) : author.firstName != null) return false;
+        return secondName != null ? secondName.equals(author.secondName) : author.secondName == null;
     }
 
     @Override
     public int hashCode() {
-        int result = authorId.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + secondName.hashCode();
-        result = 31 * result + birthDate.hashCode();
+        int result = authorId != null ? authorId.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
         return result;
     }
 
@@ -94,7 +70,6 @@ public class Author {
                 "authorId=" + authorId +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
-                ", birthDate=" + birthDate +
                 '}';
     }
 }
