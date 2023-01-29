@@ -3,6 +3,7 @@ package com.my.library.controller.filter;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
+import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.entities.User;
@@ -70,11 +71,13 @@ public class AuthenticationFilter implements Filter {
         if (command == null || !ADMIN_COMMANDS.contains(command) && !USER_COMMANDS.contains(command) && !GENERAL_COMMANDS.contains(command) && !LIBRARIAN_COMMANDS.contains(command)) {
             logger.log(Level.DEBUG, "Unknown command: " +command + " was received");
             //TODO: add wrong command page
+            session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.ERROR_PAGE);
             response.sendError(404);
         }else if (GENERAL_COMMANDS.contains(command)) {
             chain.doFilter(servletRequest, servletResponse);
         } else {
             if (user == null) {
+                session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.NOT_AUTHORIZED);
                 response.sendRedirect(request.getContextPath() + Pages.NOT_AUTHORIZED);
                 logger.log(Level.DEBUG, "No user in session! Tried to execute: " + command);
             } else {
@@ -90,12 +93,12 @@ public class AuthenticationFilter implements Filter {
                     logger.log(Level.DEBUG, "Admin: " + user.getUserId() +" executed: " + command);
                     chain.doFilter(servletRequest, servletResponse);
                 } else {
+                    session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.NOT_AUTHORIZED);
                     response.sendRedirect(request.getContextPath() + Pages.NOT_AUTHORIZED);
                 }
             }
         }
     }
-
     @Override
     public void destroy() {
     }
