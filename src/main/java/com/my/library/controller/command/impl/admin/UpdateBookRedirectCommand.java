@@ -11,7 +11,8 @@ import com.my.library.entities.Publisher;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
-import com.my.library.services.ServiceFactory;
+import com.my.library.services.GenreService;
+import com.my.library.services.PublisherService;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
@@ -25,9 +26,13 @@ public class UpdateBookRedirectCommand implements Command {
     private final static Logger logger = LogManager.getLogger();
 
     private final BookService bookService;
+    private final GenreService genreService;
+    private final PublisherService publisherService;
 
-    public UpdateBookRedirectCommand(BookService bookService) {
+    public UpdateBookRedirectCommand(BookService bookService, GenreService genreService, PublisherService publisherService) {
         this.bookService = bookService;
+        this.genreService = genreService;
+        this.publisherService = publisherService;
     }
 
     @Override
@@ -56,8 +61,8 @@ public class UpdateBookRedirectCommand implements Command {
             }
 
             var bookDTO = new BookMapper(bookService).toDTO(book.get(), bookService.getQuantity(bookId), bookService.isRemoved(bookId));
-            var genresList = ServiceFactory.getGenreService().findAll();
-            var publishersList = ServiceFactory.getPublisherService().findAll();
+            var genresList = genreService.findAll();
+            var publishersList = publisherService.findAll();
 
             publishersList = publishersList.stream()
                     .filter(publisher -> !publisher.getTitle().equals(bookDTO.getPublisherTitle()))

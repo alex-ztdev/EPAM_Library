@@ -1,6 +1,7 @@
 package com.my.library.services;
 
 import com.my.library.dao.DaoFactory;
+import com.my.library.dao.GenreDAO;
 import com.my.library.dao.impl.BookDaoImpl;
 import com.my.library.dao.impl.GenreDaoImpl;
 import com.my.library.dao.impl.PublisherDaoImpl;
@@ -26,15 +27,16 @@ public class ServiceFactory {
         return new BookServiceImpl(daoFactory.getBookDao());
     }
 
+
     public AuthorService getAuthorService() {
         return new AuthorServiceImpl(daoFactory.getAuthorDao());
     }
 
-    public static PublisherService getPublisherService() {
-        return new PublisherServiceImpl(PublisherDaoImpl.getInstance());
+    public PublisherService getPublisherService() {
+        return new PublisherServiceImpl(daoFactory.getPublishersDao());
     }
-    public static GenreService getGenreService() {
-        return new GenreServiceImpl(GenreDaoImpl.getInstance());
+    public GenreService getGenreService() {
+        return new GenreServiceImpl(daoFactory.getGenreDao());
     }
 
 }

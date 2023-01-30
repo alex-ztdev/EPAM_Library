@@ -1,35 +1,23 @@
 package com.my.library.dao.impl;
 
 import com.my.library.connection_pool.ConnectionPool;
+import com.my.library.dao.AbstractDao;
 import com.my.library.dao.GenreDAO;
 import com.my.library.dao.constants.columns.GenreColumns;
 import com.my.library.dao.constants.queries.GenreQueries;
 import com.my.library.entities.Genre;
 import com.my.library.exceptions.DaoException;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenreDaoImpl implements GenreDAO {
-    private static final ConnectionPool dbm = ConnectionPool.getInstance();
-    private static volatile GenreDaoImpl INSTANCE;
+public class GenreDaoImpl extends AbstractDao implements GenreDAO {
 
-    private GenreDaoImpl() {
-    }
-
-    public static GenreDaoImpl getInstance() {
-        GenreDaoImpl instance = INSTANCE;
-        if (instance != null) {
-            return instance;
-        }
-        synchronized (GenreDaoImpl.class) {
-            if (instance == null) {
-                instance = new GenreDaoImpl();
-            }
-            return instance;
-        }
+    public GenreDaoImpl(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -37,10 +25,9 @@ public class GenreDaoImpl implements GenreDAO {
 
         List<Genre> GenresList = new ArrayList<>();
 
-        try (var connection = dbm.getConnection();
-             var statement = connection.createStatement()) {
+        try (var statement = connection.createStatement()) {
 
-            try (var rs = statement.executeQuery(GenreQueries.FIND_ALL_GENRES) ) {
+            try (var rs = statement.executeQuery(GenreQueries.FIND_ALL_GENRES)) {
                 while (rs.next()) {
                     GenresList.add(buildGenre(rs));
                 }
