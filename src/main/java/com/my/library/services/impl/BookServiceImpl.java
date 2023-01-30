@@ -104,6 +104,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public boolean alreadyExists(Book book) throws ServiceException {
+        try {
+            return bookDAO.alreadyExists(book);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while exec alreadyExists method in BookServiceImpl",e);
+        }
+
+    }
+
+    @Override
     public void save(Book book) throws ServiceException {
         try{
             bookDAO.save(book);

@@ -98,4 +98,13 @@ public interface BookQueries {
             SET quantity=?
             WHERE book_id=?
             """;
+    //language=TSQL
+    String ALREADY_EXISTS = FIND_ALL_BOOKS + """
+            WHERE Books.title=? AND
+            Publishers.title =? AND
+            Book_Genres.title=? AND
+            Books.page_number=? AND
+            Books.publication_date=? AND
+            Books.author_id=?
+            """;
 }

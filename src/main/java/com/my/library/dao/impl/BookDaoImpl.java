@@ -215,6 +215,26 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
         }
     }
 
+    @Override
+    public boolean alreadyExists(Book book) throws DaoException {
+        try (var statement = connection.prepareStatement(BookQueries.ALREADY_EXISTS)) {
+            int k = 1;
+            statement.setString(k++, book.getTitle());
+            statement.setString(k++, book.getPublisherTitle());
+            statement.setString(k++, book.getGenre());
+            statement.setInt(k++, book.getPageNumber());
+            statement.setObject(k++, book.getPublicationDate());
+            statement.setObject(k, book.getAuthor().getAuthorId());
+
+            try (var rs = statement.executeQuery()) {
+//                rs.next();
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 
     public void update(Book book, int quantity) {
 

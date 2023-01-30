@@ -28,4 +28,6 @@ public interface BookDAO {
     void restore(long id) throws DaoException;
 
     void setBookCopies(int copies, long id) throws DaoException;
+
+    boolean alreadyExists(Book book) throws DaoException;
 }

@@ -39,7 +39,6 @@ public class UpdateBookCommand implements Command {
                 }
 
 
-
             } catch (ServiceException e) {
                 throw new CommandException("Error while executing UpdateBookCommand",e);
             }
