@@ -22,7 +22,9 @@ public interface BookDAO {
     void deleteById(long id) throws DaoException;
 
     int countBooks(boolean includeRemoved) throws DaoException;
+
     boolean isRemoved(long id) throws DaoException;
+
     int getQuantity(long id) throws DaoException;
 
     void restore(long id) throws DaoException;

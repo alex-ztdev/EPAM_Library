@@ -35,6 +35,7 @@ public class UpdateBookCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         var bookContainer = new RequestBookBuilder().buildBookForUpdate(request);
+        int copies = Integer.parseInt(request.getParameter(BookParameters.COPIES));
 
         HttpSession session = request.getSession();
         var resPage = String.format(RedirectToPage.BOOKS_EDIT_PAGE_WITH_PARAMETER, session.getAttribute(Parameters.BOOK_ID));
@@ -51,12 +52,12 @@ public class UpdateBookCommand implements Command {
             try {
 
                 //TODO: Add action for copies!
-                if (bookService.alreadyExists(book)) {
+                if (bookService.alreadyExists(book) && bookService.getQuantity(book.getBookId())==copies) {
                     logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId() + " book with such parameters already exists");
                     request.getSession().setAttribute(BookParameters.BOOK_ALREADY_EXISTS, BookParameters.BOOK_ALREADY_EXISTS);
                 }else{
                     logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId());
-                    bookService.update(book, authorService, transactionManager);
+                    bookService.update(book,copies , authorService, transactionManager);
                     session.setAttribute(BookParameters.SUCCESSFULLY_UPDATED, BookParameters.SUCCESSFULLY_UPDATED);
                 }
 

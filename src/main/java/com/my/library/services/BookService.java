@@ -26,7 +26,7 @@ public interface BookService extends Service<Book> {
 
     boolean alreadyExists(Book book) throws ServiceException;
 
-    boolean update(Book book, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
+    boolean update(Book book,int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
 
 }
 

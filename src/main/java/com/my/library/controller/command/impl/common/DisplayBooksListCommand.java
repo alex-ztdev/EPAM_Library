@@ -41,7 +41,6 @@ public class DisplayBooksListCommand implements Command {
         BooksOrderDir orderDir = BooksOrderDir.ASC;
         BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
 
-
         var reqCurrPage = request.getParameter(Parameters.BOOKS_LIST_CURR_PAGE);
         var reqOrderDir = request.getParameter(Parameters.ORDER_DIRECTION);
         var reqOrderBy = request.getParameter(Parameters.ORDER_BY);

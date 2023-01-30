@@ -21,13 +21,12 @@ public class RequestBookBuilder {
         Long bookId = Long.valueOf(request.getParameter(Parameters.BOOK_ID));
         String title = request.getParameter(BookParameters.TITLE);
 
-
         String firstName = request.getParameter(BookParameters.AUTHOR_FIRST_NAME);
         String secondName = request.getParameter(BookParameters.AUTHOR_SECOND_NAME);
 
         String genre = request.getParameter(BookParameters.GENRE);
         String publisher = request.getParameter(BookParameters.PUBLISHER);
-        String copies = request.getParameter(BookParameters.COPIES);
+        int copies = Integer.parseInt(request.getParameter(BookParameters.COPIES));
         int pages = Integer.parseInt(request.getParameter(BookParameters.PAGES));
         LocalDate publicationDate = LocalDate.parse(request.getParameter(BookParameters.PUBLICATION_DATE));
 

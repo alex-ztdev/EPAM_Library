@@ -30,14 +30,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void delete(Book book) throws ServiceException {
-        try{
+        try {
             bookDAO.delete(book);
         } catch (DaoException e) {
             throw new ServiceException("Error while deleting book in BookServiceImpl", e);
         }
     }
+
     public void deleteById(long id) throws ServiceException {
-        try{
+        try {
             bookDAO.deleteById(id);
         } catch (DaoException e) {
             throw new ServiceException("Error while deleting book by id in BookServiceImpl", e);
@@ -46,7 +47,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<Book> find(long id) throws ServiceException {
-        try{
+        try {
             return bookDAO.find(id);
         } catch (DaoException e) {
             throw new ServiceException("Error while deleting book in BookServiceImpl", e);
@@ -55,7 +56,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() throws ServiceException {
-        try{
+        try {
             return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, BooksOrderDir.ASC, false);
         } catch (DaoException e) {
             throw new ServiceException("Error while default findAll in BookServiceImpl", e);
@@ -67,7 +68,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDAO.findAll(from, to, orderBy, dir, includeRemoved);
         } catch (DaoException e) {
-            throw new ServiceException("Error while findAll method with parameters in BookServiceImpl",e);
+            throw new ServiceException("Error while findAll method with parameters in BookServiceImpl", e);
         }
     }
 
@@ -76,7 +77,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDAO.countBooks(includeRemoved);
         } catch (DaoException e) {
-            throw new ServiceException("Error while counting books in BookServiceImpl",e);
+            throw new ServiceException("Error while counting books in BookServiceImpl", e);
         }
     }
 
@@ -85,7 +86,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDAO.isRemoved(id);
         } catch (DaoException e) {
-            throw new ServiceException("Error while exec isRemoved method in BookServiceImpl",e);
+            throw new ServiceException("Error while exec isRemoved method in BookServiceImpl", e);
         }
     }
 
@@ -94,7 +95,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDAO.getQuantity(id);
         } catch (DaoException e) {
-            throw new ServiceException("Error while exec getQuantity method in BookServiceImpl",e);
+            throw new ServiceException("Error while exec getQuantity method in BookServiceImpl", e);
         }
     }
 
@@ -103,7 +104,7 @@ public class BookServiceImpl implements BookService {
         try {
             bookDAO.restore(id);
         } catch (DaoException e) {
-            throw new ServiceException("Error while exec restore method in BookServiceImpl",e);
+            throw new ServiceException("Error while exec restore method in BookServiceImpl", e);
         }
     }
 
@@ -112,13 +113,13 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDAO.alreadyExists(book);
         } catch (DaoException e) {
-            throw new ServiceException("Error while exec alreadyExists method in BookServiceImpl",e);
+            throw new ServiceException("Error while exec alreadyExists method in BookServiceImpl", e);
         }
 
     }
 
     @Override
-    public boolean update(Book book, AuthorService authorService, TransactionManager transactionManager) throws ServiceException {
+    public boolean update(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException {
         var operationRes = false;
         logger.log(Level.DEBUG, "Executing update for book: " + book);
         try {
@@ -128,21 +129,22 @@ public class BookServiceImpl implements BookService {
                 logger.log(Level.INFO, "UpdateBookCommand was called for book_id: " + book.getBookId() + " with new Author data:" + book.getAuthor());
                 authorService.save(book.getAuthor());
             }
-
             operationRes = bookDAO.update(book);
 
+            bookDAO.setBookCopies(bookCopies, book.getBookId());
+
             transactionManager.commit();
-            logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed: operation_result="+operationRes);
+            logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed: operation_result=" + operationRes);
             return operationRes;
         } catch (DaoException e) {
             try {
                 transactionManager.rollback();
                 logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction rolledBack successfully");
             } catch (DaoException ex) {
-                throw new ServiceException("Error while executing rollback in update method BookServiceImpl",e);
+                throw new ServiceException("Error while executing rollback in update method BookServiceImpl", e);
             }
-            throw new ServiceException("Error while executing update",e);
-        }finally {
+            throw new ServiceException("Error while executing update", e);
+        } finally {
             transactionManager.endTransaction();
             logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction ended successfully");
         }
@@ -150,7 +152,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void save(Book book) throws ServiceException {
-        try{
+        try {
             bookDAO.save(book);
         } catch (DaoException e) {
             throw new ServiceException("Error while saving book BookService", e);
