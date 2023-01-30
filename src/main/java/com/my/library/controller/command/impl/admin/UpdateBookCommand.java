@@ -43,20 +43,19 @@ public class UpdateBookCommand implements Command {
         } else {
             var book = bookContainer.get();
             try {
-
                 //if there is no such author, then save it to DataBase
                 if (authorService.findByNames(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()).isEmpty()) {
                     logger.log(Level.INFO, "UpdateBookCommand was called for book_id: "+ book.getBookId() + " with new Author data:" + book.getAuthor());
                     authorService.save(book.getAuthor());
                 }
                 if (bookService.alreadyExists(book)) {
-                    logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId()+ " book with such parameters already exists");
+                    logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId() + " book with such parameters already exists");
                     request.getSession().setAttribute(BookParameters.BOOK_ALREADY_EXISTS, BookParameters.BOOK_ALREADY_EXISTS);
                 }
             } catch (ServiceException e) {
                 throw new CommandException("Error while executing UpdateBookCommand",e);
             }
         }
-        return new CommandResult(request.getContextPath() + resPage, CommandDirection.REDIRECT);
+        return new CommandResult(resPage, CommandDirection.REDIRECT);
     }
 }

@@ -78,6 +78,7 @@ public class UpdateBookRedirectCommand implements Command {
                     .toList();
 
             //TODO: change to session scope?
+            session.setAttribute(Parameters.BOOK_ID, reqBookId);
             session.setAttribute(Parameters.BOOKS_DTO, bookDTO);
             session.setAttribute(Parameters.GENRES_LIST, genresList);
             session.setAttribute(Parameters.PUBLISHERS_LIST, publishersList);

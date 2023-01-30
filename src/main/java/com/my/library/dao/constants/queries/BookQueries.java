@@ -105,6 +105,7 @@ public interface BookQueries {
             Book_Genres.title=? AND
             Books.page_number=? AND
             Books.publication_date=? AND
-            Books.author_id=?
+            A.first_name=? AND
+            A.second_name=?
             """;
 }

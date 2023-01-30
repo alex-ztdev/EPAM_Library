@@ -29,7 +29,7 @@
 <div class="container">
   <div class="main-content">
     <p class="operation-title"><fmt:message key="admin.books.edit.form.title"/></p>
-
+    <p>${sessionScope}</p>
     <c:if test="${not empty sessionScope.invalid_book_data}">
       <p class="error-msg"><fmt:message key="admin.books.edit.error.msg.invalid.data"/></p><br>
     </c:if>
