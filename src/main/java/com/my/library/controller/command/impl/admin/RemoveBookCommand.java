@@ -18,7 +18,11 @@ import org.apache.logging.log4j.Logger;
 public class RemoveBookCommand implements Command {
     private final static Logger logger = LogManager.getLogger();
 
-    private final BookService bookService = ServiceFactory.getBookService();
+    private final BookService bookService;
+
+    public RemoveBookCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {

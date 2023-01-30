@@ -24,7 +24,11 @@ import java.util.Optional;
 public class UpdateBookRedirectCommand implements Command {
     private final static Logger logger = LogManager.getLogger();
 
-    private final BookService bookService = ServiceFactory.getBookService();
+    private final BookService bookService;
+
+    public UpdateBookRedirectCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
@@ -51,7 +55,7 @@ public class UpdateBookRedirectCommand implements Command {
                 return new CommandResult(request.getContextPath() + Pages.ERROR_PAGE, CommandDirection.REDIRECT);
             }
 
-            var bookDTO = new BookMapper().toDTO(book.get(), bookService.getQuantity(bookId), bookService.isRemoved(bookId));
+            var bookDTO = new BookMapper(bookService).toDTO(book.get(), bookService.getQuantity(bookId), bookService.isRemoved(bookId));
             var genresList = ServiceFactory.getGenreService().findAll();
             var publishersList = ServiceFactory.getPublisherService().findAll();
 

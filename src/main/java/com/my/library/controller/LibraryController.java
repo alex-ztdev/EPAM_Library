@@ -32,13 +32,16 @@ public class LibraryController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String command = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
-        var action = CommandFactory.createCommand(command);
+        String commandReq = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
 
-        logger.log(Level.DEBUG, "Command " + action.getClass().getSimpleName() + " was received");
-        try {
-            var commandRes = action.execute(request);
+        try (var commandFactory = new CommandFactory()){
+            var command = commandFactory.createCommand(commandReq);
+
+            logger.log(Level.DEBUG, "Command " + command.getClass().getSimpleName() + " was received");
+
+            var commandRes = command.execute(request);
             direct(request, response, commandRes);
+
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Command exception while processingRequest", e);
             response.sendRedirect(Pages.ERROR_PAGE);

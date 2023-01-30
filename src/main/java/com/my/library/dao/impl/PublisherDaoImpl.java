@@ -37,7 +37,7 @@ public class PublisherDaoImpl implements PublisherDAO {
 
         List<Publisher> publishersList = new ArrayList<>();
 
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.createStatement()) {
 
             try (var rs = statement.executeQuery(PublisherQueries.FIND_ALL_PUBLISHERS) ) {

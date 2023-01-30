@@ -2,7 +2,9 @@ package com.my.library.dao.impl;
 
 
 import com.my.library.connection_pool.ConnectionPool;
+import com.my.library.dao.AbstractDao;
 import com.my.library.dao.AuthorDAO;
+import com.my.library.dao.builder.impl.AuthorBuilder;
 import com.my.library.dao.constants.columns.AuthorsColumns;
 import com.my.library.dao.constants.queries.AuthorQueries;
 import com.my.library.entities.Author;
@@ -14,37 +16,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AuthorDaoImpl implements AuthorDAO {
-    private static final ConnectionPool dbm = ConnectionPool.getInstance();
-    private static volatile AuthorDaoImpl INSTANCE;
+public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
+//    private static final ConnectionPool dbm = ConnectionPool.getInstance();
+//    private static volatile AuthorDaoImpl INSTANCE;
 
-    private AuthorDaoImpl() {
+    public AuthorDaoImpl(Connection connection) {
+        this.connection = connection;
     }
 
-    public static AuthorDaoImpl getInstance() {
-        AuthorDaoImpl instance = INSTANCE;
-        if (instance != null) {
-            return instance;
-        }
-        synchronized (AuthorDaoImpl.class) {
-            if (instance == null) {
-                instance = new AuthorDaoImpl();
-            }
-            return instance;
-        }
-    }
+//    public static AuthorDaoImpl getInstance() {
+//        AuthorDaoImpl instance = INSTANCE;
+//        if (instance != null) {
+//            return instance;
+//        }
+//        synchronized (AuthorDaoImpl.class) {
+//            if (instance == null) {
+//                instance = new AuthorDaoImpl();
+//            }
+//            return instance;
+//        }
+//    }
 
     @Override
     public Optional<Author> find(long id) throws DaoException {
         Author author = null;
-        try (var connection = dbm.get()) {
-            try (var statement = connection.prepareStatement(AuthorQueries.FIND_AUTHOR_BY_ID)) {
-                statement.setLong(1, id);
+        try (var statement = connection.prepareStatement(AuthorQueries.FIND_AUTHOR_BY_ID)) {
+            statement.setLong(1, id);
 
-                try(var rs = statement.executeQuery();){
-                    if (rs.next()) {
-                        author = buildAuthor(rs);
-                    }
+            try (var rs = statement.executeQuery();) {
+                if (rs.next()) {
+                    author = buildAuthor(rs);
                 }
             }
         } catch (SQLException e) {
@@ -54,16 +55,13 @@ public class AuthorDaoImpl implements AuthorDAO {
     }
 
     private Author buildAuthor(ResultSet rs) throws SQLException {
-        return new Author(rs.getLong(AuthorsColumns.ID),
-                rs.getString(AuthorsColumns.FIRST_NAME),
-                rs.getString(AuthorsColumns.SECOND_NAME));
+        return new AuthorBuilder().build(rs);
     }
 
     @Override
     public List<Author> findAll() throws DaoException {
         List<Author> authorList = new ArrayList<>();
-        try (var connection = dbm.get();
-             var statement = connection.createStatement()) {
+        try (var statement = connection.createStatement()) {
 
             try (var rs = statement.executeQuery(AuthorQueries.FIND_ALL_AUTHORS);) {
                 while (rs.next()) {
@@ -79,8 +77,7 @@ public class AuthorDaoImpl implements AuthorDAO {
 
     @Override
     public void save(Author author) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(AuthorQueries.INSERT_AUTHOR, Statement.RETURN_GENERATED_KEYS)) {
+        try (var statement = connection.prepareStatement(AuthorQueries.INSERT_AUTHOR, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, author.getFirstName());
             statement.setString(2, author.getSecondName());
@@ -99,8 +96,7 @@ public class AuthorDaoImpl implements AuthorDAO {
 
     @Override
     public boolean update(Author author) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(AuthorQueries.UPDATE_AUTHOR_BY_ID)) {
+        try (var statement = connection.prepareStatement(AuthorQueries.UPDATE_AUTHOR_BY_ID)) {
 
             statement.setString(1, author.getFirstName());
             statement.setString(2, author.getSecondName());
@@ -113,24 +109,23 @@ public class AuthorDaoImpl implements AuthorDAO {
         }
     }
 
-    @Override
-    public List<Book> getAuthorBooks(long id) throws DaoException {
-        List<Book> bookList = new ArrayList<>();
-
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(AuthorQueries.FIND_ALL_AUTHORS_BOOKS)) {
-            BookDaoImpl bookDao = BookDaoImpl.getInstance();
-            statement.setLong(1, id);
-
-            try (var rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    bookDao.find(rs.getLong(AuthorsColumns.AUTHORS_BOOK_ID)).ifPresent(bookList::add);
-                }
-            }
-            return bookList;
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
+//    @Override
+//    public List<Book> getAuthorBooks(long id) throws DaoException {
+//        List<Book> bookList = new ArrayList<>();
+//
+//        try(  var statement = connection.prepareStatement(AuthorQueries.FIND_ALL_AUTHORS_BOOKS)) {
+//            BookDaoImpl bookDao = BookDaoImpl.getInstance();
+//            statement.setLong(1, id);
+//
+//            try (var rs = statement.executeQuery()) {
+//                while (rs.next()) {
+//                    bookDao.find(rs.getLong(AuthorsColumns.AUTHORS_BOOK_ID)).ifPresent(bookList::add);
+//                }
+//            }
+//            return bookList;
+//        } catch (SQLException e) {
+//            throw new DaoException(e);
+//        }
+//    }
 
 }

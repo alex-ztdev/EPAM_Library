@@ -1,51 +1,47 @@
 package com.my.library.dao.impl;
 
-import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.constant.BooksOrderDir;
-import com.my.library.dao.AuthorDAO;
+import com.my.library.dao.AbstractDao;
 import com.my.library.dao.BookDAO;
+import com.my.library.dao.builder.impl.AuthorBuilder;
+import com.my.library.dao.builder.impl.BookBuilder;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.columns.BooksColumns;
 import com.my.library.dao.constants.queries.BookQueries;
-import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class BookDaoImpl implements BookDAO {
-    private static final ConnectionPool dbm = ConnectionPool.getInstance();
-    private static volatile BookDaoImpl INSTANCE;
+public class BookDaoImpl extends AbstractDao implements BookDAO {
+//    private static final ConnectionPool dbm = ConnectionPool.getInstance();
+//    private static volatile BookDaoImpl INSTANCE;
 
-    private final AuthorDAO authorDAO = AuthorDaoImpl.getInstance();
 
-    private BookDaoImpl() {
+    public BookDaoImpl(Connection connection) {
+        this.connection = connection;
     }
 
-    public static BookDaoImpl getInstance() {
-        BookDaoImpl instance = INSTANCE;
-        if (instance != null) {
-            return instance;
-        }
-        synchronized (BookDaoImpl.class) {
-            if (instance == null) {
-                instance = new BookDaoImpl();
-            }
-            return instance;
-        }
-    }
+//    public static BookDaoImpl getInstance() {
+//        BookDaoImpl instance = INSTANCE;
+//        if (instance != null) {
+//            return instance;
+//        }
+//        synchronized (BookDaoImpl.class) {
+//            if (instance == null) {
+//                instance = new BookDaoImpl();
+//            }
+//            return instance;
+//        }
+//    }
 
     @Override
     public Optional<Book> find(long id) throws DaoException {
         Book book = null;
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.FIND_BOOK_BY_ID)) {
+        try (var statement = connection.prepareStatement(BookQueries.FIND_BOOK_BY_ID)) {
             statement.setLong(1, id);
 
             try (var rs = statement.executeQuery();) {
@@ -59,14 +55,8 @@ public class BookDaoImpl implements BookDAO {
         return book == null ? Optional.empty() : Optional.of(book);
     }
 
-    private Book buildBook(ResultSet rs) throws SQLException, DaoException {
-        return new Book(rs.getLong(BooksColumns.ID),
-                rs.getString(BooksColumns.TITLE),
-                rs.getString(BooksColumns.PUBLISHER),
-                rs.getString(BooksColumns.GENRE),
-                rs.getInt(BooksColumns.PAGE_NUMBER),
-                rs.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate(),
-                authorDAO.find(rs.getLong(BooksColumns.AUTHOR_ID)).orElse(Author.UNKNOWN_AUTHOR));
+    private Book buildBook(ResultSet rs) throws SQLException {
+        return new BookBuilder().build(rs);
     }
 
 
@@ -76,8 +66,7 @@ public class BookDaoImpl implements BookDAO {
         var unformattedQ = includeRemoved ? BookQueries.FIND_ALL_BOOKS_PAGINATION : BookQueries.FIND_ALL_NOT_REMOVED_BOOKS_PAGINATION;
 
         String query = String.format(unformattedQ, orderBy.getOrderBy(), dir);
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(query)) {
+        try (var statement = connection.prepareStatement(query)) {
 
             int k = 1;
             statement.setInt(k++, start);
@@ -97,8 +86,7 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public void save(Book book) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
+        try (var statement = connection.prepareStatement(BookQueries.INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             int k = 1;
             statement.setString(k++, book.getTitle());
             statement.setString(k++, book.getPublisherTitle());
@@ -121,8 +109,7 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public boolean update(Book book) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.UPDATE_BOOK)) {
+        try (var statement = connection.prepareStatement(BookQueries.UPDATE_BOOK)) {
             int k = 1;
             statement.setString(k++, book.getTitle());
             statement.setString(k++, book.getPublisherTitle());
@@ -148,8 +135,7 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public void deleteById(long id) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
+        try (var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
             int k = 1;
             statement.setLong(k, id);
 
@@ -162,8 +148,7 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public int countBooks(boolean includeRemoved) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.createStatement()) {
+        try (var statement = connection.createStatement()) {
 
             try (var rs = statement.executeQuery(includeRemoved ? BookQueries.COUNT_ALL_BOOK_RECORDS : BookQueries.COUNT_NOT_REMOVED_BOOK_RECORDS)) {
                 rs.next();
@@ -176,8 +161,7 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public boolean isRemoved(long id) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.IS_REMOVED_BOOK)) {
+        try (var statement = connection.prepareStatement(BookQueries.IS_REMOVED_BOOK)) {
 
             statement.setLong(1, id);
 
@@ -192,8 +176,7 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public int getQuantity(long id) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.GET_QUANTITY)) {
+        try (var statement = connection.prepareStatement(BookQueries.GET_QUANTITY)) {
 
             statement.setLong(1, id);
 
@@ -208,8 +191,7 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public void restore(long id) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.RESTORE_BOOK)) {
+        try (var statement = connection.prepareStatement(BookQueries.RESTORE_BOOK)) {
 
             statement.setLong(1, id);
 
@@ -222,8 +204,7 @@ public class BookDaoImpl implements BookDAO {
 
     @Override
     public void setBookCopies(int copies, long id) throws DaoException {
-        try (var connection = dbm.get();
-             var statement = connection.prepareStatement(BookQueries.SET_BOOK_COPIES)) {
+        try (var statement = connection.prepareStatement(BookQueries.SET_BOOK_COPIES)) {
 
             statement.setInt(1, copies);
             statement.setLong(2, id);

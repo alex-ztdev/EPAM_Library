@@ -16,6 +16,6 @@ public interface AuthorDAO {
 
     boolean update(Author entity) throws DaoException;
 
-    List<Book> getAuthorBooks(long id) throws DaoException;
+//    List<Book> getAuthorBooks(long id) throws DaoException;
 
 }

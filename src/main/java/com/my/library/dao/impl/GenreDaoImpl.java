@@ -37,7 +37,7 @@ public class GenreDaoImpl implements GenreDAO {
 
         List<Genre> GenresList = new ArrayList<>();
 
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.createStatement()) {
 
             try (var rs = statement.executeQuery(GenreQueries.FIND_ALL_GENRES) ) {

@@ -1,6 +1,5 @@
 package com.my.library.connection_pool;
 
-import com.my.library.exceptions.ConnectionPoolException;
 import com.my.library.exceptions.DaoException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -58,7 +57,7 @@ public class ConnectionPool {
         }
     }
 
-    public Connection get() {
+    public Connection getConnection() {
         Connection connection = null;
         try {
             connection = pool.take();

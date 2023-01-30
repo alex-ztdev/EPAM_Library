@@ -1,13 +1,33 @@
 package com.my.library.controller.command;
 
+import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
+import com.my.library.dao.TransactionHelper;
+import com.my.library.exceptions.CommandException;
+import com.my.library.exceptions.DaoException;
+import com.my.library.services.ServiceFactory;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class CommandFactory {
+import java.sql.Connection;
+import java.sql.SQLException;
 
-    public static Command createCommand(String command) {
+public class CommandFactory implements AutoCloseable {
+    private final static Logger logger = LogManager.getLogger();
+
+    private ServiceFactory serviceFactory;
+    private TransactionHelper transactionManager;
+    private Connection connection;
+    public CommandFactory() {
+        this.connection = ConnectionPool.getInstance().getConnection();
+        this.serviceFactory = new ServiceFactory(connection);
+    }
+
+    public Command createCommand(String command) {
         Command res;
         switch (command) {
             case GeneralCommands.LOGIN -> res = new LoginCommand();
@@ -15,15 +35,25 @@ public class CommandFactory {
             case GeneralCommands.REGISTRATION -> res = new RegisterCommand();
             case GeneralCommands.CHANGE_LANGUAGE -> res = new ChangeLanguageCommand();
             case GeneralCommands.HOME -> res = new HomeCommand();
-            case GeneralCommands.BOOKS_LIST -> res = new DisplayBooksListCommand();
-            case AdminCommands.REMOVE_BOOK -> res = new RemoveBookCommand();
-            case AdminCommands.RESTORE_BOOK -> res = new RestoreBookCommand();
+            case GeneralCommands.BOOKS_LIST -> res = new DisplayBooksListCommand(serviceFactory.getBookService());
+            case AdminCommands.REMOVE_BOOK -> res = new RemoveBookCommand(serviceFactory.getBookService());
+            case AdminCommands.RESTORE_BOOK -> res = new RestoreBookCommand(serviceFactory.getBookService());
             case AdminCommands.ADD_BOOK_REDIRECT -> res = new AddBookRedirectCommand();
-            case AdminCommands.UPDATE_BOOK_REDIRECT -> res = new UpdateBookRedirectCommand();
+            case AdminCommands.UPDATE_BOOK_REDIRECT -> res = new UpdateBookRedirectCommand(serviceFactory.getBookService());
             case AdminCommands.UPDATE_BOOK -> res = new UpdateBookCommand();
             default -> res = new DefaultCommand();
         }
         return res;
     }
 
+    @Override
+    public void close() throws CommandException {
+        //TODO: implement retrieve connection
+        try {
+            connection.close();
+            logger.log(Level.DEBUG, "Connection retrieved after CommandFactoryClosed");
+        } catch (SQLException e) {
+            throw new CommandException("Error while closing connection",e);
+        }
+    }
 }

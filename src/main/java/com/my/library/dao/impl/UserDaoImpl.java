@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDAO {
     @Override
     public Optional<User> find(long id) throws DaoException {
         User user = null;
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.FIND_USER_BY_ID)) {
 
             statement.setLong(1, id);
@@ -72,7 +72,7 @@ public class UserDaoImpl implements UserDAO {
     public List<User> findAll() throws DaoException {
         List<User> userList = new ArrayList<>();
 
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.createStatement()) {
 
             try (var rs = statement.executeQuery(UserQueries.FIND_ALL_USERS)) {
@@ -88,7 +88,7 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public void save(User user) throws DaoException {
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             int k = 1;
             statement.setString(k++, user.getLogin());
@@ -114,7 +114,7 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public boolean update(User user) throws DaoException {
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.UPDATE_USER)) {
             int k = 1;
             statement.setString(k++, user.getLogin());
@@ -136,7 +136,7 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public void block(User user) throws DaoException {
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
             statement.setLong(1, UserStatus.BLOCKED.ordinal() + 1);
@@ -151,7 +151,7 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public void unblock(User user) throws DaoException {
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
             statement.setLong(1, UserStatus.NORMAL.ordinal() + 1);
@@ -166,7 +166,7 @@ public class UserDaoImpl implements UserDAO {
     @Override
     public Optional<User> authenticate(String login, String password) throws DaoException {
         User res = null;
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.AUTHENTICATE_BY_LOGIN_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, password);
@@ -186,7 +186,7 @@ public class UserDaoImpl implements UserDAO {
     @Override
     public Optional<User> findByLogin(String login) throws DaoException {
         User user = null;
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.FIND_BY_LOGIN)) {
 
             statement.setString(1, login);
@@ -205,7 +205,7 @@ public class UserDaoImpl implements UserDAO {
     @Override
     public Optional<User> findByEmail(String email) throws DaoException {
         User user = null;
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.FIND_BY_EMAIL)) {
 
             statement.setString(1, email);
@@ -225,7 +225,7 @@ public class UserDaoImpl implements UserDAO {
     public Optional<User> findByPhone(String phone) throws DaoException {
 
         User user = null;
-        try (var connection = dbm.get();
+        try (var connection = dbm.getConnection();
              var statement = connection.prepareStatement(UserQueries.FIND_BY_PHONE)) {
 
             statement.setString(1, phone);

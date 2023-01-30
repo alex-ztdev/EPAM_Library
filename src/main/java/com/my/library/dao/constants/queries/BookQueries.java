@@ -10,10 +10,13 @@ public interface BookQueries {
             	Book_Genres.title as book_genre,
             	Books.page_number,
             	Books.publication_date,
-            	Books.author_id
+            	Books.author_id,
+            	A.first_name,
+            	A.second_name
             FROM Books
             INNER JOIN Publishers ON Books.publisher_id = Publishers.id
             INNER JOIN Book_Genres ON Books.genre_id = Book_Genres.id
+            INNER JOIN Authors A on A.id = Books.author_id
             """;
     String FIND_BOOK_BY_ID = FIND_ALL_BOOKS + "WHERE Books.id=?";
 
@@ -51,7 +54,6 @@ public interface BookQueries {
 
     //language=TSQL
     String FIND_ALL_NOT_REMOVED_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
-            INNER JOIN Authors A on A.id = Books.author_id
             INNER JOIN Storage S on Books.id = S.book_id
             WHERE isRemoved = 0
             ORDER BY %s %s
@@ -60,7 +62,6 @@ public interface BookQueries {
             """;
   //language=TSQL
     String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
-            INNER JOIN Authors A on A.id = Books.author_id
             INNER JOIN Storage S on Books.id = S.book_id
             ORDER BY %s %s
             OFFSET ? ROWS

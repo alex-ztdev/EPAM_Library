@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookMapper {
+    private BookService service;
+
+    public BookMapper(BookService service) {
+        this.service = service;
+    }
 
     public List<BookDTO> getDTOList(List<Book> books) throws ServiceException {
-        BookService service = ServiceFactory.getBookService();
 
         List<BookDTO> bookDTOList = new ArrayList<>();
 

@@ -17,7 +17,11 @@ public class RestoreBookCommand implements Command {
 
     private final static Logger logger = LogManager.getLogger();
 
-    private final BookService bookService = ServiceFactory.getBookService();
+    private final BookService bookService;
+
+    public RestoreBookCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {

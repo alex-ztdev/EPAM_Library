@@ -23,9 +23,15 @@ import java.util.List;
 public class DisplayBooksListCommand implements Command {
     private static final int RECORDS_PER_PAGE = 15;
 
+    private final BookService bookService;
+
+    public DisplayBooksListCommand(BookService bookService) {
+        this.bookService = bookService;
+    }
+
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        BookService bookService = ServiceFactory.getBookService();
+
 
         int currPage = 1;
 
@@ -56,7 +62,7 @@ public class DisplayBooksListCommand implements Command {
                     orderDir, includeRemoved
             );
 
-            List<BookDTO> bookDTOList = new BookMapper().getDTOList(booksList);
+            List<BookDTO> bookDTOList = new BookMapper(bookService).getDTOList(booksList);
 
             int totalRecords = bookService.countBooks(includeRemoved);
             int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
