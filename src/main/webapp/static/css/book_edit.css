@@ -118,3 +118,8 @@ input:valid {
 input:invalid {
     border: 2px solid #dd2c00;
 }
+.error-msg{
+    font-size: 24px;
+    color: red;
+    text-align: center;
+}

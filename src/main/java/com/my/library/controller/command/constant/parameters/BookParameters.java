@@ -13,6 +13,7 @@ public interface BookParameters {
 
 
     String BOOK_INVALID_DATA = "invalid_book_data";
+    String BOOK_ALREADY_EXISTS = "book_exists";
 
 
 }

@@ -15,6 +15,7 @@ import com.my.library.services.GenreService;
 import com.my.library.services.PublisherService;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +39,8 @@ public class UpdateBookRedirectCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         var reqBookId = request.getParameter(Parameters.BOOK_ID);
+        HttpSession session = request.getSession();
+
 
         logger.log(Level.DEBUG,"UpdateBookCommand: request book_id: " + reqBookId);
 
@@ -75,9 +78,9 @@ public class UpdateBookRedirectCommand implements Command {
                     .toList();
 
             //TODO: change to session scope?
-            request.setAttribute(Parameters.BOOKS_DTO, bookDTO);
-            request.setAttribute(Parameters.GENRES_LIST, genresList);
-            request.setAttribute(Parameters.PUBLISHERS_LIST, publishersList);
+            session.setAttribute(Parameters.BOOKS_DTO, bookDTO);
+            session.setAttribute(Parameters.GENRES_LIST, genresList);
+            session.setAttribute(Parameters.PUBLISHERS_LIST, publishersList);
 
             return new CommandResult(Pages.BOOK_EDIT);
         } catch (ServiceException e) {

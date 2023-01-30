@@ -16,9 +16,9 @@ public class BookValidator {
                 || book.getTitle() == null
                 || book.getPublisherTitle() == null) {
             return false;
-        } else return Pattern.matches(TITLE_PATTERN, book.getTitle())
-                && Pattern.matches(NAME_PATTERN, book.getAuthor().getFirstName())
-                && Pattern.matches(NAME_PATTERN, book.getAuthor().getSecondName());
+        } else return !Pattern.matches(TITLE_PATTERN, book.getTitle())
+                && !Pattern.matches(NAME_PATTERN, book.getAuthor().getFirstName())
+                && !Pattern.matches(NAME_PATTERN, book.getAuthor().getSecondName());
     }
 
 }
