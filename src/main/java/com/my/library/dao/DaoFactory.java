@@ -3,6 +3,7 @@ package com.my.library.dao;
 import com.my.library.dao.impl.AuthorDaoImpl;
 import com.my.library.dao.impl.BookDaoImpl;
 import com.my.library.dao.impl.UserDaoImpl;
+import com.my.library.entities.Author;
 
 import java.sql.Connection;
 
@@ -18,5 +19,9 @@ public class DaoFactory {
     }
     public UserDAO getUserDao() {
         return new UserDaoImpl(connection);
+    }
+
+    public AuthorDAO getAuthorDao() {
+        return new AuthorDaoImpl(connection);
     }
 }

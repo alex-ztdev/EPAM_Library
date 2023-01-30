@@ -5,10 +5,7 @@ import com.my.library.dao.impl.BookDaoImpl;
 import com.my.library.dao.impl.GenreDaoImpl;
 import com.my.library.dao.impl.PublisherDaoImpl;
 import com.my.library.dao.impl.UserDaoImpl;
-import com.my.library.services.impl.BookServiceImpl;
-import com.my.library.services.impl.GenreServiceImpl;
-import com.my.library.services.impl.PublisherServiceImpl;
-import com.my.library.services.impl.UserServiceImpl;
+import com.my.library.services.impl.*;
 
 import java.sql.Connection;
 
@@ -27,6 +24,10 @@ public class ServiceFactory {
 
     public BookService getBookService() {
         return new BookServiceImpl(daoFactory.getBookDao());
+    }
+
+    public AuthorService getAuthorService() {
+        return new AuthorServiceImpl(daoFactory.getAuthorDao());
     }
 
     public static PublisherService getPublisherService() {
