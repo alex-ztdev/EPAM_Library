@@ -26,4 +26,6 @@ public interface BookDAO {
     int getQuantity(long id) throws DaoException;
 
     void restore(long id) throws DaoException;
+
+    void setBookCopies(int copies, long id) throws DaoException;
 }

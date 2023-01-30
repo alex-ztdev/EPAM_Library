@@ -219,4 +219,24 @@ public class BookDaoImpl implements BookDAO {
             throw new DaoException(e);
         }
     }
+
+    @Override
+    public void setBookCopies(int copies, long id) throws DaoException {
+        try (var connection = dbm.get();
+             var statement = connection.prepareStatement(BookQueries.SET_BOOK_COPIES)) {
+
+            statement.setInt(1, copies);
+            statement.setLong(2, id);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+
+    public void update(Book book, int quantity) {
+
+    }
 }

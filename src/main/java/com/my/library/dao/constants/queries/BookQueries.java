@@ -91,5 +91,10 @@ public interface BookQueries {
             SET isRemoved=0
             WHERE book_id=?
             """;
-
+    //language=TSQL
+    String SET_BOOK_COPIES = """
+            UPDATE Storage
+            SET quantity=?
+            WHERE book_id=?
+            """;
 }
