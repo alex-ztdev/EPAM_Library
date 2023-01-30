@@ -21,7 +21,11 @@ import org.apache.logging.log4j.Logger;
 
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService userService = ServiceFactory.getUserService();
+    private final UserService userService;
+
+    public LoginCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     //TODO: Make case insensitive
     @Override

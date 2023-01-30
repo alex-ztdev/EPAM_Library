@@ -25,11 +25,15 @@ import static com.my.library.utils.validator.UserValidator.setParameters;
 
 public class RegisterCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final UserService userService;
+
+    public RegisterCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "Registration command invoked");
-        UserService userService = ServiceFactory.getUserService();
 
 
 

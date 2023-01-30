@@ -21,8 +21,8 @@ public class ServiceFactory {
         this.daoFactory = new DaoFactory(connection);
     }
 
-    public static UserService getUserService() {
-        return new UserServiceImpl(UserDaoImpl.getInstance());
+    public UserService getUserService() {
+        return new UserServiceImpl(daoFactory.getUserDao());
     }
 
     public BookService getBookService() {
