@@ -55,7 +55,7 @@ public class CommandFactory implements AutoCloseable {
         //TODO: implement retrieve connection
         try {
             connection.close();
-            logger.log(Level.DEBUG, "Connection successfully retrieved after CommandFactoryClosed");
+//            logger.log(Level.DEBUG, "Connection successfully retrieved after CommandFactoryClosed");
         } catch (SQLException e) {
             logger.error("Error while closing connection", e);
         }

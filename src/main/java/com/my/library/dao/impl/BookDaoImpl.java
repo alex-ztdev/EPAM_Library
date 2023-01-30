@@ -113,6 +113,8 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
             statement.setString(k++, book.getTitle());
             statement.setString(k++, book.getPublisherTitle());
             statement.setString(k++, book.getGenre());
+            statement.setString(k++, book.getAuthor().getFirstName());
+            statement.setString(k++, book.getAuthor().getSecondName());
             statement.setInt(k++, book.getPageNumber());
             statement.setDate(k++, Date.valueOf(book.getPublicationDate()));
             statement.setLong(k, book.getBookId());

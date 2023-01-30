@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.admin;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dto.BookMapper;
 import com.my.library.entities.Book;
@@ -42,7 +43,7 @@ public class UpdateBookRedirectCommand implements Command {
         HttpSession session = request.getSession();
 
 
-        logger.log(Level.DEBUG,"UpdateBookCommand: request book_id: " + reqBookId);
+        logger.log(Level.DEBUG,"UpdateBookRedirectCommand: request book_id: " + reqBookId);
 
         Long bookId = null;
         if (reqBookId != null && !reqBookId.isBlank()) {
@@ -50,7 +51,7 @@ public class UpdateBookRedirectCommand implements Command {
         }
 
         if (bookId == null ) {
-            logger.log(Level.DEBUG,"UpdateBookCommand: empty book_id: " + reqBookId);
+            logger.log(Level.DEBUG,"UpdateBookRedirectCommand: empty book_id: " + reqBookId);
             return new CommandResult(request.getContextPath() + Pages.ERROR_PAGE, CommandDirection.REDIRECT);
         }
         Optional<Book> book;
@@ -59,7 +60,7 @@ public class UpdateBookRedirectCommand implements Command {
 
             boolean isPresentBook = book.isPresent();
             if (!isPresentBook) {
-                logger.log(Level.DEBUG,"UpdateBookCommand: Book with such book_id: " + reqBookId + " doesn't found!");
+                logger.log(Level.DEBUG,"UpdateBookRedirectCommand: Book with such book_id: " + reqBookId + " doesn't found!");
                 return new CommandResult(request.getContextPath() + Pages.ERROR_PAGE, CommandDirection.REDIRECT);
             }
 

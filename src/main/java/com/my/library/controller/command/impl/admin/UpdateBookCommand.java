@@ -1,5 +1,6 @@
 package com.my.library.controller.command.impl.admin;
 
+import com.my.library.controller.MessageRemover;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
@@ -7,12 +8,10 @@ import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dao.TransactionManager;
-import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.AuthorService;
 import com.my.library.services.BookService;
-import com.my.library.utils.Pages;
 import com.my.library.utils.builder.RequestBookBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -40,21 +39,27 @@ public class UpdateBookCommand implements Command {
         HttpSession session = request.getSession();
         var resPage = String.format(RedirectToPage.BOOKS_EDIT_PAGE_WITH_PARAMETER, session.getAttribute(Parameters.BOOK_ID));
 
+        session.setAttribute(Parameters.PREVIOUS_PAGE, resPage);
+
+        new MessageRemover().removeMessages(session);
+
         if (bookContainer.isEmpty()) {
             logger.log(Level.INFO, "UpdateBookCommand was called, but Book data is invalid");
             session.setAttribute(BookParameters.BOOK_INVALID_DATA, BookParameters.BOOK_INVALID_DATA);
         } else {
             var book = bookContainer.get();
             try {
-                //if there is no such author, then save it to DataBase
-                if (authorService.findByNames(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()).isEmpty()) {
-                    logger.log(Level.INFO, "UpdateBookCommand was called for book_id: "+ book.getBookId() + " with new Author data:" + book.getAuthor());
-                    authorService.save(book.getAuthor());
-                }
+
+                //TODO: Add action for copies!
                 if (bookService.alreadyExists(book)) {
                     logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId() + " book with such parameters already exists");
                     request.getSession().setAttribute(BookParameters.BOOK_ALREADY_EXISTS, BookParameters.BOOK_ALREADY_EXISTS);
+                }else{
+                    logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId());
+                    bookService.update(book, authorService, transactionManager);
+                    session.setAttribute(BookParameters.SUCCESSFULLY_UPDATED, BookParameters.SUCCESSFULLY_UPDATED);
                 }
+
             } catch (ServiceException e) {
                 throw new CommandException("Error while executing UpdateBookCommand",e);
             }

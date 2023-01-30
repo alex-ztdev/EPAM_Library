@@ -34,6 +34,7 @@ public interface BookQueries {
             title= ?,
             publisher_id= (SELECT TOP(1) id FROM Publishers WHERE title=?),
             genre_id=(SELECT TOP(1) id FROM Book_Genres WHERE title=?),
+            author_id=(SELECT TOP(1) id FROM Authors WHERE Authors.first_name=? AND Authors.second_name=?),
             page_number=?,
             publication_date=?
             WHERE id = ?

@@ -16,4 +16,5 @@ public interface BookParameters {
     String BOOK_ALREADY_EXISTS = "book_exists";
 
 
+    String SUCCESSFULLY_UPDATED = "successfully_updated";
 }

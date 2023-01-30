@@ -29,7 +29,9 @@
 <div class="container">
   <div class="main-content">
     <p class="operation-title"><fmt:message key="admin.books.edit.form.title"/></p>
-    <p>${sessionScope}</p>
+    <c:if test="${not empty sessionScope.successfully_updated}">
+      <p class="success-msg"><fmt:message key="admin.books.edit.success.msg.updated"/></p><br>
+    </c:if>
     <c:if test="${not empty sessionScope.invalid_book_data}">
       <p class="error-msg"><fmt:message key="admin.books.edit.error.msg.invalid.data"/></p><br>
     </c:if>
@@ -48,7 +50,7 @@
                 id="bookTitle"
                 name="book_title"
                 placeholder="<fmt:message key="admin.books.edit.form.placeholder.title"/>"
-                pattern="^['a-zA-Z?!,.а-яА-ЯёЁ0-9\s-]{1,350}$"
+                pattern="^['a-zA-Z?!,.а-яА-ЯёЁ0-9\s-:]{1,350}$"
                 title="<fmt:message key="admin.books.edit.form.validation.msg.title"/>"
                 value="${sessionScope.book.title}"
                 required

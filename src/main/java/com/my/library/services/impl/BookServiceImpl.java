@@ -3,11 +3,15 @@ package com.my.library.services.impl;
 import com.my.library.controller.command.constant.BooksOrderDir;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.dao.BookDAO;
+import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.BooksOrderTypes;
+import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
+import com.my.library.services.AuthorService;
 import com.my.library.services.BookService;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -114,6 +118,37 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public boolean update(Book book, AuthorService authorService, TransactionManager transactionManager) throws ServiceException {
+        var operationRes = false;
+        logger.log(Level.DEBUG, "Executing update for book: " + book);
+        try {
+            transactionManager.beginTransaction();
+
+            if (authorService.findByNames(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()).isEmpty()) {
+                logger.log(Level.INFO, "UpdateBookCommand was called for book_id: " + book.getBookId() + " with new Author data:" + book.getAuthor());
+                authorService.save(book.getAuthor());
+            }
+
+            operationRes = bookDAO.update(book);
+
+            transactionManager.commit();
+            logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed: operation_result="+operationRes);
+            return operationRes;
+        } catch (DaoException e) {
+            try {
+                transactionManager.rollback();
+                logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction rolledBack successfully");
+            } catch (DaoException ex) {
+                throw new ServiceException("Error while executing rollback in update method BookServiceImpl",e);
+            }
+            throw new ServiceException("Error while executing update",e);
+        }finally {
+            transactionManager.endTransaction();
+            logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction ended successfully");
+        }
+    }
+
+    @Override
     public void save(Book book) throws ServiceException {
         try{
             bookDAO.save(book);
@@ -124,7 +159,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean update(Book book) throws ServiceException {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -2,11 +2,15 @@ package com.my.library.dao;
 
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.exceptions.DaoException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class TransactionManager {
+    private static final Logger logger = LogManager.getLogger();
     private final Connection connection;
 
     public TransactionManager(Connection connection) {
@@ -21,11 +25,11 @@ public class TransactionManager {
         }
     }
 
-    public void endTransaction() throws DaoException {
+    public void endTransaction() {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            throw new DaoException("Error while executing endTransaction() method", e);
+            logger.log(Level.ERROR, "Error while executing endTransaction() method", e);
         }
     }
 
@@ -38,9 +42,9 @@ public class TransactionManager {
     }
     public void rollback() throws DaoException {
         try {
-            connection.commit();
+            connection.rollback();
         } catch (SQLException e) {
-            throw new DaoException("Error while executing commit() method",e);
+            throw new DaoException("Error while executing rollback() method",e);
         }
     }
 }

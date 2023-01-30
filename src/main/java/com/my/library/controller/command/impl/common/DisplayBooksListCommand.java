@@ -1,5 +1,6 @@
 package com.my.library.controller.command.impl.common;
 
+import com.my.library.controller.MessageRemover;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.*;
@@ -17,6 +18,7 @@ import com.my.library.services.BookService;
 import com.my.library.services.ServiceFactory;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -31,12 +33,14 @@ public class DisplayBooksListCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-
+        HttpSession session = request.getSession();
+        new MessageRemover().removeMessages(session);
 
         int currPage = 1;
 
         BooksOrderDir orderDir = BooksOrderDir.ASC;
         BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
+
 
         var reqCurrPage = request.getParameter(Parameters.BOOKS_LIST_CURR_PAGE);
         var reqOrderDir = request.getParameter(Parameters.ORDER_DIRECTION);
@@ -51,7 +55,7 @@ public class DisplayBooksListCommand implements Command {
         if (reqOrderBy != null && !reqOrderBy.isBlank()) {
             orderBy = BooksOrderTypes.valueOf(reqOrderBy.toUpperCase());
         }
-        var user = (User) request.getSession().getAttribute(UserParameters.USER_IN_SESSION);
+        var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         boolean includeRemoved = user != null && user.getRole() == UserRole.ADMIN;
 
@@ -77,7 +81,7 @@ public class DisplayBooksListCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-        request.getSession().setAttribute(Parameters.PREVIOUS_PAGE,
+        session.setAttribute(Parameters.PREVIOUS_PAGE,
                 String.format(RedirectToPage.BOOKS_PAGE_WITH_PARAMETERS, orderBy, orderDir, currPage));
 
         return new CommandResult(Pages.BOOKS_LIST, CommandDirection.FORWARD);
