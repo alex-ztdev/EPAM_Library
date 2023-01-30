@@ -3,8 +3,7 @@ package com.my.library.dao.impl;
 import com.my.library.controller.command.constant.BooksOrderDir;
 import com.my.library.dao.AbstractDao;
 import com.my.library.dao.BookDAO;
-import com.my.library.dao.builder.impl.AuthorBuilder;
-import com.my.library.dao.builder.impl.BookBuilder;
+import com.my.library.dao.builder.impl.DaoBookBuilder;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.columns.BooksColumns;
 import com.my.library.dao.constants.queries.BookQueries;
@@ -56,7 +55,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
     }
 
     private Book buildBook(ResultSet rs) throws SQLException {
-        return new BookBuilder().build(rs);
+        return new DaoBookBuilder().build(rs);
     }
 
 

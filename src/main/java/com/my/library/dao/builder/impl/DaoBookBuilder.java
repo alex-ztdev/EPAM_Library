@@ -7,7 +7,7 @@ import com.my.library.entities.Book;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BookBuilder implements Builder<Book> {
+public class DaoBookBuilder implements Builder<Book> {
     @Override
     public Book build(ResultSet resultSet) throws SQLException {
         return new Book(resultSet.getLong(BooksColumns.ID),
@@ -16,6 +16,6 @@ public class BookBuilder implements Builder<Book> {
                 resultSet.getString(BooksColumns.GENRE),
                 resultSet.getInt(BooksColumns.PAGE_NUMBER),
                 resultSet.getDate(BooksColumns.PUBLICATION_DATE).toLocalDate(),
-                new AuthorBuilder().build(resultSet));
+                new DaoAuthorBuilder().build(resultSet));
     }
 }

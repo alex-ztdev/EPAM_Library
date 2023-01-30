@@ -8,7 +8,7 @@ import com.my.library.entities.Author;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AuthorBuilder implements Builder<Author> {
+public class DaoAuthorBuilder implements Builder<Author> {
 
     @Override
     public Author build(ResultSet resultSet) throws SQLException {

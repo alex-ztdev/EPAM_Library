@@ -10,4 +10,9 @@ public interface BookParameters {
     String PAGES = "pages";
     String PUBLICATION_DATE = "publication_date";
 
+
+
+    String BOOK_INVALID_DATA = "invalid_book_data";
+
+
 }

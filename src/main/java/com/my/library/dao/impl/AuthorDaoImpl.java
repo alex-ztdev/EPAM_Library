@@ -1,14 +1,11 @@
 package com.my.library.dao.impl;
 
 
-import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.AbstractDao;
 import com.my.library.dao.AuthorDAO;
-import com.my.library.dao.builder.impl.AuthorBuilder;
-import com.my.library.dao.constants.columns.AuthorsColumns;
+import com.my.library.dao.builder.impl.DaoAuthorBuilder;
 import com.my.library.dao.constants.queries.AuthorQueries;
 import com.my.library.entities.Author;
-import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 
 import java.sql.*;
@@ -55,7 +52,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
     }
 
     private Author buildAuthor(ResultSet rs) throws SQLException {
-        return new AuthorBuilder().build(rs);
+        return new DaoAuthorBuilder().build(rs);
     }
 
     @Override
