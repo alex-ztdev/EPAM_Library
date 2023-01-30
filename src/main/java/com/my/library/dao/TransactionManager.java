@@ -6,17 +6,16 @@ import com.my.library.exceptions.DaoException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class TransactionHelper {
-    private Connection connection = ConnectionPool.getInstance().getConnection();
+public class TransactionManager {
+    private final Connection connection;
 
-    public void beginTransaction(AbstractDao abstractDao, AbstractDao... abstractDaos) throws DaoException {
+    public TransactionManager(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void beginTransaction() throws DaoException {
         try {
             connection.setAutoCommit(false);
-
-            abstractDao.setConnection(connection);
-            for (var dao : abstractDaos) {
-                dao.setConnection(connection);
-            }
         } catch (SQLException e) {
             throw new DaoException("Error while executing beginTransaction method", e);
         }
@@ -25,7 +24,6 @@ public class TransactionHelper {
     public void endTransaction() throws DaoException {
         try {
             connection.setAutoCommit(true);
-            connection.close();
         } catch (SQLException e) {
             throw new DaoException("Error while executing endTransaction() method", e);
         }

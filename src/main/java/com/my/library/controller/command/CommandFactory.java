@@ -5,9 +5,7 @@ import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
-import com.my.library.dao.TransactionHelper;
-import com.my.library.exceptions.CommandException;
-import com.my.library.exceptions.DaoException;
+import com.my.library.dao.TransactionManager;
 import com.my.library.services.ServiceFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +19,7 @@ public class CommandFactory implements AutoCloseable {
 
     private ServiceFactory serviceFactory;
 
-    private TransactionHelper transactionManager;
+    private TransactionManager transactionManager;
     private Connection connection;
 
     public CommandFactory() {
@@ -45,7 +43,7 @@ public class CommandFactory implements AutoCloseable {
             case AdminCommands.RESTORE_BOOK -> res = new RestoreBookCommand(serviceFactory.getBookService());
             case AdminCommands.ADD_BOOK_REDIRECT -> res = new AddBookRedirectCommand();
             case AdminCommands.UPDATE_BOOK_REDIRECT -> res = new UpdateBookRedirectCommand(serviceFactory.getBookService(), serviceFactory.getGenreService(), serviceFactory.getPublisherService());
-            case AdminCommands.UPDATE_BOOK -> res = new UpdateBookCommand(serviceFactory.getBookService(), serviceFactory.getAuthorService());
+            case AdminCommands.UPDATE_BOOK -> res = new UpdateBookCommand(serviceFactory.getBookService(), serviceFactory.getAuthorService(), new TransactionManager(connection));
 
             default -> res = new DefaultCommand();
         }

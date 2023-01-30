@@ -6,6 +6,7 @@ import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.dao.TransactionManager;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
@@ -24,10 +25,12 @@ public class UpdateBookCommand implements Command {
     private final BookService bookService;
     private final AuthorService authorService;
 
+    private final TransactionManager transactionManager;
 
-    public UpdateBookCommand(BookService bookService, AuthorService authorService) {
+    public UpdateBookCommand(BookService bookService, AuthorService authorService, TransactionManager transactionManager) {
         this.bookService = bookService;
         this.authorService = authorService;
+        this.transactionManager = transactionManager;
     }
 
     @Override
