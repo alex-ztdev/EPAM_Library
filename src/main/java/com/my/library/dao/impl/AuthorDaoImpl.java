@@ -97,13 +97,31 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
 
             statement.setString(1, author.getFirstName());
             statement.setString(2, author.getSecondName());
-            statement.setLong(4, author.getAuthorId());
+            statement.setLong(3, author.getAuthorId());
 
             var updateRes = statement.executeUpdate();
             return updateRes == 1;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+    }
+
+    @Override
+    public Optional<Author> findByNames(String firstName, String secondName) throws DaoException {
+        Author author = null;
+        try(var statement = connection.prepareStatement(AuthorQueries.FIND_BY_NAMES)) {
+            statement.setString(1, firstName);
+            statement.setString(2, secondName);
+
+            try (var rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    author = buildAuthor(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return author == null ? Optional.empty() : Optional.of(author);
     }
 
 //    @Override

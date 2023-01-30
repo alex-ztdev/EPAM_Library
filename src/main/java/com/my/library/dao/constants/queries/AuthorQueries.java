@@ -5,6 +5,9 @@ public interface AuthorQueries {
     String FIND_AUTHOR_BY_ID = "SELECT id as author_id, first_name, second_name FROM Authors WHERE id = ?";
     //language=TSQL
     String FIND_ALL_AUTHORS = "SELECT id as author_id, first_name, second_name FROM Authors";
+
+    //language=TSQL
+    String FIND_BY_NAMES = "SELECT id as author_id, first_name, second_name FROM Authors WHERE first_name=? AND second_name=?";
     //language=TSQL
     String INSERT_AUTHOR = "INSERT INTO Authors (first_name, second_name) VALUES (?, ?)";
     //language=TSQL

@@ -3,6 +3,7 @@ package com.my.library.services.impl;
 import com.my.library.dao.AuthorDAO;
 import com.my.library.dao.BookDAO;
 import com.my.library.entities.Author;
+import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.AuthorService;
 import org.apache.logging.log4j.LogManager;
@@ -22,26 +23,46 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Optional<Author> findByNames(String firstName, String secondName) throws ServiceException {
-        return Optional.empty();
+        try {
+            return authorDAO.findByNames(firstName, secondName);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing findByNames method in AuthorServiceImpl",e);
+        }
     }
 
     @Override
     public Optional<Author> find(long id) throws ServiceException {
-        return Optional.empty();
+        try {
+            return authorDAO.find(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing find method in AuthorServiceImpl",e);
+        }
     }
 
     @Override
     public List<Author> findAll() throws ServiceException {
-        return null;
+        try {
+            return authorDAO.findAll();
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing findAll method in AuthorServiceImpl",e);
+        }
     }
 
     @Override
-    public void save(Author entity) throws ServiceException {
-
+    public void save(Author author) throws ServiceException {
+        try {
+            authorDAO.save(author);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing save method in AuthorServiceImpl",e);
+        }
     }
 
     @Override
-    public boolean update(Author entity) throws ServiceException {
-        return false;
+    public boolean update(Author author) throws ServiceException {
+        try {
+            return authorDAO.update(author);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing update method in AuthorServiceImpl",e);
+        }
     }
 }
