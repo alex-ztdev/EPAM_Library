@@ -30,12 +30,11 @@
     <div class="left-header">
 
         <a class="active" href="${pageContext.request.contextPath}/controller?command=home"><fmt:message key="header.common.home"/></a>
-<%--        <a href="controller?command=authors"><fmt:message key="header.common.authors"/></a>--%>
 
         <a href="${pageContext.request.contextPath}/controller?command=books-list"><fmt:message key="header.common.books"/></a>
 
         <c:choose>
-            <%-- Menu bar for reader only--%>
+            <%-- Menu bar for user only--%>
             <c:when test="${sessionScope.user.role eq 'USER'}">
                 <a href="${pageContext.request.contextPath}/controller?command=user-orders"><fmt:message key="header.user.order"/></a>
             </c:when>
@@ -49,17 +48,7 @@
                 <a href="${pageContext.request.contextPath}/controller?command=librarians-list"><fmt:message key="header.admin.librarians"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
             </c:when>
-
-
         </c:choose>
-
-<%--        <a href="controller?command=books_list"><fmt:message key="header.common.books"/></a>--%>
-
-<%--        <a href="controller?command=user_orders"><fmt:message key="header.user.order"/></a>--%>
-
-<%--        <a href="controller?command=librarians_list"><fmt:message key="header.admin.librarians"/></a>--%>
-
-<%--        <a href="#users"><fmt:message key="header.admin.users"/></a>--%>
     </div>
 
     <div class="right-header">
@@ -82,7 +71,6 @@
                 </button>
             </form>
         </div>
-
 
         <c:choose>
             <c:when test="${sessionScope.user == null}">

@@ -11,4 +11,5 @@ public interface Pages {
     String BOOKS_LIST = "/pages/books.jsp";
     String UNSUPPORTED_COMMAND = "/pages/error/400.jsp";
     String BOOK_EDIT = "/pages/book_edit.jsp";
+    String ORDER_PAGE = "/pages/order_book.jsp";
 }

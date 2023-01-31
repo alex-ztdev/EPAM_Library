@@ -8,8 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
 <c:set var="order_by" scope="request" value="${requestScope.order_by}"/>
@@ -38,7 +37,7 @@
 <div class="container">
 
     <div class="main-content">
-        <div class="top-row" >
+        <div class="top-row">
             <p class="books-list-title">Books List</p>
             <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                 <a href="controller?command=add-book-redirect&add_new_pressed=true" class="books-add-new">Add New</a>
@@ -337,13 +336,16 @@
                                         .removed-book:hover a p.label:after {
                                             content: '<fmt:message key="books.admin.action.restore"/>';
                                         }
+
                                         .removed-book:hover a p.label span {
                                             display: none;
                                         }
                                     </style>
                                     <div class="removed-book-div">
-                                        <a class="remove-link" href="controller?command=restore-book&book_id=${booksList.bookId}">
-                                            <p class="label"><span class="align"><fmt:message key="books.admin.msg.removed"/></span></p>
+                                        <a class="remove-link"
+                                           href="controller?command=restore-book&book_id=${booksList.bookId}">
+                                            <p class="label"><span class="align"><fmt:message
+                                                    key="books.admin.msg.removed"/></span></p>
                                         </a>
                                     </div>
                                 </td>
@@ -354,13 +356,16 @@
                                         .present-book:hover a p.label:after {
                                             content: '<fmt:message key="books.admin.action.remove"/>';
                                         }
+
                                         .present-book:hover a p.label span {
                                             display: none;
                                         }
                                     </style>
                                     <div class="removed-book-div">
-                                        <a class="remove-link" href="controller?command=remove-book&book_id=${booksList.bookId}">
-                                            <p class="label"><span class="align"><fmt:message key="books.admin.msg.present"/></span></p>
+                                        <a class="remove-link"
+                                           href="controller?command=remove-book&book_id=${booksList.bookId}">
+                                            <p class="label"><span class="align"><fmt:message
+                                                    key="books.admin.msg.present"/></span></p>
                                         </a>
                                     </div>
                                 </td>
@@ -369,13 +374,23 @@
 
                         <td>
                             <div class="update-book-div">
-                                <a class="remove-link" href="controller?command=update-book-redirect&book_id=${booksList.bookId}">
+                                <a class="remove-link"
+                                   href="controller?command=update-book-redirect&book_id=${booksList.bookId}">
                                     <fmt:message key="books.admin.action.update"/>
                                 </a>
                             </div>
 
                         </td>
                     </c:if>
+                <c:if test="${userRole eq 'USER'}">
+                    <td class="order-book">
+                        <div class="order-book-div">
+                            <a class="order-book-link" href="controller?command=order_book_redirect&book_id=${booksList.bookId}">
+                                <p class="label"><span class="align"><fmt:message key="user.books.action.order.book"/></span></p>
+                            </a>
+                        </div>
+                    </td>
+                </c:if>
                 </tr>
                 </c:forEach>
             </table>
