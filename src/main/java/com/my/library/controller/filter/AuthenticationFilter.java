@@ -42,8 +42,10 @@ public class AuthenticationFilter implements Filter {
     );
     private static final List<String> USER_COMMANDS = List.of(
             //TODO: Add User commands
-            UserCommands.ORDER_BOOK_REDIRECT
+            UserCommands.ORDER_BOOK_REDIRECT,
+            UserCommands.ORDER_BOOK
     );
+
 
     private static final List<String> ADMIN_COMMANDS = List.of(
             AdminCommands.REMOVE_BOOK,

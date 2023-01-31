@@ -166,9 +166,6 @@ body {
     background: #30b220;
 }
 
-.order-book :hover {
-    background: #32d51b;
-}
 
 .order-book-impossible {
     background: #a40606;

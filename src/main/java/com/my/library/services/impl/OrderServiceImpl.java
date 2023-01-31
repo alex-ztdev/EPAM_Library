@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,11 @@ public class OrderServiceImpl implements OrderService {
         try {
             logger.log(Level.DEBUG, "OrderServiceImpl/save/Transaction started");
             transactionManager.beginTransaction();
+
+            var nowTime = LocalDateTime.now();
+            order.setOrderStartDate(nowTime);
+
+            order.setOrderEndDate(nowTime.plusDays(order.isOnSubscription() ? SUBSCRIPTION_DAYS : IN_READING_ROOM_DAYS));
 
             orderDAO.save(order);
 

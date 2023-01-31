@@ -4,6 +4,7 @@ import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
+import com.my.library.controller.command.constant.parameters.OrderParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.TransactionManager;
@@ -43,18 +44,31 @@ public class OrderBookCommand implements Command {
         HttpSession session = request.getSession();
 
 
-        Long bookId = (Long) session.getAttribute(Parameters.BOOK_ID);
-        logger.log(Level.DEBUG, "OrderBookCommand: book_id: " + bookId);
+        String bookIdStr = request.getParameter(Parameters.BOOK_ID);
+
+
+        var onSubscriptionStr = request.getParameter(OrderParameters.SUBSCRIPTION_TYPE);
+
+        logger.log(Level.DEBUG, "OrderBookCommand: book_id: " + bookIdStr);
+
+        if (bookIdStr == null || onSubscriptionStr==null) {
+            logger.log(Level.DEBUG, "OrderBookCommand: book_id is null: redirect to error page");
+            return new CommandResult(Pages.ERROR_PAGE, CommandDirection.REDIRECT);
+        }
+        var bookId = Long.parseLong(bookIdStr);
+        var onSubscription = Boolean.parseBoolean(onSubscriptionStr);
 
         var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
         logger.log(Level.DEBUG, "OrderBookCommand: user_id: " + user);
 
         try {
             var orderToSave = new Order();
-            orderToSave.setOrderId(bookId);
-            orderToSave.setUserId(bookId);
+            orderToSave.setBookId(bookId);
+            orderToSave.setUserId(user.getUserId());
+            orderToSave.setOnSubscription(onSubscription);
 
-            if (bookService.getQuantity(bookId) > 0) {
+            if (bookService.getQuantity(bookId) <= 0) {
+                logger.log(Level.DEBUG, "OrderBookCommand: books quantity is 0 or less: redirect to error page");
                 return new CommandResult(Pages.ERROR_PAGE, CommandDirection.REDIRECT);
             }
             orderService.save(orderToSave, bookService, transactionManager);
