@@ -36,7 +36,12 @@
 <jsp:include page="header.jsp"/>
 
 <div class="container">
+
     <div class="main-content">
+        <div class="top-row" >
+            <p class="books-list-title">Books List</p>
+            <a href="controller?add-book-redirect" class="books-add-new">Add New</a>
+        </div>
         <div class="books_list_container">
             <table class="books_table">
                 <tr>

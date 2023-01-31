@@ -154,7 +154,7 @@
                 required
         />
       </div>
-      <button type="submit"><fmt:message key="admin.books.edit.form.label.submit.btn"/></button>
+      <button type="submit" style="margin-left: 43%; padding: 10px 20px"><fmt:message key="admin.books.edit.form.label.submit.btn"/></button>
     </form>
   </div>
 </div>

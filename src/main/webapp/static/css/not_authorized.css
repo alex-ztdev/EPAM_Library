@@ -3,7 +3,7 @@
     flex-direction: column;
     flex: 1 1 auto;
 
-    background-image: url("../img/background.jpg");
+    background-image: url("../img/background-light.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     overflow:hidden;

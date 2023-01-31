@@ -30,7 +30,7 @@ body {
 }
 
 .main-content {
-    background-image: url("../img/background.jpg");
+    background-image: url("../img/background-light.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     overflow:hidden;

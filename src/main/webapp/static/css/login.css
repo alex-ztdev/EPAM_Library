@@ -24,7 +24,7 @@ body {
     align-self: center;
     flex: 1 1 auto;
 
-    background-image: url("../img/background.jpg");
+    background-image: url("../img/background_dark.png");
     background-repeat: no-repeat;
     background-size: cover;
     overflow:hidden;
