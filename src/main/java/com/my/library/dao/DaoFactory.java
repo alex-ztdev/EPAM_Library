@@ -29,4 +29,8 @@ public class DaoFactory {
     public PublisherDAO getPublishersDao() {
         return new PublisherDaoImpl(connection);
     }
+    public OrderDAO getOrderDao() {
+        return new OrderDaoImpl(connection);
+    }
+
 }

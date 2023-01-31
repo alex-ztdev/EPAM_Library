@@ -2,6 +2,7 @@ package com.my.library.services;
 
 import com.my.library.dao.DaoFactory;
 import com.my.library.dao.GenreDAO;
+import com.my.library.dao.OrderDAO;
 import com.my.library.dao.impl.BookDaoImpl;
 import com.my.library.dao.impl.GenreDaoImpl;
 import com.my.library.dao.impl.PublisherDaoImpl;
@@ -37,6 +38,10 @@ public class ServiceFactory {
     }
     public GenreService getGenreService() {
         return new GenreServiceImpl(daoFactory.getGenreDao());
+    }
+
+    public OrderService getOrderService() {
+        return new OrderServiceImpl(daoFactory.getOrderDao());
     }
 
 }

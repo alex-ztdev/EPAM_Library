@@ -4,7 +4,7 @@ import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.parameters.Parameters;
-import com.my.library.dto.BookMapper;
+import com.my.library.dto.mapper.BookMapper;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;

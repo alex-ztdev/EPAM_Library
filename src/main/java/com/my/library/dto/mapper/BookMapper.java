@@ -1,5 +1,6 @@
-package com.my.library.dto;
+package com.my.library.dto.mapper;
 
+import com.my.library.dto.BookDTO;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;

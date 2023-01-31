@@ -10,7 +10,7 @@ import com.my.library.controller.command.impl.admin.MessageRemover;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dto.BookDTO;
-import com.my.library.dto.BookMapper;
+import com.my.library.dto.mapper.BookMapper;
 import com.my.library.entities.Book;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;

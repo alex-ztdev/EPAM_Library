@@ -5,22 +5,33 @@ import java.time.LocalDateTime;
 
 public class Order {
     private Long orderId;
-    private User user;
-    private Book book;
+    private Long userId;
+    private Long bookId;
     private LocalDateTime orderStartDate;
     private LocalDateTime orderEndDate;
-    private LocalDateTime actualReturnDate;
+    private boolean isReturned;
+    private boolean onSubscription;
 
     public Order() {
     }
 
-
-    public Order(User user, Book book, LocalDateTime orderStartDate, LocalDateTime orderEndDate, LocalDateTime actualReturnDate) {
-        this.user = user;
-        this.book = book;
+    public Order(Long userId, Long bookId, LocalDateTime orderStartDate, LocalDateTime orderEndDate, boolean isReturned, boolean onSubscription) {
+        this.userId = userId;
+        this.bookId = bookId;
         this.orderStartDate = orderStartDate;
         this.orderEndDate = orderEndDate;
-        this.actualReturnDate = actualReturnDate;
+        this.isReturned = isReturned;
+        this.onSubscription = onSubscription;
+    }
+
+    public Order(Long orderId, Long userId, Long bookId, LocalDateTime orderStartDate, LocalDateTime orderEndDate, boolean isReturned, boolean onSubscription) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.bookId = bookId;
+        this.orderStartDate = orderStartDate;
+        this.orderEndDate = orderEndDate;
+        this.isReturned = isReturned;
+        this.onSubscription = onSubscription;
     }
 
     public Long getOrderId() {
@@ -31,20 +42,20 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Book getBook() {
-        return book;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public LocalDateTime getOrderStartDate() {
@@ -63,13 +74,22 @@ public class Order {
         this.orderEndDate = orderEndDate;
     }
 
-    public LocalDateTime getActualReturnDate() {
-        return actualReturnDate;
+    public boolean isReturned() {
+        return isReturned;
     }
 
-    public void setActualReturnDate(LocalDateTime actualReturnDate) {
-        this.actualReturnDate = actualReturnDate;
+    public void setReturned(boolean returned) {
+        isReturned = returned;
     }
+
+    public boolean isOnSubscription() {
+        return onSubscription;
+    }
+
+    public void setOnSubscription(boolean onSubscription) {
+        this.onSubscription = onSubscription;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -78,22 +98,25 @@ public class Order {
 
         Order order = (Order) o;
 
-        if (!orderId.equals(order.orderId)) return false;
-        if (!user.equals(order.user)) return false;
-        if (!book.equals(order.book)) return false;
-        if (!orderStartDate.equals(order.orderStartDate)) return false;
-        if (!orderEndDate.equals(order.orderEndDate)) return false;
-        return actualReturnDate.equals(order.actualReturnDate);
+        if (isReturned != order.isReturned) return false;
+        if (onSubscription != order.onSubscription) return false;
+        if (orderId != null ? !orderId.equals(order.orderId) : order.orderId != null) return false;
+        if (userId != null ? !userId.equals(order.userId) : order.userId != null) return false;
+        if (bookId != null ? !bookId.equals(order.bookId) : order.bookId != null) return false;
+        if (orderStartDate != null ? !orderStartDate.equals(order.orderStartDate) : order.orderStartDate != null)
+            return false;
+        return orderEndDate != null ? orderEndDate.equals(order.orderEndDate) : order.orderEndDate == null;
     }
 
     @Override
     public int hashCode() {
-        int result = orderId.hashCode();
-        result = 31 * result + user.hashCode();
-        result = 31 * result + book.hashCode();
-        result = 31 * result + orderStartDate.hashCode();
-        result = 31 * result + orderEndDate.hashCode();
-        result = 31 * result + actualReturnDate.hashCode();
+        int result = orderId != null ? orderId.hashCode() : 0;
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (bookId != null ? bookId.hashCode() : 0);
+        result = 31 * result + (orderStartDate != null ? orderStartDate.hashCode() : 0);
+        result = 31 * result + (orderEndDate != null ? orderEndDate.hashCode() : 0);
+        result = 31 * result + (isReturned ? 1 : 0);
+        result = 31 * result + (onSubscription ? 1 : 0);
         return result;
     }
 
@@ -101,11 +124,12 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
-                ", user=" + user +
-                ", book=" + book +
+                ", userId=" + userId +
+                ", bookId=" + bookId +
                 ", orderStartDate=" + orderStartDate +
                 ", orderEndDate=" + orderEndDate +
-                ", actualReturnDate=" + actualReturnDate +
+                ", isReturned=" + isReturned +
+                ", onSubscription=" + onSubscription +
                 '}';
     }
 }
