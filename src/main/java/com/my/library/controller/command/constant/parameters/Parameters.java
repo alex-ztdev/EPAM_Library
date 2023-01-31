@@ -14,4 +14,8 @@ public interface Parameters {
     String ORDER_DIRECTION = "order_dir";
     String GENRES_LIST = "genres_list";
     String PUBLISHERS_LIST = "publishers_list";
+    String OPERATION_TYPE = "operation_type";
+    String UPDATE_BOOK = "update_book";
+    String ADD_BOOK = "add_book";
+
 }

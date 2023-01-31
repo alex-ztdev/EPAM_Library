@@ -42,8 +42,8 @@ public class UpdateBookRedirectCommand implements Command {
         var reqBookId = request.getParameter(Parameters.BOOK_ID);
         HttpSession session = request.getSession();
 
-
         logger.log(Level.DEBUG,"UpdateBookRedirectCommand: request book_id: " + reqBookId);
+        session.setAttribute(Parameters.OPERATION_TYPE, Parameters.UPDATE_BOOK);
 
         Long bookId = null;
         if (reqBookId != null && !reqBookId.isBlank()) {

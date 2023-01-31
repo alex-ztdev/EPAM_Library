@@ -41,7 +41,6 @@ public class UpdateBookCommand implements Command {
         var resPage = String.format(RedirectToPage.BOOKS_EDIT_PAGE_WITH_PARAMETER, session.getAttribute(Parameters.BOOK_ID));
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, resPage);
-
         new MessageRemover().removeMessages(session);
 
         if (bookContainer.isEmpty()) {
@@ -52,17 +51,17 @@ public class UpdateBookCommand implements Command {
             try {
 
                 //TODO: Add action for copies!
-                if (bookService.alreadyExists(book) && bookService.getQuantity(book.getBookId())==copies) {
+                if (bookService.alreadyExists(book) && bookService.getQuantity(book.getBookId()) == copies) {
                     logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId() + " book with such parameters already exists");
                     request.getSession().setAttribute(BookParameters.BOOK_ALREADY_EXISTS, BookParameters.BOOK_ALREADY_EXISTS);
-                }else{
+                } else {
                     logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId());
-                    bookService.update(book,copies , authorService, transactionManager);
+                    bookService.update(book, copies, authorService, transactionManager);
                     session.setAttribute(BookParameters.SUCCESSFULLY_UPDATED, BookParameters.SUCCESSFULLY_UPDATED);
                 }
 
             } catch (ServiceException e) {
-                throw new CommandException("Error while executing UpdateBookCommand",e);
+                throw new CommandException("Error while executing UpdateBookCommand", e);
             }
         }
         return new CommandResult(resPage, CommandDirection.REDIRECT);
