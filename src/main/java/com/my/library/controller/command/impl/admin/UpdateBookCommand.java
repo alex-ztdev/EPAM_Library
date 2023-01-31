@@ -38,10 +38,10 @@ public class UpdateBookCommand implements Command {
         int copies = Integer.parseInt(request.getParameter(BookParameters.COPIES));
 
         HttpSession session = request.getSession();
-        var resPage = String.format(RedirectToPage.BOOKS_EDIT_PAGE_WITH_PARAMETER, session.getAttribute(Parameters.BOOK_ID));
+        var resPage = String.format(RedirectToPage.BOOKS_UPDATE_PAGE_WITH_PARAMETER, session.getAttribute(Parameters.BOOK_ID));
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, resPage);
-        new LoginCommand.MessageRemover().removeMessages(session);
+        new MessageRemover().removeMessages(session);
 
         if (bookContainer.isEmpty()) {
             logger.log(Level.INFO, "UpdateBookCommand was called, but Book data is invalid");
@@ -55,6 +55,7 @@ public class UpdateBookCommand implements Command {
                 } else {
                     logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId());
                     bookService.update(book, copies, authorService, transactionManager);
+
                     session.setAttribute(BookParameters.SUCCESSFULLY_UPDATED, BookParameters.SUCCESSFULLY_UPDATED);
                 }
 

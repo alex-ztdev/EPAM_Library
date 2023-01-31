@@ -38,6 +38,9 @@
         <c:if test="${not empty sessionScope.successfully_updated}">
             <p class="success-msg"><fmt:message key="admin.books.edit.success.msg.updated"/></p><br>
         </c:if>
+        <c:if test="${not empty sessionScope.successfully_added}">
+            <p class="success-msg"><fmt:message key="admin.books.edit.success.msg.added"/></p><br>
+        </c:if>
         <c:if test="${not empty sessionScope.invalid_book_data}">
             <p class="error-msg"><fmt:message key="admin.books.edit.error.msg.invalid.data"/></p><br>
         </c:if>

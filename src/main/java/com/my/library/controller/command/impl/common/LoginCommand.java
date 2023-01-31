@@ -70,14 +70,5 @@ public class LoginCommand implements Command {
         return res;
     }
 
-    public static class MessageRemover {
-        public void removeMessages(HttpSession session) {
-            session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
-            session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
-            session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
 
-            session.removeAttribute(Parameters.UPDATE_BOOK);
-            session.removeAttribute(Parameters.ADD_BOOK);
-        }
-    }
 }

@@ -17,4 +17,5 @@ public interface BookParameters {
 
 
     String SUCCESSFULLY_UPDATED = "successfully_updated";
+    String SUCCESSFULLY_ADDED = "successfully_added";
 }

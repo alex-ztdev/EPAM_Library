@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.admin;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dao.TransactionManager;
@@ -42,6 +43,9 @@ public class AddBookCommand implements Command {
 
         var bookContainer = new RequestBookBuilder().buildBookForSave(request);
 
+
+        new MessageRemover().removeMessages(session);
+
         if (bookContainer.isEmpty()) {
             logger.log(Level.INFO, "AddBookCommand was called, but Book data is invalid");
             session.setAttribute(BookParameters.BOOK_INVALID_DATA, BookParameters.BOOK_INVALID_DATA);
@@ -60,14 +64,14 @@ public class AddBookCommand implements Command {
                     logger.log(Level.INFO, "AddBookCommand book_id:" + book.getBookId());
                     bookService.save(book, copies, authorService, transactionManager);
 
-                    session.setAttribute(BookParameters.SUCCESSFULLY_UPDATED, BookParameters.SUCCESSFULLY_UPDATED);
+                    session.setAttribute(BookParameters.SUCCESSFULLY_ADDED, BookParameters.SUCCESSFULLY_ADDED);
                 }
 
             } catch (ServiceException e) {
                 throw new CommandException("Error while executing AddBookCommand", e);
             }
         }
-        return new CommandResult(Pages.BOOK_EDIT, CommandDirection.REDIRECT);
+        return new CommandResult(RedirectToPage.BOOKS_ADD_PAGE, CommandDirection.REDIRECT);
     }
 
 }

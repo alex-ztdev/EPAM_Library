@@ -6,6 +6,7 @@ import com.my.library.controller.command.constant.*;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
+import com.my.library.controller.command.impl.admin.MessageRemover;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dto.BookDTO;
@@ -33,7 +34,7 @@ public class DisplayBooksListCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        new LoginCommand.MessageRemover().removeMessages(session);
+        new MessageRemover().removeMessages(session);
         removeBook(session);
 
         int currPage = 1;

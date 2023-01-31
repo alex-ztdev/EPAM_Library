@@ -40,7 +40,7 @@ public class AddBookRedirectCommand implements Command {
 
         if (TRUE.equals(request.getParameter(Parameters.ADD_NEW_BUTTON_PRESSED))) {
             removeBook(session);
-            new LoginCommand.MessageRemover().removeMessages(session);
+            new MessageRemover().removeMessages(session);
         }else{
 
         }

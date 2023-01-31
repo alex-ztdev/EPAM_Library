@@ -156,10 +156,12 @@ public class BookServiceImpl implements BookService {
         logger.log(Level.DEBUG, "Executing save for book: " + book);
         try {
             transactionManager.beginTransaction();
-
-            if (authorService.findByNames(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()).isEmpty()) {
+            var authorContainer = authorService.findByNames(book.getAuthor().getFirstName(), book.getAuthor().getSecondName());
+            if (authorContainer.isEmpty()) {
                 logger.log(Level.INFO, "BookServiceImpl/save was called for book_id: " + book.getBookId() + " with new Author data:" + book.getAuthor());
                 authorService.save(book.getAuthor());
+            } else {
+                book.setAuthor(authorContainer.get());
             }
             bookDAO.save(book);
             logger.log(Level.DEBUG, "BookServiceImpl/save book_id after save:" + book.getBookId());
