@@ -9,6 +9,9 @@ import com.my.library.dao.constants.columns.BooksColumns;
 import com.my.library.dao.constants.queries.BookQueries;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,26 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookDaoImpl extends AbstractDao implements BookDAO {
-//    private static final ConnectionPool dbm = ConnectionPool.getInstance();
-//    private static volatile BookDaoImpl INSTANCE;
-
+    private static final Logger logger = LogManager.getLogger();
 
     public BookDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
-//    public static BookDaoImpl getInstance() {
-//        BookDaoImpl instance = INSTANCE;
-//        if (instance != null) {
-//            return instance;
-//        }
-//        synchronized (BookDaoImpl.class) {
-//            if (instance == null) {
-//                instance = new BookDaoImpl();
-//            }
-//            return instance;
-//        }
-//    }
 
     @Override
     public Optional<Book> find(long id) throws DaoException {
@@ -85,6 +74,8 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
 
     @Override
     public void save(Book book) throws DaoException {
+        logger.log(Level.DEBUG, "BookDaoImpl/save method invoked with book: " + book);
+
         try (var statement = connection.prepareStatement(BookQueries.INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
             int k = 1;
             statement.setString(k++, book.getTitle());
@@ -98,6 +89,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
             try (var keysRS = statement.getGeneratedKeys()) {
                 if (keysRS.next()) {
                     book.setBookId(keysRS.getLong(1));
+                    logger.log(Level.DEBUG, "BookDaoImpl/save method returned key: " + keysRS.getLong(1));
                 }
             }
 
@@ -205,6 +197,8 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
 
     @Override
     public void setBookCopies(int copies, long id) throws DaoException {
+        logger.log(Level.DEBUG, "BookDaoImpl/setBookCopies called with params: copies=" + copies + "\t book_id=" + id);
+
         try (var statement = connection.prepareStatement(BookQueries.SET_BOOK_COPIES)) {
 
             statement.setInt(1, copies);
@@ -239,9 +233,14 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
 
     @Override
     public void addToStorage(long book_id, int copies) throws DaoException {
+        logger.log(Level.DEBUG, "BookDaoImpl/addToStorage method invoked with book_id=" + book_id +" copies="+ copies);
+
         try (var statement = connection.prepareStatement(BookQueries.ADD_TO_STORAGE)) {
             statement.setLong(1, book_id);
             statement.setInt(2, copies);
+
+            statement.executeUpdate();
+
         } catch (SQLException e) {
             throw new DaoException(e);
         }

@@ -136,6 +136,7 @@ public class BookServiceImpl implements BookService {
             transactionManager.commit();
             logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed: operation_result=" + operationRes);
             return operationRes;
+
         } catch (DaoException e) {
             try {
                 transactionManager.rollback();
@@ -161,22 +162,23 @@ public class BookServiceImpl implements BookService {
                 authorService.save(book.getAuthor());
             }
             bookDAO.save(book);
+            logger.log(Level.DEBUG, "BookServiceImpl/save book_id after save:" + book.getBookId());
 
-            bookDAO.setBookCopies(bookCopies, book.getBookId());
+            bookDAO.addToStorage(book.getBookId(), bookCopies);
 
             transactionManager.commit();
-            logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed successfully");
+            logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction committed successfully");
         } catch (DaoException e) {
             try {
                 transactionManager.rollback();
-                logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction rolledBack successfully");
+                logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction rolledBack successfully");
             } catch (DaoException ex) {
-                throw new ServiceException("Error while executing rollback in update method BookServiceImpl", e);
+                throw new ServiceException("Error while executing rollback in save method BookServiceImpl", e);
             }
             throw new ServiceException("Error while executing update", e);
         } finally {
             transactionManager.endTransaction();
-            logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction ended successfully");
+            logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction ended successfully");
         }
     }
 

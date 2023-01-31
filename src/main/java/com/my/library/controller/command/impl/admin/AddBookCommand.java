@@ -68,7 +68,6 @@ public class AddBookCommand implements Command {
             }
         }
         return new CommandResult(Pages.BOOK_EDIT, CommandDirection.REDIRECT);
-
     }
 
 }
