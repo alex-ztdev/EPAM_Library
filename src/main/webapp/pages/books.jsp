@@ -38,9 +38,11 @@
 
     <div class="main-content">
         <div class="top-row">
-            <p class="books-list-title">Books List</p>
+            <p class="books-list-title"><fmt:message key="books.common.label.books.list"/></p>
             <c:if test="${sessionScope.user.role eq 'ADMIN'}">
-                <a href="controller?command=add-book-redirect&add_new_pressed=true" class="books-add-new">Add New</a>
+                <a href="controller?command=add-book-redirect&add_new_pressed=true" class="books-add-new">
+                    <fmt:message key="admin.books.edit.form.title.add"/>
+                </a>
             </c:if>
         </div>
         <div class="books_list_container">
@@ -321,14 +323,15 @@
                     <td> ${booksList.pageNumber} </td>
                     <td> ${booksList.publicationDate} </td>
                     <td>
-                        <c:choose>
-                            <c:when test="${booksList.copies gt 0}">
-                                ${booksList.copies}
-                            </c:when>
-                            <c:otherwise>
-                                <fmt:message key="books.common.unavailable"/>
-                            </c:otherwise>
-                        </c:choose>
+                            ${booksList.copies}
+<%--                        <c:choose>--%>
+<%--                            <c:when test="${booksList.copies gt 0}">--%>
+<%--                                ${booksList.copies}--%>
+<%--                            </c:when>--%>
+<%--                            <c:otherwise>--%>
+<%--                                <fmt:message key="books.common.unavailable"/>--%>
+<%--                            </c:otherwise>--%>
+<%--                        </c:choose>--%>
                     </td>
 
                     <c:if test="${userRole eq 'ADMIN'}">
@@ -386,23 +389,26 @@
                         </td>
                     </c:if>
                     <c:if test="${userRole eq 'USER'}">
-                        <td class="order-book" >
-                            <style>
-                                .order-book{
-                                    background: #30b220;
-                                }
-                                .order-book:hover{
-                                    background: #32d51b;
-                                }
-                            </style>
-                            <div class="order-book-div">
-                                <a class="order-book-link"
-                                   href="controller?command=order_book_redirect&book_id=${booksList.bookId}">
-                                    <p class="label"><span class="align"><fmt:message
-                                            key="user.books.action.order.book"/></span></p>
-                                </a>
-                            </div>
-                        </td>
+                                <c:choose>
+                                    <c:when test="${booksList.copies gt 0}">
+                                        <td class="order-book" >
+                                            <div class="order-book-div">
+                                                <a class="order-book-link"
+                                                   href="controller?command=order_book_redirect&book_id=${booksList.bookId}">
+                                                    <fmt:message key="user.books.action.order.book"/>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td class="order-book-impossible" >
+                                            <div class="order-book-div">
+                                                <fmt:message key="books.common.unavailable"/>
+                                            </div>
+                                        </td>
+                                    </c:otherwise>
+                                </c:choose>
+
                     </c:if>
                 </tr>
                 </c:forEach>

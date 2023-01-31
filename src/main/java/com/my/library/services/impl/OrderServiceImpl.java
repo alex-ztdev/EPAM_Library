@@ -17,6 +17,9 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger();
 
+    private static final int SUBSCRIPTION_DAYS = 30;
+    private static final int IN_READING_ROOM_DAYS = 1;
+
     private final OrderDAO orderDAO;
 
     public OrderServiceImpl(OrderDAO orderDAO) {
