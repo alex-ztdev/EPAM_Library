@@ -1,11 +1,9 @@
 package com.my.library.services.impl;
 
 import com.my.library.controller.command.constant.BooksOrderDir;
-import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.dao.BookDAO;
 import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.BooksOrderTypes;
-import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
@@ -15,13 +13,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class BookServiceImpl implements BookService {
     private static final Logger logger = LogManager.getLogger();
-
     private final BookDAO bookDAO;
 
     public BookServiceImpl(BookDAO bookDAO) {

@@ -14,11 +14,11 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class OrderBookRedirect implements Command {
+public class OrderBookRedirectCommand implements Command {
     private final static Logger logger = LogManager.getLogger();
     private final BookService bookService;
 
-    public OrderBookRedirect(BookService bookService) {
+    public OrderBookRedirectCommand(BookService bookService) {
         this.bookService = bookService;
     }
 

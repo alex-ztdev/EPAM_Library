@@ -7,7 +7,6 @@ import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
-import com.my.library.services.UserService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

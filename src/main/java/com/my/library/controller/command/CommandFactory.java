@@ -6,10 +6,9 @@ import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.constant.commands.UserCommands;
 import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
-import com.my.library.controller.command.impl.user.OrderBookRedirect;
+import com.my.library.controller.command.impl.user.OrderBookRedirectCommand;
 import com.my.library.dao.TransactionManager;
 import com.my.library.services.ServiceFactory;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,7 +46,7 @@ public class CommandFactory implements AutoCloseable {
             case AdminCommands.ADD_BOOK ->
                     res = new AddBookCommand(serviceFactory.getBookService(), serviceFactory.getAuthorService(), new TransactionManager(connection));
 
-            case UserCommands.ORDER_BOOK_REDIRECT -> res = new OrderBookRedirect(serviceFactory.getBookService());
+            case UserCommands.ORDER_BOOK_REDIRECT -> res = new OrderBookRedirectCommand(serviceFactory.getBookService());
             default -> res = new DefaultCommand();
         }
         return res;
