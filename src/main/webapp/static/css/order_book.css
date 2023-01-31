@@ -96,3 +96,8 @@ button:hover {
     border: 2px solid black;
 }
 
+.book-data{
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: white;
+}

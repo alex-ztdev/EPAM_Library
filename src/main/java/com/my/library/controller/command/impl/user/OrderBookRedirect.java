@@ -44,7 +44,7 @@ public class OrderBookRedirect implements Command {
 
             session.setAttribute(Parameters.BOOKS_DTO, bookDTO);
 
-            return new CommandResult(Pages.ORDER_PAGE, CommandDirection.REDIRECT);
+            return new CommandResult(Pages.ORDER_PAGE);
         } catch (ServiceException e) {
             throw new CommandException("Error occurred while executing OrderBookRedirect command", e);
         }
