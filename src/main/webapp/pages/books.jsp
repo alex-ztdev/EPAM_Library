@@ -270,20 +270,20 @@
                     <c:when test="${order_by eq 'BY_REMOVED'}">
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
-                        <th class="active">
-                            <a href="controller?command=books-list&order_by=by_removed&order_dir=desc">
-                                <fmt:message key="books.admin.label.removed"/>
-                                <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                            </a>
-                        </th>
+                    <th class="active">
+                        <a href="controller?command=books-list&order_by=by_removed&order_dir=desc">
+                            <fmt:message key="books.admin.label.removed"/>
+                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                        </a>
+                    </th>
                     </c:when>
                     <c:otherwise>
-                        <th class="active">
-                            <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
-                                <fmt:message key="books.admin.label.removed"/>
-                                <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                            </a>
-                        </th>
+                    <th class="active">
+                        <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
+                            <fmt:message key="books.admin.label.removed"/>
+                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                        </a>
+                    </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
@@ -301,6 +301,9 @@
                         <fmt:message key="books.admin.action.update"/>
                     </th>
 
+                    </c:if>
+                    <c:if test="${sessionScope.user.role eq 'USER'}">
+                    <th><fmt:message key="user.books.label.order.book"/></th>
                     </c:if>
 
 
@@ -382,15 +385,25 @@
 
                         </td>
                     </c:if>
-                <c:if test="${userRole eq 'USER'}">
-                    <td class="order-book">
-                        <div class="order-book-div">
-                            <a class="order-book-link" href="controller?command=order_book_redirect&book_id=${booksList.bookId}">
-                                <p class="label"><span class="align"><fmt:message key="user.books.action.order.book"/></span></p>
-                            </a>
-                        </div>
-                    </td>
-                </c:if>
+                    <c:if test="${userRole eq 'USER'}">
+                        <td class="order-book" >
+                            <style>
+                                .order-book{
+                                    background: #30b220;
+                                }
+                                .order-book:hover{
+                                    background: #32d51b;
+                                }
+                            </style>
+                            <div class="order-book-div">
+                                <a class="order-book-link"
+                                   href="controller?command=order_book_redirect&book_id=${booksList.bookId}">
+                                    <p class="label"><span class="align"><fmt:message
+                                            key="user.books.action.order.book"/></span></p>
+                                </a>
+                            </div>
+                        </td>
+                    </c:if>
                 </tr>
                 </c:forEach>
             </table>
@@ -421,7 +434,6 @@
             </c:if>
 
         </div>
-
 
     </div>
 </div>
