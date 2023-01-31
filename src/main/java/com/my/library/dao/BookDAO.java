@@ -32,4 +32,7 @@ public interface BookDAO {
     void setBookCopies(int copies, long id) throws DaoException;
 
     boolean alreadyExists(Book book) throws DaoException;
+
+    void addToStorage(long book_id, int copies) throws DaoException;
+
 }

@@ -18,4 +18,6 @@ public interface Parameters {
     String UPDATE_BOOK = "update_book";
     String ADD_BOOK = "add_book";
 
+    String ADD_NEW_BUTTON_PRESSED = "add_new_pressed";
+
 }

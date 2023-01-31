@@ -109,4 +109,9 @@ public interface BookQueries {
             A.first_name=? AND
             A.second_name=?
             """;
+    //language=TSQL
+    String ADD_TO_STORAGE = """
+            INSERT INTO  Storage (book_id, quantity) values(?, ?)""";
+
+    
 }

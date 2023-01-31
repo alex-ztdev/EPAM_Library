@@ -1,12 +1,12 @@
 package com.my.library.controller.command.impl.admin;
 
-import com.my.library.controller.MessageRemover;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.controller.command.impl.common.LoginCommand;
 import com.my.library.dao.TransactionManager;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
@@ -41,7 +41,7 @@ public class UpdateBookCommand implements Command {
         var resPage = String.format(RedirectToPage.BOOKS_EDIT_PAGE_WITH_PARAMETER, session.getAttribute(Parameters.BOOK_ID));
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, resPage);
-        new MessageRemover().removeMessages(session);
+        new LoginCommand.MessageRemover().removeMessages(session);
 
         if (bookContainer.isEmpty()) {
             logger.log(Level.INFO, "UpdateBookCommand was called, but Book data is invalid");
@@ -49,8 +49,6 @@ public class UpdateBookCommand implements Command {
         } else {
             var book = bookContainer.get();
             try {
-
-                //TODO: Add action for copies!
                 if (bookService.alreadyExists(book) && bookService.getQuantity(book.getBookId()) == copies) {
                     logger.log(Level.INFO, "UpdateBookCommand book_id:" + book.getBookId() + " book with such parameters already exists");
                     request.getSession().setAttribute(BookParameters.BOOK_ALREADY_EXISTS, BookParameters.BOOK_ALREADY_EXISTS);
@@ -66,4 +64,6 @@ public class UpdateBookCommand implements Command {
         }
         return new CommandResult(resPage, CommandDirection.REDIRECT);
     }
+
+
 }

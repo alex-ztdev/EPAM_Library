@@ -53,6 +53,7 @@
                 </c:when>
                 <c:otherwise>
                     <input name="command" type="hidden" value="add-book">
+<%--                    <input name="command" type="hidden" value="add-book">--%>
                 </c:otherwise>
             </c:choose>
 

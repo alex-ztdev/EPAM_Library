@@ -3,7 +3,9 @@ package com.my.library.controller.command.impl.admin;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.controller.command.impl.common.LoginCommand;
 import com.my.library.entities.Genre;
 import com.my.library.entities.Publisher;
 import com.my.library.exceptions.CommandException;
@@ -13,7 +15,6 @@ import com.my.library.services.PublisherService;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class AddBookRedirectCommand implements Command {
     private final static Logger logger = LogManager.getLogger();
-
+    private final static String TRUE = "true";
     private final GenreService genreService;
     private final PublisherService publisherService;
 
@@ -33,9 +34,16 @@ public class AddBookRedirectCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        logger.log(Level.DEBUG, "AddBookRedirectCommand: ");
+
         HttpSession session = request.getSession();
         request.setAttribute(Parameters.OPERATION_TYPE, Parameters.ADD_BOOK);
+
+        if (TRUE.equals(request.getParameter(Parameters.ADD_NEW_BUTTON_PRESSED))) {
+            removeBook(session);
+            new LoginCommand.MessageRemover().removeMessages(session);
+        }else{
+
+        }
 
 
         try {
@@ -57,4 +65,16 @@ public class AddBookRedirectCommand implements Command {
             throw new CommandException("Error while executing AddBookRedirectCommand",e);
         }
     }
+    private void removeBook(HttpSession session) {
+        session.removeAttribute(Parameters.BOOK_ID);
+        session.removeAttribute(Parameters.BOOKS_DTO);
+        session.removeAttribute(Parameters.GENRES_LIST);
+        session.removeAttribute(Parameters.PUBLISHERS_LIST);
+        session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
+        session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
+        session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
+        session.removeAttribute(Parameters.OPERATION_TYPE);
+    }
+
 }
+

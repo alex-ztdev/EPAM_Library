@@ -18,8 +18,6 @@ public class CommandFactory implements AutoCloseable {
     private final static Logger logger = LogManager.getLogger();
 
     private ServiceFactory serviceFactory;
-
-    private TransactionManager transactionManager;
     private Connection connection;
 
     public CommandFactory() {
@@ -44,6 +42,8 @@ public class CommandFactory implements AutoCloseable {
             case AdminCommands.ADD_BOOK_REDIRECT -> res = new AddBookRedirectCommand(serviceFactory.getGenreService(), serviceFactory.getPublisherService());
             case AdminCommands.UPDATE_BOOK_REDIRECT -> res = new UpdateBookRedirectCommand(serviceFactory.getBookService(), serviceFactory.getGenreService(), serviceFactory.getPublisherService());
             case AdminCommands.UPDATE_BOOK -> res = new UpdateBookCommand(serviceFactory.getBookService(), serviceFactory.getAuthorService(), new TransactionManager(connection));
+            case AdminCommands.ADD_BOOK ->
+                    res = new AddBookCommand(serviceFactory.getBookService(), serviceFactory.getAuthorService(), new TransactionManager(connection));
 
             default -> res = new DefaultCommand();
         }

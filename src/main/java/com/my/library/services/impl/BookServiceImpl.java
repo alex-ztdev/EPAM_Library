@@ -126,7 +126,7 @@ public class BookServiceImpl implements BookService {
             transactionManager.beginTransaction();
 
             if (authorService.findByNames(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()).isEmpty()) {
-                logger.log(Level.INFO, "UpdateBookCommand was called for book_id: " + book.getBookId() + " with new Author data:" + book.getAuthor());
+                logger.log(Level.INFO, "BookService update was called for book_id: " + book.getBookId() + " with new Author data:" + book.getAuthor());
                 authorService.save(book.getAuthor());
             }
             operationRes = bookDAO.update(book);
@@ -136,6 +136,36 @@ public class BookServiceImpl implements BookService {
             transactionManager.commit();
             logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed: operation_result=" + operationRes);
             return operationRes;
+        } catch (DaoException e) {
+            try {
+                transactionManager.rollback();
+                logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction rolledBack successfully");
+            } catch (DaoException ex) {
+                throw new ServiceException("Error while executing rollback in update method BookServiceImpl", e);
+            }
+            throw new ServiceException("Error while executing update", e);
+        } finally {
+            transactionManager.endTransaction();
+            logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction ended successfully");
+        }
+    }
+
+    @Override
+    public void save(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException {
+        logger.log(Level.DEBUG, "Executing save for book: " + book);
+        try {
+            transactionManager.beginTransaction();
+
+            if (authorService.findByNames(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()).isEmpty()) {
+                logger.log(Level.INFO, "BookServiceImpl/save was called for book_id: " + book.getBookId() + " with new Author data:" + book.getAuthor());
+                authorService.save(book.getAuthor());
+            }
+            bookDAO.save(book);
+
+            bookDAO.setBookCopies(bookCopies, book.getBookId());
+
+            transactionManager.commit();
+            logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed successfully");
         } catch (DaoException e) {
             try {
                 transactionManager.rollback();

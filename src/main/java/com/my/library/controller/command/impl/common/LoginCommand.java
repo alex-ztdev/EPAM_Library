@@ -3,13 +3,12 @@ package com.my.library.controller.command.impl.common;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
-import com.my.library.controller.command.constant.RedirectToPage;
+import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.UserStatus;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
-import com.my.library.services.ServiceFactory;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
@@ -69,5 +68,16 @@ public class LoginCommand implements Command {
             throw new CommandException("Error while executing LoginCommand.", e);
         }
         return res;
+    }
+
+    public static class MessageRemover {
+        public void removeMessages(HttpSession session) {
+            session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
+            session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
+            session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
+
+            session.removeAttribute(Parameters.UPDATE_BOOK);
+            session.removeAttribute(Parameters.ADD_BOOK);
+        }
     }
 }

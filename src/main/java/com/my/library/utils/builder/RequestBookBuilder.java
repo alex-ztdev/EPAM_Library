@@ -16,44 +16,37 @@ import java.util.Optional;
 public class RequestBookBuilder {
 
     private static final Logger logger = LogManager.getLogger();
+
     public Optional<Book> buildBookForUpdate(HttpServletRequest request) {
 
         Long bookId = Long.valueOf(request.getParameter(Parameters.BOOK_ID));
-        String title = request.getParameter(BookParameters.TITLE);
+        int copies = Integer.parseInt(request.getParameter(BookParameters.COPIES));
+        var bookContainer = buildBookForSave(request);
 
+        bookContainer.ifPresent(book -> book.setBookId(bookId));
+
+        logger.log(Level.INFO, "buildBookForUpdate was called. Received data: " + bookContainer + " copies: " + copies);
+
+        return bookContainer;
+    }
+
+    public Optional<Book> buildBookForSave(HttpServletRequest request) {
+        String title = request.getParameter(BookParameters.TITLE);
         String firstName = request.getParameter(BookParameters.AUTHOR_FIRST_NAME);
         String secondName = request.getParameter(BookParameters.AUTHOR_SECOND_NAME);
-
         String genre = request.getParameter(BookParameters.GENRE);
         String publisher = request.getParameter(BookParameters.PUBLISHER);
         int copies = Integer.parseInt(request.getParameter(BookParameters.COPIES));
         int pages = Integer.parseInt(request.getParameter(BookParameters.PAGES));
         LocalDate publicationDate = LocalDate.parse(request.getParameter(BookParameters.PUBLICATION_DATE));
 
-
-        Book book = new Book(bookId, title, publisher, genre, pages, publicationDate, new Author(firstName, secondName));
-        logger.log(Level.INFO, "buildBookForUpdate was called. Received data: " + book + " copies: " + copies);
+        Book book = new Book(title, publisher, genre, pages, publicationDate, new Author(firstName, secondName));
+        logger.log(Level.INFO, "buildBookForSave was called. Received data: " + book + " copies: " + copies);
 
         if (new BookValidator().validateBook(book)) {
             return Optional.empty();
         } else return Optional.of(book);
-
-//        System.out.println();
-//        System.out.println(title);
-//        System.out.println(firstName);
-//        System.out.println(secondName);
-//        System.out.println(publisher);
-//        System.out.println(copies);
-//        System.out.println(pages);
-//        System.out.println(publicationDate);
-//
-//
-
-
-//        if (true) {
-//            return Optional.empty();
-//        }
-//        return Optional.of(new User(login, password, UserRole.USER, UserStatus.NORMAL, email, phoneNumber.isEmpty() ? null : phoneNumber, firstName, secondName));\
-//        return Optional.empty();
     }
+
+
 }

@@ -7,4 +7,5 @@ public interface AdminCommands {
     String ADD_BOOK_REDIRECT = "add-book-redirect";
     String UPDATE_BOOK_REDIRECT = "update-book-redirect";
     String UPDATE_BOOK = "update-book";
+    String ADD_BOOK = "add-book";
 }

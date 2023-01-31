@@ -2,13 +2,73 @@ package com.my.library.controller.command.impl.admin;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
+import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.parameters.BookParameters;
+import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.dao.TransactionManager;
+import com.my.library.dto.BookDTO;
+import com.my.library.dto.BookMapper;
 import com.my.library.exceptions.CommandException;
+import com.my.library.exceptions.ServiceException;
+import com.my.library.services.AuthorService;
+import com.my.library.services.BookService;
+import com.my.library.utils.Pages;
+import com.my.library.utils.builder.RequestBookBuilder;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.lang.annotation.Target;
 
 public class AddBookCommand implements Command {
+    private static final Logger logger = LogManager.getLogger();
+
+    private final BookService bookService;
+    private final AuthorService authorService;
+    private final TransactionManager transactionManager;
+
+    public AddBookCommand(BookService bookService, AuthorService authorService, TransactionManager transactionManager) {
+        this.bookService = bookService;
+        this.authorService = authorService;
+        this.transactionManager = transactionManager;
+    }
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        return null;
+        HttpSession session = request.getSession();
+//        new LoginCommand.MessageRemover().removeMessages(session);
+
+        var bookContainer = new RequestBookBuilder().buildBookForSave(request);
+
+        if (bookContainer.isEmpty()) {
+            logger.log(Level.INFO, "AddBookCommand was called, but Book data is invalid");
+            session.setAttribute(BookParameters.BOOK_INVALID_DATA, BookParameters.BOOK_INVALID_DATA);
+        } else {
+
+            int copies = Integer.parseInt(request.getParameter(BookParameters.COPIES));
+            var book = bookContainer.get();
+            var bookDTO = new BookMapper(bookService).toDTO(book, copies, false);
+            session.setAttribute(Parameters.BOOKS_DTO, bookDTO);
+
+            try {
+                if (bookService.alreadyExists(book)) {
+                    logger.log(Level.INFO, "AddBookCommand book_id:" + book.getBookId() + " book with such parameters already exists");
+                    request.getSession().setAttribute(BookParameters.BOOK_ALREADY_EXISTS, BookParameters.BOOK_ALREADY_EXISTS);
+                } else {
+                    logger.log(Level.INFO, "AddBookCommand book_id:" + book.getBookId());
+                    bookService.save(book, copies, authorService, transactionManager);
+
+                    session.setAttribute(BookParameters.SUCCESSFULLY_UPDATED, BookParameters.SUCCESSFULLY_UPDATED);
+                }
+
+            } catch (ServiceException e) {
+                throw new CommandException("Error while executing AddBookCommand", e);
+            }
+        }
+        return new CommandResult(Pages.BOOK_EDIT, CommandDirection.REDIRECT);
+
     }
+
 }

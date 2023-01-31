@@ -1,9 +1,9 @@
 package com.my.library.controller.command.impl.common;
 
-import com.my.library.controller.MessageRemover;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.*;
+import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.BooksOrderTypes;
@@ -15,7 +15,6 @@ import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
-import com.my.library.services.ServiceFactory;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -34,7 +33,8 @@ public class DisplayBooksListCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        new MessageRemover().removeMessages(session);
+        new LoginCommand.MessageRemover().removeMessages(session);
+        removeBook(session);
 
         int currPage = 1;
 
@@ -84,5 +84,16 @@ public class DisplayBooksListCommand implements Command {
                 String.format(RedirectToPage.BOOKS_PAGE_WITH_PARAMETERS, orderBy, orderDir, currPage));
 
         return new CommandResult(Pages.BOOKS_LIST, CommandDirection.FORWARD);
+    }
+
+    private void removeBook(HttpSession session) {
+        session.removeAttribute(Parameters.BOOK_ID);
+        session.removeAttribute(Parameters.BOOKS_DTO);
+        session.removeAttribute(Parameters.GENRES_LIST);
+        session.removeAttribute(Parameters.PUBLISHERS_LIST);
+        session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
+        session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
+        session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
+        session.removeAttribute(Parameters.OPERATION_TYPE);
     }
 }

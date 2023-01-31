@@ -237,6 +237,16 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
         }
     }
 
+    @Override
+    public void addToStorage(long book_id, int copies) throws DaoException {
+        try (var statement = connection.prepareStatement(BookQueries.ADD_TO_STORAGE)) {
+            statement.setLong(1, book_id);
+            statement.setInt(2, copies);
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 
     public void update(Book book, int quantity) {
 
