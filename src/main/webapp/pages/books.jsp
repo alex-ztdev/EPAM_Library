@@ -40,7 +40,9 @@
     <div class="main-content">
         <div class="top-row" >
             <p class="books-list-title">Books List</p>
-            <a href="controller?add-book-redirect" class="books-add-new">Add New</a>
+            <c:if test="${sessionScope.user.role eq 'ADMIN'}">
+                <a href="controller?command=add-book-redirect" class="books-add-new">Add New</a>
+            </c:if>
         </div>
         <div class="books_list_container">
             <table class="books_table">
