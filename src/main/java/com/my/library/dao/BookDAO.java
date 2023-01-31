@@ -33,6 +33,8 @@ public interface BookDAO {
 
     boolean alreadyExists(Book book) throws DaoException;
 
-    void addToStorage(long book_id, int copies) throws DaoException;
+    void addToStorage(long id, int copies) throws DaoException;
+
+    void decrementBookQuantity(long id) throws DaoException;
 
 }

@@ -232,11 +232,11 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
     }
 
     @Override
-    public void addToStorage(long book_id, int copies) throws DaoException {
-        logger.log(Level.DEBUG, "BookDaoImpl/addToStorage method invoked with book_id=" + book_id +" copies="+ copies);
+    public void addToStorage(long id, int copies) throws DaoException {
+        logger.log(Level.DEBUG, "BookDaoImpl/addToStorage method invoked with book_id=" + id + " copies=" + copies);
 
         try (var statement = connection.prepareStatement(BookQueries.ADD_TO_STORAGE)) {
-            statement.setLong(1, book_id);
+            statement.setLong(1, id);
             statement.setInt(2, copies);
 
             statement.executeUpdate();
@@ -246,8 +246,22 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
         }
     }
 
+    @Override
+    public void decrementBookQuantity(long id) throws DaoException {
+        logger.log(Level.DEBUG, "BookDaoImpl/decrementBookQuantity method invoked with book_id=" + id);
 
-    public void update(Book book, int quantity) {
+        try (var statement = connection.prepareStatement(BookQueries.DECREMENT_QUANTITY)) {
+            statement.setLong(1, id);
 
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
+
+
+//    public void update(Book book, int quantity) {
+//        throw new UnsupportedOperationException();
+//    }
 }

@@ -4,7 +4,6 @@ import com.my.library.controller.command.constant.BooksOrderDir;
 import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.entities.Book;
-import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 
 import java.util.List;
@@ -29,5 +28,8 @@ public interface BookService extends Service<Book> {
     boolean update(Book book,int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
 
     void save(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
+
+    void decreaseBookQuantity(long id) throws ServiceException;
+
 }
 

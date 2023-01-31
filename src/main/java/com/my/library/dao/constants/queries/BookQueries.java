@@ -113,5 +113,8 @@ public interface BookQueries {
     String ADD_TO_STORAGE = """
             INSERT INTO  Storage (book_id, quantity) values(?, ?)""";
 
-    
+    //language=TSQL
+    String DECREMENT_QUANTITY = """
+            UPDATE Storage SET quantity = quantity - 1 WHERE book_id =?
+            """;
 }

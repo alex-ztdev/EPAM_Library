@@ -18,7 +18,7 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger();
 
-    private OrderDAO orderDAO;
+    private final OrderDAO orderDAO;
 
     public OrderServiceImpl(OrderDAO orderDAO) {
         this.orderDAO = orderDAO;
@@ -43,18 +43,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void save(Order entity) throws ServiceException {
+    public void save(Order order) throws ServiceException {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void save(Order entity, BookService bookService, TransactionManager transactionManager) throws ServiceException {
+    public void save(Order order, BookService bookService, TransactionManager transactionManager) throws ServiceException {
 
         try {
+            logger.log(Level.DEBUG, "OrderServiceImpl/save/Transaction started");
             transactionManager.beginTransaction();
 
+            orderDAO.save(order);
 
-
+            bookService.decreaseBookQuantity(order.getBookId());
 
             transactionManager.commit();
 
@@ -69,11 +71,12 @@ public class OrderServiceImpl implements OrderService {
         } finally {
             transactionManager.endTransaction();
         }
+        logger.log(Level.DEBUG, "OrderServiceImpl/saved order:" + order + " successfully");
     }
 
     @Override
 
-    public boolean update(Order entity) throws ServiceException {
-        return false;
+    public boolean update(Order order) throws ServiceException {
+        throw new UnsupportedOperationException();
     }
 }
