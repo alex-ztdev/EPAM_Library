@@ -47,4 +47,14 @@ public interface OrderQueries {
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
+
+
+    //language=TSQL
+    String COUNT_ALL_ORDERS = """
+            SELECT COUNT(id) FROM Orders
+            """;
+    //language=TSQL
+    String COUNT_USERS_ORDERS = COUNT_ALL_ORDERS + " WHERE user_id = ?";
+
+
 }

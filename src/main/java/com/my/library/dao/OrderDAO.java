@@ -22,4 +22,7 @@ public interface OrderDAO {
     List<Order> getUsersOrders(long user_id) throws DaoException;
 
     List<Order> findAllUsersOrders(long userId, int start, int offset) throws DaoException;
+
+
+    int countUserOrders(long userId) throws DaoException;
 }

@@ -12,6 +12,8 @@ public interface OrderService extends Service<Order> {
     void save(Order order, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 
     List<Order> findAllUsersOrders(long userId, int start, int offset) throws ServiceException;
+
+    int countUsersOrders(long userId) throws ServiceException;
 }
 
 

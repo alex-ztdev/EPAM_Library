@@ -94,6 +94,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public int countUsersOrders(long userId) throws ServiceException {
+        try{
+            return orderDAO.countUserOrders(userId);
+        }catch (DaoException e) {
+            throw new ServiceException("OrderServiceImpl/error while executing countUsersOrders method", e);
+        }
+    }
+
+    @Override
 
     public boolean update(Order order) throws ServiceException {
         throw new UnsupportedOperationException();
