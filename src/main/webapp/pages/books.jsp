@@ -48,7 +48,7 @@
         <div class="books_list_container">
             <table class="books_table">
                 <tr>
-                    <th><fmt:message key="books.common.label.counter"/></th>
+                    <th><fmt:message key="common.label.counter"/></th>
 
                     <c:choose>
                     <c:when test="${order_by eq 'BY_TITLE'}">

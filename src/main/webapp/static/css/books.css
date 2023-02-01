@@ -41,7 +41,7 @@ body {
     padding-bottom: 5px;
 }
 
-.books-list-title {
+.books-list-title, .users-orders-title{
     color: white;
     font-size: 36px;
     font-weight: 700;
