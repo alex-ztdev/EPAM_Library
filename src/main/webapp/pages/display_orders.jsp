@@ -70,17 +70,20 @@
 
                 </tr>
                 <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
+
                     <c:choose>
                         <c:when test="${orders.fine != 0.0}">
-                            <tr style="background: #d72d2d;">
+                            <tr class="overdue-tr" style="background: #d72d2d;">
                         </c:when>
                         <c:when test="${orders.returnDate != null}">
-                            <tr style="background: #25cc33;">
+
+                            <tr class="returned-tr" style="background: #18a223;">
                         </c:when>
                         <c:otherwise>
                             <tr>
                         </c:otherwise>
                     </c:choose>
+
 
                     <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
                     <td> ${orders.orderId} </td>

@@ -181,4 +181,18 @@ body {
     text-align: center;
 }
 
+/*.overdue-tr{*/
+/*    background: #d72d2d;*/
+/*}*/
+/*.overdue-tr:hover{*/
+/*    background: #ef3535;*/
+/*}*/
+
+/*.returned-tr{*/
+/*   background: #18a223;*/
+/*}*/
+/*.returned-tr:hover{*/
+/*    background: #25cc33;*/
+/*}*/
+
 
