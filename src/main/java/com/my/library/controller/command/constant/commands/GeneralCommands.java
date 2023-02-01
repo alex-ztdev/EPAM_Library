@@ -45,4 +45,5 @@ public interface GeneralCommands {
     String SEARCH_BOOK = "search_book";
     String SORT_BOOKS = "sort_books";
 
+    String NOT_AUTHORIZED = "not-authorized";
 }

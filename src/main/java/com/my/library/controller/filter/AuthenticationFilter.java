@@ -33,7 +33,8 @@ public class AuthenticationFilter implements Filter {
             GeneralCommands.BOOKS_LIST,
             GeneralCommands.SEARCH_BOOK,
             GeneralCommands.SORT_BOOKS,
-            GeneralCommands.HOME
+            GeneralCommands.HOME,
+            GeneralCommands.NOT_AUTHORIZED
     );
 
     private static final List<String> LIBRARIAN_COMMANDS = List.of(
@@ -56,7 +57,10 @@ public class AuthenticationFilter implements Filter {
             AdminCommands.ADD_BOOK_REDIRECT,
             AdminCommands.ADD_BOOK,
             AdminCommands.UPDATE_BOOK_REDIRECT,
-            AdminCommands.UPDATE_BOOK
+            AdminCommands.UPDATE_BOOK,
+            //TODO: remove LibrarianCommands from ADMIN?
+            LibrarianCommands.DISPLAY_USERS_ORDERS,
+            LibrarianCommands.RETURN_ORDER
     );
 
     private static final Logger logger = LogManager.getLogger();
@@ -84,8 +88,8 @@ public class AuthenticationFilter implements Filter {
             chain.doFilter(servletRequest, servletResponse);
         } else {
             if (user == null) {
-                session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.NOT_AUTHORIZED);
-                response.sendRedirect(request.getContextPath() + Pages.NOT_AUTHORIZED);
+                session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.NOT_AUTHORIZED);
+                response.sendRedirect(request.getContextPath() + RedirectToPage.NOT_AUTHORIZED);
                 logger.log(Level.DEBUG, "No user in session! Tried to execute: " + command);
             } else {
                 //TODO: implement admin, librarian, user, (unknown?)
@@ -101,7 +105,7 @@ public class AuthenticationFilter implements Filter {
                     chain.doFilter(servletRequest, servletResponse);
                 } else {
                     session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.NOT_AUTHORIZED);
-                    response.sendRedirect(request.getContextPath() + Pages.NOT_AUTHORIZED);
+                    response.sendRedirect(request.getContextPath() + RedirectToPage.NOT_AUTHORIZED);
                 }
             }
         }
