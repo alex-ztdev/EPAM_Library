@@ -44,7 +44,7 @@
             </div>
             <div class="form__input-group">
                 <input id="loginUsername" name="login" type="text" class="form__input" autofocus
-                       placeholder="<fmt:message key="commonForm.username"/>">
+                       placeholder="<fmt:message key="commonForm.username"/>" value="${sessionScope.login_val}">
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">

@@ -26,4 +26,6 @@ public interface Parameters {
 
     String ORDERS_LIST = "ordersList";
     String ORDER_ID = "order_id";
+
+    String LOGIN_INVOCATION = "from";
 }

@@ -14,6 +14,7 @@ import com.my.library.services.AuthorService;
 import com.my.library.services.BookService;
 import com.my.library.utils.Pages;
 import com.my.library.utils.builder.RequestBookBuilder;
+import com.my.library.utils.validator.ValidationErrorsRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -41,7 +42,7 @@ public class AddBookCommand implements Command {
         var bookContainer = new RequestBookBuilder().buildBookForSave(request);
 
 
-        new MessageRemover().removeMessages(session);
+        new ValidationErrorsRemover().removeBookErrors(session);
 
         if (bookContainer.isEmpty()) {
             logger.log(Level.INFO, "AddBookCommand was called, but Book data is invalid");

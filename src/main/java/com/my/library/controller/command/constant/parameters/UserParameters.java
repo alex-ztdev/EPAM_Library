@@ -19,6 +19,7 @@ public interface UserParameters {
 
     String ID = "id";
     String LOGIN = "login";
+    String LOGIN_VALUE = "login_val";
     String PASSWORD = "password";
 
     String REG_LOGIN = "regLogin";

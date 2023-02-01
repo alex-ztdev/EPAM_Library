@@ -7,6 +7,7 @@ import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.exceptions.CommandException;
 import com.my.library.utils.Pages;
+import com.my.library.utils.validator.ValidationErrorsRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -18,9 +19,14 @@ public class LoginRedirectCommand implements Command {
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.LOGIN_PAGE);
 
+        if (request.getParameter(Parameters.LOGIN_INVOCATION) != null) {
+            new ValidationErrorsRemover().removeLoginErrors(session);
+        }
+
         if (session.getAttribute(UserParameters.USER_IN_SESSION) != null) {
             return new CommandResult(RedirectToPage.HOME);
         }
         return new CommandResult(Pages.LOGIN_PAGE);
     }
+
 }

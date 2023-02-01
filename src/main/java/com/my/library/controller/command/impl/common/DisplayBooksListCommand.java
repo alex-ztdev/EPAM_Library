@@ -6,7 +6,6 @@ import com.my.library.controller.command.constant.*;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
-import com.my.library.controller.command.impl.admin.MessageRemover;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dto.BookDTO;
@@ -17,6 +16,7 @@ import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.validator.ValidationErrorsRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -34,7 +34,7 @@ public class DisplayBooksListCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        new MessageRemover().removeMessages(session);
+        new ValidationErrorsRemover().removeBookErrors(session);
         removeBook(session);
 
         int currPage = 1;

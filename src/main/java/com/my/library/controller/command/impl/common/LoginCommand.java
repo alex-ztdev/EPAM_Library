@@ -12,6 +12,7 @@ import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.validator.ValidationErrorsRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -35,9 +36,10 @@ public class LoginCommand implements Command {
         String password = request.getParameter(UserParameters.PASSWORD);
 
         HttpSession session = request.getSession();
-
+        session.setAttribute(UserParameters.LOGIN_VALUE, login);
         logger.log(Level.DEBUG, "LoginCommand: set curr page: " + Pages.LOGIN_PAGE);
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.LOGIN_PAGE);
+        new ValidationErrorsRemover().removeLoginErrors(session);
 
         if (login == null || login.isBlank() || password == null || password.isBlank()) {
             return new CommandResult(RedirectToPage.LOGIN_PAGE, CommandDirection.REDIRECT);
