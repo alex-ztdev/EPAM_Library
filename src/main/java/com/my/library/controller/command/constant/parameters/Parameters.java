@@ -21,7 +21,8 @@ public interface Parameters {
 
     String ADD_NEW_BUTTON_PRESSED = "add_new_pressed";
 
-    String ORDER_PER_PAGE = "ordersPerPage";
+    String ORDERS_PER_PAGE = "ordersPerPage";
+    String ORDER_SUCCESSFUL_MSG = "msg";
 
     String ORDERS_LIST = "ordersList";
 }

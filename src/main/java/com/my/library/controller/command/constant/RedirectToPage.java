@@ -7,5 +7,5 @@ public interface RedirectToPage {
     String BOOKS_PAGE_WITH_PARAMETERS = "/controller?command=books-list&order_by=%s&order_dir=%s&page=%s";
     String BOOKS_UPDATE_PAGE_WITH_PARAMETER = "/controller?command=update-book-redirect&book_id=%s";
     String BOOKS_ADD_PAGE = "/controller?command=add-book-redirect";
-    String MY_ORDERS_PAGE = "/controller?command=display-my-orders";
+    String MY_ORDERS_PAGE = "/controller?command=display-my-orders&msg=success";
 }

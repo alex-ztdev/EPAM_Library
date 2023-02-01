@@ -39,6 +39,9 @@
                 </c:when>
                 <c:otherwise>
                     <p class="users-orders-title"><fmt:message key="user.orders.orders.title"/></p>
+                    <c:if test="${not empty requestScope.msg}">
+                        <p class="success-msg"> <fmt:message key="user.orders.success.msg"/></p>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -71,7 +74,7 @@
                         </c:otherwise>
                     </c:choose>
 
-                        <td> ${loop.count + (requestScope.page - 1) * requestScope.booksPerPage} </td>
+                        <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
                         <td> ${orders.orderId} </td>
                         <c:if test="${sessionScope.user.role eq 'ADMIN' or 'LIBRARIAN'}">
                             <td>${orders.userId}</td>

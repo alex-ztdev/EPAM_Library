@@ -175,5 +175,10 @@ body {
 }
 
 
+.success-msg{
+    font-size: 24px;
+    color: rgb(85, 247, 85);
+    text-align: center;
+}
 
 
