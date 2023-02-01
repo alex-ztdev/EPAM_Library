@@ -9,7 +9,7 @@ public interface OrderQueries {
             	book_id,
             	order_start_date,
             	order_end_date,
-            	is_returned,
+            	return_date,
             	on_subscription
             FROM Orders
             """;
@@ -17,7 +17,7 @@ public interface OrderQueries {
     String FIND_ORDER_BY_ID = FIND_ALL_ORDERS + "WHERE id=?";
     //language=TSQL
     String INSERT_ORDER = """
-            INSERT INTO Orders (user_id, book_id, order_start_date, order_end_date, is_returned, on_subscription)
+            INSERT INTO Orders (user_id, book_id, order_start_date, order_end_date, return_date, on_subscription)
             VALUES(?,?,?,?,?,?)
             """;
     //language=TSQL
@@ -28,7 +28,7 @@ public interface OrderQueries {
             book_id = ?,
             order_start_date = ?,
             order_end_date = ?,
-            is_returned=?,
+            return_date=?,
             on_subscription=?
             WHERE id =?
             """;

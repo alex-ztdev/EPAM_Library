@@ -9,28 +9,17 @@ public class Order {
     private Long bookId;
     private LocalDateTime orderStartDate;
     private LocalDateTime orderEndDate;
-    private boolean isReturned;
+    private LocalDateTime returnDate;
     private boolean onSubscription;
 
     public Order() {
     }
 
-    public Order(Long userId, Long bookId, LocalDateTime orderStartDate, LocalDateTime orderEndDate, boolean isReturned, boolean onSubscription) {
+    public Order(Long userId, Long bookId, LocalDateTime orderStartDate, LocalDateTime orderEndDate, boolean onSubscription) {
         this.userId = userId;
         this.bookId = bookId;
         this.orderStartDate = orderStartDate;
         this.orderEndDate = orderEndDate;
-        this.isReturned = isReturned;
-        this.onSubscription = onSubscription;
-    }
-
-    public Order(Long orderId, Long userId, Long bookId, LocalDateTime orderStartDate, LocalDateTime orderEndDate, boolean isReturned, boolean onSubscription) {
-        this.orderId = orderId;
-        this.userId = userId;
-        this.bookId = bookId;
-        this.orderStartDate = orderStartDate;
-        this.orderEndDate = orderEndDate;
-        this.isReturned = isReturned;
         this.onSubscription = onSubscription;
     }
 
@@ -74,12 +63,12 @@ public class Order {
         this.orderEndDate = orderEndDate;
     }
 
-    public boolean isReturned() {
-        return isReturned;
+    public LocalDateTime getReturnDate() {
+        return returnDate;
     }
 
-    public void setReturned(boolean returned) {
-        isReturned = returned;
+    public void setReturnDate(LocalDateTime returnDate) {
+        this.returnDate = returnDate;
     }
 
     public boolean isOnSubscription() {
@@ -90,7 +79,6 @@ public class Order {
         this.onSubscription = onSubscription;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,14 +86,14 @@ public class Order {
 
         Order order = (Order) o;
 
-        if (isReturned != order.isReturned) return false;
         if (onSubscription != order.onSubscription) return false;
         if (orderId != null ? !orderId.equals(order.orderId) : order.orderId != null) return false;
         if (userId != null ? !userId.equals(order.userId) : order.userId != null) return false;
         if (bookId != null ? !bookId.equals(order.bookId) : order.bookId != null) return false;
         if (orderStartDate != null ? !orderStartDate.equals(order.orderStartDate) : order.orderStartDate != null)
             return false;
-        return orderEndDate != null ? orderEndDate.equals(order.orderEndDate) : order.orderEndDate == null;
+        if (orderEndDate != null ? !orderEndDate.equals(order.orderEndDate) : order.orderEndDate != null) return false;
+        return returnDate != null ? returnDate.equals(order.returnDate) : order.returnDate == null;
     }
 
     @Override
@@ -115,10 +103,11 @@ public class Order {
         result = 31 * result + (bookId != null ? bookId.hashCode() : 0);
         result = 31 * result + (orderStartDate != null ? orderStartDate.hashCode() : 0);
         result = 31 * result + (orderEndDate != null ? orderEndDate.hashCode() : 0);
-        result = 31 * result + (isReturned ? 1 : 0);
+        result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
         result = 31 * result + (onSubscription ? 1 : 0);
         return result;
     }
+
 
     @Override
     public String toString() {
@@ -128,7 +117,7 @@ public class Order {
                 ", bookId=" + bookId +
                 ", orderStartDate=" + orderStartDate +
                 ", orderEndDate=" + orderEndDate +
-                ", isReturned=" + isReturned +
+                ", returnDate=" + returnDate +
                 ", onSubscription=" + onSubscription +
                 '}';
     }

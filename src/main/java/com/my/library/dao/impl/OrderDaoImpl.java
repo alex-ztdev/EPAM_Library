@@ -1,13 +1,10 @@
 package com.my.library.dao.impl;
 
-import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.AbstractDao;
 import com.my.library.dao.OrderDAO;
 import com.my.library.dao.constants.columns.OrdersColumns;
 import com.my.library.dao.constants.queries.OrderQueries;
-import com.my.library.entities.Book;
 import com.my.library.entities.Order;
-import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 
 import java.sql.Connection;
@@ -51,7 +48,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             order.setBookId(resultSet.getLong(OrdersColumns.BOOK_ID));
             order.setOrderStartDate(resultSet.getObject(OrdersColumns.ORDER_START_DATE, LocalDateTime.class));
             order.setOrderEndDate(resultSet.getObject(OrdersColumns.SUBSCRIPTION_END_DATE, LocalDateTime.class));
-            order.setReturned(resultSet.getBoolean(OrdersColumns.IS_RETURNED));
+            order.setReturnDate(resultSet.getObject(OrdersColumns.RETURN_DATE, LocalDateTime.class));
             order.setOnSubscription(resultSet.getBoolean(OrdersColumns.ON_SUBSCRIPTION));
 
             return order;
@@ -85,7 +82,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             statement.setLong(k++, order.getBookId());
             statement.setObject(k++, order.getOrderStartDate());
             statement.setObject(k++, order.getOrderEndDate());
-            statement.setBoolean(k++, order.isReturned());
+            statement.setObject(k++, order.getReturnDate());
             statement.setBoolean(k, order.isOnSubscription());
 
             statement.executeUpdate();
@@ -109,7 +106,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             statement.setLong(k++, order.getBookId());
             statement.setObject(k++, order.getOrderStartDate());
             statement.setObject(k++, order.getOrderEndDate());
-            statement.setBoolean(k++, order.isReturned());
+            statement.setObject(k++, order.getReturnDate());
             statement.setBoolean(k++, order.isOnSubscription());
 
             statement.setLong(k, order.getOrderId());
