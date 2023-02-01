@@ -43,22 +43,24 @@
                 <tr>
                     <th><fmt:message key="common.label.counter"/></th>
 
-                    <th>
-                        <fmt:message key="books.common.label.genre"/>
-                    </th>
-
-                    <c:if test="${sessionScope.user.role eq 'USER'}">
-                    <th><fmt:message key="user.books.label.order.book"/></th>
+                    <th><fmt:message key="orders.common.order.id"/></th>
+                    <c:if test="${sessionScope.user.role eq 'ADMIN' or 'LIBRARIAN'}">
+                        <th><fmt:message key="orders.common.user.id"/></th>
+                        <th><fmt:message key="orders.common.user.name"/></th>
                     </c:if>
 
+                    <th><fmt:message key="orders.common.book.title"/></th>
+                    <th><fmt:message key="orders.common.order.start.date"/></th>
+                    <th><fmt:message key="orders.common.order.end.date"/></th>
+                    <th><fmt:message key="orders.common.order.place"/> </th>
+                    <th><fmt:message key="orders.common.returned"/></th>
+                    <th><fmt:message key="orders.common.fine"/></th>
 
-                    <%--                    <th><fmt:message key="books.common.label.available"/> <i class="fa fa-sort" aria-hidden="true"></i></th>--%>
-                    <%--                </tr>--%>
-                    <c:forEach var="booksList" items="${requestScope.booksList}" varStatus="loop">
+                    <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
                 <tr>
                     <td> ${loop.count + (requestScope.page - 1) * requestScope.booksPerPage} </td>
-                    <td> ${booksList.title} </td>
-                    <td> ${booksList.genre} </td>
+                    <td> ${orders.orderId} </td>
+                    <td> ${orders.book.book.title} </td>
                     <td> ${booksList.authorFirstName} ${booksList.authorSecondName}
 
                     </td>

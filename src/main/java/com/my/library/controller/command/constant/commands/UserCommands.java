@@ -4,4 +4,6 @@ public interface UserCommands {
     String ORDER_BOOK_REDIRECT = "order_book_redirect";
     String ORDER_BOOK = "order-book";
 
+    String DISPLAY_MY_ORDERS = "display-my-orders";
+
 }
