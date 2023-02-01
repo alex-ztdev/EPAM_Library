@@ -13,9 +13,13 @@ public interface OrderService extends Service<Order> {
 
     List<Order> findAllUsersOrders(long userId, int start, int offset) throws ServiceException;
 
+    List<Order> findAll(int start, int offset) throws ServiceException;
+
     int countUsersOrders(long userId) throws ServiceException;
 
     double countFine(Order order);
+
+    int countTotalOrders() ;
 }
 
 

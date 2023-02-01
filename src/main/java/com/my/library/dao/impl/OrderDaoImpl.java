@@ -59,13 +59,14 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             throw new DaoException(e);
         }
     }
-
     @Override
-    public List<Order> findAll() throws DaoException {
+    public List<Order> findAll(int start, int offset) throws DaoException {
         List<Order> orderList = new ArrayList<>();
-        try (var statement = connection.createStatement()) {
+        try (var statement = connection.prepareStatement(OrderQueries.FIND_ALL_ORDERS_PAGINATION)) {
+            statement.setInt(1, start);
+            statement.setInt(2, offset);
 
-            try (var rs = statement.executeQuery(OrderQueries.FIND_ALL_ORDERS)) {
+            try (var rs = statement.executeQuery()) {
                 while (rs.next()) {
                     orderList.add(buildOrder(rs));
                 }
@@ -130,24 +131,6 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
 
             statement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public List<Order> getUsersOrders(long user_id) throws DaoException {
-        List<Order> orderList = new ArrayList<>();
-        try (var statement = connection.prepareStatement(OrderQueries.FIND_ALL_USER_ORDERS)) {
-
-            statement.setLong(1, user_id);
-
-            try (var rs = statement.executeQuery()) {
-                while (rs.next()) {
-                    orderList.add(buildOrder(rs));
-                }
-            }
-            return orderList;
         } catch (SQLException e) {
             throw new DaoException(e);
         }

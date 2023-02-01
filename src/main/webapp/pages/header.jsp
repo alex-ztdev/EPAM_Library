@@ -36,7 +36,7 @@
         <c:choose>
             <%-- Menu bar for user only--%>
             <c:when test="${sessionScope.user.role eq 'USER'}">
-                <a href="${pageContext.request.contextPath}/controller?command='display-my-orders'"><fmt:message key="header.user.order"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=display-my-orders"><fmt:message key="header.user.order"/></a>
             </c:when>
             <%-- Menu bar for Admin or Librarian only--%>
             <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">

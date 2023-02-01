@@ -63,6 +63,11 @@
                     <th><fmt:message key="orders.common.order.place"/></th>
                     <th><fmt:message key="orders.common.returned"/></th>
                     <th><fmt:message key="orders.common.fine"/></th>
+
+                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
+                        <th><fmt:message key="librarian.orders.already.status"/></th>
+                    </c:if>
+
                 </tr>
                 <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
                     <c:choose>

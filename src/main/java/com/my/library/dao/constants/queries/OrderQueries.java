@@ -48,6 +48,12 @@ public interface OrderQueries {
             FETCH NEXT ? ROWS ONLY
             """;
 
+    //language=TSQL
+    String FIND_ALL_ORDERS_PAGINATION = FIND_ALL_ORDERS + """
+            ORDER BY return_date
+            OFFSET ? ROWS
+            FETCH NEXT ? ROWS ONLY
+            """;
 
     //language=TSQL
     String COUNT_ALL_ORDERS = """

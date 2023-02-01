@@ -39,27 +39,18 @@ public class DisplayUsersOrdersCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        var orderSuccessMsg = request.getParameter(Parameters.ORDER_SUCCESSFUL_MSG);
-        if (orderSuccessMsg != null && !orderSuccessMsg.isBlank()) {
-            request.setAttribute(Parameters.ORDER_SUCCESSFUL_MSG, Parameters.ORDER_SUCCESSFUL_MSG);
-        }
+        logger.log(Level.DEBUG, "DisplayUsersOrdersCommand/ invoked");
 
         int currPage = 1;
 
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
-        logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ current page: " + reqCurrPage);
+        logger.log(Level.DEBUG, "DisplayUsersOrdersCommand/ current page: " + reqCurrPage);
         if (reqCurrPage != null && !reqCurrPage.isBlank()) {
             currPage = Integer.parseInt(reqCurrPage);
         }
-        var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
 
-        if (user == null) {
-            return new CommandResult(Pages.NOT_AUTHORIZED, CommandDirection.REDIRECT);
-        }
-        var userId = user.getUserId();
-        logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ for user_id: " + userId);
         try {
-            List<Order> orderList = orderService.findAllUsersOrders(userId,
+            List<Order> orderList = orderService.findAll(
                     (currPage - 1) * RECORDS_PER_PAGE,
                     RECORDS_PER_PAGE);
 

@@ -40,11 +40,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAll() throws ServiceException {
-        try {
-            return orderDAO.findAll();
-        } catch (DaoException e) {
-            throw new ServiceException("OrderServiceImpl/error while executing findAll method ", e);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -95,6 +91,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAll(int start, int offset) throws ServiceException {
+        try  {
+            return orderDAO.findAll(start, offset);
+        } catch (DaoException e) {
+            throw new ServiceException("OrderServiceImpl/error while executing findAll method", e);
+        }
+    }
+
+    @Override
     public int countUsersOrders(long userId) throws ServiceException {
         try{
             return orderDAO.countUserOrders(userId);
@@ -110,6 +115,11 @@ public class OrderServiceImpl implements OrderService {
             return 0;
         }
         return daysPassed * DAY_OVERDUE_FEE;
+    }
+
+    @Override
+    public int countTotalOrders() {
+        return 0;
     }
 
     @Override

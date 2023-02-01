@@ -8,7 +8,6 @@ import com.my.library.controller.command.constant.parameters.OrderParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.TransactionManager;
-import com.my.library.entities.Book;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
@@ -21,9 +20,6 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.tags.shaded.org.apache.xpath.operations.Or;
-
-import java.time.LocalDateTime;
 
 public class OrderBookCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
