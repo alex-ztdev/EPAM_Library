@@ -37,9 +37,10 @@ public class LoginCommand implements Command {
         HttpSession session = request.getSession();
 
         logger.log(Level.DEBUG, "LoginCommand: set curr page: " + Pages.LOGIN_PAGE);
-        session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.LOGIN_PAGE);
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.LOGIN_PAGE);
+
         if (login == null || login.isBlank() || password == null || password.isBlank()) {
-            return new CommandResult(Pages.LOGIN_PAGE);
+            return new CommandResult(RedirectToPage.LOGIN_PAGE, CommandDirection.REDIRECT);
         }
 
         CommandResult res;
@@ -47,14 +48,14 @@ public class LoginCommand implements Command {
             var userContainer = userService.authenticate(login, password);
 
             if (userContainer.isEmpty()) {
-                res = new CommandResult(Pages.LOGIN_PAGE);
-                session.setAttribute(UserParameters.INVALID_LOGIN_PASSWORD, UserParameters.CONTENT_FROM_RESOURCES);
+                res = new CommandResult(RedirectToPage.LOGIN_PAGE, CommandDirection.REDIRECT);
+                session.setAttribute(UserParameters.INVALID_LOGIN_PASSWORD, UserParameters.USER_IS_BLOCKED);
                 logger.log(Level.INFO, "User: " + login + " logging failed");
             } else {
                 var user = userContainer.get();
                 if (user.getStatus() == UserStatus.BLOCKED) {
-                    res = new CommandResult(Pages.LOGIN_PAGE);
-                    session.setAttribute(UserParameters.USER_IS_BLOCKED, UserParameters.CONTENT_FROM_RESOURCES);
+                    res = new CommandResult(RedirectToPage.LOGIN_PAGE, CommandDirection.REDIRECT);
+                    session.setAttribute(UserParameters.USER_IS_BLOCKED, UserParameters.USER_IS_BLOCKED);
                     logger.log(Level.INFO, "User: " + login + " is blocked!");
                 }
                 //TODO: add error pages

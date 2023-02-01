@@ -37,7 +37,6 @@ public class OrderBookCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
 
-
         String bookIdStr = request.getParameter(Parameters.BOOK_ID);
 
 
