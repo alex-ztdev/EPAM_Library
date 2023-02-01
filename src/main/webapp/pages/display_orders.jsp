@@ -122,7 +122,7 @@
                         <td>
                         <c:choose>
                             <c:when test="${empty orders.returnDate}">
-                                <a href="${pageContext.request.contextPath}/controller?command=order-returned&order_id=${orders.orderId}">
+                                <a href="${pageContext.request.contextPath}/controller?command=return-order&order_id=${orders.orderId}">
                                     <fmt:message key="librarian.orders.return"/>
                                 </a>
                             </c:when>

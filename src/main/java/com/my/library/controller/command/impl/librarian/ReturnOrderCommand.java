@@ -2,12 +2,16 @@ package com.my.library.controller.command.impl.librarian;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
+import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dao.TransactionManager;
 import com.my.library.exceptions.CommandException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
 import com.my.library.services.UserService;
+import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +32,13 @@ public class ReturnOrderCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        return null;
+        logger.log(Level.DEBUG, "ReturnOrderCommand invoked");
+
+        var orderId = request.getParameter(Parameters.ORDER_ID);
+
+        if (orderId == null || orderId.isBlank()) {
+            return new CommandResult(Pages.NOT_AUTHORIZED);
+        }
+        return new CommandResult(Pages.NOT_AUTHORIZED, CommandDirection.REDIRECT);
     }
 }

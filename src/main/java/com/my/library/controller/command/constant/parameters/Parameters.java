@@ -25,4 +25,5 @@ public interface Parameters {
     String ORDER_SUCCESSFUL_MSG = "msg";
 
     String ORDERS_LIST = "ordersList";
+    String ORDER_ID = "order_id";
 }
