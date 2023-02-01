@@ -6,6 +6,9 @@ import com.my.library.dao.constants.columns.OrdersColumns;
 import com.my.library.dao.constants.queries.OrderQueries;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderDaoImpl extends AbstractDao implements OrderDAO {
+    private static final Logger logger = LogManager.getLogger();
 
     public OrderDaoImpl(Connection connection) {
         this.connection = connection;
@@ -42,7 +46,6 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
     private Order buildOrder(ResultSet resultSet) throws DaoException {
         try {
             Order order = new Order();
-
             order.setOrderId(resultSet.getLong(OrdersColumns.ID));
             order.setUserId(resultSet.getLong(OrdersColumns.USER_ID));
             order.setBookId(resultSet.getLong(OrdersColumns.BOOK_ID));
@@ -138,6 +141,30 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
         try (var statement = connection.prepareStatement(OrderQueries.FIND_ALL_USER_ORDERS)) {
 
             statement.setLong(1, user_id);
+
+            try (var rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    orderList.add(buildOrder(rs));
+                }
+            }
+            return orderList;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<Order> findAllUsersOrders(long userId, int start, int offset) throws DaoException {
+        logger.log(Level.DEBUG, "OrderDaoImpl/findAllUsersOrders method invoked with parameters: user_id=" +
+                userId + " start=" + start + " offset=" + offset);
+
+        List<Order> orderList = new ArrayList<>();
+
+        try (var statement = connection.prepareStatement(OrderQueries.FIND_ALL_USER_ORDERS_PAGINATION)) {
+            int k = 1;
+            statement.setLong(k++, userId);
+            statement.setInt(k++, start);
+            statement.setInt(k, offset);
 
             try (var rs = statement.executeQuery()) {
                 while (rs.next()) {

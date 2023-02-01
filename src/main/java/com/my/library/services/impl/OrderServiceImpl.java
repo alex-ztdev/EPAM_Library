@@ -85,6 +85,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAllUsersOrders(long userId, int start, int offset) throws ServiceException {
+        try {
+            return orderDAO.findAllUsersOrders(userId, start, offset);
+        } catch (DaoException e) {
+            throw new ServiceException("OrderServiceImpl/error while executing findAllUsersOrders method", e);
+        }
+    }
+
+    @Override
 
     public boolean update(Order order) throws ServiceException {
         throw new UnsupportedOperationException();
