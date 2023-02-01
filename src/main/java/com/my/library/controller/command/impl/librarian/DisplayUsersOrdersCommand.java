@@ -54,9 +54,9 @@ public class DisplayUsersOrdersCommand implements Command {
                     (currPage - 1) * RECORDS_PER_PAGE,
                     RECORDS_PER_PAGE);
 
-            int totalRecords = orderService.countUsersOrders(userId);
+            int totalRecords = orderService.countTotalOrders();
 
-            logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ total user orders: " + totalRecords);
+            logger.log(Level.DEBUG, "DisplayUsersOrdersCommand/ total orders: " + totalRecords);
 
             var totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
 

@@ -174,5 +174,18 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
         }
     }
 
+    @Override
+    public int countTotalOrders() throws DaoException {
+        try (var statement = connection.createStatement()) {
+            try (var rs = statement.executeQuery(OrderQueries.COUNT_ALL_ORDERS)) {
+                rs.next();
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 
 }

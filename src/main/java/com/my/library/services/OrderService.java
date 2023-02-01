@@ -19,7 +19,7 @@ public interface OrderService extends Service<Order> {
 
     double countFine(Order order);
 
-    int countTotalOrders() ;
+    int countTotalOrders() throws ServiceException;
 }
 
 

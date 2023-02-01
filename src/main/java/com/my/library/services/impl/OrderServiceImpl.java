@@ -118,8 +118,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int countTotalOrders() {
-        return 0;
+    public int countTotalOrders() throws ServiceException {
+        try{
+            return orderDAO.countTotalOrders();
+        } catch (DaoException e) {
+            throw new ServiceException("OrderServiceImpl/error while executing countTotalOrders method", e);
+        }
     }
 
     @Override

@@ -21,4 +21,6 @@ public interface OrderDAO {
 
 
     int countUserOrders(long userId) throws DaoException;
+
+    int countTotalOrders() throws DaoException;
 }
