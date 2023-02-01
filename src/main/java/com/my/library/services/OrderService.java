@@ -2,6 +2,7 @@ package com.my.library.services;
 
 import com.my.library.dao.TransactionManager;
 
+import com.my.library.entities.Book;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
@@ -20,6 +21,9 @@ public interface OrderService extends Service<Order> {
     double countFine(Order order);
 
     int countTotalOrders() throws ServiceException;
+
+    void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException;
+
 }
 
 

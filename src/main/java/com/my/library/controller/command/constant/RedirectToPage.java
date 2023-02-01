@@ -8,6 +8,6 @@ public interface RedirectToPage {
     String BOOKS_UPDATE_PAGE_WITH_PARAMETER = "/controller?command=update-book-redirect&book_id=%s";
     String BOOKS_ADD_PAGE = "/controller?command=add-book-redirect";
     String MY_ORDERS_PAGE = "/controller?command=display-my-orders&msg=success";
-
+    String DISPLAY_USERS_ORDERS = "/controller?command=display-users-orders";
     String NOT_AUTHORIZED = "/controller?command=not-authorized";
 }

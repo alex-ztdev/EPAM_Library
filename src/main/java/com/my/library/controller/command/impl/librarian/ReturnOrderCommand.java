@@ -7,6 +7,7 @@ import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dao.TransactionManager;
 import com.my.library.exceptions.CommandException;
+import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
 import com.my.library.services.UserService;
@@ -35,11 +36,20 @@ public class ReturnOrderCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "ReturnOrderCommand invoked");
 
-        var orderId = request.getParameter(Parameters.ORDER_ID);
+        var orderIdStr = request.getParameter(Parameters.ORDER_ID);
 
-        if (orderId == null || orderId.isBlank()) {
+        if (orderIdStr == null || orderIdStr.isBlank()) {
+            //FIXME: change to unsupported command page
             return new CommandResult(RedirectToPage.NOT_AUTHORIZED);
         }
-        return new CommandResult(RedirectToPage.NOT_AUTHORIZED);
+        var orderId = Long.parseLong(orderIdStr);
+
+        try{
+            orderService.returnOrder(orderId, bookService, userService, transactionManager);
+
+            return new CommandResult(RedirectToPage.DISPLAY_USERS_ORDERS);
+        } catch (ServiceException e) {
+            throw new CommandException("Error while executing ReturnOrderCommand",e);
+        }
     }
 }

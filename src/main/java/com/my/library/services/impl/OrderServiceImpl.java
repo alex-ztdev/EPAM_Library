@@ -7,6 +7,7 @@ import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
+import com.my.library.services.UserService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -124,6 +125,34 @@ public class OrderServiceImpl implements OrderService {
         } catch (DaoException e) {
             throw new ServiceException("OrderServiceImpl/error while executing countTotalOrders method", e);
         }
+    }
+
+    @Override
+    public void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException {
+        try {
+            logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder/Transaction started");
+            transactionManager.beginTransaction();
+
+//            var nowTime = LocalDateTime.now();
+//            orderDAO
+//            orderDAO.save(order);
+//
+//            bookService.decreaseBookQuantity(order.getBookId());
+
+            transactionManager.commit();
+
+            logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder/Transaction committed successfully");
+        } catch (DaoException e) {
+            try {
+                transactionManager.rollback();
+            } catch (DaoException ex) {
+                throw new ServiceException("OrderServiceImpl/error while executing returnOrder method" + "Rollback method didn't work", ex);
+            }
+            throw new ServiceException("OrderServiceImpl/error while executing returnOrder method ", e);
+        } finally {
+            transactionManager.endTransaction();
+        }
+        logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder executed successfully ");
     }
 
     @Override
