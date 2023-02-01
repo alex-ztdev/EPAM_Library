@@ -42,7 +42,7 @@ public class DisplayBooksListCommand implements Command {
         BooksOrderDir orderDir = BooksOrderDir.ASC;
         BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
 
-        var reqCurrPage = request.getParameter(Parameters.BOOKS_LIST_CURR_PAGE);
+        var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
         var reqOrderDir = request.getParameter(Parameters.ORDER_DIRECTION);
         var reqOrderBy = request.getParameter(Parameters.ORDER_BY);
 
@@ -71,10 +71,10 @@ public class DisplayBooksListCommand implements Command {
             int totalRecords = bookService.countBooks(includeRemoved);
             int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
 
-            request.setAttribute(Parameters.BOOKS_LIST_CURR_PAGE, currPage);
+            request.setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
             request.setAttribute(Parameters.ORDER_DIRECTION, orderDir.toString());
             request.setAttribute(Parameters.ORDER_BY, orderBy.toString());
-            request.setAttribute(Parameters.BOOKS_TOTAL_PAGES, totalPages);
+            request.setAttribute(Parameters.GENERAL_TOTAL_PAGES, totalPages);
             request.setAttribute(Parameters.BOOKS_LIST, bookDTOList);
             request.setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
 
