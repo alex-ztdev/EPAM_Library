@@ -36,17 +36,17 @@
         <c:choose>
             <%-- Menu bar for user only--%>
             <c:when test="${sessionScope.user.role eq 'USER'}">
-                <a href="${pageContext.request.contextPath}/controller?command=display-my-orders"><fmt:message key="header.user.order"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command='display-my-orders'"><fmt:message key="header.user.order"/></a>
             </c:when>
             <%-- Menu bar for Admin or Librarian only--%>
             <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">
                 <a href="${pageContext.request.contextPath}/controller?command=users-list"><fmt:message key="header.admin.users"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message key="header.admin.orders"/></a>
             </c:when>
             <c:when test="${sessionScope.user.role eq 'ADMIN'}">
                 <a href="${pageContext.request.contextPath}/controller?command=users-list"><fmt:message key="header.admin.users"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=librarians-list"><fmt:message key="header.admin.librarians"/></a>
-                <a href="${pageContext.request.contextPath}/controller?command=admin-user-orders"><fmt:message key="header.admin.orders"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message key="header.admin.orders"/></a>
             </c:when>
         </c:choose>
     </div>
@@ -77,8 +77,8 @@
                 <a href="${pageContext.request.contextPath}/controller?command=login"><fmt:message key="header.common.login"/></a>
             </c:when>
             <c:otherwise>
-                <a href="controller?command=profile"><fmt:message key="header.common.profile"/></a>
-                <a href="controller?command=logout"><fmt:message key="header.common.logout"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=profile"><fmt:message key="header.common.profile"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message key="header.common.logout"/></a>
             </c:otherwise>
         </c:choose>
     </div>

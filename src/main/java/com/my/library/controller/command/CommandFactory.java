@@ -3,9 +3,11 @@ package com.my.library.controller.command;
 import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
+import com.my.library.controller.command.constant.commands.LibrarianCommands;
 import com.my.library.controller.command.constant.commands.UserCommands;
 import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
+import com.my.library.controller.command.impl.librarian.DisplayUsersOrdersCommand;
 import com.my.library.controller.command.impl.user.DisplayMyOrdersCommand;
 import com.my.library.controller.command.impl.user.OrderBookCommand;
 import com.my.library.controller.command.impl.user.OrderBookRedirectCommand;
@@ -55,6 +57,8 @@ public class CommandFactory implements AutoCloseable {
             case UserCommands.DISPLAY_MY_ORDERS ->
                     res = new DisplayMyOrdersCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService());
 
+            case LibrarianCommands.DISPLAY_USERS_ORDERS ->
+                    res = new DisplayUsersOrdersCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService());
             default -> res = new DefaultCommand();
         }
         return res;

@@ -3,6 +3,7 @@ package com.my.library.controller.filter;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
+import com.my.library.controller.command.constant.commands.LibrarianCommands;
 import com.my.library.controller.command.constant.commands.UserCommands;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
@@ -37,9 +38,9 @@ public class AuthenticationFilter implements Filter {
 
     private static final List<String> LIBRARIAN_COMMANDS = List.of(
             //TODO: Add Librarian commands
-//            LibrarianCommands.CHANGE_LANGUAGE,
-//            LibrarianCommands.
+            LibrarianCommands.DISPLAY_USERS_ORDERS
     );
+
     private static final List<String> USER_COMMANDS = List.of(
             //TODO: Add User commands
             UserCommands.ORDER_BOOK_REDIRECT,

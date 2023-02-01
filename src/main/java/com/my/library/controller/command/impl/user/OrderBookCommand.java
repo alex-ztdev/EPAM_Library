@@ -27,8 +27,6 @@ import java.time.LocalDateTime;
 
 public class OrderBookCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-
-
     private final OrderService orderService;
     private final BookService bookService;
     private final TransactionManager transactionManager;
@@ -51,7 +49,7 @@ public class OrderBookCommand implements Command {
 
         logger.log(Level.DEBUG, "OrderBookCommand: book_id: " + bookIdStr);
 
-        if (bookIdStr == null || onSubscriptionStr==null) {
+        if (bookIdStr == null || onSubscriptionStr == null) {
             logger.log(Level.DEBUG, "OrderBookCommand: book_id is null: redirect to error page");
             return new CommandResult(Pages.ERROR_PAGE, CommandDirection.REDIRECT);
         }

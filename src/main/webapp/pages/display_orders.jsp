@@ -16,8 +16,8 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
-<c:set var="command" scope="request" value="${sessionScope.user.role eq 'USER' ? 'display-my-orders' : 'display-user-orders'}"/>
-
+<c:set var="command" scope="request"
+       value="${sessionScope.user.role eq 'USER' ? 'display-my-orders' : 'display-user-orders'}"/>
 
 
 <html lang="${language}">
@@ -34,13 +34,13 @@
     <div class="main-content">
         <div class="top-row">
             <c:choose>
-                <c:when test="${sessionScope.user.role eq 'ADMIN' or 'LIBRARIAN'}">
+                <c:when test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
                     <p class="users-orders-title"><fmt:message key="admin.orders.orders.title"/></p>
                 </c:when>
                 <c:otherwise>
                     <p class="users-orders-title"><fmt:message key="user.orders.orders.title"/></p>
                     <c:if test="${not empty requestScope.msg}">
-                        <p class="success-msg"> <fmt:message key="user.orders.success.msg"/></p>
+                        <p class="success-msg"><fmt:message key="user.orders.success.msg"/></p>
                     </c:if>
                 </c:otherwise>
             </c:choose>
@@ -52,7 +52,7 @@
                     <th><fmt:message key="common.label.counter"/></th>
 
                     <th><fmt:message key="orders.common.order.id"/></th>
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or 'LIBRARIAN'}">
+                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
                         <th><fmt:message key="orders.common.user.id"/></th>
                         <th><fmt:message key="orders.common.user.name"/></th>
                     </c:if>
@@ -74,36 +74,51 @@
                         </c:otherwise>
                     </c:choose>
 
-                        <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
-                        <td> ${orders.orderId} </td>
-                        <c:if test="${sessionScope.user.role eq 'ADMIN' or 'LIBRARIAN'}">
-                            <td>${orders.userId}</td>
-                            <td>${orders.userName}</td>
-                        </c:if>
-                        <td> ${orders.bookTitle} </td>
-                        <td> ${orders.orderStartDate} </td>
-                         <td> ${orders.orderEndDate} </td>
+                    <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
+                    <td> ${orders.orderId} </td>
+                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
+                        <td>${orders.userId}</td>
+                        <td>${orders.userName}</td>
+                    </c:if>
+                    <td> ${orders.bookTitle} </td>
+                    <td> ${orders.orderStartDate} </td>
+                    <td> ${orders.orderEndDate} </td>
 
 
+                    <c:choose>
+                        <c:when test="${orders.onSubscription}">
+                            <td><fmt:message key="orders.common.order.subscription"/></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><fmt:message key="orders.common.order.in.reading.hall"/></td>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${orders.returnDate != null}">
+                            <td> ${orders.returnDate} </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><fmt:message key="orders.common.not.returned"/></td>
+                        </c:otherwise>
+                    </c:choose>
 
+                    <td>${orders.fine}</td>
+
+                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
+                        <td>
                         <c:choose>
-                            <c:when test="${orders.onSubscription}">
-                                <td> <fmt:message key="orders.common.order.subscription"/>  </td>
-                            </c:when>
-                            <c:otherwise>
-                                <td> <fmt:message key="orders.common.order.in.reading.hall"/>  </td>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:choose>
+
                             <c:when test="${orders.returnDate != null}">
-                                <td> ${orders.returnDate} </td>
+                                <a href="${pageContext.request.contextPath}/controller?command=order-returned">
+                                    <fmt:message key="librarian.orders.return"/>
+                                </a>
                             </c:when>
                             <c:otherwise>
-                                <td><fmt:message key="orders.common.not.returned"/></td>
+                                <fmt:message key="librarian.orders.already.returned"/>
                             </c:otherwise>
                         </c:choose>
-
-                        <td>${orders.fine}</td>
+                        </td>
+                    </c:if>
                     </tr>
                 </c:forEach>
             </table>
