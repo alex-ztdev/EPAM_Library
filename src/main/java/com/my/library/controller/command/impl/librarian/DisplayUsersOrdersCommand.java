@@ -62,7 +62,6 @@ public class DisplayUsersOrdersCommand implements Command {
 
             List<OrderDTO> orderDTOList = new OrderMapper(bookService, userService, orderService).toDTOList(orderList);
 
-
             request.setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
             request.setAttribute(Parameters.GENERAL_TOTAL_PAGES, totalPages);
             request.setAttribute(Parameters.ORDERS_LIST, orderDTOList);

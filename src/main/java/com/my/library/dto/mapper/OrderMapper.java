@@ -38,7 +38,7 @@ public class OrderMapper {
             var user = userContainer.get();
             var book = bookContainer.get();
 
-            orderDTOList.add(new OrderDTO(order, orderService.countFine(order), user.getFirstName() + user.getSecondName(), book.getTitle()));
+            orderDTOList.add(new OrderDTO(order, orderService.countFine(order), user.getFirstName() +" "+ user.getSecondName(), book.getTitle()));
         }
         return orderDTOList;
     }

@@ -17,7 +17,7 @@
 <fmt:setBundle basename="locale"/>
 
 <c:set var="command" scope="request"
-       value="${sessionScope.user.role eq 'USER' ? 'display-my-orders' : 'display-user-orders'}"/>
+       value="${sessionScope.user.role eq 'USER' ? 'display-my-orders' : 'display-users-orders'}"/>
 
 
 <html lang="${language}">

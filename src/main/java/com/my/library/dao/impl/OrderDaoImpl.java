@@ -181,7 +181,6 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
                 rs.next();
                 return rs.getInt(1);
             }
-
         } catch (SQLException e) {
             throw new DaoException(e);
         }
