@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.common;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
@@ -38,7 +39,7 @@ public class LoginCommand implements Command {
         logger.log(Level.DEBUG, "LoginCommand: set curr page: " + Pages.LOGIN_PAGE);
         session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.LOGIN_PAGE);
         if (login == null || login.isBlank() || password == null || password.isBlank()) {
-            return new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
+            return new CommandResult(Pages.LOGIN_PAGE);
         }
 
         CommandResult res;
@@ -47,18 +48,18 @@ public class LoginCommand implements Command {
 
             if (userContainer.isEmpty()) {
                 res = new CommandResult(Pages.LOGIN_PAGE);
-                request.setAttribute(UserParameters.INVALID_LOGIN_PASSWORD, UserParameters.CONTENT_FROM_RESOURCES);
+                session.setAttribute(UserParameters.INVALID_LOGIN_PASSWORD, UserParameters.CONTENT_FROM_RESOURCES);
                 logger.log(Level.INFO, "User: " + login + " logging failed");
             } else {
                 var user = userContainer.get();
                 if (user.getStatus() == UserStatus.BLOCKED) {
                     res = new CommandResult(Pages.LOGIN_PAGE);
-                    request.setAttribute(UserParameters.USER_IS_BLOCKED, UserParameters.CONTENT_FROM_RESOURCES);
+                    session.setAttribute(UserParameters.USER_IS_BLOCKED, UserParameters.CONTENT_FROM_RESOURCES);
                     logger.log(Level.INFO, "User: " + login + " is blocked!");
                 }
                 //TODO: add error pages
                 else {
-                    res = new CommandResult(Pages.MAIN_PAGE, CommandDirection.REDIRECT);
+                    res = new CommandResult(RedirectToPage.HOME);
                     session.setAttribute(UserParameters.USER_IN_SESSION, user);
                     logger.log(Level.INFO, "User: " + login + " logged successfully");
                 }

@@ -1,7 +1,6 @@
 package com.my.library.controller.command.constant;
 
 public interface RedirectToPage {
-    String LOGIN_PAGE = "/controller?command=login";
     String BOOKS_PAGE = "/controller?command=books-list";
 
     String BOOKS_PAGE_WITH_PARAMETERS = "/controller?command=books-list&order_by=%s&order_dir=%s&page=%s";
@@ -11,4 +10,8 @@ public interface RedirectToPage {
     String MY_ORDERS_PAGE = "/controller?command=display-my-orders";
     String DISPLAY_USERS_ORDERS = "/controller?command=display-users-orders";
     String NOT_AUTHORIZED = "/controller?command=not-authorized";
+    String HOME = "/controller?command=home";
+
+    //TODO: add flag that redirect from main and remove validation msg if true
+    String LOGIN_PAGE = "/controller?command=login-page";
 }

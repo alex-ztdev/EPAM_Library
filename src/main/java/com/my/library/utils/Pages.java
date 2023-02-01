@@ -6,11 +6,11 @@ public interface Pages {
     String ERROR_PAGE = "/pages/error/404.jsp";
 
     String PROFILE_PAGE = "/pages/profile.jsp";
-
     String NOT_AUTHORIZED = "/pages/not_authorized.jsp";
     String BOOKS_LIST = "/pages/books.jsp";
     String UNSUPPORTED_COMMAND = "/pages/error/400.jsp";
     String BOOK_EDIT = "/pages/book_edit.jsp";
     String ORDER_PAGE = "/pages/order_book.jsp";
     String DISPLAY_ORDERS_PAGE = "/pages/display_orders.jsp";
+
 }

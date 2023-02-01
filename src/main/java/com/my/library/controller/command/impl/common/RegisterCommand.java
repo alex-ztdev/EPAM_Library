@@ -73,7 +73,7 @@ public class RegisterCommand implements Command {
             }
             else {
                 request.setAttribute(UserParameters.REG_FORM, UserParameters.REG_FORM);
-                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT); //TODO: redirect to forward
+                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT); //TODO: redirect to forward?
             }
 
         } catch (ServiceException e) {

@@ -14,6 +14,6 @@ public class HomeCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         var session = request.getSession();
         session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.MAIN_PAGE);
-        return new CommandResult(Pages.MAIN_PAGE, CommandDirection.REDIRECT);
+        return new CommandResult(Pages.MAIN_PAGE);
     }
 }

@@ -41,8 +41,8 @@ public class CommandFactory implements AutoCloseable {
             case GeneralCommands.NOT_AUTHORIZED -> res = new NotAuthorizedCommand();
 
             case GeneralCommands.LOGIN -> res = new LoginCommand(serviceFactory.getUserService());
+            case GeneralCommands.LOGIN_PAGE -> res = new LoginRedirectCommand();
             case GeneralCommands.REGISTRATION -> res = new RegisterCommand(serviceFactory.getUserService());
-
 
             case GeneralCommands.BOOKS_LIST -> res = new DisplayBooksListCommand(serviceFactory.getBookService());
             case AdminCommands.REMOVE_BOOK -> res = new RemoveBookCommand(serviceFactory.getBookService());

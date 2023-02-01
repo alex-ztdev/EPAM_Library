@@ -27,6 +27,7 @@ public class AuthenticationFilter implements Filter {
     private static final List<String> GENERAL_COMMANDS = List.of(
             GeneralCommands.CHANGE_LANGUAGE,
             GeneralCommands.LOGIN,
+            GeneralCommands.LOGIN_PAGE,
             GeneralCommands.LOGOUT,
             GeneralCommands.REGISTRATION,
             GeneralCommands.ALL_BOOKS_LIST,
@@ -35,6 +36,7 @@ public class AuthenticationFilter implements Filter {
             GeneralCommands.SORT_BOOKS,
             GeneralCommands.HOME,
             GeneralCommands.NOT_AUTHORIZED
+
     );
 
     private static final List<String> LIBRARIAN_COMMANDS = List.of(

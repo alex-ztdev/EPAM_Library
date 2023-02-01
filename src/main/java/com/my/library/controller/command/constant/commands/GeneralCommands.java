@@ -5,6 +5,7 @@ public interface GeneralCommands {
     String REGISTRATION = "registration";
 
     String LOGIN = "login";
+    String LOGIN_PAGE = "login-page";
     String CHANGE_LANGUAGE = "change_language";
     String LOGOUT = "logout";
 

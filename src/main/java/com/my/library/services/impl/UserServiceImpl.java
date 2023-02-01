@@ -9,6 +9,7 @@ import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
 import com.my.library.utils.validator.UserValidator;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.find(id);
         } catch (DaoException e) {
-            throw new ServiceException("Error while searching user by id", e);
+            throw new ServiceException("UserServiceImpl/Error while searching user by id", e);
         }
     }
 
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.findAll();
         } catch (DaoException e) {
-            throw new ServiceException("Error while searching all users in UserService", e);
+            throw new ServiceException("UserServiceImpl/Error while searching all users", e);
         }
     }
 
@@ -49,10 +50,10 @@ public class UserServiceImpl implements UserService {
                 user.setPassword(encryptPassword(user.getPassword()));
                 userDAO.save(user);
             } else {
-                throw new ServiceException("User already exists!" + canBeRegistered(user));
+                throw new ServiceException("UserServiceImpl/User already exists!" + canBeRegistered(user));
             }
         } catch (DaoException e) {
-            throw new ServiceException("Error in save method in UserService", e);
+            throw new ServiceException("UserServiceImpl/Error in save method", e);
         }
     }
 
@@ -61,19 +62,20 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.update(user);
         } catch (DaoException e) {
-            throw new ServiceException("Error in update method in UserService", e);
+            throw new ServiceException("UserServiceImpl/Error in update method ", e);
         }
     }
 
     @Override
     public Optional<User> authenticate(String login, String password) throws ServiceException {
+        logger.log(Level.INFO, "UserServiceImpl/authenticate method invoked for user with login: " + login);
         if (!UserValidator.isValidLogin(login) || !UserValidator.isValidPassword(password)) {
             return Optional.empty();
         }
         try {
             return userDAO.authenticate(login, encryptPassword(password));
         } catch (DaoException e) {
-            throw new ServiceException("Error in authenticate method in UserService", e);
+            throw new ServiceException("UserServiceImpl/Error in authenticate method", e);
         }
     }
 

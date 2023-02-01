@@ -35,10 +35,10 @@
             <input name="command" type="hidden" value="login">
             <h1 class="form__title"><fmt:message key="loginForm.login"/></h1>
             <div class="form__message form__message--error">
-                <c:if test="${not empty requestScope.invalidLoginPassword}">
+                <c:if test="${not empty sessionScope.invalidLoginPassword}">
                     <fmt:message key="loginForm.msg.loginError"/>
                 </c:if>
-                <c:if test="${not empty requestScope.isBlocked}">
+                <c:if test="${not empty sessionScope.isBlocked}">
                     <fmt:message key="loginForm.msg.userIsBlocked"/>
                 </c:if>
             </div>
