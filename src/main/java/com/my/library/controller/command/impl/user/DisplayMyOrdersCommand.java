@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.user;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dto.OrderDTO;
@@ -55,7 +56,7 @@ public class DisplayMyOrdersCommand implements Command {
         var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         if (user == null) {
-            return new CommandResult(Pages.NOT_AUTHORIZED, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.NOT_AUTHORIZED);
         }
         var userId = user.getUserId();
         logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ for user_id: "+userId);

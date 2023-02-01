@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.librarian;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dao.TransactionManager;
 import com.my.library.exceptions.CommandException;
@@ -37,8 +38,8 @@ public class ReturnOrderCommand implements Command {
         var orderId = request.getParameter(Parameters.ORDER_ID);
 
         if (orderId == null || orderId.isBlank()) {
-            return new CommandResult(Pages.NOT_AUTHORIZED);
+            return new CommandResult(RedirectToPage.NOT_AUTHORIZED);
         }
-        return new CommandResult(Pages.NOT_AUTHORIZED, CommandDirection.REDIRECT);
+        return new CommandResult(RedirectToPage.NOT_AUTHORIZED);
     }
 }

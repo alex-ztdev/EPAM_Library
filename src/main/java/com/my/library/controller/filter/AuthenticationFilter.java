@@ -104,7 +104,7 @@ public class AuthenticationFilter implements Filter {
                     logger.log(Level.DEBUG, "Admin: " + user.getUserId() +" executed: " + command);
                     chain.doFilter(servletRequest, servletResponse);
                 } else {
-                    session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.NOT_AUTHORIZED);
+                    session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.NOT_AUTHORIZED);
                     response.sendRedirect(request.getContextPath() + RedirectToPage.NOT_AUTHORIZED);
                 }
             }
