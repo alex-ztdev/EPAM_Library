@@ -2,9 +2,9 @@ package com.my.library.dto.mapper;
 
 import com.my.library.dto.OrderDTO;
 import com.my.library.entities.Order;
-import com.my.library.entities.User;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
+import com.my.library.services.OrderService;
 import com.my.library.services.UserService;
 
 import java.util.ArrayList;
@@ -13,10 +13,12 @@ import java.util.List;
 public class OrderMapper {
     private final BookService bookService;
     private final UserService userService;
+    private final OrderService orderService;
 
-    public OrderMapper(BookService bookService, UserService userService) {
+    public OrderMapper(BookService bookService, UserService userService, OrderService orderService) {
         this.bookService = bookService;
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     public List<OrderDTO> toDTOList(List<Order> orderList) throws ServiceException {
@@ -36,7 +38,7 @@ public class OrderMapper {
             var user = userContainer.get();
             var book = bookContainer.get();
 
-            orderDTOList.add(new OrderDTO(order, userService.countFine(order), user.getFirstName() + user.getSecondName(), book.getTitle()));
+            orderDTOList.add(new OrderDTO(order, orderService.countFine(order), user.getFirstName() + user.getSecondName(), book.getTitle()));
         }
         return orderDTOList;
     }

@@ -62,7 +62,7 @@ public class DisplayMyOrdersCommand implements Command {
             int totalRecords = orderService.countUsersOrders(userId);
             var totalPages =(int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE) ;
 
-            List<OrderDTO> orderDTOList = new OrderMapper(bookService, userService).toDTOList(orderList);
+            List<OrderDTO> orderDTOList = new OrderMapper(bookService, userService, orderService).toDTOList(orderList);
 
 
             request.setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);

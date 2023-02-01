@@ -44,6 +44,7 @@
         </div>
         <div class="books_list_container">
             <table class="books_table">
+
                 <tr>
                     <th><fmt:message key="common.label.counter"/></th>
 
@@ -61,18 +62,44 @@
                     <th><fmt:message key="orders.common.fine"/></th>
                 </tr>
                 <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
-                    <tr>
+                    <c:choose>
+                        <c:when test="${orders.fine != 0.0}">
+                            <tr style="background: #d72d2d;">
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                        </c:otherwise>
+                    </c:choose>
+
                         <td> ${loop.count + (requestScope.page - 1) * requestScope.booksPerPage} </td>
                         <td> ${orders.orderId} </td>
-                        <td> ${orders.book.book.title} </td>
-                        <td> ${orders.authorFirstName} ${booksList.authorSecondName}</td>
-                        <td> ${orders.publisherTitle} </td>
-                        <td> ${orders.pageNumber} </td>
-                        <td> ${orders.publicationDate} </td>
-                        <td>
-                                ${booksList.copies}
-                        </td>
+                        <c:if test="${sessionScope.user.role eq 'ADMIN' or 'LIBRARIAN'}">
+                            <td>${orders.userId}</td>
+                            <td>${orders.userName}</td>
+                        </c:if>
+                        <td> ${orders.bookTitle} </td>
+                        <td> ${orders.orderStartDate} </td>
 
+
+                        <c:choose>
+                            <c:when test="${not empty orders.orderEndDate}">
+                                <td> ${orders.orderEndDate} </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><fmt:message key="orders.common.not.returned"/></td>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <c:choose>
+                            <c:when test="${orders.onSubscription}">
+                                <td> <fmt:message key="orders.common.order.subscription"/>  </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td> <fmt:message key="orders.common.order.in.reading.hall"/>  </td>
+                            </c:otherwise>
+                        </c:choose>
+                        <td> ${orders.returnDate} </td>
+                        <td>${orders.fine}</td>
                     </tr>
                 </c:forEach>
             </table>

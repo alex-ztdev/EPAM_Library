@@ -1,13 +1,8 @@
 package com.my.library.dto;
 
 import com.my.library.entities.Order;
-import com.my.library.services.BookService;
-import com.my.library.services.UserService;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrderDTO {
     private Long orderId;
@@ -102,5 +97,9 @@ public class OrderDTO {
 
     public void setFine(double fine) {
         this.fine = fine;
+    }
+
+    public boolean getOnSubscription() {
+        return onSubscription;
     }
 }

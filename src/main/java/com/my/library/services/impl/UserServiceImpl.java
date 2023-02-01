@@ -2,6 +2,7 @@ package com.my.library.services.impl;
 
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.UserDAO;
+import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;

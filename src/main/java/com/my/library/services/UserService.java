@@ -11,6 +11,4 @@ public interface UserService extends Service<User> {
     Optional<User> authenticate(String login, String password) throws ServiceException;
 
     List<String> canBeRegistered(User user) throws ServiceException;
-
-    double countFine(Order order);
 }

@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger();
 
     private static final int SUBSCRIPTION_DAYS = 30;
-
+    private static final double DAY_OVERDUE_FEE = 10;
 
     private final OrderDAO orderDAO;
 
@@ -100,6 +101,15 @@ public class OrderServiceImpl implements OrderService {
         }catch (DaoException e) {
             throw new ServiceException("OrderServiceImpl/error while executing countUsersOrders method", e);
         }
+    }
+
+    @Override
+    public double countFine(Order order) {
+        var daysPassed = ChronoUnit.DAYS.between(order.getOrderEndDate(), LocalDateTime.now());
+        if (daysPassed <= 0) {
+            return 0;
+        }
+        return daysPassed * DAY_OVERDUE_FEE;
     }
 
     @Override
