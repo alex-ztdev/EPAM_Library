@@ -74,6 +74,9 @@
                         <c:when test="${orders.fine != 0.0}">
                             <tr style="background: #d72d2d;">
                         </c:when>
+                        <c:when test="${orders.returnDate != null}">
+                            <tr style="background: #25cc33;">
+                        </c:when>
                         <c:otherwise>
                             <tr>
                         </c:otherwise>
@@ -102,6 +105,9 @@
                         <c:when test="${orders.returnDate != null}">
                             <td> ${orders.returnDate} </td>
                         </c:when>
+                        <c:when test="${orders.returnDate == null and orders.fine != 0.0}">
+                            <td><fmt:message key="orders.common.returned.overdue"/></td>
+                        </c:when>
                         <c:otherwise>
                             <td><fmt:message key="orders.common.not.returned"/></td>
                         </c:otherwise>
@@ -112,9 +118,8 @@
                     <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
                         <td>
                         <c:choose>
-
-                            <c:when test="${orders.returnDate != null}">
-                                <a href="${pageContext.request.contextPath}/controller?command=order-returned">
+                            <c:when test="${empty orders.returnDate}">
+                                <a href="${pageContext.request.contextPath}/controller?command=order-returned&order_id=${orders.orderId}">
                                     <fmt:message key="librarian.orders.return"/>
                                 </a>
                             </c:when>
