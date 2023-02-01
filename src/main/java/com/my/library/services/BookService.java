@@ -29,7 +29,7 @@ public interface BookService extends Service<Book> {
 
     void save(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
 
-    void decreaseBookQuantity(long id) throws ServiceException;
-
+    void decrementBookQuantity(long id) throws ServiceException;
+    void incrementBookQuantity(long id) throws ServiceException;
 }
 

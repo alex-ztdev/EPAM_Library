@@ -185,6 +185,4 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             throw new DaoException(e);
         }
     }
-
-
 }

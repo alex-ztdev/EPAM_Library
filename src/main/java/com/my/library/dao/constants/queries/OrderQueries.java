@@ -62,5 +62,11 @@ public interface OrderQueries {
     //language=TSQL
     String COUNT_USERS_ORDERS = COUNT_ALL_ORDERS + " WHERE user_id = ?";
 
+    //language=TSQL
+    String SET_RETURN_DATE = """
+            UPDATE Orders SET
+            return_date=?
+            WHERE id=?
+            """;
 
 }

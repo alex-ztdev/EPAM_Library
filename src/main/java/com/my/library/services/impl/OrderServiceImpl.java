@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 
             orderDAO.save(order);
 
-            bookService.decreaseBookQuantity(order.getBookId());
+            bookService.decrementBookQuantity(order.getBookId());
 
             transactionManager.commit();
 
@@ -133,11 +133,17 @@ public class OrderServiceImpl implements OrderService {
             logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder/Transaction started");
             transactionManager.beginTransaction();
 
-//            var nowTime = LocalDateTime.now();
-//            orderDAO
-//            orderDAO.save(order);
-//
-//            bookService.decreaseBookQuantity(order.getBookId());
+            var nowTime = LocalDateTime.now();
+
+            var orderContainer = orderDAO.find(orderId);
+            if (orderContainer.isEmpty()) {
+                throw new ServiceException("OrderServiceImpl/ order doesn't exists!");
+            }
+            var order = orderContainer.get();
+
+            order.setReturnDate(nowTime);
+            orderDAO.update(order);
+            bookService.incrementBookQuantity(order.getBookId());
 
             transactionManager.commit();
 

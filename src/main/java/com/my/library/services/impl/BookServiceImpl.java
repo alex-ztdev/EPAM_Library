@@ -181,7 +181,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void decreaseBookQuantity(long id) throws ServiceException {
+    public void decrementBookQuantity(long id) throws ServiceException {
+        try {
+            bookDAO.decrementBookQuantity(id);
+        } catch (DaoException e) {
+            throw new ServiceException( "BookServiceImpl/ error while executing decreaseBookQuantity", e);
+        }
+    }
+
+    @Override
+    public void incrementBookQuantity(long id) throws ServiceException {
         try {
             bookDAO.decrementBookQuantity(id);
         } catch (DaoException e) {
