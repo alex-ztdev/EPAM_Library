@@ -79,16 +79,9 @@
                         </c:if>
                         <td> ${orders.bookTitle} </td>
                         <td> ${orders.orderStartDate} </td>
+                         <td> ${orders.orderEndDate} </td>
 
 
-                        <c:choose>
-                            <c:when test="${not empty orders.orderEndDate}">
-                                <td> ${orders.orderEndDate} </td>
-                            </c:when>
-                            <c:otherwise>
-                                <td><fmt:message key="orders.common.not.returned"/></td>
-                            </c:otherwise>
-                        </c:choose>
 
                         <c:choose>
                             <c:when test="${orders.onSubscription}">
@@ -98,7 +91,15 @@
                                 <td> <fmt:message key="orders.common.order.in.reading.hall"/>  </td>
                             </c:otherwise>
                         </c:choose>
-                        <td> ${orders.returnDate} </td>
+                        <c:choose>
+                            <c:when test="${orders.returnDate != null}">
+                                <td> ${orders.returnDate} </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><fmt:message key="orders.common.not.returned"/></td>
+                            </c:otherwise>
+                        </c:choose>
+
                         <td>${orders.fine}</td>
                     </tr>
                 </c:forEach>
