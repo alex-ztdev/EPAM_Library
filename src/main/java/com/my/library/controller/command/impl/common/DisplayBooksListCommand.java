@@ -66,7 +66,7 @@ public class DisplayBooksListCommand implements Command {
                     orderDir, includeRemoved
             );
 
-            List<BookDTO> bookDTOList = new BookMapper(bookService).getDTOList(booksList);
+            List<BookDTO> bookDTOList = new BookMapper(bookService).toDTOList(booksList);
 
             int totalRecords = bookService.countBooks(includeRemoved);
             int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);

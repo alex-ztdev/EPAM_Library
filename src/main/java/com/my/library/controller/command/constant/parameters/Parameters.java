@@ -9,6 +9,7 @@ public interface Parameters {
     String BOOKS_DTO= "book";
     String BOOKS_PER_PAGE = "booksPerPage";
     String ORDER_BY = "order_by";
+
     String BOOK_ID = "book_id";
     String PREVIOUS_PAGE = "previous_page";
     String ORDER_DIRECTION = "order_dir";
@@ -20,4 +21,7 @@ public interface Parameters {
 
     String ADD_NEW_BUTTON_PRESSED = "add_new_pressed";
 
+    String ORDER_PER_PAGE = "ordersPerPage";
+
+    String ORDERS_LIST = "ordersList";
 }

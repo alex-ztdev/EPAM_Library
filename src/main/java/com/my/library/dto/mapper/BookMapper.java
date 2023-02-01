@@ -4,7 +4,6 @@ import com.my.library.dto.BookDTO;
 import com.my.library.entities.Book;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
-import com.my.library.services.ServiceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ public class BookMapper {
         this.service = service;
     }
 
-    public List<BookDTO> getDTOList(List<Book> books) throws ServiceException {
+    public List<BookDTO> toDTOList(List<Book> books) throws ServiceException {
 
         List<BookDTO> bookDTOList = new ArrayList<>();
 

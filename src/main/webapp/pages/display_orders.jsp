@@ -65,10 +65,10 @@
                         <td> ${loop.count + (requestScope.page - 1) * requestScope.booksPerPage} </td>
                         <td> ${orders.orderId} </td>
                         <td> ${orders.book.book.title} </td>
-                        <td> ${booksList.authorFirstName} ${booksList.authorSecondName}</td>
-                        <td> ${booksList.publisherTitle} </td>
-                        <td> ${booksList.pageNumber} </td>
-                        <td> ${booksList.publicationDate} </td>
+                        <td> ${orders.authorFirstName} ${booksList.authorSecondName}</td>
+                        <td> ${orders.publisherTitle} </td>
+                        <td> ${orders.pageNumber} </td>
+                        <td> ${orders.publicationDate} </td>
                         <td>
                                 ${booksList.copies}
                         </td>

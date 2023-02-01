@@ -5,6 +5,8 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
+import com.my.library.dto.OrderDTO;
+import com.my.library.dto.mapper.OrderMapper;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
@@ -57,16 +59,23 @@ public class DisplayMyOrdersCommand implements Command {
                     (currPage - 1) * RECORDS_PER_PAGE,
                     RECORDS_PER_PAGE);
 
+            int totalRecords = orderService.countUsersOrders(userId);
+            var totalPages =(int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE) ;
+
+            List<OrderDTO> orderDTOList = new OrderMapper(bookService, userService).toDTOList(orderList);
+
+
+            request.setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
+            request.setAttribute(Parameters.GENERAL_TOTAL_PAGES, totalPages);
+            request.setAttribute(Parameters.ORDERS_LIST, orderDTOList);
+            request.setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
+
         } catch (ServiceException e) {
             throw new CommandException("Error while executing DisplayMyOrdersCommand", e);
         }
 
 
-        request.setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
 
-//        request.setAttribute(Parameters.GENERAL_TOTAL_PAGES, totalPages);
-//        request.setAttribute(Parameters.BOOKS_LIST, bookDTOList);
-        request.setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
 
         return new CommandResult(Pages.DISPLAY_ORDERS_PAGE, CommandDirection.FORWARD);
     }
