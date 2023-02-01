@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.librarian;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dto.OrderDTO;
@@ -40,6 +41,7 @@ public class DisplayUsersOrdersCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         logger.log(Level.DEBUG, "DisplayUsersOrdersCommand/ invoked");
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_ORDERS);
 
         int currPage = 1;
 

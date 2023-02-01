@@ -72,7 +72,7 @@
                 <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
 
                     <c:choose>
-                        <c:when test="${orders.fine != 0.0}">
+                        <c:when test="${orders.fine != 0.0 and orders.returnDate == null}">
                             <tr class="overdue-tr" style="background: #d72d2d;">
                         </c:when>
                         <c:when test="${orders.returnDate != null}">

@@ -12,6 +12,7 @@ import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.AuthorService;
 import com.my.library.services.BookService;
+import com.my.library.utils.Pages;
 import com.my.library.utils.builder.RequestBookBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

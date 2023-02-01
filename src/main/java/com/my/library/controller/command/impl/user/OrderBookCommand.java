@@ -67,7 +67,7 @@ public class OrderBookCommand implements Command {
             }
             orderService.save(orderToSave, bookService, transactionManager);
 
-            return new CommandResult(RedirectToPage.MY_ORDERS_PAGE, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.MY_ORDERS_PAGE_WITH_SUCCESSFUL_MSG, CommandDirection.REDIRECT);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing OrderBookCommand", e);
         }

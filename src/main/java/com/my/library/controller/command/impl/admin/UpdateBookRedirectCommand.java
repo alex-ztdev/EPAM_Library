@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.admin;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dto.mapper.BookMapper;
 import com.my.library.entities.Book;
@@ -41,6 +42,7 @@ public class UpdateBookRedirectCommand implements Command {
         var reqBookId = request.getParameter(Parameters.BOOK_ID);
         HttpSession session = request.getSession();
 
+
         logger.log(Level.DEBUG,"UpdateBookRedirectCommand: request book_id: " + reqBookId);
         session.setAttribute(Parameters.OPERATION_TYPE, Parameters.UPDATE_BOOK);
 
@@ -53,6 +55,8 @@ public class UpdateBookRedirectCommand implements Command {
             logger.log(Level.DEBUG,"UpdateBookRedirectCommand: empty book_id: " + reqBookId);
             return new CommandResult(request.getContextPath() + Pages.ERROR_PAGE, CommandDirection.REDIRECT);
         }
+
+        session.setAttribute(Parameters.PREVIOUS_PAGE, String.format(RedirectToPage.BOOKS_UPDATE_PAGE_WITH_PARAMETER, bookId));
         Optional<Book> book;
         try {
             book = bookService.find(bookId);

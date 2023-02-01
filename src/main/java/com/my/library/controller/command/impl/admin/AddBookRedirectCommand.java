@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.admin;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.impl.common.LoginCommand;
@@ -37,12 +38,11 @@ public class AddBookRedirectCommand implements Command {
 
         HttpSession session = request.getSession();
         request.setAttribute(Parameters.OPERATION_TYPE, Parameters.ADD_BOOK);
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.BOOKS_ADD_PAGE);
 
         if (TRUE.equals(request.getParameter(Parameters.ADD_NEW_BUTTON_PRESSED))) {
             removeBook(session);
             new MessageRemover().removeMessages(session);
-        }else{
-
         }
 
 
