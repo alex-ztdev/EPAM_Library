@@ -64,4 +64,11 @@ public interface UserQueries {
     String COUNT_ALL_USERS = """
             SELECT COUNT(id) FROM USERS
             """;
+    //language=TSQL
+    String SET_USER_ROLE = """
+             UPDATE Users SET 
+             role_id=?
+             WHERE id =?
+            """;
+
 }

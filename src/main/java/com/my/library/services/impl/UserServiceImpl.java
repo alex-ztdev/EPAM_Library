@@ -2,6 +2,7 @@ package com.my.library.services.impl;
 
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.UserDAO;
+import com.my.library.dao.constants.UserRole;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
@@ -136,6 +137,15 @@ public class UserServiceImpl implements UserService {
             userDAO.unblock(userId);
         } catch (DaoException e) {
             throw new ServiceException("Error while executing unblockUser method",e);
+        }
+    }
+
+    @Override
+    public void setUserRole(long id, UserRole newUserRole) throws ServiceException {
+        try {
+            userDAO.setUserRole(id, newUserRole);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing setUserRole method",e);
         }
     }
 

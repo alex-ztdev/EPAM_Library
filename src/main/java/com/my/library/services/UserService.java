@@ -1,5 +1,6 @@
 package com.my.library.services;
 
+import com.my.library.dao.constants.UserRole;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.ServiceException;
@@ -19,4 +20,6 @@ public interface UserService extends Service<User> {
     void blockUser(long userId) throws ServiceException;
 
     void unblockUser(long userId) throws ServiceException;
+
+    void setUserRole(long userId, UserRole newUserRole) throws ServiceException;
 }

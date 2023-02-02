@@ -249,6 +249,19 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
         }
     }
 
+    @Override
+    public void setUserRole(long id, UserRole newUserRole) throws DaoException {
+        try (var statement = connection.prepareStatement(UserQueries.SET_USER_ROLE)) {
+            statement.setLong(1, newUserRole.ordinal() + 1);
+            statement.setLong(2, id);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 //    String msg = "User with such ";
 //    String defaultMsg = msg;
 //
