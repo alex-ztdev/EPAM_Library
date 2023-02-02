@@ -60,6 +60,8 @@ public class AuthenticationFilter implements Filter {
             AdminCommands.ADD_BOOK,
             AdminCommands.UPDATE_BOOK_REDIRECT,
             AdminCommands.UPDATE_BOOK,
+            AdminCommands.DISPLAY_USERS,
+
             //TODO: remove LibrarianCommands from ADMIN?
             LibrarianCommands.DISPLAY_USERS_ORDERS,
             LibrarianCommands.RETURN_ORDER

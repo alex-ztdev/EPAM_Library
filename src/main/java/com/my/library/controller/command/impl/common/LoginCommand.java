@@ -62,7 +62,7 @@ public class LoginCommand implements Command {
                 }
                 //TODO: add error pages
                 else {
-                    res = new CommandResult(RedirectToPage.HOME);
+                    res = new CommandResult(RedirectToPage.HOME, CommandDirection.REDIRECT);
                     session.setAttribute(UserParameters.USER_IN_SESSION, user);
                     logger.log(Level.INFO, "User: " + login + " logged successfully");
                 }

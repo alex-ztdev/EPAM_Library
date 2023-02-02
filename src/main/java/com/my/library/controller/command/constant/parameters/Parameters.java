@@ -3,6 +3,11 @@ package com.my.library.controller.command.constant.parameters;
 public interface Parameters {
     String LOCALE = "language";
     String DEFAULT_LOCALE = "en";
+
+    String LOGIN_INVOCATION = "from";
+    String REG_INVOCATION = "reg_invoked";
+
+    String REG_SUCCESS_MSG = "reg_msg";
     String GENERAL_CURR_PAGE = "page";
     String GENERAL_TOTAL_PAGES = "totalPages";
     String BOOKS_LIST = "booksList";
@@ -27,9 +32,9 @@ public interface Parameters {
     String ORDERS_LIST = "ordersList";
     String ORDER_ID = "order_id";
 
-    String LOGIN_INVOCATION = "from";
-    String REG_INVOCATION = "reg_invoked";
+    String USERS_LIST = "users_list";
+    String USERS_PER_PAGE = "usersPerPage";
 
-    String REG_SUCCESS_MSG = "reg_msg";
+
 
 }

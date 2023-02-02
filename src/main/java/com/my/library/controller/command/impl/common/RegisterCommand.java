@@ -67,7 +67,7 @@ public class RegisterCommand implements Command {
                 if (validation.isEmpty()) {
                     userService.save(user);
                     logger.log(Level.DEBUG, "RegisterCommand/registration successful! User_id: " + user.getUserId());
-                    res = new CommandResult(RedirectToPage.LOGIN_PAGE_WITH_SUCCESS);
+                    res = new CommandResult(RedirectToPage.LOGIN_PAGE_WITH_SUCCESS, CommandDirection.REDIRECT);
                 } else {
                     logger.log(Level.DEBUG, "RegisterCommand/unique check failed! Errors list: " + validation);
                     session.setAttribute(UserParameters.VALIDATION_LIST, validation);
@@ -77,8 +77,7 @@ public class RegisterCommand implements Command {
             }
             else {
                 logger.log(Level.DEBUG, "RegisterCommand/validation failed!");
-                request.setAttribute(UserParameters.REG_FORM, UserParameters.REG_FORM);
-                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
+                res = new CommandResult(RedirectToPage.REGISTRATION_PAGE, CommandDirection.REDIRECT);
             }
 
         } catch (ServiceException e) {

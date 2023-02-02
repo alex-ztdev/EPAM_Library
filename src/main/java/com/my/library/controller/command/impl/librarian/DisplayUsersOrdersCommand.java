@@ -26,7 +26,7 @@ import java.util.List;
 
 public class DisplayUsersOrdersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private static final int RECORDS_PER_PAGE = 10;
+    private static final int RECORDS_PER_PAGE = 8;
     private final BookService bookService;
     private final UserService userService;
     private final OrderService orderService;
@@ -71,7 +71,7 @@ public class DisplayUsersOrdersCommand implements Command {
 
             return new CommandResult(Pages.DISPLAY_ORDERS_PAGE, CommandDirection.FORWARD);
         } catch (ServiceException e) {
-            throw new CommandException("Error while executing DisplayMyOrdersCommand", e);
+            throw new CommandException("Error while executing DisplayUsersOrdersCommand", e);
         }
     }
 }
