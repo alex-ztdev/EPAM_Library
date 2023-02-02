@@ -40,7 +40,7 @@
             </c:when>
             <%-- Menu bar for Admin or Librarian only--%>
             <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">
-                <a href="${pageContext.request.contextPath}/controller?command=users-list"><fmt:message key="header.admin.users"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=display-users"><fmt:message key="header.admin.users"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message key="header.admin.orders"/></a>
             </c:when>
             <c:when test="${sessionScope.user.role eq 'ADMIN'}">

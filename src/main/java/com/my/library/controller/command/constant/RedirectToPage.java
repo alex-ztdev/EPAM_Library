@@ -12,8 +12,9 @@ public interface RedirectToPage {
     String NOT_AUTHORIZED = "/controller?command=not-authorized";
     String HOME = "/controller?command=home";
 
-    //TODO: add flag that redirect from main and remove validation msg if true
     String LOGIN_PAGE = "/controller?command=login-page";
     String LOGIN_PAGE_WITH_SUCCESS = "/controller?command=login-page&reg_msg=successful_registration&reg_invoked=true";
     String REGISTRATION_PAGE = "/controller?command=login-page&regForm=regForm";
+
+    String DISPLAY_USERS = "/controller?command=display-users";
 }

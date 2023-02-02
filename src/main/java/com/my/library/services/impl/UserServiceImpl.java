@@ -102,6 +102,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public List<User> findAll(int start, int offset) throws ServiceException {
+        return null;
+    }
+
     private String encryptPassword(String password) {
         return DigestUtils.sha512Hex(password);
     }
