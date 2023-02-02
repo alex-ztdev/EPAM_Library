@@ -35,4 +35,6 @@ public interface UserParameters {
     String REG_PHONE_VAL = "regPhoneVal";
     String REG_FIRST_NAME_VAL = "regFirstNameVal";
     String REG_SECOND_NAME_VAL = "regSecondNameVal";
+    String ROLE = "role";
+
 }

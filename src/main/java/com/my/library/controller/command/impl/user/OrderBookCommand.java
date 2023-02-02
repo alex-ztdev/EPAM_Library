@@ -46,7 +46,7 @@ public class OrderBookCommand implements Command {
 
         if (bookIdStr == null || onSubscriptionStr == null) {
             logger.log(Level.DEBUG, "OrderBookCommand: book_id is null: redirect to error page");
-            return new CommandResult(Pages.ERROR_PAGE, CommandDirection.REDIRECT);
+            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
         var bookId = Long.parseLong(bookIdStr);
         var onSubscription = Boolean.parseBoolean(onSubscriptionStr);

@@ -31,7 +31,7 @@ public class BlockUserCommand implements Command {
 
         if (userIdStr == null || userIdStr.isBlank()) {
             logger.log(Level.DEBUG, "BlockUserCommand user_id is null or empty! Redirect to ");
-            return new CommandResult(request.getContextPath() + Pages.ERROR_PAGE, CommandDirection.REDIRECT);
+            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
 
         long userId = Long.parseLong(userIdStr);

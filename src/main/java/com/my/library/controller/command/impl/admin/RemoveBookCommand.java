@@ -37,8 +37,7 @@ public class RemoveBookCommand implements Command {
 
         if (bookId == null) {
             logger.log(Level.DEBUG,"RemoveBookCommand: empty book_id: " + reqBookId);
-
-            return new CommandResult(request.getContextPath() + Pages.ERROR_PAGE, CommandDirection.REDIRECT);
+            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
         try {
             bookService.deleteById(bookId);

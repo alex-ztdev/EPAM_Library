@@ -63,6 +63,7 @@ public class AuthenticationFilter implements Filter {
             AdminCommands.DISPLAY_USERS,
             AdminCommands.BLOCK_USER,
             AdminCommands.UNBLOCK_USER,
+            AdminCommands.CHANGE_ROLE,
 
             //TODO: remove LibrarianCommands from ADMIN?
             LibrarianCommands.DISPLAY_USERS_ORDERS,

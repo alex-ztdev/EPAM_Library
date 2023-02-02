@@ -171,7 +171,7 @@
                                                 </style>
                                                 <div class="removed-book-div">
                                                     <a class="remove-link"
-                                                       href="controller?command=set-to-lib&user_id=${users.userId}">
+                                                       href="controller?command=change-user-role&role=librarian&user_id=${users.userId}">
                                                         <p class="label"><span class="align"><fmt:message
                                                                 key="admin.users.msg.user"/></span></p>
                                                     </a>
@@ -191,7 +191,7 @@
                                                 </style>
                                                 <div class="removed-book-div">
                                                     <a class="remove-link"
-                                                       href="controller?command=set-to-user&user_id=${users.userId}">
+                                                       href="controller?command=change-user-role&role=user&user_id=${users.userId}">
                                                         <p class="label"><span class="align" style="text-align: center;">
                                                             <fmt:message key="admin.users.msg.librarian"/></span></p>
                                                     </a>

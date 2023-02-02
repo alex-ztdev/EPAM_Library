@@ -11,4 +11,6 @@ public interface AdminCommands {
     String DISPLAY_USERS = "display-users";
     String BLOCK_USER = "block-user";
     String UNBLOCK_USER = "unblock-user";
+
+    String CHANGE_ROLE = "change-user-role";
 }
