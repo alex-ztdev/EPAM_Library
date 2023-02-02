@@ -130,6 +130,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void unblockUser(long userId) throws ServiceException {
+        try {
+            userDAO.unblock(userId);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing unblockUser method",e);
+        }
+    }
+
     private String encryptPassword(String password) {
         return DigestUtils.sha512Hex(password);
     }

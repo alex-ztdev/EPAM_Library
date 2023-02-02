@@ -133,11 +133,11 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     }
 
     @Override
-    public void unblock(User user) throws DaoException {
+    public void unblock(long id) throws DaoException {
         try (var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
             statement.setLong(1, UserStatus.NORMAL.ordinal() + 1);
-            statement.setLong(2, user.getUserId());
+            statement.setLong(2, id);
 
             statement.executeUpdate();
         } catch (SQLException e) {
