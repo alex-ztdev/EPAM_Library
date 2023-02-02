@@ -4,6 +4,7 @@ import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
+import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.exceptions.CommandException;
@@ -30,7 +31,7 @@ public class ChangeRoleCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "ChangeRoleCommand invoked");
         var newRoleStr = request.getParameter(UserParameters.ROLE);
-        var userIdStr = request.getParameter(UserParameters.ROLE);
+        var userIdStr = request.getParameter(Parameters.USER_ID);
 
 
         var userIdContainer = new LongParser().parseLong(userIdStr);
