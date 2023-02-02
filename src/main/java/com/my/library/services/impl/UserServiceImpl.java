@@ -69,7 +69,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> authenticate(String login, String password) throws ServiceException {
         logger.log(Level.INFO, "UserServiceImpl/authenticate method invoked for user with login: " + login);
-        if (!UserValidator.isValidLogin(login) || !UserValidator.isValidPassword(password)) {
+        var userValidator = new UserValidator();
+        if (!userValidator.isValidLogin(login) || !userValidator.isValidPassword(password)) {
             return Optional.empty();
         }
         try {

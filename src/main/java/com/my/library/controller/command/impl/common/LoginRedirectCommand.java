@@ -5,6 +5,7 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
+import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.utils.Pages;
 import com.my.library.utils.validator.ValidationErrorsRemover;
@@ -25,6 +26,10 @@ public class LoginRedirectCommand implements Command {
 
         if (session.getAttribute(UserParameters.USER_IN_SESSION) != null) {
             return new CommandResult(RedirectToPage.HOME);
+        }
+
+        if (request.getParameter(UserParameters.REG_FORM) != null) {
+            request.setAttribute(UserParameters.REG_FORM, UserParameters.REG_FORM);
         }
         return new CommandResult(Pages.LOGIN_PAGE);
     }

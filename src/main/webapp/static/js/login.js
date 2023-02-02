@@ -5,8 +5,6 @@ const nameRegex = /^[a-zA-Z ,.'\-]{1,30}$/;
 const phoneRegex = /^\d{12}$/;
 
 
-// TODO: add form save to localStorage
-
 function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
 
@@ -53,10 +51,49 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
         }
     });
-
     createAccountForm.addEventListener("submit", e => {
+        let signupUsername = document.getElementById('signupUsername').value;
+        let email = document.getElementById('signupEmail').value;
+        let phone = document.getElementById('signupPhone').value;
+        let password = document.getElementById('signupPassword').value;
+        let confirmPass = document.getElementById('signupConfirmPassword').value;
+        let firstName = document.getElementById('firstName').value;
+        let secondName = document.getElementById('secondName').value;
 
+
+        if (!signupUsername.match(usernameRegex)) {
+            console.log("signupUsername ERROR");
+            e.preventDefault();
+        }
+        if (!email.match(emailRegex)) {
+            console.log("signupEmail ERROR");
+            e.preventDefault();
+        }
+        if (phone && !phone.match(phoneRegex)) {
+            console.log("signupPhone ERROR");
+            e.preventDefault();
+        }
+        if (!password.match(passwordRegex)) {
+            console.log("signupPassword ERROR");
+            e.preventDefault();
+        }
+        if (!firstName.match(nameRegex)) {
+            console.log("first name ERROR");
+            e.preventDefault();
+        }
+        if (!secondName.match(nameRegex)) {
+            console.log("second name ERROR");
+            e.preventDefault();
+        }
+
+        if(confirmPass!==password){
+            console.log("passwords do not match ERROR");
+            e.preventDefault()
+        }
     });
+
+
+
 
     document.querySelectorAll(".form__input").forEach(inputElement => {
         inputElement.addEventListener("blur", e => {

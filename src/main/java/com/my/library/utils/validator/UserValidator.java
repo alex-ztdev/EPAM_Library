@@ -5,6 +5,7 @@ import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.entities.User;
 import com.my.library.utils.validator.constants.UserRegex;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,39 +75,29 @@ public class UserValidator {
         return validationList;
     }
 
-    private static boolean isValidPhone(String phone) {
+    private boolean isValidPhone(String phone) {
         return Pattern.matches(UserRegex.PHONE.getRegex(), phone);
     }
 
-    public static boolean isValidLogin(String login) {
+    public boolean isValidLogin(String login) {
         if (login == null || login.isEmpty()) return false;
         return Pattern.matches(UserRegex.LOGIN.getRegex(), login);
     }
 
-    public static boolean isValidPassword(String password) {
+    public boolean isValidPassword(String password) {
         if (password == null || password.isEmpty()) return false;
         return Pattern.matches(UserRegex.PASSWORD.getRegex(), password);
     }
 
-    public static boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         if (email == null || email.isEmpty()) return false;
         return Pattern.matches(UserRegex.EMAIL.getRegex(), email);
     }
 
-    public static boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         if (name == null || name.isEmpty()) return false;
         return Pattern.matches(UserRegex.NAME.getRegex(), name);
     }
 
-    public static void setParameters(HttpServletRequest request, List<String> validationList) {
-        if (validationList.contains(UserParameters.USER_EMAIL_ALREADY_EXISTS)) {
-            request.setAttribute(UserParameters.USER_EMAIL_ALREADY_EXISTS, UserParameters.USER_EMAIL_ALREADY_EXISTS);
-        }
-        if (validationList.contains(UserParameters.USER_LOGIN_ALREADY_EXISTS)) {
-            request.setAttribute(UserParameters.USER_LOGIN_ALREADY_EXISTS, UserParameters.USER_LOGIN_ALREADY_EXISTS);
-        }
-        if (validationList.contains(UserParameters.USER_PHONE_ALREADY_EXISTS)) {
-            request.setAttribute(UserParameters.USER_PHONE_ALREADY_EXISTS, UserParameters.USER_PHONE_ALREADY_EXISTS);
-        }
-    }
+
 }

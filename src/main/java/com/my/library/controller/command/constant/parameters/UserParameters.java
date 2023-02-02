@@ -30,4 +30,9 @@ public interface UserParameters {
     String REG_FIRST_NAME = "regFirstName";
     String REG_SECOND_NAME = "regSecondName";
 
+    String REG_LOGIN_VAL = "regLoginVal";
+    String REG_EMAIL_VAL = "regEmailVal";
+    String REG_PHONE_VAL = "regPhoneVal";
+    String REG_FIRST_NAME_VAL = "regFirstNameVal";
+    String REG_SECOND_NAME_VAL = "regSecondNameVal";
 }

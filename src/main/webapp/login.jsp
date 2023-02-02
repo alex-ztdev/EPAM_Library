@@ -66,9 +66,9 @@
             <div class="form__message form__message--error"></div>
             <div class="form__input-group">
                 <input type="text" id="signupUsername" name="regLogin" class="form__input" required autofocus
-                       placeholder="<fmt:message key="commonForm.username"/>">
+                       placeholder="<fmt:message key="commonForm.username"/>" value="${sessionScope.regLoginVal}">
                 <div class="form__input-error-message">
-                    <c:if test="${not empty requestScope.loginAlreadyExists}">
+                    <c:if test="${not empty sessionScope.loginAlreadyExists}">
                         <fmt:message key="registrationForm.login_already_exists"/>
                     </c:if>
 
@@ -76,16 +76,16 @@
             </div>
             <div class="form__input-group">
                 <input type="text" id="signupEmail" class="form__input" name="regEmail" required autofocus
-                       placeholder="<fmt:message key="registrationForm.email"/>">
+                       placeholder="<fmt:message key="registrationForm.email"/>" value="${sessionScope.regEmailVal}">
                 <div class="form__input-error-message">
-                    <c:if test="${not empty requestScope.emailAlreadyExists}">
+                    <c:if test="${not empty sessionScope.emailAlreadyExists}">
                         <fmt:message key="registrationForm.email_already_exists"/>
                     </c:if>
                 </div>
             </div>
             <div class="form__input-group">
                 <input type="password" id="signupPassword" class="form__input" name="regPassword" required autofocus
-                       placeholder="<fmt:message key="commonForm.password"/>">
+                       placeholder="<fmt:message key="commonForm.password"/>" >
                 <div class="form__input-error-message">
 
                 </div>
@@ -97,21 +97,21 @@
             </div>
             <div class="form__input-group">
                 <input type="text" id="signupPhone" class="form__input" name="regPhone" autofocus
-                       placeholder="<fmt:message key="registrationForm.phone"/>">
+                       placeholder="<fmt:message key="registrationForm.phone"/>" value="${sessionScope.regPhoneVal}">
                 <div class="form__input-error-message">
-                    <c:if test="${not empty requestScope.phoneAlreadyExists}">
+                    <c:if test="${not empty sessionScope.phoneAlreadyExists}">
                         <fmt:message key="registrationForm.phone_already_exists"/>
                     </c:if>
                 </div>
             </div>
             <div class="form__input-group">
                 <input type="text" id="firstName" class="form__input" name="regFirstName" required autofocus
-                       placeholder="<fmt:message key="registrationForm.firstName"/>">
+                       placeholder="<fmt:message key="registrationForm.firstName"/>" value="${sessionScope.regFirstNameVal}">
                 <div class="form__input-error-message"></div>
             </div>
             <div class="form__input-group">
                 <input type="text" id="secondName" class="form__input" name="regSecondName" required autofocus
-                       placeholder="<fmt:message key="registrationForm.secondName"/>">
+                       placeholder="<fmt:message key="registrationForm.secondName"/>" value="${sessionScope.regSecondNameVal}">
                 <div class="form__input-error-message"></div>
             </div>
             <button class="form__button" type="submit"><fmt:message key="registrationForm.btn.create"/></button>

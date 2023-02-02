@@ -39,6 +39,7 @@ public class LoginCommand implements Command {
         session.setAttribute(UserParameters.LOGIN_VALUE, login);
         logger.log(Level.DEBUG, "LoginCommand: set curr page: " + Pages.LOGIN_PAGE);
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.LOGIN_PAGE);
+
         new ValidationErrorsRemover().removeLoginErrors(session);
 
         if (login == null || login.isBlank() || password == null || password.isBlank()) {
