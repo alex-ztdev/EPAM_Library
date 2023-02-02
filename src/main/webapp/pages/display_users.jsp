@@ -16,8 +16,8 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
-<%--<c:set var="command" scope="request"--%>
-<%--       value="${sessionScope.user.role eq 'USER' ? 'display-my-orders' : 'display-users-orders'}"/>--%>
+<c:set var="command" scope="request"
+       value="${sessionScope.user.role eq 'ADMIN' ? 'display-users' : 'display-readers'}"/>
 
 
 <html lang="${language}">
@@ -34,14 +34,11 @@
     <div class="main-content">
         <div class="top-row">
             <c:choose>
-                <c:when test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                    <p class="users-orders-title"><fmt:message key="admin.orders.orders.title"/></p>
+                <c:when test="${sessionScope.user.role eq 'ADMIN'}">
+                    <p class="users-list-title"><fmt:message key="admin.user.users.title"/></p>
                 </c:when>
                 <c:otherwise>
-                    <p class="users-orders-title"><fmt:message key="user.orders.orders.title"/></p>
-                    <c:if test="${not empty requestScope.msg}">
-                        <p class="success-msg"><fmt:message key="user.orders.success.msg"/></p>
-                    </c:if>
+                    <p class="users-list-title"><fmt:message key="admin.user.reader.title"/></p>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -54,82 +51,169 @@
                     <th><fmt:message key="admin.users.user.id"/></th>
                     <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                         <th><fmt:message key="admin.users.user.login"/></th>
-                        <th><fmt:message key="admin.users.user.status"/></th>
+
                     </c:if>
-                    <th><fmt:message key="admin.users.user.first_name"/></th>
-                    <th><fmt:message key="admin.users.user.second_name"/></th>
+                    <th><fmt:message key="admin.users.user.name"/></th>
                     <th><fmt:message key="admin.users.user.email"/></th>
                     <th><fmt:message key="admin.users.user.phone"/></th>
 
 
                     <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                         <th><fmt:message key="admin.users.user.role"/></th>
+                        <th><fmt:message key="admin.users.user.status"/></th>
+                        <th style="min-width: 150px"><fmt:message key="admin.users.user.change.role"/></th>
                     </c:if>
 
+                    <c:if test="${sessionScope.user.role eq 'LIBRARIAN'}">
+                        <th><fmt:message key="admin.users.user.status"/></th>
+                    </c:if>
                 </tr>
-                <c:forEach var="users" items="${requestScope.usersList}" varStatus="loop">
+                <c:forEach var="users" items="${requestScope.users_list}" varStatus="loop">
+<%--                                        <c:choose>--%>
+<%--                                            <c:when test="${users.status eq 'BLOCKED'}">--%>
+<%--                                                <tr style="background: #d72d2d;">--%>
+<%--                                            </c:when>--%>
+<%--                                            <c:otherwise>--%>
+<%--                                                <tr>--%>
+<%--                                            </c:otherwise>--%>
+<%--                                        </c:choose>--%>
+                    <tr <c:if test="${users.status eq 'BLOCKED'}">style="background: #d72d2d;"</c:if>>
 
-                    <c:choose>
-                        <c:when test="${orders.fine != 0.0 and orders.returnDate == null}">
-                            <tr class="overdue-tr" style="background: #d72d2d;">
-                        </c:when>
-                        <c:when test="${orders.returnDate != null}">
+                        <td> ${loop.count + (requestScope.page - 1) * requestScope.usersPerPage} </td>
+                        <td> ${users.userId} </td>
 
-                            <tr class="returned-tr" style="background: #18a223;">
-                        </c:when>
-                        <c:otherwise>
-                            <tr>
-                        </c:otherwise>
-                    </c:choose>
+                        <c:if test="${sessionScope.user.role eq 'ADMIN'}">
+                            <td> ${users.login}</td>
+                        </c:if>
 
+                        <td> ${users.name} </td>
+                        <td> ${users.email} </td>
+                        <td> ${users.phoneNumber} </td>
 
-                    <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
-                    <td> ${orders.orderId} </td>
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                        <td>${orders.userId}</td>
-                        <td>${orders.userName}</td>
-                    </c:if>
-                    <td> ${orders.bookTitle} </td>
-                    <td> ${orders.orderStartDate} </td>
-                    <td> ${orders.orderEndDate} </td>
+                        <c:if test="${sessionScope.user.role eq 'LIBRARIAN'}">
+                            <th><fmt:message key="admin.users.user.status"/></th>
+                        </c:if>
 
-
-                    <c:choose>
-                        <c:when test="${orders.onSubscription}">
-                            <td><fmt:message key="orders.common.order.subscription"/></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><fmt:message key="orders.common.order.in.reading.hall"/></td>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${orders.returnDate != null}">
-                            <td> ${orders.returnDate} </td>
-                        </c:when>
-                        <c:when test="${orders.returnDate == null and orders.fine != 0.0}">
-                            <td><fmt:message key="orders.common.returned.overdue"/></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><fmt:message key="orders.common.not.returned"/></td>
-                        </c:otherwise>
-                    </c:choose>
-
-                    <td>${orders.fine}</td>
-
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                        <td>
+                        <c:if test="${sessionScope.user.role eq 'ADMIN'}">
+                            <td> ${users.role} </td>
+                            
                             <c:choose>
-                                <c:when test="${empty orders.returnDate}">
-                                    <a href="${pageContext.request.contextPath}/controller?command=return-order&order_id=${orders.orderId}">
-                                        <fmt:message key="librarian.orders.return"/>
-                                    </a>
+                                <c:when test="${users.role ne 'ADMIN'}">
+                                    <c:choose>
+                                        <c:when test="${users.status eq 'BLOCKED'}">
+                                            <td class="ban-user">
+                                                <style>
+                                                    .ban-user:hover a p.label:after {
+                                                        content: '<fmt:message key="admin.users.action.unban"/>';
+                                                    }
+
+                                                    .ban-user:hover a p.label span {
+                                                        display: none;
+                                                    }
+
+                                                </style>
+                                                <div class="removed-book-div">
+                                                    <a class="remove-link"
+                                                       href="controller?command=unban-user&user_id=${users.userId}">
+                                                        <p class="label"><span class="align"><fmt:message
+                                                                key="admin.user.msg.banned"/></span></p>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td class="unban-user">
+                                                <style>
+                                                    .unban-user:hover a p.label:after {
+                                                        content: '<fmt:message key="admin.users.action.ban"/>';
+                                                    }
+
+                                                    .unban-user:hover a p.label span {
+                                                        display: none;
+                                                    }
+                                                </style>
+                                                <div class="removed-book-div">
+                                                    <a class="remove-link"
+                                                       href="controller?command=ban-user&user_id=${users.userId}">
+                                                        <p class="label"><span class="align">
+                                                            <fmt:message key="admin.user.msg.not.banned"/></span></p>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:when>
                                 <c:otherwise>
-                                    <fmt:message key="librarian.orders.already.returned"/>
+                                    <c:choose>
+                                        <c:when test="${users.status eq 'BLOCKED'}">
+                                            <td><fmt:message key="admin.user.msg.banned"/></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><fmt:message key="admin.user.msg.not.banned"/></td>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:otherwise>
                             </c:choose>
-                        </td>
-                    </c:if>
+
+
+                            <c:choose>
+                                <c:when test="${users.role ne 'ADMIN' and users.status ne 'BLOCKED'}">
+                                    <c:choose>
+                                        <c:when test="${users.role eq 'USER'}">
+                                            <td class="change-role-to-user">
+                                                <style>
+                                                    .change-role-to-user:hover a p.label:after {
+                                                        content: '<fmt:message key="admin.users.action.lib"/>';
+                                                    }
+                                                    .change-role-to-user:hover a p.label span {
+                                                        display: none;
+                                                    }
+                                                </style>
+                                                <div class="removed-book-div">
+                                                    <a class="remove-link"
+                                                       href="controller?command=set-to-lib&user_id=${users.userId}">
+                                                        <p class="label"><span class="align"><fmt:message
+                                                                key="admin.users.msg.user"/></span></p>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td class="change-role-to-lib">
+                                                <style>
+                                                    .change-role-to-lib:hover a p.label:after {
+                                                        content: '<fmt:message key="admin.users.action.user"/>';
+                                                    }
+
+                                                    .change-role-to-lib:hover a p.label span {
+                                                        display: none;
+                                                    }
+                                                </style>
+                                                <div class="removed-book-div">
+                                                    <a class="remove-link"
+                                                       href="controller?command=set-to-user&user_id=${users.userId}">
+                                                        <p class="label"><span class="align" style="text-align: center;">
+                                                            <fmt:message key="admin.users.msg.librarian"/></span></p>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:choose>
+                                        <c:when test="${users.role ne 'ADMIN'}">
+                                            <td><fmt:message key="admin.user.msg.unban.first"/></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                           <td><fmt:message key="admin.user.msg.unsupported"/></td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
+
+
                     </tr>
                 </c:forEach>
             </table>
