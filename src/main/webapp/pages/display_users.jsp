@@ -60,8 +60,8 @@
 
                     <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                         <th><fmt:message key="admin.users.user.role"/></th>
-                        <th><fmt:message key="admin.users.user.status"/></th>
-                        <th style="min-width: 150px"><fmt:message key="admin.users.user.change.role"/></th>
+                        <th  style="min-width: 150px;"><fmt:message key="admin.users.user.status"/></th>
+                        <th style="min-width: 150px;"><fmt:message key="admin.users.user.change.role"/></th>
                     </c:if>
 
                     <c:if test="${sessionScope.user.role eq 'LIBRARIAN'}">
