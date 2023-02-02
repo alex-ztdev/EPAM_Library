@@ -9,6 +9,7 @@ import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
+import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -31,13 +32,13 @@ public class BlockUserCommand implements Command {
         var userIdStr = request.getParameter(Parameters.USER_ID);
 
         if (userIdStr == null || userIdStr.isBlank()) {
-            return new CommandResult(RedirectToPage.HOME, CommandDirection.REDIRECT);
+            logger.log(Level.DEBUG, "BlockUserCommand user_id is null or empty! Redirect to ");
+            return new CommandResult(request.getContextPath() + Pages.ERROR_PAGE, CommandDirection.REDIRECT);
         }
 
         long userId = Long.parseLong(userIdStr);
         try {
             userService.blockUser(userId);
-
             return new CommandResult(RedirectToPage.DISPLAY_USERS, CommandDirection.REDIRECT);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing BlockUserCommand", e);

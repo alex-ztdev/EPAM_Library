@@ -10,4 +10,5 @@ public interface AdminCommands {
     String ADD_BOOK = "add-book";
     String DISPLAY_USERS = "display-users";
     String BLOCK_USER = "block-user";
+    String UNBLOCK_USER = "unblock-user";
 }
