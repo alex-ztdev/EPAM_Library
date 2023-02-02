@@ -43,14 +43,14 @@ public interface OrderQueries {
     //language=TSQL
     String FIND_ALL_USER_ORDERS_PAGINATION = FIND_ALL_ORDERS + """
             WHERE user_id = ?
-            ORDER BY return_date
+            ORDER BY  return_date, order_end_date
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
 
     //language=TSQL
     String FIND_ALL_ORDERS_PAGINATION = FIND_ALL_ORDERS + """
-            ORDER BY return_date
+            ORDER BY  return_date, order_end_date
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
