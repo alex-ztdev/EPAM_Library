@@ -39,6 +39,7 @@ public class LoginRedirectCommand implements Command {
 
         if (request.getParameter(Parameters.REG_INVOCATION) != null) {
             messagesRemover.removeRegistrationErrors(session);
+            messagesRemover.removeLoginErrors(session);
         }
 
         if (request.getParameter(UserParameters.REG_FORM) != null) {
