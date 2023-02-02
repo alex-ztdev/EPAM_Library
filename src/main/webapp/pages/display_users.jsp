@@ -91,7 +91,15 @@
                         <td> ${users.phoneNumber} </td>
 
                         <c:if test="${sessionScope.user.role eq 'LIBRARIAN'}">
-                            <th><fmt:message key="admin.users.user.status"/></th>
+                            <c:choose>
+                                <c:when test="${users.status eq 'BLOCKED'}">
+                                    <td><fmt:message key="admin.user.msg.banned"/></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td><fmt:message key="admin.user.msg.not.banned"/></td>
+                                </c:otherwise>
+                            </c:choose>
+
                         </c:if>
 
                         <c:if test="${sessionScope.user.role eq 'ADMIN'}">

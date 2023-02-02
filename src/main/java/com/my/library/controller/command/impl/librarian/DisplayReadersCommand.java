@@ -23,7 +23,7 @@ import java.util.List;
 public class DisplayReadersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
-    private static final int RECORDS_PER_PAGE = 8;
+    private static final int RECORDS_PER_PAGE = 5;
 
     private final UserService userService;
 
