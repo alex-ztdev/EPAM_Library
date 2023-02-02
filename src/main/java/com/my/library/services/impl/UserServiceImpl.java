@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.find(id);
         } catch (DaoException e) {
-            throw new ServiceException("UserServiceImpl/Error while searching user by id", e);
+            throw new ServiceException("Error while searching user by id", e);
         }
     }
 
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.findAll();
         } catch (DaoException e) {
-            throw new ServiceException("UserServiceImpl/Error while searching all users", e);
+            throw new ServiceException("Error while searching all users", e);
         }
     }
 
@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
                 user.setPassword(encryptPassword(user.getPassword()));
                 userDAO.save(user);
             } else {
-                throw new ServiceException("UserServiceImpl/User already exists!" + canBeRegistered(user));
+                throw new ServiceException("User already exists!" + canBeRegistered(user));
             }
         } catch (DaoException e) {
-            throw new ServiceException("UserServiceImpl/Error in save method", e);
+            throw new ServiceException("Error in save method", e);
         }
     }
 
@@ -62,13 +62,13 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.update(user);
         } catch (DaoException e) {
-            throw new ServiceException("UserServiceImpl/Error in update method ", e);
+            throw new ServiceException("Error in update method ", e);
         }
     }
 
     @Override
     public Optional<User> authenticate(String login, String password) throws ServiceException {
-        logger.log(Level.INFO, "UserServiceImpl/authenticate method invoked for user with login: " + login);
+        logger.log(Level.INFO, "authenticate method invoked for user with login: " + login);
         var userValidator = new UserValidator();
         if (!userValidator.isValidLogin(login) || !userValidator.isValidPassword(password)) {
             return Optional.empty();
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.authenticate(login, encryptPassword(password));
         } catch (DaoException e) {
-            throw new ServiceException("UserServiceImpl/Error in authenticate method", e);
+            throw new ServiceException("Error in authenticate method", e);
         }
     }
 
@@ -104,7 +104,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll(int start, int offset) throws ServiceException {
-        return null;
+        try {
+            return userDAO.findAll(start, offset);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing findAll(int, int) method",e);
+        }
+    }
+
+    @Override
+    public int countTotalUsers() throws ServiceException {
+        try {
+            return userDAO.countTotalUsers();
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing countTotalUsers method", e);
+        }
+
     }
 
     private String encryptPassword(String password) {

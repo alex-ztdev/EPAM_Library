@@ -29,4 +29,5 @@ public interface UserDAO {
 
     List<User> findAll(int start, int offset) throws DaoException;
 
+    int countTotalUsers() throws DaoException;
 }

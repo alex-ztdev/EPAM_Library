@@ -59,5 +59,8 @@ public interface UserQueries {
             FETCH NEXT ? ROWS ONLY
             """;
 
-
+    //language=TSQL
+    String COUNT_ALL_USERS = """
+            SELECT COUNT(id) FROM USERS
+            """;
 }

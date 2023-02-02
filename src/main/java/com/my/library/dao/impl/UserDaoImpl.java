@@ -237,6 +237,18 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
         }
     }
 
+    @Override
+    public int countTotalUsers() throws DaoException {
+        try (var statement = connection.createStatement()) {
+            try (var rs = statement.executeQuery(UserQueries.COUNT_ALL_USERS)) {
+                rs.next();
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 //    String msg = "User with such ";
 //    String defaultMsg = msg;
 //
