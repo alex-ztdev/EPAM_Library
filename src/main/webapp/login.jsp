@@ -34,6 +34,11 @@
         <form class="form" id="login" method="POST" action="controller">
             <input name="command" type="hidden" value="login">
             <h1 class="form__title"><fmt:message key="loginForm.login"/></h1>
+            <div class="form__message form__message--success">
+                <c:if test="${not empty requestScope.reg_msg}">
+                    <fmt:message key="registrationForm.msg.success"/>
+                </c:if>
+            </div>
             <div class="form__message form__message--error">
                 <c:if test="${not empty sessionScope.invalidLoginPassword}">
                     <fmt:message key="loginForm.msg.loginError"/>

@@ -6,7 +6,6 @@ import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
-import com.my.library.controller.command.impl.common.LoginCommand;
 import com.my.library.entities.Genre;
 import com.my.library.entities.Publisher;
 import com.my.library.exceptions.CommandException;
@@ -14,7 +13,7 @@ import com.my.library.exceptions.ServiceException;
 import com.my.library.services.GenreService;
 import com.my.library.services.PublisherService;
 import com.my.library.utils.Pages;
-import com.my.library.utils.validator.ValidationErrorsRemover;
+import com.my.library.utils.validator.MessagesRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +42,7 @@ public class AddBookRedirectCommand implements Command {
 
         if (TRUE.equals(request.getParameter(Parameters.ADD_NEW_BUTTON_PRESSED))) {
             removeBook(session);
-            new ValidationErrorsRemover().removeBookErrors(session);
+            new MessagesRemover().removeBookErrors(session);
         }
 
 

@@ -56,27 +56,29 @@ public class RegisterCommand implements Command {
 
             Optional<User> userOptional = new UserBuilder().buildNewUser(request);
 
-            logger.log(Level.DEBUG, "User builder return: " + userOptional);
+            logger.log(Level.DEBUG, "RegisterCommand/User builder return: " + userOptional);
 
             if (userOptional.isPresent()) {
                 var user = userOptional.get();
                 List<String> validation = userService.canBeRegistered(user);
 
-                logger.log(Level.DEBUG, "User validator return: " + validation);
+                logger.log(Level.DEBUG, "RegisterCommand/User validator return: " + validation);
 
                 if (validation.isEmpty()) {
                     userService.save(user);
+                    logger.log(Level.DEBUG, "RegisterCommand/registration successful! User_id: " + user.getUserId());
                     res = new CommandResult(RedirectToPage.LOGIN_PAGE_WITH_SUCCESS);
                 } else {
-                    //TODO: Save all validation errors in session!
+                    logger.log(Level.DEBUG, "RegisterCommand/unique check failed! Errors list: " + validation);
                     session.setAttribute(UserParameters.VALIDATION_LIST, validation);
                     setParameters(session, validation);
                     res = new CommandResult(RedirectToPage.REGISTRATION_PAGE, CommandDirection.REDIRECT);
                 }
             }
             else {
+                logger.log(Level.DEBUG, "RegisterCommand/validation failed!");
                 request.setAttribute(UserParameters.REG_FORM, UserParameters.REG_FORM);
-                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT); //TODO: redirect to forward?
+                res = new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
             }
 
         } catch (ServiceException e) {

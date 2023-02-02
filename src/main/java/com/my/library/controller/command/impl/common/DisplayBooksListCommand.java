@@ -16,7 +16,7 @@ import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.utils.Pages;
-import com.my.library.utils.validator.ValidationErrorsRemover;
+import com.my.library.utils.validator.MessagesRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -34,7 +34,7 @@ public class DisplayBooksListCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-        new ValidationErrorsRemover().removeBookErrors(session);
+        new MessagesRemover().removeBookErrors(session);
         removeBook(session);
 
         int currPage = 1;

@@ -6,7 +6,7 @@ public interface Parameters {
     String GENERAL_CURR_PAGE = "page";
     String GENERAL_TOTAL_PAGES = "totalPages";
     String BOOKS_LIST = "booksList";
-    String BOOKS_DTO= "book";
+    String BOOKS_DTO = "book";
     String BOOKS_PER_PAGE = "booksPerPage";
     String ORDER_BY = "order_by";
 
@@ -28,4 +28,8 @@ public interface Parameters {
     String ORDER_ID = "order_id";
 
     String LOGIN_INVOCATION = "from";
+    String REG_INVOCATION = "reg_invoked";
+
+    String REG_SUCCESS_MSG = "reg_msg";
+
 }

@@ -6,14 +6,13 @@ import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
-import com.my.library.controller.command.impl.common.LoginCommand;
 import com.my.library.dao.TransactionManager;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.AuthorService;
 import com.my.library.services.BookService;
 import com.my.library.utils.builder.RequestBookBuilder;
-import com.my.library.utils.validator.ValidationErrorsRemover;
+import com.my.library.utils.validator.MessagesRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -42,7 +41,7 @@ public class UpdateBookCommand implements Command {
         var resPage = String.format(RedirectToPage.BOOKS_UPDATE_PAGE_WITH_PARAMETER, session.getAttribute(Parameters.BOOK_ID));
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, resPage);
-        new ValidationErrorsRemover().removeBookErrors(session);
+        new MessagesRemover().removeBookErrors(session);
 
         if (bookContainer.isEmpty()) {
             logger.log(Level.INFO, "UpdateBookCommand was called, but Book data is invalid");
