@@ -69,14 +69,6 @@
                     </c:if>
                 </tr>
                 <c:forEach var="users" items="${requestScope.users_list}" varStatus="loop">
-<%--                                        <c:choose>--%>
-<%--                                            <c:when test="${users.status eq 'BLOCKED'}">--%>
-<%--                                                <tr style="background: #d72d2d;">--%>
-<%--                                            </c:when>--%>
-<%--                                            <c:otherwise>--%>
-<%--                                                <tr>--%>
-<%--                                            </c:otherwise>--%>
-<%--                                        </c:choose>--%>
                     <tr <c:if test="${users.status eq 'BLOCKED'}">style="background: #d72d2d;"</c:if>>
 
                         <td> ${loop.count + (requestScope.page - 1) * requestScope.usersPerPage} </td>

@@ -19,7 +19,7 @@
 <html lang="${language}">
 <head>
     <meta charset="UTF-8"/>
-    <title>Library Main</title>
+    <title>Order book</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/order_book.css"/>
 
 </head>
