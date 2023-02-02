@@ -12,6 +12,7 @@ import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -38,15 +39,17 @@ public class ReturnOrderCommand implements Command {
 
         var orderIdStr = request.getParameter(Parameters.ORDER_ID);
 
-        if (orderIdStr == null || orderIdStr.isBlank()) {
+
+        var orderIdContainer = new LongParser().parseLong(orderIdStr);
+
+        if (orderIdContainer.isEmpty()) {
             //FIXME: change to unsupported command page
-            return new CommandResult(RedirectToPage.NOT_AUTHORIZED);
+            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
-        var orderId = Long.parseLong(orderIdStr);
+        var orderId = orderIdContainer.get();
 
         try{
             orderService.returnOrder(orderId, bookService, userService, transactionManager);
-
             return new CommandResult(RedirectToPage.DISPLAY_USERS_ORDERS);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing ReturnOrderCommand",e);

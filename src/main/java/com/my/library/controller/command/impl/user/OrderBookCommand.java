@@ -15,6 +15,7 @@ import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -44,11 +45,14 @@ public class OrderBookCommand implements Command {
 
         logger.log(Level.DEBUG, "OrderBookCommand: book_id: " + bookIdStr);
 
-        if (bookIdStr == null || onSubscriptionStr == null) {
+
+        var bookIdContainer = new LongParser().parseLong(bookIdStr);
+        if (bookIdContainer.isEmpty() || "true".equalsIgnoreCase(onSubscriptionStr) || "false".equalsIgnoreCase(onSubscriptionStr)) {
             logger.log(Level.DEBUG, "OrderBookCommand: book_id is null: redirect to error page");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
-        var bookId = Long.parseLong(bookIdStr);
+        long bookId = bookIdContainer.get();
+
         var onSubscription = Boolean.parseBoolean(onSubscriptionStr);
 
         var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);

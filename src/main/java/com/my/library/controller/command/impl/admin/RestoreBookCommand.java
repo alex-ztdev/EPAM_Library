@@ -7,7 +7,7 @@ import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
-import com.my.library.services.ServiceFactory;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -29,16 +29,14 @@ public class RestoreBookCommand implements Command {
 
         logger.log(Level.DEBUG,"RestoreBookCommand: request book_id: " + reqBookId);
 
-        Long bookId = null;
-        if (reqBookId != null && !reqBookId.isBlank()) {
-            bookId = Long.parseLong(reqBookId);
-        }
 
-        if (bookId == null) {
+        var bookIdContainer = new LongParser().parseLong(reqBookId);
+
+        if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG,"RestoreBookCommand: empty book_id: " + reqBookId);
-
             throw new CommandException("RestoreBookCommand book_id is empty! Failed to execute command!");
         }
+        long bookId = bookIdContainer.get();
         try {
             bookService.restore(bookId);
         } catch (ServiceException e) {

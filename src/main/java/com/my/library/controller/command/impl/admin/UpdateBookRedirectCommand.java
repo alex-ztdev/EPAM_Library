@@ -15,6 +15,7 @@ import com.my.library.services.BookService;
 import com.my.library.services.GenreService;
 import com.my.library.services.PublisherService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -46,15 +47,13 @@ public class UpdateBookRedirectCommand implements Command {
         logger.log(Level.DEBUG,"UpdateBookRedirectCommand: request book_id: " + reqBookId);
         session.setAttribute(Parameters.OPERATION_TYPE, Parameters.UPDATE_BOOK);
 
-        Long bookId = null;
-        if (reqBookId != null && !reqBookId.isBlank()) {
-            bookId = Long.parseLong(reqBookId);
-        }
+        var bookIdContainer = new LongParser().parseLong(reqBookId);
 
-        if (bookId == null ) {
-            logger.log(Level.DEBUG,"UpdateBookRedirectCommand: empty book_id: " + reqBookId);
+        if (bookIdContainer.isEmpty()) {
+            logger.log(Level.DEBUG, "UpdateBookRedirectCommand: empty book_id: " + reqBookId);
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
+        long bookId = bookIdContainer.get();
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, String.format(RedirectToPage.BOOKS_UPDATE_PAGE_WITH_PARAMETER, bookId));
         Optional<Book> book;

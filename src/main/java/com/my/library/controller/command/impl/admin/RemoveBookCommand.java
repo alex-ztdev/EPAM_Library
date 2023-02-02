@@ -8,8 +8,8 @@ import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
-import com.my.library.services.ServiceFactory;
 import com.my.library.utils.Pages;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -30,15 +30,14 @@ public class RemoveBookCommand implements Command {
 
         logger.log(Level.DEBUG,"RemoveBookCommand: request book_id: " + reqBookId);
 
-        Long bookId = null;
-        if (reqBookId != null && !reqBookId.isBlank()) {
-            bookId = Long.parseLong(reqBookId);
-        }
+        var bookIdContainer = new LongParser().parseLong(reqBookId);
 
-        if (bookId == null) {
+        if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG,"RemoveBookCommand: empty book_id: " + reqBookId);
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
+        long bookId = bookIdContainer.get();
+
         try {
             bookService.deleteById(bookId);
         } catch (ServiceException e) {

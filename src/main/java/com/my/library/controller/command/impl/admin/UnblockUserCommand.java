@@ -9,6 +9,7 @@ import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -24,20 +25,20 @@ public class UnblockUserCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        logger.log(Level.DEBUG, "BlockUserCommand invoked");
+        logger.log(Level.DEBUG, "UnblockUserCommand invoked");
         var userIdStr = request.getParameter(Parameters.USER_ID);
 
-        if (userIdStr == null || userIdStr.isBlank()) {
-            logger.log(Level.DEBUG, "BlockUserCommand user_id is null or empty! Redirect to ");
+        var userIdContainer = new LongParser().parseLong(userIdStr);
+        if (userIdContainer.isEmpty()) {
+            logger.log(Level.DEBUG, "UnblockUserCommand user_id is null or empty! Redirect to ");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
-
-        long userId = Long.parseLong(userIdStr);
+        long userId = userIdContainer.get();
         try {
             userService.unblockUser(userId);
             return new CommandResult(RedirectToPage.DISPLAY_USERS, CommandDirection.REDIRECT);
         } catch (ServiceException e) {
-            throw new CommandException("Error while executing BlockUserCommand", e);
+            throw new CommandException("Error while executing UnblockUserCommand", e);
         }
     }
 }

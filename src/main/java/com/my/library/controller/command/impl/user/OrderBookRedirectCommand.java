@@ -9,8 +9,10 @@ import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,13 +26,17 @@ public class OrderBookRedirectCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
+        logger.log(Level.DEBUG, "OrderBookRedirectCommand invoked");
+
         var bookIdString = request.getParameter(Parameters.BOOK_ID);
         HttpSession session = request.getSession();
 
-        if (bookIdString == null) {
+        var bookIdContainer = new LongParser().parseLong(bookIdString);
+        if (bookIdContainer.isEmpty()) {
+            logger.log(Level.DEBUG, "book id is not a number! Redirect to error page");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
-        var bookId = Long.parseLong(bookIdString);
+        long bookId = bookIdContainer.get();
 
         try {
             var bookContainer = bookService.find(bookId);

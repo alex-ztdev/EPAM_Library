@@ -5,13 +5,12 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
-import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,12 +28,12 @@ public class BlockUserCommand implements Command {
         logger.log(Level.DEBUG, "BlockUserCommand invoked");
         var userIdStr = request.getParameter(Parameters.USER_ID);
 
-        if (userIdStr == null || userIdStr.isBlank()) {
+        var userIdContainer = new LongParser().parseLong(userIdStr);
+        if (userIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "BlockUserCommand user_id is null or empty! Redirect to ");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
-
-        long userId = Long.parseLong(userIdStr);
+        long userId = userIdContainer.get();
         try {
             userService.blockUser(userId);
             return new CommandResult(RedirectToPage.DISPLAY_USERS, CommandDirection.REDIRECT);

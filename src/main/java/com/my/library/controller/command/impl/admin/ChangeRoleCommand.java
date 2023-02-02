@@ -3,11 +3,11 @@ package com.my.library.controller.command.impl.admin;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
-import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.exceptions.CommandException;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
+import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -27,10 +27,18 @@ public class ChangeRoleCommand implements Command {
         var newRoleStr = request.getParameter(UserParameters.ROLE);
         var userIdStr = request.getParameter(UserParameters.ROLE);
 
-        if (userIdStr == null || userIdStr.isBlank()) {
+
+        var userIdContainer = new LongParser().parseLong(userIdStr);
+        if (userIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "user id is null or blank. Redirect to error page");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
         }
+        long userId = userIdContainer.get();
+
+//        if(user)
+
+
+
         return null;
     }
 }
