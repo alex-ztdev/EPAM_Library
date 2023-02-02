@@ -33,4 +33,6 @@ public interface UserDAO {
     int countTotalUsers() throws DaoException;
 
     void setUserRole(long id, UserRole newUserRole) throws DaoException;
+
+    List<User> findAllReaders(int start, int offset) throws DaoException;
 }

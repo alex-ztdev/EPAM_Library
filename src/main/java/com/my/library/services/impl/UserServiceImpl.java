@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.findAll(start, offset);
         } catch (DaoException e) {
-            throw new ServiceException("Error while executing findAll(int, int) method",e);
+            throw new ServiceException("Error while executing findAll(int, int) method", e);
         }
     }
 
@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
         try {
             userDAO.block(userId);
         } catch (DaoException e) {
-            throw new ServiceException("Error while executing blockUser method",e);
+            throw new ServiceException("Error while executing blockUser method", e);
         }
     }
 
@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
         try {
             userDAO.unblock(userId);
         } catch (DaoException e) {
-            throw new ServiceException("Error while executing unblockUser method",e);
+            throw new ServiceException("Error while executing unblockUser method", e);
         }
     }
 
@@ -145,7 +145,16 @@ public class UserServiceImpl implements UserService {
         try {
             userDAO.setUserRole(id, newUserRole);
         } catch (DaoException e) {
-            throw new ServiceException("Error while executing setUserRole method",e);
+            throw new ServiceException("Error while executing setUserRole method", e);
+        }
+    }
+
+    @Override
+    public List<User> findAllReaders(int start, int offset) throws ServiceException {
+        try {
+            return userDAO.findAllReaders(start, offset);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing findAllReaders method", e);
         }
     }
 

@@ -70,5 +70,11 @@ public interface UserQueries {
              role_id=?
              WHERE id =?
             """;
-
+    //language=TSQL
+    String FIND_READERS_PAGINATION = FIND_ALL_USERS + """
+            WHERE role_id = 1
+            ORDER BY id
+            OFFSET ? ROWS
+            FETCH NEXT ? ROWS ONLY
+            """;
 }

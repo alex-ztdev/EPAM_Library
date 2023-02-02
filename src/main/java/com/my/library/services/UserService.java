@@ -22,4 +22,6 @@ public interface UserService extends Service<User> {
     void unblockUser(long userId) throws ServiceException;
 
     void setUserRole(long userId, UserRole newUserRole) throws ServiceException;
+
+    List<User> findAllReaders(int start, int offset) throws ServiceException;
 }

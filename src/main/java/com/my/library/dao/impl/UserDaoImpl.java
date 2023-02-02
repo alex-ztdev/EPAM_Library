@@ -1,6 +1,5 @@
 package com.my.library.dao.impl;
 
-import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.dao.AbstractDao;
 import com.my.library.dao.UserDAO;
 import com.my.library.dao.constants.UserRole;
@@ -257,6 +256,25 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
 
             statement.executeUpdate();
 
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<User> findAllReaders(int start, int offset) throws DaoException {
+        List<User> readersList = new ArrayList<>();
+
+        try (var statement = connection.prepareStatement(UserQueries.FIND_READERS_PAGINATION)) {
+            statement.setInt(1, start);
+            statement.setInt(2, offset);
+
+            try (var rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    readersList.add(buildUser(rs));
+                }
+            }
+            return readersList;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
