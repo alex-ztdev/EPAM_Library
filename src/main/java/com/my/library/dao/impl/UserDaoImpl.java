@@ -27,7 +27,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     @Override
     public Optional<User> find(long id) throws DaoException {
         User user = null;
-        try(var statement = connection.prepareStatement(UserQueries.FIND_USER_BY_ID)) {
+        try (var statement = connection.prepareStatement(UserQueries.FIND_USER_BY_ID)) {
 
             statement.setLong(1, id);
 
@@ -59,7 +59,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     public List<User> findAll() throws DaoException {
         List<User> userList = new ArrayList<>();
 
-        try(var statement = connection.createStatement()) {
+        try (var statement = connection.createStatement()) {
 
             try (var rs = statement.executeQuery(UserQueries.FIND_ALL_USERS)) {
                 while (rs.next()) {
@@ -74,7 +74,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
 
     @Override
     public void save(User user) throws DaoException {
-        try(var statement = connection.prepareStatement(UserQueries.INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
+        try (var statement = connection.prepareStatement(UserQueries.INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             int k = 1;
             statement.setString(k++, user.getLogin());
             statement.setString(k++, user.getPassword());
@@ -99,7 +99,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
 
     @Override
     public boolean update(User user) throws DaoException {
-        try(var statement = connection.prepareStatement(UserQueries.UPDATE_USER)) {
+        try (var statement = connection.prepareStatement(UserQueries.UPDATE_USER)) {
             int k = 1;
             statement.setString(k++, user.getLogin());
             statement.setString(k++, user.getPassword());
@@ -120,7 +120,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
 
     @Override
     public void block(User user) throws DaoException {
-        try(var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
+        try (var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
             statement.setLong(1, UserStatus.BLOCKED.ordinal() + 1);
             statement.setLong(2, user.getUserId());
@@ -134,7 +134,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
 
     @Override
     public void unblock(User user) throws DaoException {
-        try(var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
+        try (var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
             statement.setLong(1, UserStatus.NORMAL.ordinal() + 1);
             statement.setLong(2, user.getUserId());
@@ -148,7 +148,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     @Override
     public Optional<User> authenticate(String login, String password) throws DaoException {
         User res = null;
-        try(var statement = connection.prepareStatement(UserQueries.AUTHENTICATE_BY_LOGIN_PASSWORD)) {
+        try (var statement = connection.prepareStatement(UserQueries.AUTHENTICATE_BY_LOGIN_PASSWORD)) {
             statement.setString(1, login);
             statement.setString(2, password);
 
@@ -167,7 +167,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     @Override
     public Optional<User> findByLogin(String login) throws DaoException {
         User user = null;
-        try(var statement = connection.prepareStatement(UserQueries.FIND_BY_LOGIN)) {
+        try (var statement = connection.prepareStatement(UserQueries.FIND_BY_LOGIN)) {
 
             statement.setString(1, login);
 
@@ -185,7 +185,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     @Override
     public Optional<User> findByEmail(String email) throws DaoException {
         User user = null;
-        try(var statement = connection.prepareStatement(UserQueries.FIND_BY_EMAIL)) {
+        try (var statement = connection.prepareStatement(UserQueries.FIND_BY_EMAIL)) {
 
             statement.setString(1, email);
 
@@ -204,7 +204,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     public Optional<User> findByPhone(String phone) throws DaoException {
 
         User user = null;
-        try(var statement = connection.prepareStatement(UserQueries.FIND_BY_PHONE)) {
+        try (var statement = connection.prepareStatement(UserQueries.FIND_BY_PHONE)) {
 
             statement.setString(1, phone);
 
@@ -217,6 +217,24 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
             throw new DaoException(e);
         }
         return user == null ? Optional.empty() : Optional.of(user);
+    }
+
+    @Override
+    public List<User> findAll(int start, int offset) throws DaoException {
+        try (var statement = connection.prepareStatement(UserQueries.FIND_ALL_USERS_PAGINATION)) {
+            List<User> userList = new ArrayList<>();
+            statement.setInt(1, start);
+            statement.setInt(2, offset);
+
+            try (var rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    userList.add(buildUser(rs));
+                }
+            }
+            return userList;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
 //    String msg = "User with such ";

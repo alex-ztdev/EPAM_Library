@@ -27,5 +27,6 @@ public interface UserDAO {
 
     Optional<User> findByPhone(String phone) throws DaoException;
 
+    List<User> findAll(int start, int offset) throws DaoException;
 
 }

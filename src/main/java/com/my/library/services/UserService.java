@@ -14,4 +14,5 @@ public interface UserService extends Service<User> {
 
     List<User> findAll(int start, int offset) throws ServiceException;
 
+    int countTotalUsers();
 }
