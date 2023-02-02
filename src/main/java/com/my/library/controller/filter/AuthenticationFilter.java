@@ -42,7 +42,8 @@ public class AuthenticationFilter implements Filter {
     private static final List<String> LIBRARIAN_COMMANDS = List.of(
             //TODO: Add Librarian commands
             LibrarianCommands.DISPLAY_USERS_ORDERS,
-            LibrarianCommands.RETURN_ORDER
+            LibrarianCommands.RETURN_ORDER,
+            LibrarianCommands.DISPLAY_READERS
     );
 
     private static final List<String> USER_COMMANDS = List.of(
