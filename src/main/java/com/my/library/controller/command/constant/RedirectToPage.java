@@ -18,4 +18,6 @@ public interface RedirectToPage {
 
     String DISPLAY_USERS = "/controller?command=display-users";
     String DISPLAY_READERS = "/controller?command=display-readers";
+    String MY_PROFILE = "/controller?command=my-profile";
+
 }

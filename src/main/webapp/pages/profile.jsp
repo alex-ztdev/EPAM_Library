@@ -27,38 +27,39 @@
 
 <div class="container">
     <div class="main-content">
-        <input name="book_id" type="hidden" value="${sessionScope.book.bookId}">
-        <div class="order-header"><fmt:message key="user.books.label.title"/></div>
+        <div class="profile-header"><fmt:message key="header.common.profile"/></div>
         <div>
-            <label><fmt:message key="admin.books.edit.form.label.book.title"/></label>
-            <div class="book-data">${sessionScope.book.title}</div>
+            <label><fmt:message key="common.profile.login"/></label>
+            <div class="user-data">${requestScope.user.login}</div>
 
-            <label><fmt:message key="user.books.label.author"/></label>
-            <div class="book-data">${sessionScope.book.authorFirstName} ${sessionScope.book.authorSecondName}</div>
+            <label><fmt:message key="common.profile.role"/></label>
+            <div class="user-data">${requestScope.user.role}</div>
 
-            <label><fmt:message key="user.books.label.genre"/></label>
-            <div class="book-data">${sessionScope.book.genre}</div>
-
-
-            <label><fmt:message key="user.books.label.publisher"/></label>
-            <div class="book-data">${sessionScope.book.publisherTitle}</div>
-
-            <label><fmt:message key="user.books.label.page.number"/></label>
-            <div class="book-data">${sessionScope.book.pageNumber}</div>
+            <label><fmt:message key="common.profile.status"/></label>
+            <div class="user-data">${requestScope.user.status}</div>
 
 
-            <label><fmt:message key="user.books.label.publication.date"/></label>
-            <div class="book-data">${sessionScope.book.publicationDate}</div>
+            <label><fmt:message key="common.profile.email"/></label>
+            <div class="user-data">${requestScope.user.email}</div>
 
-            <form action="${pageContext.request.contextPath}/controller?command=order-book&book_id=${sessionScope.book.bookId}" method="post">
-                <select name="subscription_type">
-                    <option value="true">On subscription</option>
-                    <option value="false">To the reading room</option>
-                </select>
-                <button type="submit" style="margin-top:20px; margin-left: 43%; padding: 10px 20px"><fmt:message
-                        key="admin.books.edit.form.label.submit.btn"/></button>
-            </form>
-            </form>
+            <label><fmt:message key="common.profile.phone"/></label>
+            <div class="user-data">${requestScope.user.phone}</div>
+
+
+            <label><fmt:message key="common.profile.first.name"/></label>
+            <div class="user-data">${requestScope.user.firstName}</div>
+
+            <label><fmt:message key="common.profile.second.name"/></label>
+            <div class="user-data">${requestScope.user.firstName}</div>
+
+<%--            <form action="${pageContext.request.contextPath}/controller?command=order-book&book_id=${sessionScope.book.bookId}" method="post">--%>
+<%--                <select name="subscription_type">--%>
+<%--                    <option value="true">On subscription</option>--%>
+<%--                    <option value="false">To the reading room</option>--%>
+<%--                </select>--%>
+<%--                <button type="submit" style="margin-top:20px; margin-left: 43%; padding: 10px 20px"><fmt:message--%>
+<%--                        key="admin.books.edit.form.label.submit.btn"/></button>--%>
+<%--            </form>--%>
 
         </div>
 
@@ -67,4 +68,4 @@
 
 <jsp:include page="/pages/footer.jsp"/>
 </body>
-</html>s
+</html>

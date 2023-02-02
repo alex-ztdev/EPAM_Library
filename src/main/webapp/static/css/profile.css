@@ -28,7 +28,7 @@ body {
     margin-top: 20px;
     padding: 20px 30px;
 }
-.order-header {
+.profile-header {
     color: white;
     font-size: 36px;
     text-align: center;
@@ -93,7 +93,7 @@ button:hover {
     border: 2px solid black;
 }
 
-.book-data{
+.user-data{
     margin-bottom: 15px;
     font-size: 18px;
     color: white;

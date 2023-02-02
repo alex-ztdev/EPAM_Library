@@ -51,14 +51,14 @@
             <label><fmt:message key="user.books.label.publication.date"/></label>
             <div class="book-data">${sessionScope.book.publicationDate}</div>
 
-            <form action="${pageContext.request.contextPath}/controller?command=order-book&book_id=${sessionScope.book.bookId}" method="post">
+            <form action="${pageContext.request.contextPath}/controller?command=order-book&book_id=${sessionScope.book.bookId}"
+                  method="post">
                 <select name="subscription_type">
                     <option value="true">On subscription</option>
                     <option value="false">To the reading room</option>
                 </select>
-                      <button type="submit" style="margin-top:20px; margin-left: 43%; padding: 10px 20px"><fmt:message
-                              key="admin.books.edit.form.label.submit.btn"/></button>
-                    </form>
+                <button type="submit" style="margin-top:20px; margin-left: 43%; padding: 10px 20px"><fmt:message
+                        key="admin.books.edit.form.label.submit.btn"/></button>
             </form>
 
         </div>

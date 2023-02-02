@@ -76,7 +76,7 @@
                 <a href="${pageContext.request.contextPath}/controller?command=login-page&from=header"><fmt:message key="header.common.login"/></a>
             </c:when>
             <c:otherwise>
-                <a href="${pageContext.request.contextPath}/controller?command=profile"><fmt:message key="header.common.profile"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=my-profile"><fmt:message key="header.common.profile"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=logout"><fmt:message key="header.common.logout"/></a>
             </c:otherwise>
         </c:choose>

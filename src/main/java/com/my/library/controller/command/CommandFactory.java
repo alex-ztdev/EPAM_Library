@@ -11,6 +11,7 @@ import com.my.library.controller.command.impl.librarian.DisplayReadersCommand;
 import com.my.library.controller.command.impl.librarian.DisplayUsersOrdersCommand;
 import com.my.library.controller.command.impl.librarian.ReturnOrderCommand;
 import com.my.library.controller.command.impl.user.DisplayMyOrdersCommand;
+import com.my.library.controller.command.impl.user.MyProfileCommand;
 import com.my.library.controller.command.impl.user.OrderBookCommand;
 import com.my.library.controller.command.impl.user.OrderBookRedirectCommand;
 import com.my.library.dao.TransactionManager;
@@ -59,6 +60,8 @@ public class CommandFactory implements AutoCloseable {
             case AdminCommands.CHANGE_ROLE-> res = new ChangeRoleCommand(serviceFactory.getUserService());
 
             case UserCommands.ORDER_BOOK_REDIRECT -> res = new OrderBookRedirectCommand(serviceFactory.getBookService());
+            //TODO: Remove my profile
+            case UserCommands.MY_PROFILE -> res = new MyProfileCommand(serviceFactory.getUserService());
 
             case UserCommands.ORDER_BOOK ->
                     res = new OrderBookCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), new TransactionManager(connection));

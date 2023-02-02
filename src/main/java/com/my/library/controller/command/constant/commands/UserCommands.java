@@ -6,4 +6,6 @@ public interface UserCommands {
 
     String DISPLAY_MY_ORDERS = "display-my-orders";
 
+    String MY_PROFILE = "my-profile";
+
 }

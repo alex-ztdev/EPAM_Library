@@ -78,7 +78,7 @@
                             <td> ${users.login}</td>
                         </c:if>
 
-                        <td> ${users.name} </td>
+                        <td> ${users.firstName} ${users.secondName}</td>
                         <td> ${users.email} </td>
                         <td> ${users.phoneNumber} </td>
 

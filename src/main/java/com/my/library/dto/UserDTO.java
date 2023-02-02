@@ -10,7 +10,9 @@ public class UserDTO {
     private UserStatus status;
     private String email;
     private String phoneNumber;
-    private String name;
+    private String firstName;
+    private String secondName;
+
 
 
     public UserDTO(Long userId, String login, UserRole role, UserStatus status, String email, String phoneNumber, String firstName, String secondName) {
@@ -20,8 +22,8 @@ public class UserDTO {
         this.status = status;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.name = firstName +" "+ secondName;
-
+        this.firstName = firstName;
+        this.secondName = secondName;
     }
 
     public Long getUserId() {
@@ -72,11 +74,19 @@ public class UserDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 }

@@ -43,14 +43,16 @@ public class AuthenticationFilter implements Filter {
             //TODO: Add Librarian commands
             LibrarianCommands.DISPLAY_USERS_ORDERS,
             LibrarianCommands.RETURN_ORDER,
-            LibrarianCommands.DISPLAY_READERS
+            LibrarianCommands.DISPLAY_READERS,
+            UserCommands.MY_PROFILE
     );
 
     private static final List<String> USER_COMMANDS = List.of(
             //TODO: Add User commands
             UserCommands.ORDER_BOOK_REDIRECT,
             UserCommands.ORDER_BOOK,
-            UserCommands.DISPLAY_MY_ORDERS
+            UserCommands.DISPLAY_MY_ORDERS,
+            UserCommands.MY_PROFILE
     );
 
 
@@ -65,10 +67,12 @@ public class AuthenticationFilter implements Filter {
             AdminCommands.BLOCK_USER,
             AdminCommands.UNBLOCK_USER,
             AdminCommands.CHANGE_ROLE,
+            UserCommands.MY_PROFILE,
 
             //TODO: remove LibrarianCommands from ADMIN?
             LibrarianCommands.DISPLAY_USERS_ORDERS,
             LibrarianCommands.RETURN_ORDER
+
     );
 
     private static final Logger logger = LogManager.getLogger();
