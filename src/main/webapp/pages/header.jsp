@@ -52,8 +52,14 @@
 
     <div class="right-header">
         <div class="search-container">
-            <form action="#search_action">
-                <input type="text" placeholder="<fmt:message key="header.common.search"/>" name="search"/>
+            <form action="${pageContext.request.contextPath}/controller">
+                <select name="search-by" style="font-size: 17px; background: #e9e9e9; font-family: 'Open Sans', sans-serif;">
+                    <option class="option-div" value="author">By Author</option>
+                    <option class="option-div" value="title">By Title</option>
+                </select>
+                <label>
+                    <input type="text" placeholder="<fmt:message key="header.common.search"/>" name="search"/>
+                </label>
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>

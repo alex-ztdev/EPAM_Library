@@ -36,7 +36,6 @@ public class AuthenticationFilter implements Filter {
             GeneralCommands.SORT_BOOKS,
             GeneralCommands.HOME,
             GeneralCommands.NOT_AUTHORIZED
-
     );
 
     private static final List<String> LIBRARIAN_COMMANDS = List.of(
