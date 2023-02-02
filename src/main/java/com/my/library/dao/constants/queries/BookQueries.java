@@ -117,4 +117,8 @@ public interface BookQueries {
     String DECREMENT_QUANTITY = """
             UPDATE Storage SET quantity = quantity - 1 WHERE book_id =?
             """;
+    //language=TSQL
+    String INCREMENT_QUANTITY = """
+            UPDATE Storage SET quantity = quantity + 1 WHERE book_id =?
+            """;
 }

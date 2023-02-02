@@ -29,6 +29,7 @@
     <div class="main-content">
         <div class="profile-header"><fmt:message key="header.common.profile"/></div>
         <div>
+
             <label><fmt:message key="common.profile.login"/></label>
             <div class="user-data">${requestScope.user.login}</div>
 
@@ -43,23 +44,25 @@
             <div class="user-data">${requestScope.user.email}</div>
 
             <label><fmt:message key="common.profile.phone"/></label>
-            <div class="user-data">${requestScope.user.phone}</div>
+            <div class="user-data">${requestScope.user.phoneNumber}</div>
 
 
-            <label><fmt:message key="common.profile.first.name"/></label>
-            <div class="user-data">${requestScope.user.firstName}</div>
+            <div class="elem-group inlined"><label><fmt:message key="common.profile.first.name"/></label>
+                <div class="user-data">${requestScope.user.firstName}</div>
+            </div>
+            <div class="elem-group inlined"><label><fmt:message key="common.profile.second.name"/></label>
+                <div class="user-data">${requestScope.user.secondName}</div>
+            </div>
 
-            <label><fmt:message key="common.profile.second.name"/></label>
-            <div class="user-data">${requestScope.user.firstName}</div>
 
-<%--            <form action="${pageContext.request.contextPath}/controller?command=order-book&book_id=${sessionScope.book.bookId}" method="post">--%>
-<%--                <select name="subscription_type">--%>
-<%--                    <option value="true">On subscription</option>--%>
-<%--                    <option value="false">To the reading room</option>--%>
-<%--                </select>--%>
-<%--                <button type="submit" style="margin-top:20px; margin-left: 43%; padding: 10px 20px"><fmt:message--%>
-<%--                        key="admin.books.edit.form.label.submit.btn"/></button>--%>
-<%--            </form>--%>
+            <%--            <form action="${pageContext.request.contextPath}/controller?command=order-book&book_id=${sessionScope.book.bookId}" method="post">--%>
+            <%--                <select name="subscription_type">--%>
+            <%--                    <option value="true">On subscription</option>--%>
+            <%--                    <option value="false">To the reading room</option>--%>
+            <%--                </select>--%>
+            <%--                <button type="submit" style="margin-top:20px; margin-left: 43%; padding: 10px 20px"><fmt:message--%>
+            <%--                        key="admin.books.edit.form.label.submit.btn"/></button>--%>
+            <%--            </form>--%>
 
         </div>
 

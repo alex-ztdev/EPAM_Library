@@ -25,7 +25,6 @@ body {
     align-content: center;
     width: 50%;
     background-color: rgba(35, 35, 35, 0.885);
-    margin-top: 20px;
     padding: 20px 30px;
 }
 .profile-header {
@@ -42,7 +41,7 @@ label {
     font-size: 12px;
     text-transform: uppercase;
     color: #ffffff;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 div.elem-group {
@@ -57,8 +56,9 @@ div.elem-group.inlined {
 }
 
 label {
+    /*margin-top: 15px;*/
     display: block;
-    padding-bottom: 10px;
+    padding: 10px 10px;
     font-size: 1.25em;
 }
 
@@ -94,7 +94,10 @@ button:hover {
 }
 
 .user-data{
-    margin-bottom: 15px;
-    font-size: 18px;
+    /*margin-left: ;*/
+    margin-bottom: 20px;
+    padding: 20px 16px;
+    font-size: 17px;
     color: white;
+    background: rgba(89, 89, 89, 0.62);
 }

@@ -260,6 +260,18 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
         }
     }
 
+    @Override
+    public void incrementBookQuantity(long id) throws DaoException {
+        try (var statement = connection.prepareStatement(BookQueries.INCREMENT_QUANTITY)) {
+            statement.setLong(1, id);
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 
 //    public void update(Book book, int quantity) {
 //        throw new UnsupportedOperationException();

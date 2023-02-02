@@ -37,4 +37,5 @@ public interface BookDAO {
 
     void decrementBookQuantity(long id) throws DaoException;
 
+    void incrementBookQuantity(long id) throws DaoException;
 }

@@ -4,6 +4,9 @@ import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.controller.command.constant.parameters.UserParameters;
+import com.my.library.dto.mapper.UserMapper;
+import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
@@ -26,6 +29,11 @@ public class MyProfileCommand implements Command {
         HttpSession session = request.getSession();
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.MY_PROFILE);
+        User user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+
+        var userDTO = new UserMapper().toDTO(user);
+
+        request.setAttribute(Parameters.USER_DTO, userDTO);
 
         return new CommandResult(Pages.MY_PROFILE);
     }

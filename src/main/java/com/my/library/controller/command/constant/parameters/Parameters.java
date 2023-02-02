@@ -39,4 +39,5 @@ public interface Parameters {
     String USER_ID = "user_id";
 
 
+    String USER_DTO = "user";
 }
