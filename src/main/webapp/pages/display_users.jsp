@@ -114,7 +114,7 @@
                                                 </style>
                                                 <div class="removed-book-div">
                                                     <a class="remove-link"
-                                                       href="controller?command=unban-user&user_id=${users.userId}">
+                                                       href="controller?command=unblock-user&user_id=${users.userId}">
                                                         <p class="label"><span class="align"><fmt:message
                                                                 key="admin.user.msg.banned"/></span></p>
                                                     </a>
@@ -134,7 +134,7 @@
                                                 </style>
                                                 <div class="removed-book-div">
                                                     <a class="remove-link"
-                                                       href="controller?command=ban-user&user_id=${users.userId}">
+                                                       href="controller?command=block-user&user_id=${users.userId}">
                                                         <p class="label"><span class="align">
                                                             <fmt:message key="admin.user.msg.not.banned"/></span></p>
                                                     </a>
