@@ -36,5 +36,6 @@ public interface Parameters {
     String USERS_PER_PAGE = "usersPerPage";
 
 
+    String USER_ID = "user_id";
 
 }

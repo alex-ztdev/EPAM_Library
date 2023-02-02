@@ -121,6 +121,15 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public void blockUser(long userId) throws ServiceException {
+        try {
+            userDAO.block(userId);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing blockUser method",e);
+        }
+    }
+
     private String encryptPassword(String password) {
         return DigestUtils.sha512Hex(password);
     }

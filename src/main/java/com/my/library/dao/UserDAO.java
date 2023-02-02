@@ -15,7 +15,7 @@ public interface UserDAO {
 
     boolean update(User user) throws DaoException;
 
-    void block(User user) throws DaoException;
+    void block(long id) throws DaoException;
 
     void unblock(User user) throws DaoException;
 

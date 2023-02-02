@@ -41,7 +41,8 @@ public interface UserQueries {
             UPDATE Users SET
             status_id = ?
             WHERE id = ?
-            """;//language=TSQL
+            """;
+    //language=TSQL
     String AUTHENTICATE_BY_LOGIN_PASSWORD = FIND_ALL_USERS + "WHERE login=? AND password=?";
 
     //language=TSQL
