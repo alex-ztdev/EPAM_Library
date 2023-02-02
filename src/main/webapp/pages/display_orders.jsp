@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="custom" uri="/WEB-INF/custom.tld" %>
+
 
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
@@ -92,8 +94,9 @@
                         <td>${orders.userName}</td>
                     </c:if>
                     <td> ${orders.bookTitle} </td>
-                    <td> ${orders.orderStartDate} </td>
-                    <td> ${orders.orderEndDate} </td>
+
+                    <td> ${custom:formatDateTime(orders.orderStartDate,"dd MMM yyyy hh:mm", language)} </td>
+                    <td> ${custom:formatDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
 
 
                     <c:choose>
@@ -106,7 +109,7 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${orders.returnDate != null}">
-                            <td> ${orders.returnDate} </td>
+                            <td> ${custom:formatDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
                         </c:when>
                         <c:when test="${orders.returnDate == null and orders.fine != 0.0}">
                             <td><fmt:message key="orders.common.returned.overdue"/></td>
