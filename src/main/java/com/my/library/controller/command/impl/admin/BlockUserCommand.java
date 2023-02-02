@@ -27,8 +27,6 @@ public class BlockUserCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "BlockUserCommand invoked");
-        HttpSession session = request.getSession();
-
         var userIdStr = request.getParameter(Parameters.USER_ID);
 
         if (userIdStr == null || userIdStr.isBlank()) {
