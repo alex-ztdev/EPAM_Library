@@ -38,7 +38,7 @@
                     <p class="users-list-title"><fmt:message key="admin.user.users.title"/></p>
                 </c:when>
                 <c:otherwise>
-                    <p class="users-list-title"><fmt:message key="admin.user.reader.title"/></p>
+                    <p class="users-list-title" style="text-align: center"><fmt:message key="admin.user.reader.title"/></p>
                 </c:otherwise>
             </c:choose>
         </div>
