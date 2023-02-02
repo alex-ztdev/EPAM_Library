@@ -158,6 +158,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public int countReaders(boolean includeBlocked) throws ServiceException {
+        try {
+            return userDAO.countReaders(includeBlocked);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing countReaders method",e);
+        }
+    }
+
     private String encryptPassword(String password) {
         return DigestUtils.sha512Hex(password);
     }

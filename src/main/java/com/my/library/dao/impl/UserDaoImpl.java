@@ -280,6 +280,18 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
         }
     }
 
+    @Override
+    public int countReaders(boolean includeBlocked) throws DaoException {
+        try (var statement = connection.createStatement()) {
+            try (var rs = statement.executeQuery(includeBlocked?UserQueries.COUNT_ALL_READERS : UserQueries.COUNT_UNBLOCKED_READERS)) {
+                rs.next();
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 //    String msg = "User with such ";
 //    String defaultMsg = msg;
 //

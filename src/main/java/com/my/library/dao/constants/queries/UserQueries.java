@@ -77,4 +77,9 @@ public interface UserQueries {
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
+    //language=TSQL
+    String COUNT_ALL_READERS = "SELECT COUNT(id) FROM USERS WHERE role_id=1";
+
+    //language=TSQL
+    String COUNT_UNBLOCKED_READERS = "SELECT COUNT(id) FROM USERS WHERE role_id=1 AND status_id=1";
 }

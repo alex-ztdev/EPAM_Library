@@ -10,8 +10,6 @@ import com.my.library.dto.mapper.UserMapper;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
-import com.my.library.services.BookService;
-import com.my.library.services.OrderService;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,11 +47,11 @@ public class DisplayReadersCommand implements Command {
             currPage = Integer.parseInt(reqCurrPage);
         }
         try {
-            List<User> usersList = userService.findAll(
+            List<User> usersList = userService.findAllReaders(
                     (currPage - 1) * RECORDS_PER_PAGE,
                     RECORDS_PER_PAGE);
 
-            int totalRecords = userService.countTotalUsers();
+            int totalRecords = userService.countReaders(true);
 
             logger.log(Level.DEBUG, "DisplayReadersCommand/ total orders: " + totalRecords);
 
