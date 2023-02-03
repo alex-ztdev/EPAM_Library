@@ -209,8 +209,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int countFoundByTitle(String title, boolean includeRemoved) throws ServiceException {
-        return 0;
-
+        try {
+            return bookDAO.countFoundByTitle(title, includeRemoved);
+        } catch (DaoException e) {
+            throw new ServiceException("error while executing countFoundByTitle",e);
+        }
     }
 
     @Override

@@ -299,6 +299,20 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
         return bookList;
     }
 
+    @Override
+    public int countFoundByTitle(String title, boolean includeRemoved) throws DaoException {
+        try (var statement = connection.prepareStatement(includeRemoved ? BookQueries.COUNT_FIND_BY_TITLE_INCLUDE_REMOVED : BookQueries.COUNT_FIND_BY_TITLE)) {
+            String formattedTitle = '%' + title + '%';
+            statement.setString(1, formattedTitle);
+            try (var rs = statement.executeQuery()) {
+                rs.next();
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 
 //    public void update(Book book, int quantity) {
 //        throw new UnsupportedOperationException();
