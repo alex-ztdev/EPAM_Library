@@ -60,7 +60,6 @@ public class LoginCommand implements Command {
                     session.setAttribute(UserParameters.USER_IS_BLOCKED, UserParameters.USER_IS_BLOCKED);
                     logger.log(Level.INFO, "User: " + login + " is blocked!");
                 }
-                //TODO: add error pages
                 else {
                     res = new CommandResult(RedirectToPage.HOME, CommandDirection.REDIRECT);
                     session.setAttribute(UserParameters.USER_IN_SESSION, user);

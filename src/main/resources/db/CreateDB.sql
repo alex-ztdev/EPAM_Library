@@ -48,8 +48,7 @@ CREATE TABLE Books
     CONSTRAINT FK_Books_publisher_id FOREIGN KEY (publisher_id) REFERENCES Publishers (id),
     CONSTRAINT FK_Books_genre_id FOREIGN KEY (genre_id) REFERENCES Book_Genres (id),
     CONSTRAINT FK_Books_author_id FOREIGN KEY (author_id) REFERENCES Authors (id),
-    CONSTRAINT UQ_Books_Info_title_publ_genre UNIQUE (title, publisher_id, genre_id, author_id, page_number,
-                                                      publication_date)
+    CONSTRAINT UQ_Books UNIQUE (title, publisher_id, genre_id, author_id, page_number, publication_date)
 );
 
 
@@ -109,15 +108,15 @@ go
 
 CREATE TABLE Orders
 (
-    id                 bigint identity (100000, 1),
-    user_id            bigint   NOT NULL,
-    book_id            bigint   NOT NULL,
-    order_start_date   datetime NOT NULL,
-    order_end_date     datetime NOT NULL,
-    actual_return_date datetime,
+    id               bigint identity (100000, 1),
+    user_id          bigint             NOT NULL,
+    book_id          bigint             NOT NULL,
+    order_start_date datetime           NOT NULL,
+    order_end_date   datetime           NOT NULL,
+    return_date      datetime DEFAULT NULL,
+    on_subscription  BIT      DEFAULT 1 NOT NULL,
 
     CONSTRAINT PK_Orders_id PRIMARY KEY (id),
-    CONSTRAINT UQ_Orders_users_books_id UNIQUE (user_id, book_id),
     CONSTRAINT FK_users_in_orders_id FOREIGN KEY (user_id) REFERENCES Users (id),
     CONSTRAINT FK_books_in_orders_id FOREIGN KEY (book_id) REFERENCES Books (id)
 );

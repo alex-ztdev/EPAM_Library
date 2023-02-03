@@ -2,6 +2,7 @@ package com.my.library.controller.command.impl.admin;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
+import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.exceptions.CommandException;
@@ -42,7 +43,7 @@ public class RestoreBookCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException("Error occurred while executing RestoreBookCommand!",e);
         }
-
-        return new CommandResult(RedirectToPage.BOOKS_PAGE);
+        var prev_page = (String)request.getSession().getAttribute(Parameters.PREVIOUS_PAGE);
+        return new CommandResult(prev_page == null || prev_page.isBlank() ? RedirectToPage.BOOKS_PAGE : prev_page, CommandDirection.REDIRECT);
     }
 }

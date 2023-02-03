@@ -27,7 +27,7 @@ import java.util.List;
 
 public class DisplayUsersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private static final int RECORDS_PER_PAGE = 4;
+    private static final int RECORDS_PER_PAGE = 5;
     private final UserService userService;
 
     public DisplayUsersCommand(UserService userService) {
