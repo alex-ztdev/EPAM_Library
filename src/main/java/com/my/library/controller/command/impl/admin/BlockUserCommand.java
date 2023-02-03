@@ -36,7 +36,9 @@ public class BlockUserCommand implements Command {
         long userId = userIdContainer.get();
         try {
             userService.blockUser(userId);
-            return new CommandResult(RedirectToPage.DISPLAY_USERS, CommandDirection.REDIRECT);
+
+            var prev_page = (String)request.getSession().getAttribute(Parameters.PREVIOUS_PAGE);
+            return new CommandResult(prev_page == null || prev_page.isBlank() ? RedirectToPage.DISPLAY_USERS : prev_page, CommandDirection.REDIRECT);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing BlockUserCommand", e);
         }

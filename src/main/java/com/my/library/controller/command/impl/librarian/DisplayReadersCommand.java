@@ -36,7 +36,6 @@ public class DisplayReadersCommand implements Command {
         logger.log(Level.DEBUG, "DisplayReadersCommand invoked");
         HttpSession session = request.getSession();
 
-        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_READERS);
 
         int currPage = 1;
 
@@ -46,6 +45,9 @@ public class DisplayReadersCommand implements Command {
         if (reqCurrPage != null && !reqCurrPage.isBlank()) {
             currPage = Integer.parseInt(reqCurrPage);
         }
+
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_READERS_WITH_PARAMETERS.formatted(currPage));
+
         try {
             List<User> usersList = userService.findAllReaders(
                     (currPage - 1) * RECORDS_PER_PAGE,

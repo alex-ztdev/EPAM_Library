@@ -38,12 +38,13 @@ public class DisplayUsersCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         logger.log(Level.DEBUG, "DisplayUsersCommand/ invoked");
-        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS);
 
         int currPage = 1;
 
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
         logger.log(Level.DEBUG, "DisplayUsersCommand/ current page: " + reqCurrPage);
+
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_WITH_PARAMETERS.formatted(reqCurrPage));
 
         if (reqCurrPage != null && !reqCurrPage.isBlank()) {
             currPage = Integer.parseInt(reqCurrPage);
