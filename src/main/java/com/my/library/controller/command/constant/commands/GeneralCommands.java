@@ -43,7 +43,7 @@ public interface GeneralCommands {
     //Book
     String BOOK_PAGE = "book_page";
     String ORDER_BOOK = "order__book";
-    String SEARCH_BOOK = "search_book";
+    String SEARCH_BOOK = "search-book";
     String SORT_BOOKS = "sort_books";
 
     String NOT_AUTHORIZED = "not-authorized";

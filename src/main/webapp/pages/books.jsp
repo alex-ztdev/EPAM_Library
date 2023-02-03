@@ -14,6 +14,7 @@
 <c:set var="order_by" scope="request" value="${requestScope.order_by}"/>
 <c:set var="order_dir" scope="request" value="${requestScope.order_dir}"/>
 <c:set var="userRole" scope="request" value="${sessionScope.user.role}"/>
+<c:set var="searchContent" scope="request" value="${requestScope.search}"/>
 
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty sessionScope.language ? sessionScope.language : 'en'}"
@@ -38,6 +39,7 @@
 
     <div class="main-content">
         <div class="top-row">
+            <p class="books-list-title">${searchContent}</p>
             <p class="books-list-title"><fmt:message key="books.common.label.books.list"/></p>
             <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                 <a href="controller?command=add-book-redirect&add_new_pressed=true" class="books-add-new">
@@ -324,14 +326,14 @@
                     <td> ${booksList.publicationDate} </td>
                     <td>
                             ${booksList.copies}
-<%--                        <c:choose>--%>
-<%--                            <c:when test="${booksList.copies gt 0}">--%>
-<%--                                ${booksList.copies}--%>
-<%--                            </c:when>--%>
-<%--                            <c:otherwise>--%>
-<%--                                <fmt:message key="books.common.unavailable"/>--%>
-<%--                            </c:otherwise>--%>
-<%--                        </c:choose>--%>
+                            <%--                        <c:choose>--%>
+                            <%--                            <c:when test="${booksList.copies gt 0}">--%>
+                            <%--                                ${booksList.copies}--%>
+                            <%--                            </c:when>--%>
+                            <%--                            <c:otherwise>--%>
+                            <%--                                <fmt:message key="books.common.unavailable"/>--%>
+                            <%--                            </c:otherwise>--%>
+                            <%--                        </c:choose>--%>
                     </td>
 
                     <c:if test="${userRole eq 'ADMIN'}">
@@ -389,23 +391,23 @@
                         </td>
                     </c:if>
                     <c:if test="${userRole eq 'USER'}">
-                                <c:choose>
-                                    <c:when test="${booksList.copies gt 0}">
-                                        <td class="order-book" >
-                                                <a class="order-book-link" style="height: 100%; width: 100%; text-align: center"
-                                                   href="controller?command=order_book_redirect&book_id=${booksList.bookId}">
-                                                    <fmt:message key="user.books.action.order.book"/>
-                                                </a>
-                                        </td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td class="order-book-impossible" >
-                                            <div class="order-book-div">
-                                                <fmt:message key="books.common.unavailable"/>
-                                            </div>
-                                        </td>
-                                    </c:otherwise>
-                                </c:choose>
+                        <c:choose>
+                            <c:when test="${booksList.copies gt 0}">
+                                <td class="order-book">
+                                    <a class="order-book-link" style="height: 100%; width: 100%; text-align: center"
+                                       href="controller?command=order_book_redirect&book_id=${booksList.bookId}">
+                                        <fmt:message key="user.books.action.order.book"/>
+                                    </a>
+                                </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td class="order-book-impossible">
+                                    <div class="order-book-div">
+                                        <fmt:message key="books.common.unavailable"/>
+                                    </div>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
 
                     </c:if>
                 </tr>
@@ -417,24 +419,62 @@
         <div class="pages_container">
             <%--For displaying Previous link except for the 1st page --%>
             <c:if test="${requestScope.page != 1}">
-                <a href="controller?command=books-list&page=${requestScope.page - 1}&order_by=${order_by}&order_dir=${order_dir}">&laquo;</a>
+
+                <c:choose>
+                    <c:when test="${searchContent != null}">
+                        <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.page - 1}&order_by=${order_by}&order_dir=${order_dir}">&laquo;</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="controller?command=books-list&page=${requestScope.page - 1}&order_by=${order_by}&order_dir=${order_dir}">&laquo;</a>s
+                    </c:otherwise>
+                </c:choose>
             </c:if>
             <%--For displaying Page numbers.
                 The when condition does not display a link for the current page--%>
             <c:forEach begin="1" end="${requestScope.totalPages}" var="i">
                 <c:choose>
                     <c:when test="${requestScope.page eq i}">
-                        <a href="controller?command=books-list&page=${i}&order_by=${order_by}&order_dir=${order_dir}"
-                           class="active"> ${i}</a>
+                        <%--                        <a href="controller?command=books-list&page=${i}&order_by=${order_by}&order_dir=${order_dir}"--%>
+                        <%--                           class="active"> ${i}</a>--%>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a class="active"
+                                   href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&order_dir=${order_dir}">${i}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&page=${i}&order_by=${order_by}&order_dir=${order_dir}"
+                                   class="active"> ${i}</a>
+                            </c:otherwise>
+                        </c:choose>
+
+
                     </c:when>
                     <c:otherwise>
-                        <a href="controller?command=books-list&page=${i}&order_by=${order_by}&order_dir=${order_dir}">${i}</a>
+                        <%--                        <a href="controller?command=books-list&page=${i}&order_by=${order_by}&order_dir=${order_dir}">${i}</a>--%>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${i}&order_by=${order_by}&order_dir=${order_dir}">${i}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&page=${i}&order_by=${order_by}&order_dir=${order_dir}">${i}</a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
             <%--For displaying Next link --%>
             <c:if test="${requestScope.page lt requestScope.totalPages}">
-                <a href="controller?command=books-list&page=${requestScope.page + 1}&order_by=${order_by}&order_dir=${order_dir}">&raquo;</a>
+                <%--                <a href="controller?command=books-list&page=${requestScope.page + 1}&order_by=${order_by}&order_dir=${order_dir}">&raquo;</a>--%>
+                <c:choose>
+                    <c:when test="${searchContent != null}">
+                        <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.page + 1}&order_by=${order_by}&order_dir=${order_dir}">&raquo;</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="controller?command=books-list&page=${requestScope.page + 1}&order_by=${order_by}&order_dir=${order_dir}">&raquo;</a>
+                    </c:otherwise>
+                </c:choose>
+
             </c:if>
 
         </div>

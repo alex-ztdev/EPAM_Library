@@ -20,4 +20,5 @@ public interface RedirectToPage {
     String DISPLAY_READERS = "/controller?command=display-readers";
     String MY_PROFILE = "/controller?command=my-profile";
 
+    String SEARCH_BOOK_WITH_PARAMETERS = "/controller?command=search&search_by=%s&order_by=%s&order_dir=%s&page=%s";
 }

@@ -40,7 +40,7 @@ public interface Parameters {
 
 
     String USER_DTO = "user";
-    String SEARCH_BY = "search-by";
+    String SEARCH_BY = "search_by";
     String SEARCH_CONTENT = "search";
 
 

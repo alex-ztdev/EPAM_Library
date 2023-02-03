@@ -62,11 +62,12 @@
 
             <input name="book_id" type="hidden" value="${sessionScope.book.bookId}">
             <div class="elem-group">
-                <label for="bookTitle"><fmt:message key="admin.books.edit.form.label.book.title"/></label>
+                <label class="book-edit-label" for="bookTitle"><fmt:message key="admin.books.edit.form.label.book.title"/></label>
                 <input
                         type="text"
                         id="bookTitle"
                         name="book_title"
+                        class="edit-book-input"
                         placeholder="<fmt:message key="admin.books.edit.form.placeholder.title"/>"
                         pattern="^['a-zA-Z?!,.а-яА-ЯёЁ0-9\s\-:]{1,350}$"
                         title="<fmt:message key="admin.books.edit.form.validation.msg.title"/>"
@@ -77,10 +78,11 @@
             </div>
 
             <div class="elem-group inlined">
-                <label for="firstName"><fmt:message key="admin.books.edit.form.label.author.first.name"/></label>
+                <label  class="book-edit-label" for="firstName"><fmt:message key="admin.books.edit.form.label.author.first.name"/></label>
                 <input
                         type="text"
                         id="firstName"
+                        class="edit-book-input"
                         name="first_name"
                         placeholder="<fmt:message key="admin.books.edit.form.placeholder.first.name"/>"
                         pattern="^['a-zA-Z?а-яА-ЯёЁ]{1,50}$"
@@ -91,10 +93,11 @@
                 <div class="error-msg-container"></div>
             </div>
             <div class="elem-group inlined">
-                <label for="secondName"><fmt:message key="admin.books.edit.form.label.author.second.name"/></label>
+                <label class="book-edit-label" for="secondName"><fmt:message key="admin.books.edit.form.label.author.second.name"/></label>
                 <input
                         type="text"
                         id="secondName"
+                        class="edit-book-input"
                         name="second_name"
                         placeholder="<fmt:message key="admin.books.edit.form.placeholder.second.name"/>"
                         pattern="^['a-zA-Z?а-яА-ЯёЁ]{1,50}$"
@@ -105,8 +108,8 @@
                 <div class="error-msg-container"></div>
             </div>
             <div class="elem-group inlined">
-                <label for="genre-selection"><fmt:message key="admin.books.edit.form.label.select.genre"/></label>
-                <select id="genre-selection" name="genre" required>
+                <label  class="book-edit-label" for="genre-selection"><fmt:message key="admin.books.edit.form.label.select.genre"/></label>
+                <select class="book-edit-select" id="genre-selection" name="genre" required>
                     <c:if test="${not empty sessionScope.book.genre }">
                         <option value="${sessionScope.book.genre}">${sessionScope.book.genre}</option>
                     </c:if>
@@ -117,9 +120,9 @@
                 </select>
             </div>
             <div class="elem-group inlined">
-                <label for="publisher-selection"><fmt:message
+                <label class="book-edit-label" for="publisher-selection"><fmt:message
                         key="admin.books.edit.form.label.select.publisher"/></label>
-                <select id="publisher-selection" name="publisher" required>
+                <select class="book-edit-select" id="publisher-selection" name="publisher" required>
                     <c:if test="${not empty sessionScope.book.publisherTitle }">
                         <option value="${sessionScope.book.publisherTitle}">${sessionScope.book.publisherTitle}</option>
                     </c:if>
@@ -129,9 +132,10 @@
                 </select>
             </div>
             <div class="elem-group">
-                <label for="copies"><fmt:message key="admin.books.edit.form.label.copies"/></label>
+                <label class="book-edit-label" for="copies"><fmt:message key="admin.books.edit.form.label.copies"/></label>
                 <input
                         type="number"
+                        class="edit-book-input"
                         id="copies"
                         name="total_copies"
                         placeholder="2"
@@ -144,8 +148,9 @@
 
             <hr/>
             <div class="elem-group inlined">
-                <label for="pages"><fmt:message key="admin.books.edit.form.label.pages"/></label>
+                <label class="book-edit-label" for="pages"><fmt:message key="admin.books.edit.form.label.pages"/></label>
                 <input
+                        class="edit-book-input"
                         type="number"
                         id="pages"
                         name="pages"
@@ -158,8 +163,9 @@
             </div>
 
             <div class="elem-group inlined">
-                <label for="publication-date"><fmt:message key="admin.books.edit.form.label.publication.date"/></label>
+                <label class="book-edit-label" for="publication-date"><fmt:message key="admin.books.edit.form.label.publication.date"/></label>
                 <input
+                        class="edit-book-input"
                         type="date"
                         id="publication-date"
                         name="publication_date"
@@ -167,7 +173,7 @@
                         required
                 />
             </div>
-            <button type="submit" style="margin-left: 43%; padding: 10px 20px"><fmt:message
+            <button class="edit-book-button" type="submit" style="margin-left: 43%; padding: 10px 20px"><fmt:message
                     key="admin.books.edit.form.label.submit.btn"/></button>
         </form>
     </div>

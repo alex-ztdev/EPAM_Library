@@ -280,8 +280,9 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
         String formattedTitle = '%' + title + '%';
 
         String query = String.format(unformattedQ, orderBy.getOrderBy(), dir);
-        try (var statement = connection.prepareStatement(query)) {
 
+
+        try (var statement = connection.prepareStatement(query)) {
             int k = 1;
             statement.setString(k++, formattedTitle);
             statement.setInt(k++, start);

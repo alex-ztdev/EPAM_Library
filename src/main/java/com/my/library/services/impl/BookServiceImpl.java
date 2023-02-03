@@ -185,7 +185,7 @@ public class BookServiceImpl implements BookService {
         try {
             bookDAO.decrementBookQuantity(id);
         } catch (DaoException e) {
-            throw new ServiceException( "BookServiceImpl/ error while executing decreaseBookQuantity", e);
+            throw new ServiceException("BookServiceImpl/ error while executing decreaseBookQuantity", e);
         }
     }
 
@@ -194,16 +194,17 @@ public class BookServiceImpl implements BookService {
         try {
             bookDAO.incrementBookQuantity(id);
         } catch (DaoException e) {
-            throw new ServiceException( "BookServiceImpl/ error while executing decreaseBookQuantity", e);
+            throw new ServiceException("BookServiceImpl/ error while executing decreaseBookQuantity", e);
         }
     }
 
     @Override
     public List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws ServiceException {
+        logger.log(Level.DEBUG, "findByTitle invoked with parameters: title=%s start=%s offset=%s orderBy=%s dir=%s includeRemoved=%s".formatted(title, start, offset, orderBy, dir, includeRemoved));
         try {
-           return bookDAO.findByTitle(title, start, offset, orderBy, dir, includeRemoved);
+            return bookDAO.findByTitle(title, start, offset, orderBy, dir, includeRemoved);
         } catch (DaoException e) {
-            throw new ServiceException( "BookServiceImpl/ error while executing findByTitle", e);
+            throw new ServiceException("BookServiceImpl/ error while executing findByTitle", e);
         }
     }
 
@@ -212,7 +213,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDAO.countFoundByTitle(title, includeRemoved);
         } catch (DaoException e) {
-            throw new ServiceException("error while executing countFoundByTitle",e);
+            throw new ServiceException("error while executing countFoundByTitle", e);
         }
     }
 

@@ -34,11 +34,8 @@ body {
     text-align: center;
 }
 
-label,
-input {
+.book-edit-label {
     display: block;
-}
-label {
     font-size: 12px;
     text-transform: uppercase;
     color: #ffffff;
@@ -56,20 +53,27 @@ div.elem-group.inlined {
     margin-left: 1%;
 }
 
-label {
+.book-edit-label {
     display: block;
-    font-family: "Nanum Gothic";
     padding-bottom: 10px;
     font-size: 1.25em;
 }
 
-input,
-select {
+.book-edit-select {
     border-radius: 2px;
     border: 2px solid #777;
     box-sizing: border-box;
     font-size: 1.25em;
-    font-family: "Nanum Gothic";
+    width: 100%;
+    padding: 10px;
+    outline: 0;
+}
+.edit-book-input{
+    display: block;
+    border-radius: 2px;
+    border: 2px solid #777;
+    box-sizing: border-box;
+    font-size: 1.25em;
     width: 100%;
     padding: 10px;
     outline: 0;
@@ -84,13 +88,12 @@ hr {
     border: 1px dotted #ccc;
 }
 
-button {
+.edit-book-button {
     height: 50px;
     background: orange;
     border: none;
     color: white;
     font-size: 1.25em;
-    font-family: "Nanum Gothic";
     border-radius: 4px;
     cursor: pointer;
 }
@@ -99,7 +102,7 @@ button:hover {
     border: 2px solid black;
 }
 
-input {
+.edit-book-input {
     width: 100%;
     padding: 10px;
     outline: 0;
@@ -109,13 +112,13 @@ input {
     border-color: #dd2c00;
   } */
 
-input:focus {
+.edit-book-input:focus {
     border: 2px solid black;
 }
-input:valid {
+.edit-book-input:valid {
     border: 2px solid rgb(85, 247, 85);
 }
-input:invalid {
+.edit-book-input:invalid {
     border: 2px solid #dd2c00;
 }
 .error-msg{

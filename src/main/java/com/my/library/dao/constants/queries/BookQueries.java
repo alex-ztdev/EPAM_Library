@@ -129,7 +129,7 @@ public interface BookQueries {
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
-    
+
     String FIND_BY_TITLE = FIND_ALL_BOOKS + """
             INNER JOIN Storage S on Books.id = S.book_id
             WHERE isRemoved=0 AND  Books.title LIKE ?
@@ -147,7 +147,7 @@ public interface BookQueries {
     //language=TSQL
     String COUNT_FIND_BY_TITLE = """
             SELECT
-            	COUNT(id)
+            	COUNT(Books.id)
             FROM Books
             INNER JOIN Storage S on Books.id = S.book_id
             WHERE isRemoved=0 AND Books.title LIKE ?

@@ -1,6 +1,6 @@
 package com.my.library.controller.command.constant;
 
 public enum SearchBy {
-    AUTHOR,
-    TITLE
+    BY_AUTHOR,
+    BY_TITLE
 }
