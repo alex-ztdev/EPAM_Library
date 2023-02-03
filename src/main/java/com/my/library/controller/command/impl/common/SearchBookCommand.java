@@ -105,7 +105,6 @@ public class SearchBookCommand implements Command {
                         RECORDS_PER_PAGE, orderBy,
                         orderDir, includeRemoved
                 );
-
                 totalRecords = bookService.countFoundByAuthor(searchContent, includeRemoved);
             }
 

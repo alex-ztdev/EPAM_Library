@@ -30,27 +30,27 @@
         <div class="profile-header"><fmt:message key="header.common.profile"/></div>
         <div>
 
-            <label><fmt:message key="common.profile.login"/></label>
+            <label class="profile-label"><fmt:message key="common.profile.login"/></label>
             <div class="user-data">${requestScope.user.login}</div>
 
-            <label><fmt:message key="common.profile.role"/></label>
+            <label class="profile-label"><fmt:message key="common.profile.role"/></label>
             <div class="user-data">${requestScope.user.role}</div>
 
-            <label><fmt:message key="common.profile.status"/></label>
+            <label class="profile-label"><fmt:message key="common.profile.status"/></label>
             <div class="user-data">${requestScope.user.status}</div>
 
 
-            <label><fmt:message key="common.profile.email"/></label>
+            <label class="profile-label"><fmt:message key="common.profile.email"/></label>
             <div class="user-data">${requestScope.user.email}</div>
 
-            <label><fmt:message key="common.profile.phone"/></label>
+            <label class="profile-label"><fmt:message key="common.profile.phone"/></label>
             <div class="user-data">${requestScope.user.phoneNumber}</div>
 
 
-            <div class="elem-group inlined"><label><fmt:message key="common.profile.first.name"/></label>
+            <div class="elem-group inlined"><label class="profile-label"><fmt:message key="common.profile.first.name"/></label>
                 <div class="user-data">${requestScope.user.firstName}</div>
             </div>
-            <div class="elem-group inlined"><label><fmt:message key="common.profile.second.name"/></label>
+            <div class="elem-group inlined"><label class="profile-label"><fmt:message key="common.profile.second.name"/></label>
                 <div class="user-data">${requestScope.user.secondName}</div>
             </div>
 

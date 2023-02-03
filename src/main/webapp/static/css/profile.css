@@ -33,11 +33,9 @@ body {
     text-align: center;
 }
 
-label,
-input {
+
+.profile-label {
     display: block;
-}
-label {
     font-size: 12px;
     text-transform: uppercase;
     color: #ffffff;
@@ -55,39 +53,26 @@ div.elem-group.inlined {
     margin-left: 1%;
 }
 
-label {
+.profile-label {
     /*margin-top: 15px;*/
     display: block;
     padding: 10px 10px;
     font-size: 1.25em;
 }
 
-input,
-select {
-    border-radius: 2px;
-    border: 2px solid #777;
-    box-sizing: border-box;
-    font-size: 1.25em;
-    width: 100%;
-    padding: 10px;
-    outline: 0;
-}
-
-
-
 hr {
     border: 1px dotted #ccc;
 }
 
-button {
-    height: 50px;
-    background: orange;
-    border: none;
-    color: white;
-    font-size: 1.25em;
-    border-radius: 4px;
-    cursor: pointer;
-}
+/*button {*/
+/*    height: 50px;*/
+/*    background: orange;*/
+/*    border: none;*/
+/*    color: white;*/
+/*    font-size: 1.25em;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*}*/
 
 button:hover {
     border: 2px solid black;
