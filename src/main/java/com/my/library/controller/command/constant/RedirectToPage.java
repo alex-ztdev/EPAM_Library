@@ -17,7 +17,9 @@ public interface RedirectToPage {
     String REGISTRATION_PAGE = "/controller?command=login-page&regForm=regForm";
 
     String DISPLAY_USERS = "/controller?command=display-users";
+    String DISPLAY_USERS_WITH_PARAMETERS = "/controller?command=display-users&page=%s";
     String DISPLAY_READERS = "/controller?command=display-readers";
+    String DISPLAY_READERS_WITH_PARAMETERS = "/controller?command=display-readers&page=%s";
     String MY_PROFILE = "/controller?command=my-profile";
 
     String SEARCH_BOOK_WITH_PARAMETERS = "/controller?command=search-book&search_by=%s&search=%s&page=%s&order_by=%s&order_dir=%s";
