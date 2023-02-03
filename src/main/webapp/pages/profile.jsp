@@ -21,6 +21,7 @@
     <meta charset="UTF-8"/>
     <title>Order book</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/profile.css"/>
+    <link rel="icon" href="${pageContext.request.contextPath}/static/img/icon/icon.ico">
 </head>
 <body>
 <jsp:include page="/pages/header.jsp"/>

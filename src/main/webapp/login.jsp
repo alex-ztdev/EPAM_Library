@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/login.css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/login.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/config.js"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/static/img/icon/icon.ico">
 </head>
 <body>
 <jsp:include page="/pages/header.jsp"/>

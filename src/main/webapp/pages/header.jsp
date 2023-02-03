@@ -17,6 +17,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="locale"/>
 
+
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/header.css"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

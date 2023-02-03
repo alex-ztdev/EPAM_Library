@@ -28,6 +28,7 @@
     <title>Orders</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/books.css"/>
     <script src="https://kit.fontawesome.com/e83e8567ce.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/static/img/icon/icon.ico">
 </head>
 <body>
 <jsp:include page="header.jsp"/>

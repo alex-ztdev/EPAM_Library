@@ -21,7 +21,7 @@
     <meta charset="UTF-8"/>
     <title>Library Main</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/book_edit.css"/>
-
+    <link rel="icon" href="${pageContext.request.contextPath}/static/img/icon/icon.ico">
 </head>
 <body>
 <jsp:include page="/pages/header.jsp"/>
