@@ -44,7 +44,6 @@ public class SearchBookCommand implements Command {
 
         HttpSession session = request.getSession();
         new MessagesRemover().removeBookErrors(session);
-//        removeBook(session);
 
         int currPage = 1;
 
@@ -61,7 +60,6 @@ public class SearchBookCommand implements Command {
             logger.log(Level.DEBUG, "Search content is null or empty");
             return new CommandResult(RedirectToPage.BOOKS_PAGE, CommandDirection.REDIRECT);
         }
-//        searchContent = searchContent.trim();
         SearchBy searchBy;
         try {
             if (searchByStr == null) {
@@ -130,8 +128,8 @@ public class SearchBookCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-//        session.setAttribute(Parameters.PREVIOUS_PAGE,
-//                String.format(RedirectToPage.SEARCH_BOOK_WITH_PARAMETERS, orderBy, orderDir, currPage));
+        session.setAttribute(Parameters.PREVIOUS_PAGE,
+                String.format(RedirectToPage.SEARCH_BOOK_WITH_PARAMETERS, searchBy.toString().toLowerCase(), searchContent,currPage, orderBy.toString().toLowerCase(), orderDir.toString().toLowerCase()));
 
         return new CommandResult(Pages.BOOKS_LIST, CommandDirection.FORWARD);
     }

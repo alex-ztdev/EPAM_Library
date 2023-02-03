@@ -39,7 +39,6 @@
 
     <div class="main-content">
         <div class="top-row">
-            <p class="books-list-title">${searchContent}</p>
             <p class="books-list-title"><fmt:message key="books.common.label.books.list"/></p>
             <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                 <a href="controller?command=add-book-redirect&add_new_pressed=true" class="books-add-new">
