@@ -37,6 +37,7 @@ public class DisplayUsersCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS);
         logger.log(Level.DEBUG, "DisplayUsersCommand/ invoked");
 
         int currPage = 1;
@@ -44,11 +45,11 @@ public class DisplayUsersCommand implements Command {
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
         logger.log(Level.DEBUG, "DisplayUsersCommand/ current page: " + reqCurrPage);
 
-        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_WITH_PARAMETERS.formatted(reqCurrPage));
 
         if (reqCurrPage != null && !reqCurrPage.isBlank()) {
             currPage = Integer.parseInt(reqCurrPage);
         }
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_WITH_PARAMETERS.formatted(currPage));
         try {
             List<User> usersList = userService.findAll(
                     (currPage - 1) * RECORDS_PER_PAGE,
