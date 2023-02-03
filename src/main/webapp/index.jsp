@@ -19,15 +19,18 @@
 
 </head>
 <body>
+<jsp:include page="/pages/header.jsp"/>
+
 <div class="container">
-    <jsp:include page="/pages/header.jsp"/>
 
     <div class="main-content">
-
+        <div class="main-title">LIBRARY</div>
+        <div class="sub-title">By Oleksii Horobets</div>
     </div>
 
-    <jsp:include page="/pages/footer.jsp"/>
+
 </div>
+<jsp:include page="/pages/footer.jsp"/>
 </body>
 
 </html>
