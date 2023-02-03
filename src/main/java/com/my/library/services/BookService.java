@@ -35,5 +35,9 @@ public interface BookService extends Service<Book> {
     List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws ServiceException;
 
     int countFoundByTitle(String title, boolean includeRemoved) throws ServiceException;
+
+    List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir orderDir, boolean includeRemoved) throws ServiceException;
+
+    int countByAuthor(String author, boolean includeRemoved);
 }
 

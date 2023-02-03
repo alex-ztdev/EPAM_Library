@@ -314,6 +314,35 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
         }
     }
 
+    @Override
+    public List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws DaoException {
+        List<Book> bookList = new ArrayList<>();
+        var unformattedQ = includeRemoved ? BookQueries.FIND_BY_AUTHOR_INCLUDE_REMOVED : BookQueries.FIND_BY_AUTHOR;
+
+        String formattedTitle = '%' + author + '%';
+
+        String query = String.format(unformattedQ, orderBy.getOrderBy(), dir);
+
+        try (var statement = connection.prepareStatement(query)) {
+            int k = 1;
+            statement.setString(k++, formattedTitle);
+            statement.setInt(k++, start);
+            statement.setInt(k, offset);
+
+            try (var rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    bookList.add(buildBook(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return bookList;
+    }
+
+
+
 
 //    public void update(Book book, int quantity) {
 //        throw new UnsupportedOperationException();

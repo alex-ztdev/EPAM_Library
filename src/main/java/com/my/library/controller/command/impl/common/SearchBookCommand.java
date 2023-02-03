@@ -100,13 +100,13 @@ public class SearchBookCommand implements Command {
                 );
                 totalRecords = bookService.countFoundByTitle(searchContent, includeRemoved);
             } else {
-                booksList = bookService.findByTitle(searchContent,
+                booksList = bookService.findByAuthor(searchContent,
                         (currPage - 1) * RECORDS_PER_PAGE,
                         RECORDS_PER_PAGE, orderBy,
                         orderDir, includeRemoved
                 );
 
-                totalRecords = bookService.countFoundByTitle(searchContent, includeRemoved);
+                totalRecords = bookService.countByAuthor(searchContent, includeRemoved);
             }
 
             logger.log(Level.DEBUG, "Found books: " + booksList);

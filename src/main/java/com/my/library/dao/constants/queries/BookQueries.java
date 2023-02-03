@@ -152,4 +152,22 @@ public interface BookQueries {
             INNER JOIN Storage S on Books.id = S.book_id
             WHERE isRemoved=0 AND Books.title LIKE ?
             """;
+
+//    language=TSQL
+    String FIND_BY_AUTHOR_INCLUDE_REMOVED = FIND_ALL_BOOKS +  """
+            WHERE  (A.first_name +' ' + A.second_name) LIKE ?
+            ORDER BY %s %s
+            OFFSET ? ROWS
+            FETCH NEXT ? ROWS ONLY
+            """;
+    //    language=TSQL
+    String FIND_BY_AUTHOR = FIND_ALL_BOOKS + """
+            INNER JOIN Storage S on Books.id = S.book_id
+            WHERE  (A.first_name +' ' + A.second_name) LIKE ? AND isRemoved=0
+            ORDER BY %s %s
+            OFFSET ? ROWS
+            FETCH NEXT ? ROWS ONLY
+            """;
+
+
 }

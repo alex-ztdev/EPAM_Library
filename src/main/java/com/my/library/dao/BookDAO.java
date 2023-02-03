@@ -43,4 +43,8 @@ public interface BookDAO {
     List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws DaoException;
 
     int countFoundByTitle(String title, boolean includeRemoved) throws DaoException;
+
+    List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir orderDir, boolean includeRemoved) throws DaoException;
+
+    int countByAuthor(String author, boolean includeRemoved);
 }
