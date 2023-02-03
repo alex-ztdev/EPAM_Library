@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
+<%@ taglib prefix="custom" uri="/WEB-INF/custom.tld" %>
 
 <c:set var="order_by" scope="request" value="${requestScope.order_by}"/>
 <c:set var="order_dir" scope="request" value="${requestScope.order_dir}"/>
@@ -57,28 +57,60 @@
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_title&order_dir=desc">
-                            <fmt:message key="books.common.label.book_title"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
+
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_title&order_dir=desc">
+                                    <fmt:message key="books.common.label.book_title"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_title&order_dir=desc">
+                                    <fmt:message key="books.common.label.book_title"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </th>
                     </c:when>
                     <c:otherwise>
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_title&order_dir=asc">
-                            <fmt:message key="books.common.label.book_title"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_title&order_dir=asc">
+                                    <fmt:message key="books.common.label.book_title"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_title&order_dir=asc">
+                                    <fmt:message key="books.common.label.book_title"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
                     <th>
-                        <a href="controller?command=books-list&order_by=by_title&order_dir=asc">
-                            <fmt:message key="books.common.label.book_title"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_title&order_dir=asc">
+                                    <fmt:message key="books.common.label.book_title"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_title&order_dir=asc">
+                                    <fmt:message key="books.common.label.book_title"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
@@ -87,29 +119,62 @@
                     <c:when test="${order_by eq 'BY_GENRE'}">
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
+
+
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_genre&order_dir=desc">
-                            <fmt:message key="books.common.label.genre"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_genre&order_dir=desc">
+                                    <fmt:message key="books.common.label.genre"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_genre&order_dir=desc">
+                                    <fmt:message key="books.common.label.genre"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:when>
                     <c:otherwise>
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_genre&order_dir=asc">
-                            <fmt:message key="books.common.label.genre"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_genre&order_dir=asc">
+                                    <fmt:message key="books.common.label.genre"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_genre&order_dir=asc">
+                                    <fmt:message key="books.common.label.genre"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
+
                     <th>
-                        <a href="controller?command=books-list&order_by=by_genre&order_dir=asc">
-                            <fmt:message key="books.common.label.genre"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_genre&order_dir=asc">
+                                    <fmt:message key="books.common.label.genre"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_genre&order_dir=asc">
+                                    <fmt:message key="books.common.label.genre"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
@@ -119,28 +184,58 @@
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_author&order_dir=desc">
-                            <fmt:message key="books.common.label.author"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_author&order_dir=desc">
+                                    <fmt:message key="books.common.label.author"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_author&order_dir=desc">
+                                    <fmt:message key="books.common.label.author"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:when>
                     <c:otherwise>
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_author&order_dir=asc">
-                            <fmt:message key="books.common.label.author"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_author&order_dir=asc">
+                                    <fmt:message key="books.common.label.author"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_author&order_dir=asc">
+                                    <fmt:message key="books.common.label.author"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
                     <th>
-                        <a href="controller?command=books-list&order_by=by_author&order_dir=asc">
-                            <fmt:message key="books.common.label.author"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_author&order_dir=asc">
+                                    <fmt:message key="books.common.label.author"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_author&order_dir=asc">
+                                    <fmt:message key="books.common.label.author"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
@@ -150,28 +245,58 @@
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_publisher&order_dir=desc">
-                            <fmt:message key="books.common.label.publisher"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_publisher&order_dir=desc">
+                                    <fmt:message key="books.common.label.publisher"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_publisher&order_dir=desc">
+                                    <fmt:message key="books.common.label.publisher"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:when>
                     <c:otherwise>
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_publisher&order_dir=asc">
-                            <fmt:message key="books.common.label.publisher"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_publisher&order_dir=asc">
+                                    <fmt:message key="books.common.label.publisher"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_publisher&order_dir=asc">
+                                    <fmt:message key="books.common.label.publisher"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
                     <th>
-                        <a href="controller?command=books-list&order_by=by_publisher&order_dir=asc">
-                            <fmt:message key="books.common.label.publisher"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_publisher&order_dir=asc">
+                                    <fmt:message key="books.common.label.publisher"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_publisher&order_dir=asc">
+                                    <fmt:message key="books.common.label.publisher"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
@@ -181,28 +306,60 @@
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_pages&order_dir=desc">
-                            <fmt:message key="books.common.label.pages"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_pages&order_dir=desc">
+                                    <fmt:message key="books.common.label.pages"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_pages&order_dir=desc">
+                                    <fmt:message key="books.common.label.pages"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </th>
                     </c:when>
                     <c:otherwise>
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_pages&order_dir=asc">
-                            <fmt:message key="books.common.label.pages"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_pages&order_dir=asc">
+                                    <fmt:message key="books.common.label.pages"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_pages&order_dir=asc">
+                                    <fmt:message key="books.common.label.pages"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
                     <th>
-                        <a href="controller?command=books-list&order_by=by_pages&order_dir=asc">
-                            <fmt:message key="books.common.label.pages"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_pages&order_dir=asc">
+                                    <fmt:message key="books.common.label.pages"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_pages&order_dir=asc">
+                                    <fmt:message key="books.common.label.pages"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
@@ -212,28 +369,61 @@
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_publication_date&order_dir=desc">
-                            <fmt:message key="books.common.label.publication_date"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_publication_date&order_dir=desc">
+                                    <fmt:message key="books.common.label.publication_date"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_publication_date&order_dir=desc">
+                                    <fmt:message key="books.common.label.publication_date"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </th>
                     </c:when>
                     <c:otherwise>
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_publication_date&order_dir=asc">
-                            <fmt:message key="books.common.label.publication_date"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_publication_date&order_dir=asc">
+                                    <fmt:message key="books.common.label.publication_date"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_publication_date&order_dir=asc">
+                                    <fmt:message key="books.common.label.publication_date"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
                     <th>
-                        <a href="controller?command=books-list&order_by=by_publication_date&order_dir=asc">
-                            <fmt:message key="books.common.label.publication_date"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_publication_date&order_dir=asc">
+                                    <fmt:message key="books.common.label.publication_date"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_publication_date&order_dir=asc">
+                                    <fmt:message key="books.common.label.publication_date"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </th>
                     </c:otherwise>
                     </c:choose>
@@ -243,28 +433,61 @@
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_copies&order_dir=desc">
-                            <fmt:message key="books.common.label.available"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_copies&order_dir=desc">
+                                    <fmt:message key="books.common.label.available"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_copies&order_dir=desc">
+                                    <fmt:message key="books.common.label.available"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:when>
                     <c:otherwise>
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_copies&order_dir=asc">
-                            <fmt:message key="books.common.label.available"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
+
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_copies&order_dir=asc">
+                                    <fmt:message key="books.common.label.available"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_copies&order_dir=asc">
+                                    <fmt:message key="books.common.label.available"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
                     <th>
-                        <a href="controller?command=books-list&order_by=by_copies&order_dir=asc">
-                            <fmt:message key="books.common.label.available"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_copies&order_dir=asc">
+                                    <fmt:message key="books.common.label.available"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_copies&order_dir=asc">
+                                    <fmt:message key="books.common.label.available"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
                     </th>
                     </c:otherwise>
                     </c:choose>
@@ -275,28 +498,60 @@
                     <c:choose>
                     <c:when test="${order_dir eq 'ASC'}">
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_removed&order_dir=desc">
-                            <fmt:message key="books.admin.label.removed"/>
-                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        </a>
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_removed&order_dir=desc">
+                                    <fmt:message key="books.admin.label.removed"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_removed&order_dir=desc">
+                                    <fmt:message key="books.admin.label.removed"/>
+                                    <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:when>
                     <c:otherwise>
                     <th class="active">
-                        <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
-                            <fmt:message key="books.admin.label.removed"/>
-                            <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
-                        </a>
+
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_removed&order_dir=asc">
+                                    <fmt:message key="books.admin.label.removed"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
+                                    <fmt:message key="books.admin.label.removed"/>
+                                    <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
                     </c:when>
                     <c:otherwise>
                     <th>
-                        <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
-                            <fmt:message key="books.admin.label.removed"/>
-                            <i class="fa fa-sort" aria-hidden="true"></i>
-                        </a>
+
+                        <c:choose>
+                            <c:when test="${searchContent != null}">
+                                <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&order_by=by_removed&order_dir=asc">
+                                    <fmt:message key="books.admin.label.removed"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="controller?command=books-list&order_by=by_removed&order_dir=asc">
+                                    <fmt:message key="books.admin.label.removed"/>
+                                    <i class="fa fa-sort" aria-hidden="true"></i>
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </th>
                     </c:otherwise>
                     </c:choose>
@@ -323,8 +578,9 @@
                     </td>
                     <td> ${booksList.publisherTitle} </td>
                     <td> ${booksList.pageNumber} </td>
-                    <td> ${booksList.publicationDate} </td>
-                    <td>
+                    <td> ${custom:formatDateTime(booksList.publicationDate,"dd MMM yyyy", language)} </td>
+
+                <td>
                             ${booksList.copies}
                             <%--                        <c:choose>--%>
                             <%--                            <c:when test="${booksList.copies gt 0}">--%>

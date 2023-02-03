@@ -95,8 +95,8 @@
                     </c:if>
                     <td> ${orders.bookTitle} </td>
 
-                    <td> ${custom:formatDateTime(orders.orderStartDate,"dd MMM yyyy hh:mm", language)} </td>
-                    <td> ${custom:formatDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
+                    <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy hh:mm", language)} </td>
+                    <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
 
 
                     <c:choose>
@@ -109,7 +109,7 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${orders.returnDate != null}">
-                            <td> ${custom:formatDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
+                            <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
                         </c:when>
                         <c:when test="${orders.returnDate == null and orders.fine != 0.0}">
                             <td><fmt:message key="orders.common.returned.overdue"/></td>
