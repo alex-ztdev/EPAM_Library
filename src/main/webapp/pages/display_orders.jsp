@@ -95,8 +95,8 @@
                     </c:if>
                     <td> ${orders.bookTitle} </td>
 
-                    <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy hh:mm", language)} </td>
-                    <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
+                    <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>
+                    <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:mm", language)} </td>
 
 
                     <c:choose>
