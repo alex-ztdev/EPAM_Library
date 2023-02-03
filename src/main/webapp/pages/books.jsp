@@ -680,7 +680,7 @@
                         <a href="controller?command=search-book&search_by=${requestScope.search_by}&search=${searchContent}&page=${requestScope.page - 1}&order_by=${order_by}&order_dir=${order_dir}">&laquo;</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="controller?command=books-list&page=${requestScope.page - 1}&order_by=${order_by}&order_dir=${order_dir}">&laquo;</a>s
+                        <a href="controller?command=books-list&page=${requestScope.page - 1}&order_by=${order_by}&order_dir=${order_dir}">&laquo;</a>
                     </c:otherwise>
                 </c:choose>
             </c:if>
