@@ -169,5 +169,16 @@ public interface BookQueries {
             FETCH NEXT ? ROWS ONLY
             """;
 
+    //language=TSQL
+    String COUNT_FIND_BY_AUTHOR = """
+            SELECT
+            	COUNT(Books.id)
+            FROM Books
+            INNER JOIN Authors A on Books.author_id = A.id
+            INNER JOIN Storage S on Books.id = S.book_id
+            WHERE  (A.first_name +' ' + A.second_name) LIKE ?
+            """;
+    //language=TSQL
+    String COUNT_FIND_BY_AUTHOR_INCLUDE_REMOVED = COUNT_FIND_BY_AUTHOR + "AND isRemoved=0";
 
 }

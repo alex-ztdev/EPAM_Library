@@ -106,7 +106,7 @@ public class SearchBookCommand implements Command {
                         orderDir, includeRemoved
                 );
 
-                totalRecords = bookService.countByAuthor(searchContent, includeRemoved);
+                totalRecords = bookService.countFoundByAuthor(searchContent, includeRemoved);
             }
 
             logger.log(Level.DEBUG, "Found books: " + booksList);
