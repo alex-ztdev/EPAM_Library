@@ -38,4 +38,7 @@ public interface BookDAO {
     void decrementBookQuantity(long id) throws DaoException;
 
     void incrementBookQuantity(long id) throws DaoException;
+
+
+    List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws DaoException;
 }

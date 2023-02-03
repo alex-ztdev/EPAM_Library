@@ -61,7 +61,7 @@ public interface BookQueries {
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
-  //language=TSQL
+    //language=TSQL
     String FIND_ALL_BOOKS_PAGINATION = FIND_ALL_BOOKS + """
             INNER JOIN Storage S on Books.id = S.book_id
             ORDER BY %s %s
@@ -72,9 +72,9 @@ public interface BookQueries {
 
     //language=TSQL
     String COUNT_ALL_BOOK_RECORDS = """
-    SELECT COUNT(Books.id) FROM Books
-    INNER JOIN Storage S on Books.id = S.book_id
-    """;
+            SELECT COUNT(Books.id) FROM Books
+            INNER JOIN Storage S on Books.id = S.book_id
+            """;
 
     //language=TSQL
     String COUNT_NOT_REMOVED_BOOK_RECORDS = COUNT_ALL_BOOK_RECORDS + "WHERE isRemoved=0";
@@ -120,5 +120,21 @@ public interface BookQueries {
     //language=TSQL
     String INCREMENT_QUANTITY = """
             UPDATE Storage SET quantity = quantity + 1 WHERE book_id =?
+            """;
+    //language=TSQL
+    String FIND_BY_TITLE_INCLUDE_REMOVED = FIND_ALL_BOOKS + """
+            INNER JOIN Storage S on Books.id = S.book_id
+            WHERE  Books.title LIKE ?
+            ORDER BY %s %s
+            OFFSET ? ROWS
+            FETCH NEXT ? ROWS ONLY
+            """;
+    //language=TSQL
+    String FIND_BY_TITLE = FIND_ALL_BOOKS + """
+            INNER JOIN Storage S on Books.id = S.book_id
+            WHERE isRemoved=0 AND  Books.title LIKE ?
+            ORDER BY %s %s
+            OFFSET ? ROWS
+            FETCH NEXT ? ROWS ONLY
             """;
 }

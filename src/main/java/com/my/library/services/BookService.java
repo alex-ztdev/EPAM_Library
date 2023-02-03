@@ -31,5 +31,9 @@ public interface BookService extends Service<Book> {
 
     void decrementBookQuantity(long id) throws ServiceException;
     void incrementBookQuantity(long id) throws ServiceException;
+
+    List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws ServiceException;
+
+    int countFoundByTitle(String title, boolean includeRemoved) throws ServiceException;
 }
 

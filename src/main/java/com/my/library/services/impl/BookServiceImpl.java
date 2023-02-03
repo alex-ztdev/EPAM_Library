@@ -199,6 +199,21 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws ServiceException {
+        try {
+           return bookDAO.findByTitle(title, start, offset, orderBy, dir, includeRemoved);
+        } catch (DaoException e) {
+            throw new ServiceException( "BookServiceImpl/ error while executing findByTitle", e);
+        }
+    }
+
+    @Override
+    public int countFoundByTitle(String title, boolean includeRemoved) throws ServiceException {
+        return 0;
+
+    }
+
+    @Override
     public void save(Book book) throws ServiceException {
         try {
             bookDAO.save(book);

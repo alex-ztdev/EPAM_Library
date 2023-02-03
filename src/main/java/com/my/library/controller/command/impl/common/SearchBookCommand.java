@@ -85,28 +85,28 @@ public class SearchBookCommand implements Command {
 
         boolean includeRemoved = user != null && user.getRole() == UserRole.ADMIN;
 
-        try {
-            List<Book> booksList = bookService.findAll(
-                    (currPage - 1) * RECORDS_PER_PAGE,
-                    RECORDS_PER_PAGE, orderBy,
-                    orderDir, includeRemoved
-            );
+//        try {
+//            List<Book> booksList = bookService.findByTitle(
+//                    (currPage - 1) * RECORDS_PER_PAGE,
+//                    RECORDS_PER_PAGE, orderBy,
+//                    orderDir, includeRemoved
+//            );
 
-            List<BookDTO> bookDTOList = new BookMapper(bookService).toDTOList(booksList);
-
-            int totalRecords = bookService.countBooks(includeRemoved);
-            int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
-
-            request.setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
-            request.setAttribute(Parameters.ORDER_DIRECTION, orderDir.toString());
-            request.setAttribute(Parameters.ORDER_BY, orderBy.toString());
-            request.setAttribute(Parameters.GENERAL_TOTAL_PAGES, totalPages);
-            request.setAttribute(Parameters.BOOKS_LIST, bookDTOList);
-            request.setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
-
-        } catch (ServiceException e) {
-            throw new CommandException(e);
-        }
+//            List<BookDTO> bookDTOList = new BookMapper(bookService).toDTOList(booksList);
+//
+//            int totalRecords = bookService.countBooks(includeRemoved);
+//            int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
+//
+//            request.setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
+//            request.setAttribute(Parameters.ORDER_DIRECTION, orderDir.toString());
+//            request.setAttribute(Parameters.ORDER_BY, orderBy.toString());
+//            request.setAttribute(Parameters.GENERAL_TOTAL_PAGES, totalPages);
+//            request.setAttribute(Parameters.BOOKS_LIST, bookDTOList);
+//            request.setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
+//
+//        } catch (ServiceException e) {
+//            throw new CommandException(e);
+//        }
         session.setAttribute(Parameters.PREVIOUS_PAGE,
                 String.format(RedirectToPage.BOOKS_PAGE_WITH_PARAMETERS, orderBy, orderDir, currPage));
 
