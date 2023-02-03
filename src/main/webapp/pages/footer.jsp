@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/footer.css"/>
 <div class="footer">
   <div class="footer-elements">
-    <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="footer.common.about"/></a>
+    <a href="${pageContext.request.contextPath}/controller?command=home"><fmt:message key="footer.common.about"/></a>
     <a href="https://github.com/alex-ztdev">GitHub</a>
   </div>
 </div>
