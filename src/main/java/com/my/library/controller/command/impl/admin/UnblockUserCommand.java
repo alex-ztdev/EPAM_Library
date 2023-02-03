@@ -11,6 +11,7 @@ import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
 import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +27,7 @@ public class UnblockUserCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "UnblockUserCommand invoked");
+        HttpSession session = request.getSession();
         var userIdStr = request.getParameter(Parameters.USER_ID);
 
         var userIdContainer = new LongParser().parseLong(userIdStr);
@@ -36,6 +38,7 @@ public class UnblockUserCommand implements Command {
         long userId = userIdContainer.get();
         try {
             userService.unblockUser(userId);
+
             return new CommandResult(RedirectToPage.DISPLAY_USERS, CommandDirection.REDIRECT);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing UnblockUserCommand", e);
