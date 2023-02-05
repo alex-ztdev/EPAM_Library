@@ -47,9 +47,12 @@ public class AuthenticationFilter implements Filter {
             LibrarianCommands.RETURN_ORDER,
             LibrarianCommands.DISPLAY_READERS,
             LibrarianCommands.DISPLAY_REQUESTED_ORDERS,
-            UserCommands.MY_PROFILE,
-            LibrarianCommands.ACCEPT_ORDER
+            LibrarianCommands.ACCEPT_ORDER,
+            LibrarianCommands.DECLINE_ORDER,
+
+            UserCommands.MY_PROFILE
     );
+
 
     private static final List<String> USER_COMMANDS = List.of(
             //TODO: Add User commands
@@ -78,7 +81,8 @@ public class AuthenticationFilter implements Filter {
             LibrarianCommands.DISPLAY_USERS_ORDERS,
             LibrarianCommands.DISPLAY_REQUESTED_ORDERS,
             LibrarianCommands.RETURN_ORDER,
-            LibrarianCommands.ACCEPT_ORDER
+            LibrarianCommands.ACCEPT_ORDER,
+            LibrarianCommands.DECLINE_ORDER
 
     );
 

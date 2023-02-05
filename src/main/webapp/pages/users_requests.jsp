@@ -130,7 +130,7 @@
                                     </td>
                                     <td class="decline-order">
                                         <div class="decline-order2">
-                                            <a href="${pageContext.request.contextPath}/controller?command=lib-cancel-order&order_id=${orders.orderId}" >
+                                            <a href="${pageContext.request.contextPath}/controller?command=lib-decline-order&order_id=${orders.orderId}" >
                                                 <fmt:message key="orders.common.action.decline"/>
                                             </a>
                                         </div>

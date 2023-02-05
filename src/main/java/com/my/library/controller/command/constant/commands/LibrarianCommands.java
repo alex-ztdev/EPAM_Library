@@ -9,4 +9,5 @@ public interface LibrarianCommands {
     String DISPLAY_REQUESTED_ORDERS = "display-users-requested-orders";
 
     String ACCEPT_ORDER = "lib-accept-order";
+    String DECLINE_ORDER = "lib-decline-order";
 }
