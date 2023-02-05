@@ -8,6 +8,7 @@ import com.my.library.controller.command.constant.parameters.OrderParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.TransactionManager;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
@@ -62,6 +63,7 @@ public class OrderBookCommand implements Command {
             orderToSave.setBookId(bookId);
             orderToSave.setUserId(user.getUserId());
             orderToSave.setOnSubscription(onSubscription);
+            orderToSave.setOrderStatus(OrderStatus.PROCESSING);
 
             if (bookService.getQuantity(bookId) <= 0) {
                 logger.log(Level.DEBUG, "OrderBookCommand: books quantity is 0 or less: redirect to error page");
