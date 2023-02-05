@@ -123,18 +123,20 @@
                     <td>${orders.fine}</td>
 
                     <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                        <td>
+
                         <c:choose>
                             <c:when test="${empty orders.returnDate}">
-                                <a href="${pageContext.request.contextPath}/controller?command=return-order&order_id=${orders.orderId}">
-                                    <fmt:message key="librarian.orders.return"/>
-                                </a>
+                                <td class="return-book-td">
+                                    <a href="${pageContext.request.contextPath}/controller?command=return-order&order_id=${orders.orderId}">
+                                        <fmt:message key="librarian.orders.return"/>
+                                    </a>
+                                </td>
                             </c:when>
                             <c:otherwise>
-                                <fmt:message key="librarian.orders.already.returned"/>
+                                <td><fmt:message key="librarian.orders.already.returned"/></td>
                             </c:otherwise>
                         </c:choose>
-                        </td>
+
                     </c:if>
                     </tr>
                 </c:forEach>
