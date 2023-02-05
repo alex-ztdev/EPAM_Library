@@ -1,5 +1,7 @@
 package com.my.library.entities;
 
+import com.my.library.dao.constants.OrderStatus;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -10,16 +12,21 @@ public class Order {
     private LocalDateTime orderStartDate;
     private LocalDateTime orderEndDate;
     private LocalDateTime returnDate;
+
+    private OrderStatus orderStatus;
     private boolean onSubscription;
 
     public Order() {
     }
 
-    public Order(Long userId, Long bookId, LocalDateTime orderStartDate, LocalDateTime orderEndDate, boolean onSubscription) {
+    public Order(Long orderId, Long userId, Long bookId, LocalDateTime orderStartDate, LocalDateTime orderEndDate, LocalDateTime returnDate, OrderStatus orderStatus, boolean onSubscription) {
+        this.orderId = orderId;
         this.userId = userId;
         this.bookId = bookId;
         this.orderStartDate = orderStartDate;
         this.orderEndDate = orderEndDate;
+        this.returnDate = returnDate;
+        this.orderStatus = orderStatus;
         this.onSubscription = onSubscription;
     }
 
@@ -71,54 +78,19 @@ public class Order {
         this.returnDate = returnDate;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     public boolean isOnSubscription() {
         return onSubscription;
     }
 
     public void setOnSubscription(boolean onSubscription) {
         this.onSubscription = onSubscription;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Order order = (Order) o;
-
-        if (onSubscription != order.onSubscription) return false;
-        if (orderId != null ? !orderId.equals(order.orderId) : order.orderId != null) return false;
-        if (userId != null ? !userId.equals(order.userId) : order.userId != null) return false;
-        if (bookId != null ? !bookId.equals(order.bookId) : order.bookId != null) return false;
-        if (orderStartDate != null ? !orderStartDate.equals(order.orderStartDate) : order.orderStartDate != null)
-            return false;
-        if (orderEndDate != null ? !orderEndDate.equals(order.orderEndDate) : order.orderEndDate != null) return false;
-        return returnDate != null ? returnDate.equals(order.returnDate) : order.returnDate == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = orderId != null ? orderId.hashCode() : 0;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (bookId != null ? bookId.hashCode() : 0);
-        result = 31 * result + (orderStartDate != null ? orderStartDate.hashCode() : 0);
-        result = 31 * result + (orderEndDate != null ? orderEndDate.hashCode() : 0);
-        result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
-        result = 31 * result + (onSubscription ? 1 : 0);
-        return result;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId=" + orderId +
-                ", userId=" + userId +
-                ", bookId=" + bookId +
-                ", orderStartDate=" + orderStartDate +
-                ", orderEndDate=" + orderEndDate +
-                ", returnDate=" + returnDate +
-                ", onSubscription=" + onSubscription +
-                '}';
     }
 }
