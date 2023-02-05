@@ -38,10 +38,10 @@
         <div class="top-row">
             <c:choose>
                 <c:when test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                    <p class="users-orders-title"><fmt:message key="admin.orders.orders.title"/></p>
+                    <p class="users-orders-title"><fmt:message key="admin.orders.requests.title"/></p>
                 </c:when>
                 <c:otherwise>
-                    <p class="users-orders-title"><fmt:message key="user.orders.orders.title"/></p>
+                    <p class="users-orders-title"><fmt:message key="my.orders.requests.title"/></p>
                     <c:if test="${not empty requestScope.msg}">
                         <p class="success-msg"><fmt:message key="user.orders.success.msg"/></p>
                     </c:if>
@@ -64,26 +64,23 @@
                     <th><fmt:message key="orders.common.order.start.date"/></th>
                     <th><fmt:message key="orders.common.order.end.date"/></th>
                     <th><fmt:message key="orders.common.order.place"/></th>
-                    <%--                    <th><fmt:message key="orders.common.returned"/></th>--%>
-                    <%--                    <th><fmt:message key="orders.common.fine"/></th>--%>
                     <th><fmt:message key="orders.common.status"/></th>
 
 
                 </tr>
                 <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
 
-                    <%--                    <c:choose>--%>
-                    <%--                        <c:when test="${orders.fine != 0.0 and orders.returnDate == null}">--%>
-                    <%--                            <tr class="overdue-tr" style="background: #d72d2d;">--%>
-                    <%--                        </c:when>--%>
-                    <%--                        <c:when test="${orders.returnDate != null}">--%>
-
-                    <%--                            <tr class="returned-tr" style="background: #18a223;">--%>
-                    <%--                        </c:when>--%>
-                    <%--                        <c:otherwise>--%>
-                    <%--                            <tr>--%>
-                    <%--                        </c:otherwise>--%>
-                    <%--                    </c:choose>--%>
+                    <c:choose>
+                        <c:when test="${orders.orderStatus eq 'CANCELED'}">
+                            <tr class="overdue-tr" style="background: #d72d2d;">
+                        </c:when>
+                        <c:when test="${orders.orderStatus eq 'ACCEPTED'}">
+                            <tr class="returned-tr" style="background: #18a223;">
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                        </c:otherwise>
+                    </c:choose>
 
                     <tr>
                         <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
@@ -125,24 +122,20 @@
                             <c:choose>
                                 <c:when test="${orders.orderStatus eq 'PROCESSING'}">
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/controller?command=admin-cancel-order&order_id=${orders.orderId}">
-                                            <fmt:message key="orders.common.action.cancel"/>
-                                        </a>
+                                        <div class="accept-order">
+                                            <a href="${pageContext.request.contextPath}/controller?command=admin-accept-order&order_id=${orders.orderId}">
+                                                <fmt:message key="orders.common.action.accept"/>
+                                            </a>
+                                        </div>
                                     </td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/controller?command=admin-accept-order&order_id=${orders.orderId}">
-                                            <fmt:message key="orders.common.action.accept"/>
-                                        </a>
+                                        <div class="cancel-order">
+                                            <a href="${pageContext.request.contextPath}/controller?command=admin-cancel-order&order_id=${orders.orderId}" >
+                                                <fmt:message key="orders.common.action.decline"/>
+                                            </a>
+                                        </div>
                                     </td>
                                 </c:when>
-                                <%--                                <c:when test="${orders.orderStatus}">--%>
-                                <%--                                </c:when>--%>
-                                <c:otherwise>
-                                    <td>${orders.orderStatus}</td>
-                                    >
-                                    <td>${orders.orderStatus}</td>
-                                    >
-                                </c:otherwise>
                             </c:choose>
 
 

@@ -171,6 +171,12 @@ body {
     text-align: center;
 }
 
+.accept-order{
+    display: inline-block;
+    background: rgb(63, 182, 63);
+}
+.cancel-order
+
 /*.overdue-tr{*/
 /*    background: #d72d2d;*/
 /*}*/
