@@ -185,3 +185,7 @@ body {
     background: rgb(220, 57, 57);
 }
 
+.orders_table{
+    border:none;
+}
+
