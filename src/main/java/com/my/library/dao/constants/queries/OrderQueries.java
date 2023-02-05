@@ -10,7 +10,8 @@ public interface OrderQueries {
             	order_start_date,
             	order_end_date,
             	return_date,
-            	on_subscription
+            	on_subscription,
+            	status
             FROM Orders
             """;
     //language=TSQL

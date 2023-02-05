@@ -2,6 +2,8 @@ package com.my.library.dao.impl;
 
 import com.my.library.dao.AbstractDao;
 import com.my.library.dao.OrderDAO;
+import com.my.library.dao.builder.Builder;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.dao.constants.columns.OrdersColumns;
 import com.my.library.dao.constants.queries.OrderQueries;
 import com.my.library.entities.Order;
@@ -53,6 +55,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             order.setOrderEndDate(resultSet.getObject(OrdersColumns.SUBSCRIPTION_END_DATE, LocalDateTime.class));
             order.setReturnDate(resultSet.getObject(OrdersColumns.RETURN_DATE, LocalDateTime.class));
             order.setOnSubscription(resultSet.getBoolean(OrdersColumns.ON_SUBSCRIPTION));
+            order.setOrderStatus(OrderStatus.values()[(resultSet.getInt(OrdersColumns.STATUS))-1]);
 
             return order;
         } catch (SQLException e) {
