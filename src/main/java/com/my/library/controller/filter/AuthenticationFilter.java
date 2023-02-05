@@ -36,7 +36,8 @@ public class AuthenticationFilter implements Filter {
             GeneralCommands.SORT_BOOKS,
             GeneralCommands.HOME,
             GeneralCommands.NOT_AUTHORIZED,
-            GeneralCommands.UNSUPPORTED_OPERATION
+            GeneralCommands.UNSUPPORTED_OPERATION,
+            GeneralCommands.ERROR_PAGE
     );
 
 

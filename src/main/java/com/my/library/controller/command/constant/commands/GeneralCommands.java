@@ -48,4 +48,6 @@ public interface GeneralCommands {
 
     String NOT_AUTHORIZED = "not-authorized";
     String UNSUPPORTED_OPERATION = "unsupported-operation";
+    String ERROR_PAGE = "error-page";
+
 }

@@ -44,7 +44,7 @@ public class LibraryController extends HttpServlet {
 
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Command exception while processingRequest", e);
-            response.sendRedirect(Pages.ERROR_PAGE);
+            response.sendRedirect(RedirectToPage.ERROR_PAGE);
         }
     }
 

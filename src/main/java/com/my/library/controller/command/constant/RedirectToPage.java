@@ -27,4 +27,6 @@ public interface RedirectToPage {
     String DISPLAY_USERS_REQUESTS_WITH_PARAMETERS = "/controller?command=display-users-requested-orders&page=%s";
     String UNSUPPORTED_OPERATION = "/controller?command=unsupported-operation";
 
+    String ERROR_PAGE = "/controller?command=error-page";
+
 }
