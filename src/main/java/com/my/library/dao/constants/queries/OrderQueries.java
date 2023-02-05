@@ -88,8 +88,8 @@ public interface OrderQueries {
     //language=TSQL
     String FIND_ORDERS_BY_STATUS_PAGINATION = FIND_ALL_ORDERS + """
             INNER JOIN Users U on U.id = Orders.user_id
-            WHERE U.status_id !=2 and Orders.status=?
-            ORDER BY status
+            WHERE U.status_id !=2 and Orders.status in (?, ? ,?)
+            ORDER BY return_date, order_end_date, status
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
@@ -98,7 +98,7 @@ public interface OrderQueries {
     String COUNT_ORDERS_BY_STATUS = """
             SELECT COUNT(*) FROM Orders
             INNER JOIN Users U on U.id = Orders.user_id
-            WHERE U.status_id != 2 and status=?
+            WHERE U.status_id != 2 and Orders.status in (?, ? ,?)
             """;
 
 }

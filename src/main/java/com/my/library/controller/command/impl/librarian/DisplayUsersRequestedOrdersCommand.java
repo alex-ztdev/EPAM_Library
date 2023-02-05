@@ -65,9 +65,10 @@ public class DisplayUsersRequestedOrdersCommand implements Command {
             List<Order> orderList = orderService.findAllByStatus(
                     (currPage - 1) * RECORDS_PER_PAGE,
                     RECORDS_PER_PAGE,
-                    OrderStatus.PROCESSING);
+                    OrderStatus.PROCESSING,
+                    OrderStatus.REJECTED);
 
-            int totalRecords = orderService.countOrdersByStatus(OrderStatus.PROCESSING);
+            int totalRecords = orderService.countOrdersByStatus(OrderStatus.PROCESSING, OrderStatus.REJECTED);
 
             logger.log(Level.DEBUG, "DisplayUsersRequestedOrdersCommand/ total orders: " + totalRecords);
 

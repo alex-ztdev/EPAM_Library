@@ -176,7 +176,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAllByStatus(int start, int offset, OrderStatus orderStatus) throws ServiceException {
+    public List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws ServiceException {
+        if (orderStatus.length == 0 || orderStatus.length > 3) {
+            throw new ServiceException("Error while executing findAllByStatus method: orderStatus array must contain from one to three elements");
+        }
         try {
             return orderDAO.findAllByStatus(start, offset, orderStatus);
         } catch (DaoException e) {
@@ -186,7 +189,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int countOrdersByStatus(OrderStatus orderStatus) throws ServiceException {
+    public int countOrdersByStatus(OrderStatus... orderStatus) throws ServiceException {
+        if (orderStatus.length == 0 || orderStatus.length > 3) {
+            throw new ServiceException("Error while executing findAllByStatus method: orderStatus array must contain from one to three elements");
+        }
         try {
             return orderDAO.countOrdersByStatus(orderStatus);
         } catch (DaoException e) {

@@ -6,6 +6,7 @@ import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.dto.OrderDTO;
 import com.my.library.dto.mapper.OrderMapper;
 import com.my.library.entities.Order;
@@ -21,7 +22,9 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.util.PropertySource;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class DisplayUsersOrdersCommand implements Command {
@@ -52,11 +55,17 @@ public class DisplayUsersOrdersCommand implements Command {
         }
 
         try {
-            List<Order> orderList = orderService.findAll(
+            List<Order> orderList = orderService.findAllByStatus(
                     (currPage - 1) * RECORDS_PER_PAGE,
-                    RECORDS_PER_PAGE);
+                    RECORDS_PER_PAGE,
+                    OrderStatus.ACCEPTED,
+                    OrderStatus.REJECTED
+            );
+//            var comparator = Comparator.comparing(Order::getReturnDate, Comparator.nullsFirst(Comparator.naturalOrder())).
+//                    thenComparing(Order::getOrderEndDate);
+//            orderList.sort(comparator);
 
-            int totalRecords = orderService.countTotalOrders();
+            int totalRecords = orderService.countOrdersByStatus(OrderStatus.ACCEPTED, OrderStatus.REJECTED);
 
             logger.log(Level.DEBUG, "DisplayUsersOrdersCommand/ total orders: " + totalRecords);
 

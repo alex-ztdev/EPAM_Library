@@ -12,10 +12,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -200,12 +197,13 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
     }
 
     @Override
-    public List<Order> findAllByStatus(int start, int offset, OrderStatus orderStatus) throws DaoException {
+    public List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws DaoException {
         List<Order> orderList = new ArrayList<>();
 
+
+
         try (var statement = connection.prepareStatement(OrderQueries.FIND_ORDERS_BY_STATUS_PAGINATION)) {
-            int k = 1;
-            statement.setLong(k++, orderStatus.ordinal() + 1);
+            int k = setOrderStatuses(statement, orderStatus);
             statement.setInt(k++, start);
             statement.setInt(k, offset);
 
@@ -221,9 +219,9 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
     }
 
     @Override
-    public int countOrdersByStatus(OrderStatus orderStatus) throws DaoException {
+    public int countOrdersByStatus(OrderStatus... orderStatus) throws DaoException {
         try (var statement = connection.prepareStatement(OrderQueries.COUNT_ORDERS_BY_STATUS)) {
-            statement.setLong(1, orderStatus.ordinal()+1);
+            setOrderStatuses(statement, orderStatus);
 
             try (var rs = statement.executeQuery()) {
                 rs.next();
@@ -233,4 +231,18 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             throw new DaoException(e);
         }
     }
+
+    private int setOrderStatuses(PreparedStatement statement, OrderStatus[] orderStatus) throws SQLException {
+        int k = 1;
+        int len = orderStatus.length;
+        for (int i = 0; i < len; i++) {
+            statement.setLong(k++, orderStatus[i].ordinal() + 1);
+        }
+        while (len < 3) {
+            statement.setLong(k++, orderStatus[0].ordinal() + 1);
+            len++;
+        }
+        return k;
+    }
+
 }
