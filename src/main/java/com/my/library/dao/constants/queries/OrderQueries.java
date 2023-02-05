@@ -4,14 +4,14 @@ public interface OrderQueries {
     //language=TSQL
     String FIND_ALL_ORDERS = """
             SELECT
-            	id,
-            	user_id,
-            	book_id,
-            	order_start_date,
-            	order_end_date,
-            	return_date,
-            	on_subscription,
-            	status
+            	Orders.id,
+            	Orders.user_id,
+            	Orders.book_id,
+            	Orders.order_start_date,
+            	Orders.order_end_date,
+            	Orders.return_date,
+            	Orders.on_subscription,
+            	Orders.status
             FROM Orders
             """;
     //language=TSQL
@@ -25,13 +25,13 @@ public interface OrderQueries {
     String UPDATE_ORDER = """
             UPDATE Orders
             SET
-            user_id = ?,
-            book_id = ?,
-            order_start_date = ?,
-            order_end_date = ?,
-            return_date=?,
-            on_subscription=?,
-            status=?
+            Orders.user_id = ?,
+            Orders.book_id = ?,
+            Orders.order_start_date = ?,
+            Orders.order_end_date = ?,
+            Orders.return_date=?,
+            Orders.on_subscription=?,
+            Orders.status=?
             WHERE id =?
             """;
     //language=TSQL
@@ -40,11 +40,15 @@ public interface OrderQueries {
             WHERE id = ?
             """;
     //language=TSQL
-    String FIND_ALL_USER_ORDERS = FIND_ALL_ORDERS + "WHERE user_id = ?";
+    String FIND_ALL_USER_ORDERS = FIND_ALL_ORDERS + """
+            INNER JOIN Users U on U.id = Orders.user_id
+            WHERE user_id = ? and  U.status_id = 1
+            """;
 
     //language=TSQL
     String FIND_ALL_USER_ORDERS_PAGINATION = FIND_ALL_ORDERS + """
-            WHERE user_id = ?
+            INNER JOIN Users U on U.id = Orders.user_id
+            WHERE user_id = ? and  U.status_id !=2
             ORDER BY  return_date, order_end_date
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
@@ -52,6 +56,8 @@ public interface OrderQueries {
 
     //language=TSQL
     String FIND_ALL_ORDERS_PAGINATION = FIND_ALL_ORDERS + """
+            INNER JOIN Users U on U.id = Orders.user_id
+            WHERE U.status_id !=2
             ORDER BY  return_date, order_end_date
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
@@ -59,10 +65,12 @@ public interface OrderQueries {
 
     //language=TSQL
     String COUNT_ALL_ORDERS = """
-            SELECT COUNT(id) FROM Orders
+            SELECT COUNT(*) FROM Orders
+            INNER JOIN Users U on U.id = Orders.user_id
+            WHERE U.status_id !=2
             """;
     //language=TSQL
-    String COUNT_USERS_ORDERS = COUNT_ALL_ORDERS + " WHERE user_id = ?";
+    String COUNT_USERS_ORDERS = COUNT_ALL_ORDERS + "and user_id = ?";
 
     //language=TSQL
     String SET_RETURN_DATE = """
