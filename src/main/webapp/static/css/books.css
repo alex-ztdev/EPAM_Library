@@ -181,18 +181,10 @@ body {
     text-align: center;
 }
 
-/*.overdue-tr{*/
-/*    background: #d72d2d;*/
-/*}*/
-/*.overdue-tr:hover{*/
-/*    background: #ef3535;*/
-/*}*/
-
-/*.returned-tr{*/
-/*   background: #18a223;*/
-/*}*/
-/*.returned-tr:hover{*/
-/*    background: #25cc33;*/
-/*}*/
-
+.return-book-td {
+    background: rgb(57, 164, 57);
+}
+.return-book-td:hover {
+    background: rgb(76, 217, 76);
+}
 
