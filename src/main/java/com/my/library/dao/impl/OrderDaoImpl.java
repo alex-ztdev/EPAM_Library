@@ -190,4 +190,15 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             throw new DaoException(e);
         }
     }
+
+    @Override
+    public boolean acceptOrder(long id) throws DaoException {
+        try (var statement = connection.prepareStatement(OrderQueries.CHANGE_STATUS)) {
+            statement.setInt(1, OrderStatus.ACCEPTED.ordinal() + 1);
+            statement.setLong(2, id);
+            return statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
 }

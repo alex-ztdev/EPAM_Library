@@ -45,7 +45,7 @@ public class CommandFactory implements AutoCloseable {
             case GeneralCommands.REGISTRATION -> res = new RegisterCommand(serviceFactory.getUserService());
             case GeneralCommands.SEARCH_BOOK -> res = new SearchBookCommand(serviceFactory.getBookService());
             case GeneralCommands.UNSUPPORTED_OPERATION -> res = new UnsupportedOperationCommand();
-            
+
             case GeneralCommands.BOOKS_LIST -> res = new DisplayBooksListCommand(serviceFactory.getBookService());
             case AdminCommands.REMOVE_BOOK -> res = new RemoveBookCommand(serviceFactory.getBookService());
             case AdminCommands.RESTORE_BOOK -> res = new RestoreBookCommand(serviceFactory.getBookService());
@@ -73,7 +73,7 @@ public class CommandFactory implements AutoCloseable {
                     res = new ReturnOrderCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService(), new TransactionManager(connection));
             case LibrarianCommands.DISPLAY_READERS -> res = new DisplayReadersCommand(serviceFactory.getUserService());
             case LibrarianCommands.DISPLAY_REQUESTED_ORDERS -> res = new DisplayUsersRequestedOrdersCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), serviceFactory.getUserService());
-            case LibrarianCommands.ACCEPT_ORDER -> res = new AcceptOrderCommand();
+            case LibrarianCommands.ACCEPT_ORDER -> res = new AcceptOrderCommand(serviceFactory.getOrderService());
             default -> res = new DefaultCommand();
         }
         return res;

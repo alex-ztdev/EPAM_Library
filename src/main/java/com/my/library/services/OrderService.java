@@ -24,6 +24,7 @@ public interface OrderService extends Service<Order> {
 
     void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException;
 
+    boolean acceptOrder(long id) throws ServiceException;
 }
 
 

@@ -166,7 +166,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public boolean acceptOrder(long id) throws ServiceException {
+        try {
+            return orderDAO.acceptOrder(id);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing acceptOrder method", e);
+        }
+    }
 
+
+    @Override
     public boolean update(Order order) throws ServiceException {
         throw new UnsupportedOperationException();
     }

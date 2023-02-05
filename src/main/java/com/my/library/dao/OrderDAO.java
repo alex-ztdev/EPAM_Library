@@ -25,4 +25,5 @@ public interface OrderDAO {
 
     int countTotalOrders() throws DaoException;
 
+    boolean acceptOrder(long id) throws DaoException;
 }

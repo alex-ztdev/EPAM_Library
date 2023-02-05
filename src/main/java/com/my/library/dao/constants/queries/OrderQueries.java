@@ -78,5 +78,10 @@ public interface OrderQueries {
             return_date=?
             WHERE id=?
             """;
-
+    //language=TSQL
+    String CHANGE_STATUS = """
+            UPDATE Orders SET
+            Orders.status = ?
+            WHERE id = ?
+            """;
 }
