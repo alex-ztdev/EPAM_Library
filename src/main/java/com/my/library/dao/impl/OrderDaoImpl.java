@@ -90,7 +90,8 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             statement.setObject(k++, order.getOrderStartDate());
             statement.setObject(k++, order.getOrderEndDate());
             statement.setObject(k++, order.getReturnDate());
-            statement.setBoolean(k, order.isOnSubscription());
+            statement.setBoolean(k++, order.isOnSubscription());
+            statement.setInt(k, order.getOrderStatus().ordinal()+1);
 
             statement.executeUpdate();
 

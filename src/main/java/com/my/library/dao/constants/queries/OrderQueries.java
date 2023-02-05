@@ -18,8 +18,8 @@ public interface OrderQueries {
     String FIND_ORDER_BY_ID = FIND_ALL_ORDERS + "WHERE id=?";
     //language=TSQL
     String INSERT_ORDER = """
-            INSERT INTO Orders (user_id, book_id, order_start_date, order_end_date, return_date, on_subscription)
-            VALUES(?,?,?,?,?,?)
+            INSERT INTO Orders (user_id, book_id, order_start_date, order_end_date, return_date, on_subscription, status)
+            VALUES(?,?,?,?,?,?,?)
             """;
     //language=TSQL
     String UPDATE_ORDER = """
