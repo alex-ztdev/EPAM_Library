@@ -16,6 +16,7 @@ import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
 import com.my.library.services.UserService;
+import com.my.library.utils.IntegerParser;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -51,8 +52,11 @@ public class DisplayUsersRequestedOrdersCommand implements Command {
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
         logger.log(Level.DEBUG, "DisplayUsersRequestedOrdersCommand/ current page: " + reqCurrPage);
 
-        if (reqCurrPage != null && !reqCurrPage.isBlank()) {
-            currPage = Integer.parseInt(reqCurrPage);
+        if (reqCurrPage != null) {
+            var pageContainer = IntegerParser.parseInt(reqCurrPage);
+            if (pageContainer.isPresent()) {
+                currPage = pageContainer.get();
+            }
         }
 
         try {
@@ -62,7 +66,7 @@ public class DisplayUsersRequestedOrdersCommand implements Command {
 
             int totalRecords = orderService.countTotalOrders();
 
-            logger.log(Level.DEBUG, "DisplayUsersOrdersCommand/ total orders: " + totalRecords);
+            logger.log(Level.DEBUG, "DisplayUsersRequestedOrdersCommand/ total orders: " + totalRecords);
 
             var totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
 
@@ -73,9 +77,9 @@ public class DisplayUsersRequestedOrdersCommand implements Command {
             request.setAttribute(Parameters.ORDERS_LIST, orderDTOList);
             request.setAttribute(Parameters.ORDERS_PER_PAGE, RECORDS_PER_PAGE);
 
-            return new CommandResult(Pages.DISPLAY_ORDERS_PAGE, CommandDirection.FORWARD);
+            return new CommandResult(Pages.USERS_REQUESTS, CommandDirection.FORWARD);
         } catch (ServiceException e) {
-            throw new CommandException("Error while executing DisplayUsersOrdersCommand", e);
+            throw new CommandException("Error while executing DisplayUsersRequestedOrdersCommand", e);
         }
     }
 }
