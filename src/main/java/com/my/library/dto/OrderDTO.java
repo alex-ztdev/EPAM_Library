@@ -10,7 +10,7 @@ public class OrderDTO {
     private Long userId;
     private String userName;
     private String bookTitle;
-    private OrderStatus orderStatus;
+    private String orderStatus;
     private LocalDateTime orderStartDate;
     private LocalDateTime orderEndDate;
     private LocalDateTime returnDate;
@@ -26,7 +26,7 @@ public class OrderDTO {
         this.orderEndDate = order.getOrderEndDate();
         this.returnDate = order.getReturnDate();
         this.onSubscription = order.isOnSubscription();
-        this.orderStatus = order.getOrderStatus();
+        this.orderStatus = order.getOrderStatus().toString();
         this.fine = fine;
     }
 
@@ -106,11 +106,11 @@ public class OrderDTO {
         return onSubscription;
     }
 
-    public OrderStatus getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 }

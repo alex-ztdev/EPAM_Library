@@ -64,76 +64,89 @@
                     <th><fmt:message key="orders.common.order.start.date"/></th>
                     <th><fmt:message key="orders.common.order.end.date"/></th>
                     <th><fmt:message key="orders.common.order.place"/></th>
-<%--                    <th><fmt:message key="orders.common.returned"/></th>--%>
-<%--                    <th><fmt:message key="orders.common.fine"/></th>--%>
+                    <%--                    <th><fmt:message key="orders.common.returned"/></th>--%>
+                    <%--                    <th><fmt:message key="orders.common.fine"/></th>--%>
                     <th><fmt:message key="orders.common.status"/></th>
 
 
                 </tr>
                 <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
 
-                    <c:choose>
-                        <c:when test="${orders.fine != 0.0 and orders.returnDate == null}">
-                            <tr class="overdue-tr" style="background: #d72d2d;">
-                        </c:when>
-                        <c:when test="${orders.returnDate != null}">
+                    <%--                    <c:choose>--%>
+                    <%--                        <c:when test="${orders.fine != 0.0 and orders.returnDate == null}">--%>
+                    <%--                            <tr class="overdue-tr" style="background: #d72d2d;">--%>
+                    <%--                        </c:when>--%>
+                    <%--                        <c:when test="${orders.returnDate != null}">--%>
 
-                            <tr class="returned-tr" style="background: #18a223;">
-                        </c:when>
-                        <c:otherwise>
-                            <tr>
-                        </c:otherwise>
-                    </c:choose>
+                    <%--                            <tr class="returned-tr" style="background: #18a223;">--%>
+                    <%--                        </c:when>--%>
+                    <%--                        <c:otherwise>--%>
+                    <%--                            <tr>--%>
+                    <%--                        </c:otherwise>--%>
+                    <%--                    </c:choose>--%>
+
+                    <tr>
+                        <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
+                        <td> ${orders.orderId} </td>
+                        <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
+                            <td>${orders.userId}</td>
+                            <td>${orders.userName}</td>
+                        </c:if>
+                        <td> ${orders.bookTitle} </td>
+
+                        <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>
+                        <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:mm", language)} </td>
 
 
-                    <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
-                    <td> ${orders.orderId} </td>
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                        <td>${orders.userId}</td>
-                        <td>${orders.userName}</td>
-                    </c:if>
-                    <td> ${orders.bookTitle} </td>
-
-                    <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>
-                    <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:mm", language)} </td>
+                        <c:choose>
+                            <c:when test="${orders.onSubscription}">
+                                <td><fmt:message key="orders.common.order.subscription"/></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><fmt:message key="orders.common.order.in.reading.hall"/></td>
+                            </c:otherwise>
+                        </c:choose>
 
 
-                    <c:choose>
-                        <c:when test="${orders.onSubscription}">
-                            <td><fmt:message key="orders.common.order.subscription"/></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><fmt:message key="orders.common.order.in.reading.hall"/></td>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${orders.returnDate != null}">
-                            <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy hh:mm", language)} </td>
-                        </c:when>
-                        <c:when test="${orders.returnDate == null and orders.fine != 0.0}">
-                            <td><fmt:message key="orders.common.returned.overdue"/></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><fmt:message key="orders.common.not.returned"/></td>
-                        </c:otherwise>
-                    </c:choose>
+                        <c:choose>
+                            <c:when test="${orders.orderStatus eq 'CANCELED'}">
+                                <td><fmt:message key="orders.common.status.canceled"/></td>
+                            </c:when>
+                            <c:when test="${orders.orderStatus eq 'ACCEPTED'}">
+                                <td><fmt:message key="orders.common.status.accepted"/></td>
+                            </c:when>
+                            <c:when test="${orders.orderStatus eq 'PROCESSING'}">
+                                <td><fmt:message key="orders.common.status.processing"/></td>
+                            </c:when>
+                        </c:choose>
 
-                    <td>${orders.fine}</td>
+                        <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
 
-                    <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                        <td>
                             <c:choose>
-                                <c:when test="${empty orders.returnDate}">
-                                    <a href="${pageContext.request.contextPath}/controller?command=return-order&order_id=${orders.orderId}">
-                                        <fmt:message key="librarian.orders.return"/>
-                                    </a>
+                                <c:when test="${orders.orderStatus eq 'PROCESSING'}">
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/controller?command=admin-cancel-order&order_id=${orders.orderId}">
+                                            <fmt:message key="orders.common.action.cancel"/>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/controller?command=admin-accept-order&order_id=${orders.orderId}">
+                                            <fmt:message key="orders.common.action.accept"/>
+                                        </a>
+                                    </td>
                                 </c:when>
+                                <%--                                <c:when test="${orders.orderStatus}">--%>
+                                <%--                                </c:when>--%>
                                 <c:otherwise>
-                                    <fmt:message key="librarian.orders.already.returned"/>
+                                    <td>${orders.orderStatus}</td>
+                                    >
+                                    <td>${orders.orderStatus}</td>
+                                    >
                                 </c:otherwise>
                             </c:choose>
-                        </td>
-                    </c:if>
+
+
+                        </c:if>
                     </tr>
                 </c:forEach>
             </table>
