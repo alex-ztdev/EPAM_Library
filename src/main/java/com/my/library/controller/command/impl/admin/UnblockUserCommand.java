@@ -30,7 +30,7 @@ public class UnblockUserCommand implements Command {
         HttpSession session = request.getSession();
         var userIdStr = request.getParameter(Parameters.USER_ID);
 
-        var userIdContainer = new LongParser().parseLong(userIdStr);
+        var userIdContainer = LongParser.parseLong(userIdStr);
         if (userIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "UnblockUserCommand user_id is null or empty! Redirect to ");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);

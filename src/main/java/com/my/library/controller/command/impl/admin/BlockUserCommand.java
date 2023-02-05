@@ -28,7 +28,7 @@ public class BlockUserCommand implements Command {
         logger.log(Level.DEBUG, "BlockUserCommand invoked");
         var userIdStr = request.getParameter(Parameters.USER_ID);
 
-        var userIdContainer = new LongParser().parseLong(userIdStr);
+        var userIdContainer = LongParser.parseLong(userIdStr);
         if (userIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "BlockUserCommand user_id is null or empty! Redirect to ");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);

@@ -34,7 +34,7 @@ public class ChangeRoleCommand implements Command {
         var userIdStr = request.getParameter(Parameters.USER_ID);
 
 
-        var userIdContainer = new LongParser().parseLong(userIdStr);
+        var userIdContainer = LongParser.parseLong(userIdStr);
         if (userIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "user id is null or blank. Redirect to error page");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);

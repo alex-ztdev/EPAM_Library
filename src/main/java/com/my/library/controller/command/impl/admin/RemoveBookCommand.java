@@ -30,7 +30,7 @@ public class RemoveBookCommand implements Command {
 
         logger.log(Level.DEBUG,"RemoveBookCommand: request book_id: " + reqBookId);
 
-        var bookIdContainer = new LongParser().parseLong(reqBookId);
+        var bookIdContainer = LongParser.parseLong(reqBookId);
 
         if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG,"RemoveBookCommand: empty book_id: " + reqBookId);

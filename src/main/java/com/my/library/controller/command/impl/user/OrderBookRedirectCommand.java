@@ -31,7 +31,7 @@ public class OrderBookRedirectCommand implements Command {
         var bookIdString = request.getParameter(Parameters.BOOK_ID);
         HttpSession session = request.getSession();
 
-        var bookIdContainer = new LongParser().parseLong(bookIdString);
+        var bookIdContainer = LongParser.parseLong(bookIdString);
         if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "book id is not a number! Redirect to error page");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);

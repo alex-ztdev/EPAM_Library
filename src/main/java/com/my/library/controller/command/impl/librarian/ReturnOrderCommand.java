@@ -40,7 +40,7 @@ public class ReturnOrderCommand implements Command {
         var orderIdStr = request.getParameter(Parameters.ORDER_ID);
 
 
-        var orderIdContainer = new LongParser().parseLong(orderIdStr);
+        var orderIdContainer = LongParser.parseLong(orderIdStr);
 
         if (orderIdContainer.isEmpty()) {
             //FIXME: change to unsupported command page

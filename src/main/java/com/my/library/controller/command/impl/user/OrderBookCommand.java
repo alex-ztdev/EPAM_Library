@@ -46,7 +46,7 @@ public class OrderBookCommand implements Command {
 
         logger.log(Level.DEBUG, "OrderBookCommand: book_id: " + bookIdStr);
 
-        var bookIdContainer = new LongParser().parseLong(bookIdStr);
+        var bookIdContainer = LongParser.parseLong(bookIdStr);
         if (bookIdContainer.isEmpty() || (!"true".equalsIgnoreCase(onSubscriptionStr) && !"false".equalsIgnoreCase(onSubscriptionStr))) {
             logger.log(Level.DEBUG, "OrderBookCommand: book_id is null: redirect to error page");
             return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);

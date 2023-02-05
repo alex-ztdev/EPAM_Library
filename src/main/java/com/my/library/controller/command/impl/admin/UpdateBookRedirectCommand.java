@@ -47,7 +47,7 @@ public class UpdateBookRedirectCommand implements Command {
         logger.log(Level.DEBUG,"UpdateBookRedirectCommand: request book_id: " + reqBookId);
         session.setAttribute(Parameters.OPERATION_TYPE, Parameters.UPDATE_BOOK);
 
-        var bookIdContainer = new LongParser().parseLong(reqBookId);
+        var bookIdContainer = LongParser.parseLong(reqBookId);
 
         if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "UpdateBookRedirectCommand: empty book_id: " + reqBookId);

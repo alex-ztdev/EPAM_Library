@@ -31,7 +31,7 @@ public class RestoreBookCommand implements Command {
         logger.log(Level.DEBUG,"RestoreBookCommand: request book_id: " + reqBookId);
 
 
-        var bookIdContainer = new LongParser().parseLong(reqBookId);
+        var bookIdContainer =LongParser.parseLong(reqBookId);
 
         if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG,"RestoreBookCommand: empty book_id: " + reqBookId);
