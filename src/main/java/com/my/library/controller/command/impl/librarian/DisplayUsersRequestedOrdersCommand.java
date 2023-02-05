@@ -45,7 +45,7 @@ public class DisplayUsersRequestedOrdersCommand implements Command {
         logger.log(Level.DEBUG, "DisplayUsersRequestedOrdersCommand invoked");
         HttpSession session = request.getSession();
 
-        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_REQUESTS);
+
 
         int currPage = 1;
 
@@ -58,6 +58,7 @@ public class DisplayUsersRequestedOrdersCommand implements Command {
                 currPage = pageContainer.get();
             }
         }
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_REQUESTS_WITH_PARAMETERS.formatted(currPage));
 
         try {
             List<Order> orderList = orderService.findAll(
