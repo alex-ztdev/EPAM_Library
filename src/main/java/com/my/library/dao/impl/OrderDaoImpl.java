@@ -185,16 +185,6 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
         }
     }
 
-    @Override
-    public boolean acceptOrder(long id) throws DaoException {
-        try (var statement = connection.prepareStatement(OrderQueries.CHANGE_STATUS)) {
-            statement.setInt(1, OrderStatus.ACCEPTED.ordinal() + 1);
-            statement.setLong(2, id);
-            return statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
-    }
 
     @Override
     public List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws DaoException {
@@ -231,6 +221,18 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             throw new DaoException(e);
         }
     }
+
+
+    public boolean setOrderStatus(long id, OrderStatus orderStatus) throws DaoException {
+        try (var statement = connection.prepareStatement(OrderQueries.CHANGE_STATUS)) {
+            statement.setInt(1, orderStatus.ordinal() + 1);
+            statement.setLong(2, id);
+            return statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
 
     private int setOrderStatuses(PreparedStatement statement, OrderStatus[] orderStatus) throws SQLException {
         int k = 1;

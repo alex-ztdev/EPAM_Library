@@ -5,6 +5,7 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
@@ -37,7 +38,7 @@ public class AcceptOrderCommand implements Command {
             return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         try {
-            orderService.acceptOrder(orderIdContainer.get());
+            orderService.setOrderStatus(orderIdContainer.get(), OrderStatus.ACCEPTED);
 
             var prev_page = (String)session.getAttribute(Parameters.PREVIOUS_PAGE);
 

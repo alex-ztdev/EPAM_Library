@@ -166,14 +166,6 @@ public class OrderServiceImpl implements OrderService {
         logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder executed successfully ");
     }
 
-    @Override
-    public boolean acceptOrder(long id) throws ServiceException {
-        try {
-            return orderDAO.acceptOrder(id);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while executing acceptOrder method", e);
-        }
-    }
 
     @Override
     public List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws ServiceException {
@@ -197,6 +189,17 @@ public class OrderServiceImpl implements OrderService {
             return orderDAO.countOrdersByStatus(orderStatus);
         } catch (DaoException e) {
             throw new ServiceException("Error while executing countOrdersByStatus method", e);
+        }
+    }
+
+
+
+    @Override
+    public boolean setOrderStatus(long id, OrderStatus orderStatus) throws ServiceException {
+        try {
+            return orderDAO.setOrderStatus(id , orderStatus);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing setOrderStatus method", e);
         }
     }
 

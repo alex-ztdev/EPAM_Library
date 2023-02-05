@@ -25,11 +25,11 @@ public interface OrderService extends Service<Order> {
 
     void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException;
 
-    boolean acceptOrder(long id) throws ServiceException;
-
     List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws ServiceException;
 
     int countOrdersByStatus(OrderStatus... orderStatus) throws ServiceException;
+
+    boolean setOrderStatus(long id, OrderStatus orderStatus) throws ServiceException;
 }
 
 
