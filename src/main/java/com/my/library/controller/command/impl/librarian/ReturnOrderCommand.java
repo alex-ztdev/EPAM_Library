@@ -44,7 +44,7 @@ public class ReturnOrderCommand implements Command {
 
         if (orderIdContainer.isEmpty()) {
             //FIXME: change to unsupported command page
-            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         var orderId = orderIdContainer.get();
 

@@ -47,4 +47,5 @@ public interface GeneralCommands {
     String SORT_BOOKS = "sort_books";
 
     String NOT_AUTHORIZED = "not-authorized";
+    String UNSUPPORTED_OPERATION = "unsupported-operation";
 }

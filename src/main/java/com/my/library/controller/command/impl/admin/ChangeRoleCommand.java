@@ -37,11 +37,11 @@ public class ChangeRoleCommand implements Command {
         var userIdContainer = LongParser.parseLong(userIdStr);
         if (userIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "user id is null or blank. Redirect to error page");
-            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         if (newRoleStr == null || Arrays.stream(UserRole.values()).map(Enum::toString).noneMatch(newRoleStr::equalsIgnoreCase)) {
             logger.log(Level.DEBUG, "Such role doesn't found. Redirect to error page");
-            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
 
         UserRole newUserRole = UserRole.valueOf(newRoleStr.toUpperCase());

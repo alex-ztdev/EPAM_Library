@@ -24,4 +24,6 @@ public interface RedirectToPage {
 
     String SEARCH_BOOK_WITH_PARAMETERS = "/controller?command=search-book&search_by=%s&search=%s&page=%s&order_by=%s&order_dir=%s";
     String DISPLAY_USERS_REQUESTS = "/controller?command=display-users-requested-orders";
+    String UNSUPPORTED_OPERATION = "/controller?command=unsupported-operation";
+
 }

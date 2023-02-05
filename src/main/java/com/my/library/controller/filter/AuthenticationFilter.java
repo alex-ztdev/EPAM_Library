@@ -35,8 +35,10 @@ public class AuthenticationFilter implements Filter {
             GeneralCommands.SEARCH_BOOK,
             GeneralCommands.SORT_BOOKS,
             GeneralCommands.HOME,
-            GeneralCommands.NOT_AUTHORIZED
+            GeneralCommands.NOT_AUTHORIZED,
+            GeneralCommands.UNSUPPORTED_OPERATION
     );
+
 
     private static final List<String> LIBRARIAN_COMMANDS = List.of(
             //TODO: Add Librarian commands

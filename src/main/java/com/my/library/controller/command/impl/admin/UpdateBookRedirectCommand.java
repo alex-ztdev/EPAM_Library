@@ -51,7 +51,7 @@ public class UpdateBookRedirectCommand implements Command {
 
         if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "UpdateBookRedirectCommand: empty book_id: " + reqBookId);
-            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         long bookId = bookIdContainer.get();
 
@@ -63,7 +63,7 @@ public class UpdateBookRedirectCommand implements Command {
             boolean isPresentBook = book.isPresent();
             if (!isPresentBook) {
                 logger.log(Level.DEBUG,"UpdateBookRedirectCommand: Book with such book_id: " + reqBookId + " doesn't found!");
-                return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+                return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
             }
 
             var bookDTO = new BookMapper(bookService).toDTO(book.get(), bookService.getQuantity(bookId), bookService.isRemoved(bookId));

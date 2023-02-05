@@ -68,7 +68,7 @@ public class SearchBookCommand implements Command {
             searchBy = SearchBy.valueOf(searchByStr.toUpperCase());
         } catch (IllegalArgumentException e) {
             logger.log(Level.ERROR, "Error received illegal SEARCH_BY parameter");
-            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
 
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
