@@ -44,7 +44,8 @@ public class AuthenticationFilter implements Filter {
             LibrarianCommands.RETURN_ORDER,
             LibrarianCommands.DISPLAY_READERS,
             LibrarianCommands.DISPLAY_REQUESTED_ORDERS,
-            UserCommands.MY_PROFILE
+            UserCommands.MY_PROFILE,
+            LibrarianCommands.ACCEPT_ORDER
     );
 
     private static final List<String> USER_COMMANDS = List.of(
@@ -73,7 +74,8 @@ public class AuthenticationFilter implements Filter {
             //TODO: remove LibrarianCommands from ADMIN?
             LibrarianCommands.DISPLAY_USERS_ORDERS,
             LibrarianCommands.DISPLAY_REQUESTED_ORDERS,
-            LibrarianCommands.RETURN_ORDER
+            LibrarianCommands.RETURN_ORDER,
+            LibrarianCommands.ACCEPT_ORDER
 
     );
 

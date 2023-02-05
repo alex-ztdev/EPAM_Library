@@ -7,4 +7,6 @@ public interface LibrarianCommands {
 
     String DISPLAY_READERS = "display-readers";
     String DISPLAY_REQUESTED_ORDERS = "display-users-requested-orders";
+
+    String ACCEPT_ORDER = "lib-accept-order";
 }

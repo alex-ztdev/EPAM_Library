@@ -7,10 +7,7 @@ import com.my.library.controller.command.constant.commands.LibrarianCommands;
 import com.my.library.controller.command.constant.commands.UserCommands;
 import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
-import com.my.library.controller.command.impl.librarian.DisplayReadersCommand;
-import com.my.library.controller.command.impl.librarian.DisplayUsersOrdersCommand;
-import com.my.library.controller.command.impl.librarian.DisplayUsersRequestedOrdersCommand;
-import com.my.library.controller.command.impl.librarian.ReturnOrderCommand;
+import com.my.library.controller.command.impl.librarian.*;
 import com.my.library.controller.command.impl.user.DisplayMyOrdersCommand;
 import com.my.library.controller.command.impl.user.MyProfileCommand;
 import com.my.library.controller.command.impl.user.OrderBookCommand;
@@ -75,6 +72,7 @@ public class CommandFactory implements AutoCloseable {
                     res = new ReturnOrderCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService(), new TransactionManager(connection));
             case LibrarianCommands.DISPLAY_READERS -> res = new DisplayReadersCommand(serviceFactory.getUserService());
             case LibrarianCommands.DISPLAY_REQUESTED_ORDERS -> res = new DisplayUsersRequestedOrdersCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), serviceFactory.getUserService());
+            case LibrarianCommands.ACCEPT_ORDER -> res = new AcceptOrderCommand();
             default -> res = new DefaultCommand();
         }
         return res;
