@@ -26,7 +26,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Requests</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/orders.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/requests.css"/>
     <script src="https://kit.fontawesome.com/e83e8567ce.js" crossorigin="anonymous"></script>
     <link rel="icon" href="${pageContext.request.contextPath}/static/img/icon/icon.ico">
 </head>

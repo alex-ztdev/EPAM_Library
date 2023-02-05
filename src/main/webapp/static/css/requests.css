@@ -171,18 +171,17 @@ body {
     text-align: center;
 }
 
-/*.overdue-tr{*/
-/*    background: #d72d2d;*/
-/*}*/
-/*.overdue-tr:hover{*/
-/*    background: #ef3535;*/
-/*}*/
+.accept-order{
+    background: rgb(48, 140, 48);
+}
+.accept-order:hover{
+    background: rgb(63, 182, 63);
+}
+.decline-order {
+    background: rgb(171, 43, 43);
+}
 
-/*.returned-tr{*/
-/*   background: #18a223;*/
-/*}*/
-/*.returned-tr:hover{*/
-/*    background: #25cc33;*/
-/*}*/
-
+.decline-order:hover {
+    background: rgb(220, 57, 57);
+}
 
