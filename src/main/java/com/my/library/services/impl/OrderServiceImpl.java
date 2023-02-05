@@ -2,6 +2,7 @@ package com.my.library.services.impl;
 
 import com.my.library.dao.OrderDAO;
 import com.my.library.dao.TransactionManager;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
@@ -172,6 +173,16 @@ public class OrderServiceImpl implements OrderService {
         } catch (DaoException e) {
             throw new ServiceException("Error while executing acceptOrder method", e);
         }
+    }
+
+    @Override
+    public List<Order> findAllByStatus(int start, int offset, OrderStatus orderStatus) throws ServiceException {
+        try {
+            return orderDAO.findAllByStatus(start, offset, orderStatus);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing findAllByStatus method", e);
+        }
+
     }
 
 

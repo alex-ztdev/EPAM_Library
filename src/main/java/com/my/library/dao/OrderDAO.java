@@ -1,5 +1,6 @@
 package com.my.library.dao;
 
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
 
@@ -26,4 +27,6 @@ public interface OrderDAO {
     int countTotalOrders() throws DaoException;
 
     boolean acceptOrder(long id) throws DaoException;
+
+    List<Order> findAllByStatus(int start, int offset, OrderStatus orderStatus) throws DaoException;
 }

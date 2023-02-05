@@ -2,6 +2,7 @@ package com.my.library.services;
 
 import com.my.library.dao.TransactionManager;
 
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.entities.Book;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
@@ -25,6 +26,8 @@ public interface OrderService extends Service<Order> {
     void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException;
 
     boolean acceptOrder(long id) throws ServiceException;
+
+    List<Order> findAllByStatus(int start, int offset, OrderStatus orderStatus) throws ServiceException;
 }
 
 

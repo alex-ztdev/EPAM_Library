@@ -84,4 +84,21 @@ public interface OrderQueries {
             Orders.status = ?
             WHERE id = ?
             """;
+
+    //language=TSQL
+    String FIND_ORDERS_BY_STATUS_PAGINATION = FIND_ALL_ORDERS + """
+            INNER JOIN Users U on U.id = Orders.user_id
+            WHERE U.status_id !=2 and Orders.status=?
+            ORDER BY status
+            OFFSET ? ROWS
+            FETCH NEXT ? ROWS ONLY
+            """;
+
+    //language=TSQL
+    String COUNT_ORDERS_BY_STATUS = """
+            SELECT COUNT(*) FROM Orders
+            INNER JOIN Users U on U.id = Orders.user_id
+            WHERE U.status_id != 2 and status=?
+            """;
+
 }

@@ -45,23 +45,21 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
         return order == null ? Optional.empty() : Optional.of(order);
     }
 
-    private Order buildOrder(ResultSet resultSet) throws DaoException {
-        try {
-            Order order = new Order();
-            order.setOrderId(resultSet.getLong(OrdersColumns.ID));
-            order.setUserId(resultSet.getLong(OrdersColumns.USER_ID));
-            order.setBookId(resultSet.getLong(OrdersColumns.BOOK_ID));
-            order.setOrderStartDate(resultSet.getObject(OrdersColumns.ORDER_START_DATE, LocalDateTime.class));
-            order.setOrderEndDate(resultSet.getObject(OrdersColumns.SUBSCRIPTION_END_DATE, LocalDateTime.class));
-            order.setReturnDate(resultSet.getObject(OrdersColumns.RETURN_DATE, LocalDateTime.class));
-            order.setOnSubscription(resultSet.getBoolean(OrdersColumns.ON_SUBSCRIPTION));
-            order.setOrderStatus(OrderStatus.values()[(resultSet.getInt(OrdersColumns.STATUS))-1]);
+    private Order buildOrder(ResultSet resultSet) throws SQLException {
 
-            return order;
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
+        Order order = new Order();
+        order.setOrderId(resultSet.getLong(OrdersColumns.ID));
+        order.setUserId(resultSet.getLong(OrdersColumns.USER_ID));
+        order.setBookId(resultSet.getLong(OrdersColumns.BOOK_ID));
+        order.setOrderStartDate(resultSet.getObject(OrdersColumns.ORDER_START_DATE, LocalDateTime.class));
+        order.setOrderEndDate(resultSet.getObject(OrdersColumns.SUBSCRIPTION_END_DATE, LocalDateTime.class));
+        order.setReturnDate(resultSet.getObject(OrdersColumns.RETURN_DATE, LocalDateTime.class));
+        order.setOnSubscription(resultSet.getBoolean(OrdersColumns.ON_SUBSCRIPTION));
+        order.setOrderStatus(OrderStatus.values()[(resultSet.getInt(OrdersColumns.STATUS)) - 1]);
+
+        return order;
     }
+
     @Override
     public List<Order> findAll(int start, int offset) throws DaoException {
         List<Order> orderList = new ArrayList<>();
@@ -91,8 +89,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             statement.setObject(k++, order.getOrderEndDate());
             statement.setObject(k++, order.getReturnDate());
             statement.setBoolean(k++, order.isOnSubscription());
-            statement.setInt(k, order.getOrderStatus().ordinal()+1);
-
+            statement.setInt(k, order.getOrderStatus().ordinal() + 1);
             statement.executeUpdate();
 
             try (var keys = statement.getGeneratedKeys()) {
@@ -116,7 +113,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             statement.setObject(k++, order.getOrderEndDate());
             statement.setObject(k++, order.getReturnDate());
             statement.setBoolean(k++, order.isOnSubscription());
-            statement.setInt(k++, order.getOrderStatus().ordinal()+1);
+            statement.setInt(k++, order.getOrderStatus().ordinal() + 1);
 
             statement.setLong(k, order.getOrderId());
 
@@ -197,6 +194,27 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             statement.setInt(1, OrderStatus.ACCEPTED.ordinal() + 1);
             statement.setLong(2, id);
             return statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public List<Order> findAllByStatus(int start, int offset, OrderStatus orderStatus) throws DaoException {
+        List<Order> orderList = new ArrayList<>();
+
+        try (var statement = connection.prepareStatement(OrderQueries.FIND_ORDERS_BY_STATUS_PAGINATION)) {
+            int k = 1;
+            statement.setLong(k++, orderStatus.ordinal() + 1);
+            statement.setInt(k++, start);
+            statement.setInt(k, offset);
+
+            try (var rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    orderList.add(buildOrder(rs));
+                }
+            }
+            return orderList;
         } catch (SQLException e) {
             throw new DaoException(e);
         }

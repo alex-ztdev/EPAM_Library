@@ -5,6 +5,7 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.dto.OrderDTO;
 import com.my.library.dto.UserDTO;
 import com.my.library.dto.mapper.OrderMapper;
@@ -61,9 +62,10 @@ public class DisplayUsersRequestedOrdersCommand implements Command {
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_REQUESTS_WITH_PARAMETERS.formatted(currPage));
 
         try {
-            List<Order> orderList = orderService.findAll(
+            List<Order> orderList = orderService.findAllByStatus(
                     (currPage - 1) * RECORDS_PER_PAGE,
-                    RECORDS_PER_PAGE);
+                    RECORDS_PER_PAGE,
+                    OrderStatus.PROCESSING);
 
             int totalRecords = orderService.countTotalOrders();
 
