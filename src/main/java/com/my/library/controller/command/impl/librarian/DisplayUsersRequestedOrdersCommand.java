@@ -67,7 +67,7 @@ public class DisplayUsersRequestedOrdersCommand implements Command {
                     RECORDS_PER_PAGE,
                     OrderStatus.PROCESSING);
 
-            int totalRecords = orderService.countTotalOrders();
+            int totalRecords = orderService.countOrdersByStatus(OrderStatus.PROCESSING);
 
             logger.log(Level.DEBUG, "DisplayUsersRequestedOrdersCommand/ total orders: " + totalRecords);
 

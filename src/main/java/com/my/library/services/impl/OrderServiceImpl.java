@@ -185,6 +185,15 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public int countOrdersByStatus(OrderStatus orderStatus) throws ServiceException {
+        try {
+            return orderDAO.countOrdersByStatus(orderStatus);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing countOrdersByStatus method", e);
+        }
+    }
+
 
     @Override
     public boolean update(Order order) throws ServiceException {

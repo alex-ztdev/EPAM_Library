@@ -219,4 +219,18 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
             throw new DaoException(e);
         }
     }
+
+    @Override
+    public int countOrdersByStatus(OrderStatus orderStatus) throws DaoException {
+        try (var statement = connection.prepareStatement(OrderQueries.COUNT_ORDERS_BY_STATUS)) {
+            statement.setLong(1, orderStatus.ordinal()+1);
+
+            try (var rs = statement.executeQuery()) {
+                rs.next();
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
 }

@@ -28,6 +28,8 @@ public interface OrderService extends Service<Order> {
     boolean acceptOrder(long id) throws ServiceException;
 
     List<Order> findAllByStatus(int start, int offset, OrderStatus orderStatus) throws ServiceException;
+
+    int countOrdersByStatus(OrderStatus orderStatus) throws ServiceException;
 }
 
 

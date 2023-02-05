@@ -29,4 +29,6 @@ public interface OrderDAO {
     boolean acceptOrder(long id) throws DaoException;
 
     List<Order> findAllByStatus(int start, int offset, OrderStatus orderStatus) throws DaoException;
+
+    int countOrdersByStatus(OrderStatus orderStatus) throws DaoException;
 }
