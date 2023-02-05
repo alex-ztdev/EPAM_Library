@@ -74,7 +74,7 @@ public class CommandFactory implements AutoCloseable {
             case LibrarianCommands.RETURN_ORDER ->
                     res = new ReturnOrderCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService(), new TransactionManager(connection));
             case LibrarianCommands.DISPLAY_READERS -> res = new DisplayReadersCommand(serviceFactory.getUserService());
-            case LibrarianCommands.DISPLAY_REQUESTED_ORDERS -> res = new DisplayUsersRequestedOrdersCommand(serviceFactory.getOrderService());
+            case LibrarianCommands.DISPLAY_REQUESTED_ORDERS -> res = new DisplayUsersRequestedOrdersCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), serviceFactory.getUserService());
             default -> res = new DefaultCommand();
         }
         return res;

@@ -15,12 +15,14 @@ import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
+import com.my.library.utils.IntegerParser;
 import com.my.library.utils.Pages;
 import com.my.library.utils.validator.MessagesRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DisplayBooksListCommand implements Command {
     private static final int RECORDS_PER_PAGE = 15;
@@ -46,8 +48,11 @@ public class DisplayBooksListCommand implements Command {
         var reqOrderDir = request.getParameter(Parameters.ORDER_DIRECTION);
         var reqOrderBy = request.getParameter(Parameters.ORDER_BY);
 
-        if (reqCurrPage != null && !reqCurrPage.isBlank()) {
-            currPage = Integer.parseInt(reqCurrPage);
+        if (reqCurrPage != null) {
+            var currPageContainer = IntegerParser.parseInt(reqCurrPage);
+            if (currPageContainer.isPresent()) {
+                currPage = currPageContainer.get();
+            }
         }
         if (reqOrderDir != null && !reqOrderDir.isBlank()) {
             orderDir = BooksOrderDir.valueOf(reqOrderDir.toUpperCase());
