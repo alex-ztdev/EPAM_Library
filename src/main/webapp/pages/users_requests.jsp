@@ -121,15 +121,15 @@
 
                             <c:choose>
                                 <c:when test="${orders.orderStatus eq 'PROCESSING'}">
-                                    <td>
-                                        <div class="accept-order">
+                                    <td class="accept-order">
+                                        <div class="accept-order2">
                                             <a href="${pageContext.request.contextPath}/controller?command=admin-accept-order&order_id=${orders.orderId}">
                                                 <fmt:message key="orders.common.action.accept"/>
                                             </a>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="cancel-order">
+                                    <td class="decline-order">
+                                        <div class="decline-order2">
                                             <a href="${pageContext.request.contextPath}/controller?command=admin-cancel-order&order_id=${orders.orderId}" >
                                                 <fmt:message key="orders.common.action.decline"/>
                                             </a>

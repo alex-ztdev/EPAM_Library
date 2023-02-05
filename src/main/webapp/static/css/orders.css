@@ -172,10 +172,19 @@ body {
 }
 
 .accept-order{
-    display: inline-block;
+    background: rgb(48, 140, 48);
+}
+.accept-order:hover{
     background: rgb(63, 182, 63);
 }
-.cancel-order
+.decline-order {
+    background: rgb(171, 43, 43);
+}
+
+.decline-order:hover {
+    background: rgb(220, 57, 57);
+}
+
 
 /*.overdue-tr{*/
 /*    background: #d72d2d;*/
