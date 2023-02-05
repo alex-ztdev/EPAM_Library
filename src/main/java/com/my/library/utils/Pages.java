@@ -15,4 +15,5 @@ public interface Pages {
 
     String DISPLAY_USERS_PAGE = "/pages/display_users.jsp";
     String MY_PROFILE = "/pages/profile.jsp";
+    String USERS_REQUESTS = "/pages/users_requests.jsp";
 }
