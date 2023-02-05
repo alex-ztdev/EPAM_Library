@@ -9,6 +9,7 @@ import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
 import com.my.library.controller.command.impl.librarian.DisplayReadersCommand;
 import com.my.library.controller.command.impl.librarian.DisplayUsersOrdersCommand;
+import com.my.library.controller.command.impl.librarian.DisplayUsersRequestedOrdersCommand;
 import com.my.library.controller.command.impl.librarian.ReturnOrderCommand;
 import com.my.library.controller.command.impl.user.DisplayMyOrdersCommand;
 import com.my.library.controller.command.impl.user.MyProfileCommand;
@@ -61,7 +62,6 @@ public class CommandFactory implements AutoCloseable {
             case AdminCommands.CHANGE_ROLE-> res = new ChangeRoleCommand(serviceFactory.getUserService());
 
             case UserCommands.ORDER_BOOK_REDIRECT -> res = new OrderBookRedirectCommand(serviceFactory.getBookService());
-            //TODO: Remove my profile
             case UserCommands.MY_PROFILE -> res = new MyProfileCommand(serviceFactory.getUserService());
 
             case UserCommands.ORDER_BOOK ->
@@ -74,6 +74,7 @@ public class CommandFactory implements AutoCloseable {
             case LibrarianCommands.RETURN_ORDER ->
                     res = new ReturnOrderCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService(), new TransactionManager(connection));
             case LibrarianCommands.DISPLAY_READERS -> res = new DisplayReadersCommand(serviceFactory.getUserService());
+            case LibrarianCommands.DISPLAY_REQUESTED_ORDERS -> res = new DisplayUsersRequestedOrdersCommand(serviceFactory.getOrderService());
             default -> res = new DefaultCommand();
         }
         return res;

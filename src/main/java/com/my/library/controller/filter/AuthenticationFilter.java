@@ -43,6 +43,7 @@ public class AuthenticationFilter implements Filter {
             LibrarianCommands.DISPLAY_USERS_ORDERS,
             LibrarianCommands.RETURN_ORDER,
             LibrarianCommands.DISPLAY_READERS,
+            LibrarianCommands.DISPLAY_REQUESTED_ORDERS,
             UserCommands.MY_PROFILE
     );
 
@@ -66,10 +67,12 @@ public class AuthenticationFilter implements Filter {
             AdminCommands.BLOCK_USER,
             AdminCommands.UNBLOCK_USER,
             AdminCommands.CHANGE_ROLE,
+
             UserCommands.MY_PROFILE,
 
             //TODO: remove LibrarianCommands from ADMIN?
             LibrarianCommands.DISPLAY_USERS_ORDERS,
+            LibrarianCommands.DISPLAY_REQUESTED_ORDERS,
             LibrarianCommands.RETURN_ORDER
 
     );

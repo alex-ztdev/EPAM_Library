@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
+    //TODO: Check if user is banned! Before returning orders!
     private static final Logger logger = LogManager.getLogger();
 
     private static final int SUBSCRIPTION_DAYS = 30;
