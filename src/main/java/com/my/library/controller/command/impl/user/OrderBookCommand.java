@@ -67,7 +67,7 @@ public class OrderBookCommand implements Command {
 
             if (bookService.getQuantity(bookId) <= 0) {
                 logger.log(Level.DEBUG, "OrderBookCommand: books quantity is 0 or less: redirect to error page");
-                return new CommandResult(Pages.ERROR_PAGE, CommandDirection.REDIRECT);
+                return new CommandResult(RedirectToPage.ERROR_PAGE, CommandDirection.REDIRECT);
             }
             orderService.save(orderToSave, bookService, transactionManager);
 
