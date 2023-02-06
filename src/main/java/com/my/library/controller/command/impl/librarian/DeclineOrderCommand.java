@@ -5,9 +5,11 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.OrderStatus;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
+import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
 import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,9 +22,13 @@ public class DeclineOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     private final OrderService orderService;
+    private final BookService bookService;
+    private final TransactionManager transactionManager;
 
-    public DeclineOrderCommand(OrderService orderService) {
+    public DeclineOrderCommand(OrderService orderService, BookService bookService, TransactionManager transactionManager) {
         this.orderService = orderService;
+        this.bookService = bookService;
+        this.transactionManager = transactionManager;
     }
 
     @Override
@@ -37,7 +43,7 @@ public class DeclineOrderCommand implements Command {
             return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         try {
-            orderService.setOrderStatus(orderIdContainer.get(), OrderStatus.REJECTED);
+            orderService.declineOrder(orderIdContainer.get(), bookService, transactionManager);
 
             var prev_page = (String)session.getAttribute(Parameters.PREVIOUS_PAGE);
 

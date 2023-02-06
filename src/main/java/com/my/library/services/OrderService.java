@@ -30,6 +30,8 @@ public interface OrderService extends Service<Order> {
     int countOrdersByStatus(OrderStatus... orderStatus) throws ServiceException;
 
     boolean setOrderStatus(long id, OrderStatus orderStatus) throws ServiceException;
+
+    void declineOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 }
 
 
