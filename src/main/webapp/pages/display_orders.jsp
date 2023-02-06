@@ -42,9 +42,6 @@
                 </c:when>
                 <c:otherwise>
                     <p class="users-orders-title"><fmt:message key="user.orders.orders.title"/></p>
-                    <c:if test="${not empty requestScope.msg}">
-                        <p class="success-msg"><fmt:message key="user.orders.success.msg"/></p>
-                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -79,7 +76,6 @@
                             <tr class="overdue-tr" style="background: #d72d2d;">
                         </c:when>
                         <c:when test="${orders.returnDate != null}">
-
                             <tr class="returned-tr" style="background: #18a223;">
                         </c:when>
                         <c:otherwise>
