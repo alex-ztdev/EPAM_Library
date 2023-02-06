@@ -38,10 +38,10 @@
         <div class="top-row">
             <c:choose>
                 <c:when test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                    <p class="users-orders-title"><fmt:message key="admin.orders.requests.title"/></p>
+                    <p class="users-orders-title" style="text-align: center"><fmt:message key="admin.orders.requests.title"/></p>
                 </c:when>
                 <c:otherwise>
-                    <p class="users-orders-title"><fmt:message key="my.orders.requests.title"/></p>
+                    <p class="users-orders-title" style="text-align: center"><fmt:message key="my.orders.requests.title"/></p>
                     <c:if test="${not empty requestScope.msg}">
                         <p class="success-msg"><fmt:message key="user.orders.success.msg"/></p>
                     </c:if>
