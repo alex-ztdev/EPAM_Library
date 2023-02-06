@@ -28,16 +28,58 @@ public class DisplayMyRequestsCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
     private static final int RECORDS_PER_PAGE = 10;
-
     private final OrderService orderService;
+    private final UserService userService;
+    private final BookService bookService;
 
-    public DisplayMyRequestsCommand(OrderService orderService) {
+    public DisplayMyRequestsCommand(OrderService orderService, UserService userService, BookService bookService) {
         this.orderService = orderService;
+        this.userService = userService;
+        this.bookService = bookService;
     }
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "DisplayMyRequestsCommand invoked");
-        return null;
+        HttpSession session = request.getSession();
+
+        int currPage = 1;
+
+        var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
+        logger.log(Level.DEBUG, "DisplayMyRequestsCommand/ current page: " + reqCurrPage);
+
+        if (reqCurrPage != null) {
+            var pageContainer = IntegerParser.parseInt(reqCurrPage);
+            if (pageContainer.isPresent()) {
+                currPage = pageContainer.get();
+            }
+        }
+        session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_MY_REQUESTS_WITH_PARAMETERS.formatted(currPage));
+
+        try {
+            List<Order> orderList = orderService.findAllByStatus(
+                    (currPage - 1) * RECORDS_PER_PAGE,
+                    RECORDS_PER_PAGE,
+                    OrderStatus.PROCESSING,
+                    OrderStatus.REJECTED);
+
+            int totalRecords = orderService.countOrdersByStatus(OrderStatus.PROCESSING, OrderStatus.REJECTED);
+
+            logger.log(Level.DEBUG, "DisplayMyRequestsCommand/ total orders: " + totalRecords);
+
+            var totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
+
+            List<OrderDTO> orderDTOList = new OrderMapper(bookService, userService, orderService).toDTOList(orderList);
+
+            request.setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
+            request.setAttribute(Parameters.GENERAL_TOTAL_PAGES, totalPages);
+            request.setAttribute(Parameters.ORDERS_LIST, orderDTOList);
+            request.setAttribute(Parameters.ORDERS_PER_PAGE, RECORDS_PER_PAGE);
+            request.setAttribute(Parameters.ORDER_SUCCESSFUL_MSG, request.getParameter(Parameters.ORDER_SUCCESSFUL_MSG));
+
+            return new CommandResult(Pages.USERS_REQUESTS, CommandDirection.FORWARD);
+        } catch (ServiceException e) {
+            throw new CommandException("Error while executing DisplayMyRequestsCommand", e);
+        }
     }
 }
