@@ -89,7 +89,7 @@ public interface OrderQueries {
     String FIND_ORDERS_BY_STATUS_PAGINATION = FIND_ALL_ORDERS + """
             INNER JOIN Users U on U.id = Orders.user_id
             WHERE U.status_id !=2 and Orders.status in (?, ? ,?)
-            ORDER BY return_date, order_end_date, status
+            ORDER BY status, return_date, order_end_date
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
