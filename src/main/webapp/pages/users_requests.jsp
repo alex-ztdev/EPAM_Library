@@ -73,15 +73,7 @@
 
                     <c:choose>
                         <c:when test="${orders.orderStatus eq 'REJECTED'}">
-                            <tr class="rejected-tr">
-                            <style>
-                                .rejected-tr {
-                                    background: #8f8f8f;
-                                }
-                                .rejected-tr:hover {
-                                    background: #b0b0b0;
-                                }
-                            </style>
+                            <tr class="rejected-tr" style="background: #8f8f8f;">
                         </c:when>
                         <c:otherwise>
                             <tr>
