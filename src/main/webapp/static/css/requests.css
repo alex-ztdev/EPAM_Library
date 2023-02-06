@@ -38,7 +38,7 @@ body {
     min-width: 1200px;
     max-width: 80%;
     padding-top: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 
 .orders-list-title, .users-orders-title{

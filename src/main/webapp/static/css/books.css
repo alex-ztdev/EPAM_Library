@@ -38,7 +38,7 @@ body {
     min-width: 1200px;
     max-width: 80%;
     padding-top: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 
 .top-row {
@@ -50,7 +50,7 @@ body {
     min-width: 1200px;
     max-width: 80%;
     padding-top: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 
 
@@ -201,6 +201,3 @@ body {
     background: rgb(76, 217, 76);
 }
 
-.centered-title{
-
-}
