@@ -36,14 +36,15 @@
 <div class="container">
     <div class="main-content">
         <div class="top-row">
+<%--            <p style="color: white; font-size: 20px">${requestScope}</p>--%>
             <c:choose>
                 <c:when test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
                     <p class="users-orders-title" style="text-align: center"><fmt:message key="admin.orders.requests.title"/></p>
                 </c:when>
                 <c:otherwise>
-                    <p class="users-orders-title" style="text-align: center"><fmt:message key="my.orders.requests.title"/></p>
+                    <p class="users-orders-title" style="text-align: center" style="justify-self: center"><fmt:message key="my.orders.requests.title"/></p>
                     <c:if test="${not empty requestScope.msg}">
-                        <p class="success-msg"><fmt:message key="user.orders.success.msg"/></p>
+                        <p class="success-msg" style="margin-left: 200px"><fmt:message key="user.orders.success.msg"/></p>
                     </c:if>
                 </c:otherwise>
             </c:choose>
@@ -71,18 +72,21 @@
                 <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
 
                     <c:choose>
-                        <c:when test="${orders.orderStatus eq 'CANCELED'}">
-                            <tr class="overdue-tr" style="background: #d72d2d;">
-                        </c:when>
-                        <c:when test="${orders.orderStatus eq 'ACCEPTED'}">
-                            <tr class="returned-tr" style="background: #18a223;">
+                        <c:when test="${orders.orderStatus eq 'REJECTED'}">
+                            <tr class="rejected-tr">
+                            <style>
+                                .rejected-tr {
+                                    background: #8f8f8f;
+                                }
+                                .rejected-tr:hover {
+                                    background: #b0b0b0;
+                                }
+                            </style>
                         </c:when>
                         <c:otherwise>
                             <tr>
                         </c:otherwise>
                     </c:choose>
-
-                    <tr>
                         <td> ${loop.count + (requestScope.page - 1) * requestScope.ordersPerPage} </td>
                         <td> ${orders.orderId} </td>
                         <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
