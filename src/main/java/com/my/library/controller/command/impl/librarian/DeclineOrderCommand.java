@@ -6,53 +6,52 @@ import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dao.TransactionManager;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
-import com.my.library.services.UserService;
-import com.my.library.utils.Pages;
 import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ReturnOrderCommand implements Command {
+public class DeclineOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
-    private final BookService bookService;
-    private final UserService userService;
     private final OrderService orderService;
+    private final BookService bookService;
     private final TransactionManager transactionManager;
 
-    public ReturnOrderCommand(BookService bookService, UserService userService, OrderService orderService, TransactionManager transactionManager) {
-        this.bookService = bookService;
-        this.userService = userService;
+    public DeclineOrderCommand(OrderService orderService, BookService bookService, TransactionManager transactionManager) {
         this.orderService = orderService;
+        this.bookService = bookService;
         this.transactionManager = transactionManager;
     }
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        logger.log(Level.DEBUG, "ReturnOrderCommand invoked");
+        logger.log(Level.DEBUG, "DeclineOrderCommand invoked");
 
-        var orderIdStr = request.getParameter(Parameters.ORDER_ID);
+        HttpSession session = request.getSession();
 
-
-        var orderIdContainer = LongParser.parseLong(orderIdStr);
+        var orderIdContainer = LongParser.parseLong(request.getParameter(Parameters.ORDER_ID));
 
         if (orderIdContainer.isEmpty()) {
-            //FIXME: change to unsupported command page
             return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
-        var orderId = orderIdContainer.get();
+        try {
+            orderService.declineOrder(orderIdContainer.get(), bookService, transactionManager);
 
-        try{
-            orderService.returnOrder(orderId, bookService, userService, transactionManager);
-            return new CommandResult(RedirectToPage.DISPLAY_USERS_ORDERS);
+            var prev_page = (String)session.getAttribute(Parameters.PREVIOUS_PAGE);
+
+            return new CommandResult(prev_page == null || prev_page.isBlank() ? RedirectToPage.DISPLAY_USERS_REQUESTS : prev_page, CommandDirection.REDIRECT);
+
         } catch (ServiceException e) {
-            throw new CommandException("Error while executing ReturnOrderCommand",e);
+            throw new CommandException("Error in DeclineOrderCommand",e);
         }
+
     }
 }

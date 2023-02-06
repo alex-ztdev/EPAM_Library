@@ -8,6 +8,7 @@ import com.my.library.controller.command.constant.parameters.OrderParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.TransactionManager;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
@@ -45,11 +46,10 @@ public class OrderBookCommand implements Command {
 
         logger.log(Level.DEBUG, "OrderBookCommand: book_id: " + bookIdStr);
 
-
-        var bookIdContainer = new LongParser().parseLong(bookIdStr);
+        var bookIdContainer = LongParser.parseLong(bookIdStr);
         if (bookIdContainer.isEmpty() || (!"true".equalsIgnoreCase(onSubscriptionStr) && !"false".equalsIgnoreCase(onSubscriptionStr))) {
             logger.log(Level.DEBUG, "OrderBookCommand: book_id is null: redirect to error page");
-            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         long bookId = bookIdContainer.get();
 
@@ -63,14 +63,15 @@ public class OrderBookCommand implements Command {
             orderToSave.setBookId(bookId);
             orderToSave.setUserId(user.getUserId());
             orderToSave.setOnSubscription(onSubscription);
+            orderToSave.setOrderStatus(OrderStatus.PROCESSING);
 
             if (bookService.getQuantity(bookId) <= 0) {
                 logger.log(Level.DEBUG, "OrderBookCommand: books quantity is 0 or less: redirect to error page");
-                return new CommandResult(Pages.ERROR_PAGE, CommandDirection.REDIRECT);
+                return new CommandResult(RedirectToPage.ERROR_PAGE, CommandDirection.REDIRECT);
             }
             orderService.save(orderToSave, bookService, transactionManager);
 
-            return new CommandResult(RedirectToPage.MY_ORDERS_PAGE_WITH_SUCCESSFUL_MSG, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.MY_REQUESTS_PAGE_WITH_SUCCESSFUL_MSG, CommandDirection.REDIRECT);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing OrderBookCommand", e);
         }

@@ -42,9 +42,6 @@
                 </c:when>
                 <c:otherwise>
                     <p class="users-orders-title"><fmt:message key="user.orders.orders.title"/></p>
-                    <c:if test="${not empty requestScope.msg}">
-                        <p class="success-msg"><fmt:message key="user.orders.success.msg"/></p>
-                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -68,7 +65,7 @@
                     <th><fmt:message key="orders.common.fine"/></th>
 
                     <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                        <th><fmt:message key="librarian.orders.already.status"/></th>
+                        <th><fmt:message key="librarian.orders.label.return"/></th>
                     </c:if>
 
                 </tr>
@@ -79,7 +76,6 @@
                             <tr class="overdue-tr" style="background: #d72d2d;">
                         </c:when>
                         <c:when test="${orders.returnDate != null}">
-
                             <tr class="returned-tr" style="background: #18a223;">
                         </c:when>
                         <c:otherwise>
@@ -123,18 +119,19 @@
                     <td>${orders.fine}</td>
 
                     <c:if test="${sessionScope.user.role eq 'ADMIN' or sessionScope.user.role eq 'LIBRARIAN'}">
-                        <td>
+
                         <c:choose>
                             <c:when test="${empty orders.returnDate}">
-                                <a href="${pageContext.request.contextPath}/controller?command=return-order&order_id=${orders.orderId}">
-                                    <fmt:message key="librarian.orders.return"/>
-                                </a>
+                                <td class="return-book-td">
+                                    <a href="${pageContext.request.contextPath}/controller?command=return-order&order_id=${orders.orderId}">
+                                        <fmt:message key="librarian.orders.return"/>
+                                    </a>
+                                </td>
                             </c:when>
                             <c:otherwise>
-                                <fmt:message key="librarian.orders.already.returned"/>
+                                <td><fmt:message key="librarian.orders.already.returned"/></td>
                             </c:otherwise>
                         </c:choose>
-                        </td>
                     </c:if>
                     </tr>
                 </c:forEach>

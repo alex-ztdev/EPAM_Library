@@ -6,6 +6,7 @@ import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.dto.OrderDTO;
 import com.my.library.dto.mapper.OrderMapper;
 import com.my.library.entities.Order;
@@ -66,9 +67,10 @@ public class DisplayMyOrdersCommand implements Command {
         try{
             List<Order> orderList = orderService.findAllUsersOrders(userId,
                     (currPage - 1) * RECORDS_PER_PAGE,
-                    RECORDS_PER_PAGE);
+                    RECORDS_PER_PAGE,
+                    OrderStatus.ACCEPTED);
 
-            int totalRecords = orderService.countUsersOrders(userId);
+            int totalRecords = orderService.countUsersOrders(userId, OrderStatus.ACCEPTED);
 
             logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ total user orders: "+totalRecords);
 

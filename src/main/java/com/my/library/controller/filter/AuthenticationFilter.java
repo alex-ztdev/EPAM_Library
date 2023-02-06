@@ -35,23 +35,33 @@ public class AuthenticationFilter implements Filter {
             GeneralCommands.SEARCH_BOOK,
             GeneralCommands.SORT_BOOKS,
             GeneralCommands.HOME,
-            GeneralCommands.NOT_AUTHORIZED
+            GeneralCommands.NOT_AUTHORIZED,
+            GeneralCommands.UNSUPPORTED_OPERATION,
+            GeneralCommands.ERROR_PAGE
     );
+
+
 
     private static final List<String> LIBRARIAN_COMMANDS = List.of(
             //TODO: Add Librarian commands
             LibrarianCommands.DISPLAY_USERS_ORDERS,
             LibrarianCommands.RETURN_ORDER,
             LibrarianCommands.DISPLAY_READERS,
+            LibrarianCommands.DISPLAY_REQUESTED_ORDERS,
+            LibrarianCommands.ACCEPT_ORDER,
+            LibrarianCommands.DECLINE_ORDER,
+
             UserCommands.MY_PROFILE
     );
+
 
     private static final List<String> USER_COMMANDS = List.of(
             //TODO: Add User commands
             UserCommands.ORDER_BOOK_REDIRECT,
             UserCommands.ORDER_BOOK,
             UserCommands.DISPLAY_MY_ORDERS,
-            UserCommands.MY_PROFILE
+            UserCommands.MY_PROFILE,
+            UserCommands.DISPLAY_MY_REQUESTS
     );
 
 
@@ -66,11 +76,15 @@ public class AuthenticationFilter implements Filter {
             AdminCommands.BLOCK_USER,
             AdminCommands.UNBLOCK_USER,
             AdminCommands.CHANGE_ROLE,
+
             UserCommands.MY_PROFILE,
 
             //TODO: remove LibrarianCommands from ADMIN?
             LibrarianCommands.DISPLAY_USERS_ORDERS,
-            LibrarianCommands.RETURN_ORDER
+            LibrarianCommands.DISPLAY_REQUESTED_ORDERS,
+            LibrarianCommands.RETURN_ORDER,
+            LibrarianCommands.ACCEPT_ORDER,
+            LibrarianCommands.DECLINE_ORDER
 
     );
 

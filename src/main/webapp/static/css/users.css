@@ -34,14 +34,15 @@ body {
     min-width: 1200px;
     max-width: 80%;
     padding-top: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
+    text-align: center;
 }
 
 .users-list-title, .users-orders-title{
     color: white;
     font-size: 36px;
     font-weight: 700;
-
+    text-align: center;
 }
 
 .users-add-new {
@@ -176,19 +177,3 @@ body {
     color: rgb(85, 247, 85);
     text-align: center;
 }
-
-/*.overdue-tr{*/
-/*    background: #d72d2d;*/
-/*}*/
-/*.overdue-tr:hover{*/
-/*    background: #ef3535;*/
-/*}*/
-
-/*.returned-tr{*/
-/*   background: #18a223;*/
-/*}*/
-/*.returned-tr:hover{*/
-/*    background: #25cc33;*/
-/*}*/
-
-

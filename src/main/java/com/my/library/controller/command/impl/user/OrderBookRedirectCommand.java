@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.user;
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.dto.mapper.BookMapper;
 import com.my.library.exceptions.CommandException;
@@ -31,10 +32,10 @@ public class OrderBookRedirectCommand implements Command {
         var bookIdString = request.getParameter(Parameters.BOOK_ID);
         HttpSession session = request.getSession();
 
-        var bookIdContainer = new LongParser().parseLong(bookIdString);
+        var bookIdContainer = LongParser.parseLong(bookIdString);
         if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG, "book id is not a number! Redirect to error page");
-            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         long bookId = bookIdContainer.get();
 
@@ -42,7 +43,7 @@ public class OrderBookRedirectCommand implements Command {
             var bookContainer = bookService.find(bookId);
 
             if (bookContainer.isEmpty()) {
-                return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+                return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
             }
             var book = bookContainer.get();
 

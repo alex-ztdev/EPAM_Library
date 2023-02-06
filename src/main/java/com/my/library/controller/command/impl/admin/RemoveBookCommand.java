@@ -30,11 +30,11 @@ public class RemoveBookCommand implements Command {
 
         logger.log(Level.DEBUG,"RemoveBookCommand: request book_id: " + reqBookId);
 
-        var bookIdContainer = new LongParser().parseLong(reqBookId);
+        var bookIdContainer = LongParser.parseLong(reqBookId);
 
         if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG,"RemoveBookCommand: empty book_id: " + reqBookId);
-            return new CommandResult(Pages.UNSUPPORTED_COMMAND, CommandDirection.REDIRECT);
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         long bookId = bookIdContainer.get();
 

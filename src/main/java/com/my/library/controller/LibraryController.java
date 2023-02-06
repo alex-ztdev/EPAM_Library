@@ -44,7 +44,7 @@ public class LibraryController extends HttpServlet {
 
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Command exception while processingRequest", e);
-            response.sendRedirect(Pages.ERROR_PAGE);
+            response.sendRedirect(request.getContextPath() +  RedirectToPage.ERROR_PAGE);
         }
     }
 
@@ -53,7 +53,7 @@ public class LibraryController extends HttpServlet {
             case FORWARD ->
                     getServletContext().getRequestDispatcher(commandResult.getPage()).forward(request, response);
             case REDIRECT -> response.sendRedirect(request.getContextPath() + commandResult.getPage());
-            default -> response.sendRedirect(RedirectToPage.LOGIN_PAGE);
+            default -> response.sendRedirect(request.getContextPath() + RedirectToPage.HOME);
         }
     }
 }

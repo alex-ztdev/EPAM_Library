@@ -38,15 +38,18 @@
             <%-- Menu bar for user only--%>
             <c:when test="${sessionScope.user.role eq 'USER'}">
                 <a href="${pageContext.request.contextPath}/controller?command=display-my-orders"><fmt:message key="header.user.order"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=display-my-requested-orders"><fmt:message key="header.user.requested.orders"/></a>
             </c:when>
             <%-- Menu bar for Admin or Librarian only--%>
             <c:when test="${sessionScope.user.role eq 'LIBRARIAN'}">
                 <a href="${pageContext.request.contextPath}/controller?command=display-readers"><fmt:message key="header.admin.readers"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message key="header.admin.orders"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message key="header.admin.requested.orders"/></a>
             </c:when>
             <c:when test="${sessionScope.user.role eq 'ADMIN'}">
                 <a href="${pageContext.request.contextPath}/controller?command=display-users"><fmt:message key="header.admin.users"/></a>
                 <a href="${pageContext.request.contextPath}/controller?command=display-users-orders"><fmt:message key="header.admin.orders"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=display-users-requested-orders"><fmt:message key="header.admin.requested.orders"/></a>
             </c:when>
         </c:choose>
     </div>

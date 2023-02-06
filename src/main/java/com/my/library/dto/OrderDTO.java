@@ -1,5 +1,6 @@
 package com.my.library.dto;
 
+import com.my.library.dao.constants.OrderStatus;
 import com.my.library.entities.Order;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ public class OrderDTO {
     private Long userId;
     private String userName;
     private String bookTitle;
+    private String orderStatus;
     private LocalDateTime orderStartDate;
     private LocalDateTime orderEndDate;
     private LocalDateTime returnDate;
@@ -24,6 +26,7 @@ public class OrderDTO {
         this.orderEndDate = order.getOrderEndDate();
         this.returnDate = order.getReturnDate();
         this.onSubscription = order.isOnSubscription();
+        this.orderStatus = order.getOrderStatus().toString();
         this.fine = fine;
     }
 
@@ -101,5 +104,13 @@ public class OrderDTO {
 
     public boolean getOnSubscription() {
         return onSubscription;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

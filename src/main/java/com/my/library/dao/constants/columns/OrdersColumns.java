@@ -9,4 +9,5 @@ public interface OrdersColumns {
     String SUBSCRIPTION_END_DATE = "order_end_date";
     String RETURN_DATE = "return_date";
     String ON_SUBSCRIPTION = "on_subscription";
+    String STATUS = "status";
 }

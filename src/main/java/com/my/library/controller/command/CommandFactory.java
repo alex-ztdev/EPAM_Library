@@ -7,13 +7,8 @@ import com.my.library.controller.command.constant.commands.LibrarianCommands;
 import com.my.library.controller.command.constant.commands.UserCommands;
 import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
-import com.my.library.controller.command.impl.librarian.DisplayReadersCommand;
-import com.my.library.controller.command.impl.librarian.DisplayUsersOrdersCommand;
-import com.my.library.controller.command.impl.librarian.ReturnOrderCommand;
-import com.my.library.controller.command.impl.user.DisplayMyOrdersCommand;
-import com.my.library.controller.command.impl.user.MyProfileCommand;
-import com.my.library.controller.command.impl.user.OrderBookCommand;
-import com.my.library.controller.command.impl.user.OrderBookRedirectCommand;
+import com.my.library.controller.command.impl.librarian.*;
+import com.my.library.controller.command.impl.user.*;
 import com.my.library.dao.TransactionManager;
 import com.my.library.services.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -46,6 +41,8 @@ public class CommandFactory implements AutoCloseable {
             case GeneralCommands.LOGIN_PAGE -> res = new LoginRedirectCommand();
             case GeneralCommands.REGISTRATION -> res = new RegisterCommand(serviceFactory.getUserService());
             case GeneralCommands.SEARCH_BOOK -> res = new SearchBookCommand(serviceFactory.getBookService());
+            case GeneralCommands.UNSUPPORTED_OPERATION -> res = new UnsupportedOperationCommand();
+            case GeneralCommands.ERROR_PAGE -> res = new ErrorPageCommand();
 
             case GeneralCommands.BOOKS_LIST -> res = new DisplayBooksListCommand(serviceFactory.getBookService());
             case AdminCommands.REMOVE_BOOK -> res = new RemoveBookCommand(serviceFactory.getBookService());
@@ -61,19 +58,25 @@ public class CommandFactory implements AutoCloseable {
             case AdminCommands.CHANGE_ROLE-> res = new ChangeRoleCommand(serviceFactory.getUserService());
 
             case UserCommands.ORDER_BOOK_REDIRECT -> res = new OrderBookRedirectCommand(serviceFactory.getBookService());
-            //TODO: Remove my profile
             case UserCommands.MY_PROFILE -> res = new MyProfileCommand(serviceFactory.getUserService());
 
             case UserCommands.ORDER_BOOK ->
                     res = new OrderBookCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), new TransactionManager(connection));
             case UserCommands.DISPLAY_MY_ORDERS ->
                     res = new DisplayMyOrdersCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService());
+            case UserCommands.DISPLAY_MY_REQUESTS ->
+                    res = new DisplayMyRequestsCommand(serviceFactory.getOrderService(), serviceFactory.getUserService(), serviceFactory.getBookService());
+
 
             case LibrarianCommands.DISPLAY_USERS_ORDERS ->
                     res = new DisplayUsersOrdersCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService());
             case LibrarianCommands.RETURN_ORDER ->
                     res = new ReturnOrderCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService(), new TransactionManager(connection));
             case LibrarianCommands.DISPLAY_READERS -> res = new DisplayReadersCommand(serviceFactory.getUserService());
+            case LibrarianCommands.DISPLAY_REQUESTED_ORDERS -> res = new DisplayUsersRequestedOrdersCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), serviceFactory.getUserService());
+            case LibrarianCommands.ACCEPT_ORDER -> res = new AcceptOrderCommand(serviceFactory.getOrderService());
+            case LibrarianCommands.DECLINE_ORDER ->
+                    res = new DeclineOrderCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), new TransactionManager(connection));
             default -> res = new DefaultCommand();
         }
         return res;
