@@ -136,7 +136,6 @@
                                 <td><fmt:message key="librarian.orders.already.returned"/></td>
                             </c:otherwise>
                         </c:choose>
-
                     </c:if>
                     </tr>
                 </c:forEach>

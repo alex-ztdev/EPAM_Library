@@ -19,10 +19,10 @@ public interface OrderDAO {
 
     void delete(Order order) throws DaoException;
 
-    List<Order> findAllUsersOrders(long userId, int start, int offset) throws DaoException;
+    List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws DaoException;
 
 
-    int countUserOrders(long userId) throws DaoException;
+    int countUserOrders(long userId, OrderStatus... orderStatuses) throws DaoException;
 
     int countTotalOrders() throws DaoException;
 

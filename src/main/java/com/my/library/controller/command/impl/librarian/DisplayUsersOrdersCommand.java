@@ -58,14 +58,13 @@ public class DisplayUsersOrdersCommand implements Command {
             List<Order> orderList = orderService.findAllByStatus(
                     (currPage - 1) * RECORDS_PER_PAGE,
                     RECORDS_PER_PAGE,
-                    OrderStatus.ACCEPTED,
-                    OrderStatus.REJECTED
+                    OrderStatus.ACCEPTED
             );
 //            var comparator = Comparator.comparing(Order::getReturnDate, Comparator.nullsFirst(Comparator.naturalOrder())).
 //                    thenComparing(Order::getOrderEndDate);
 //            orderList.sort(comparator);
 
-            int totalRecords = orderService.countOrdersByStatus(OrderStatus.ACCEPTED, OrderStatus.REJECTED);
+            int totalRecords = orderService.countOrdersByStatus(OrderStatus.ACCEPTED);
 
             logger.log(Level.DEBUG, "DisplayUsersOrdersCommand/ total orders: " + totalRecords);
 

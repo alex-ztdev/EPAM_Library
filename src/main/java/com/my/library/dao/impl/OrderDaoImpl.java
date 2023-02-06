@@ -136,7 +136,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
     }
 
     @Override
-    public List<Order> findAllUsersOrders(long userId, int start, int offset) throws DaoException {
+    public List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws DaoException {
         logger.log(Level.DEBUG, "OrderDaoImpl/findAllUsersOrders method invoked with parameters: user_id=" +
                 userId + " start=" + start + " offset=" + offset);
 
@@ -145,6 +145,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
         try (var statement = connection.prepareStatement(OrderQueries.FIND_ALL_USER_ORDERS_PAGINATION)) {
             int k = 1;
             statement.setLong(k++, userId);
+            k=setOrderStatuses(k, statement, orderStatus);
             statement.setInt(k++, start);
             statement.setInt(k, offset);
 
@@ -160,9 +161,11 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
     }
 
     @Override
-    public int countUserOrders(long userId) throws DaoException {
-        try (var statement = connection.prepareStatement(OrderQueries.COUNT_USERS_ORDERS)) {
-            statement.setLong(1, userId);
+    public int countUserOrders(long userId, OrderStatus... orderStatuses) throws DaoException {
+        try (var statement = connection.prepareStatement(OrderQueries.COUNT_USERS_ORDERS_BY_STATUSES)) {
+            int k = 1;
+            statement.setLong(k++, userId);
+            setOrderStatuses(k, statement, orderStatuses);
 
             try (var rs = statement.executeQuery()) {
                 rs.next();
@@ -193,7 +196,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
 
 
         try (var statement = connection.prepareStatement(OrderQueries.FIND_ORDERS_BY_STATUS_PAGINATION)) {
-            int k = setOrderStatuses(statement, orderStatus);
+            int k = setOrderStatuses(1, statement, orderStatus);
             statement.setInt(k++, start);
             statement.setInt(k, offset);
 
@@ -211,7 +214,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
     @Override
     public int countOrdersByStatus(OrderStatus... orderStatus) throws DaoException {
         try (var statement = connection.prepareStatement(OrderQueries.COUNT_ORDERS_BY_STATUS)) {
-            setOrderStatuses(statement, orderStatus);
+            setOrderStatuses(1, statement, orderStatus);
 
             try (var rs = statement.executeQuery()) {
                 rs.next();
@@ -234,8 +237,7 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
     }
 
 
-    private int setOrderStatuses(PreparedStatement statement, OrderStatus[] orderStatus) throws SQLException {
-        int k = 1;
+    private int setOrderStatuses(int k, PreparedStatement statement, OrderStatus[] orderStatus) throws SQLException {
         int len = orderStatus.length;
         for (int i = 0; i < len; i++) {
             statement.setLong(k++, orderStatus[i].ordinal() + 1);

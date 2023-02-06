@@ -48,17 +48,18 @@ public interface OrderQueries {
     //language=TSQL
     String FIND_ALL_USER_ORDERS_PAGINATION = FIND_ALL_ORDERS + """
             INNER JOIN Users U on U.id = Orders.user_id
-            WHERE user_id = ? and  U.status_id !=2
+            WHERE user_id = ? and  U.status_id !=2 and status in (?,?,?)
             ORDER BY  return_date, order_end_date
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
 
+
     //language=TSQL
     String FIND_ALL_ORDERS_PAGINATION = FIND_ALL_ORDERS + """
             INNER JOIN Users U on U.id = Orders.user_id
             WHERE U.status_id !=2
-            ORDER BY  return_date, order_end_date
+            ORDER BY return_date, order_end_date
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
             """;
@@ -71,6 +72,14 @@ public interface OrderQueries {
             """;
     //language=TSQL
     String COUNT_USERS_ORDERS = COUNT_ALL_ORDERS + "and user_id = ?";
+
+    //language=TSQL
+    String COUNT_USERS_ORDERS_BY_STATUSES = """
+            SELECT COUNT(*) FROM Orders
+            INNER JOIN Users U on U.id = Orders.user_id
+            WHERE U.status_id !=2 and user_id = ? and status in (?,?,?)
+            """;
+
 
     //language=TSQL
     String SET_RETURN_DATE = """

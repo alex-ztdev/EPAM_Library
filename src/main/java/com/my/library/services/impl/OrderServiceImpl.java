@@ -85,9 +85,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAllUsersOrders(long userId, int start, int offset) throws ServiceException {
+    public List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws ServiceException {
+        if (orderStatus.length == 0 || orderStatus.length > 3) {
+            throw new ServiceException("Error while executing findAllUsersOrders method: orderStatus array must contain from one to three elements");
+        }
         try {
-            return orderDAO.findAllUsersOrders(userId, start, offset);
+            return orderDAO.findAllUsersOrders(userId, start, offset, orderStatus);
         } catch (DaoException e) {
             throw new ServiceException("OrderServiceImpl/error while executing findAllUsersOrders method", e);
         }
@@ -103,9 +106,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int countUsersOrders(long userId) throws ServiceException {
+    public int countUsersOrders(long userId, OrderStatus... orderStatuses) throws ServiceException {
         try{
-            return orderDAO.countUserOrders(userId);
+            return orderDAO.countUserOrders(userId, orderStatuses);
         }catch (DaoException e) {
             throw new ServiceException("OrderServiceImpl/error while executing countUsersOrders method", e);
         }
