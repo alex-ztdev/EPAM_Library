@@ -106,8 +106,8 @@
 
 
                         <c:choose>
-                            <c:when test="${orders.orderStatus eq 'CANCELED'}">
-                                <td><fmt:message key="orders.common.status.canceled"/></td>
+                            <c:when test="${orders.orderStatus eq 'REJECTED'}">
+                                <td><fmt:message key="orders.common.status.rejected"/></td>
                             </c:when>
                             <c:when test="${orders.orderStatus eq 'ACCEPTED'}">
                                 <td><fmt:message key="orders.common.status.accepted"/></td>
