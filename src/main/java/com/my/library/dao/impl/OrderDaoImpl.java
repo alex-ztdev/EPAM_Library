@@ -123,12 +123,12 @@ public class OrderDaoImpl extends AbstractDao implements OrderDAO {
     }
 
     @Override
-    public void delete(Order order) throws DaoException {
+    public boolean delete(long id) throws DaoException {
         try (var statement = connection.prepareStatement(OrderQueries.DELETE_ORDER)) {
 
-            statement.setLong(1, order.getOrderId());
+            statement.setLong(1, id);
 
-            statement.executeUpdate();
+           return statement.executeUpdate() == 1;
 
         } catch (SQLException e) {
             throw new DaoException(e);

@@ -252,6 +252,39 @@ public class OrderServiceImpl implements OrderService {
         logger.log(Level.DEBUG, "OrderServiceImpl/declineOrder executed successfully ");
     }
 
+    @Override
+    public void cancelOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException {
+        try {
+            logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder/Transaction started");
+            transactionManager.beginTransaction();
+
+            var orderContainer = orderDAO.find(id);
+            if (orderContainer.isEmpty()) {
+                throw new ServiceException("OrderServiceImpl/ order doesn't exists!");
+            }
+            var order = orderContainer.get();
+
+            if (orderDAO.delete(id)) {
+                logger.log(Level.DEBUG,"OrderServiceImpl/ order doesn't exists");
+                bookService.incrementBookQuantity(order.getBookId());
+            }
+
+            transactionManager.commit();
+
+            logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder/Transaction committed successfully");
+        } catch (DaoException e) {
+            try {
+                transactionManager.rollback();
+            } catch (DaoException ex) {
+                throw new ServiceException("OrderServiceImpl/error while executing cancelOrder method" + "Rollback method didn't work", ex);
+            }
+            throw new ServiceException("OrderServiceImpl/error while executing cancelOrder method ", e);
+        } finally {
+            transactionManager.endTransaction();
+        }
+        logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder executed successfully ");
+    }
+
 
     @Override
     public boolean update(Order order) throws ServiceException {
