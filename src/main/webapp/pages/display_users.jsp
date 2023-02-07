@@ -62,7 +62,7 @@
                     <c:if test="${sessionScope.user.role eq 'ADMIN'}">
                         <th><fmt:message key="admin.users.user.role"/></th>
                         <th  style="min-width: 150px;"><fmt:message key="admin.users.user.status"/></th>
-                        <th style="min-width: 150px;"><fmt:message key="admin.users.user.change.role"/></th>
+                        <th style="min-width: 230px;"><fmt:message key="admin.users.user.change.role"/></th>
                     </c:if>
 
                     <c:if test="${sessionScope.user.role eq 'LIBRARIAN'}">
@@ -113,7 +113,7 @@
                                                     }
 
                                                 </style>
-                                                <div class="removed-book-div">
+                                                <div class="removed-order-div">
                                                     <a class="remove-link"
                                                        href="controller?command=unblock-user&user_id=${users.userId}">
                                                         <p class="label"><span class="align"><fmt:message

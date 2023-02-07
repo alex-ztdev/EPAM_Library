@@ -3,15 +3,13 @@ package com.my.library.services;
 import com.my.library.dao.TransactionManager;
 
 import com.my.library.dao.constants.OrderStatus;
-import com.my.library.entities.Book;
 import com.my.library.entities.Order;
-import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 
 import java.util.List;
 
 public interface OrderService extends Service<Order> {
-    void save(Order order, BookService bookService, TransactionManager transactionManager) throws ServiceException;
+    void placeOrder(Order order, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 
     List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws ServiceException;
 
@@ -29,9 +27,11 @@ public interface OrderService extends Service<Order> {
 
     int countOrdersByStatus(OrderStatus... orderStatus) throws ServiceException;
 
-    boolean setOrderStatus(long id, OrderStatus orderStatus) throws ServiceException;
+    boolean acceptOrder(long id) throws ServiceException;
 
     void declineOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException;
+
+    void cancelOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 }
 
 

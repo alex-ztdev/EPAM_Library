@@ -17,7 +17,7 @@ public interface OrderDAO {
 
     boolean update(Order order) throws DaoException;
 
-    void delete(Order order) throws DaoException;
+    boolean delete(long id) throws DaoException;
 
     List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws DaoException;
 

@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderStartDate(nowTime);
 
 
-//            order.setOrderEndDate(order.isOnSubscription() ? nowTime.plusDays(SUBSCRIPTION_DAYS) : LocalDateTime.of(nowTime.toLocalDate(), LocalTime.MAX));
+            order.setOrderEndDate(order.isOnSubscription() ? nowTime.plusDays(SUBSCRIPTION_DAYS) : LocalDateTime.of(nowTime.toLocalDate(), LocalTime.MAX));
 
             orderDAO.save(order);
 
@@ -197,11 +197,26 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public boolean setOrderStatus(long id, OrderStatus orderStatus) throws ServiceException {
+    public boolean acceptOrder(long id) throws ServiceException {
         try {
-            return orderDAO.setOrderStatus(id , orderStatus);
+            logger.log(Level.DEBUG, "OrderServiceImpl/acceptOrder/Transaction started");
+            var orderContainer = orderDAO.find(id);
+            if (orderContainer.isEmpty()) {
+                throw new ServiceException("OrderServiceImpl/ acceptOrder order doesn't exists!");
+            }
+            var order = orderContainer.get();
+            order.setOrderStatus(OrderStatus.ACCEPTED);
+            var nowTime = LocalDateTime.now();
+
+            order.setOrderStartDate(nowTime);
+            order.setOrderEndDate(order.isOnSubscription() ? nowTime.plusDays(SUBSCRIPTION_DAYS) :
+                    LocalDateTime.of(nowTime.toLocalDate(), LocalTime.MAX));
+
+            return orderDAO.update(order);
+
         } catch (DaoException e) {
-            throw new ServiceException("Error while executing setOrderStatus method", e);
+
+            throw new ServiceException("Error while executing acceptOrder method", e);
         }
     }
 
@@ -235,6 +250,40 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.endTransaction();
         }
         logger.log(Level.DEBUG, "OrderServiceImpl/declineOrder executed successfully ");
+    }
+
+    @Override
+    public void cancelOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException {
+        try {
+            logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder/Transaction started");
+            transactionManager.beginTransaction();
+
+            var orderContainer = orderDAO.find(id);
+            if (orderContainer.isEmpty()) {
+                throw new ServiceException("OrderServiceImpl/ order doesn't exists!");
+            }
+            var order = orderContainer.get();
+
+            if (orderDAO.delete(id)) {
+                logger.log(Level.DEBUG,"OrderServiceImpl/ order deleted");
+                logger.log(Level.DEBUG,"Deleted order: " +  order);
+                bookService.incrementBookQuantity(order.getBookId());
+            }
+
+            transactionManager.commit();
+
+            logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder/Transaction committed successfully");
+        } catch (DaoException e) {
+            try {
+                transactionManager.rollback();
+            } catch (DaoException ex) {
+                throw new ServiceException("OrderServiceImpl/error while executing cancelOrder method" + "Rollback method didn't work", ex);
+            }
+            throw new ServiceException("OrderServiceImpl/error while executing cancelOrder method ", e);
+        } finally {
+            transactionManager.endTransaction();
+        }
+        logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder executed successfully ");
     }
 
 

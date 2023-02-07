@@ -15,7 +15,6 @@ import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
-import com.my.library.utils.Pages;
 import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -69,7 +68,7 @@ public class OrderBookCommand implements Command {
                 logger.log(Level.DEBUG, "OrderBookCommand: books quantity is 0 or less: redirect to error page");
                 return new CommandResult(RedirectToPage.ERROR_PAGE, CommandDirection.REDIRECT);
             }
-            orderService.save(orderToSave, bookService, transactionManager);
+            orderService.placeOrder(orderToSave, bookService, transactionManager);
 
             return new CommandResult(RedirectToPage.MY_REQUESTS_PAGE_WITH_SUCCESSFUL_MSG, CommandDirection.REDIRECT);
         } catch (ServiceException e) {

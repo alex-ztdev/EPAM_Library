@@ -9,5 +9,6 @@ public interface UserCommands {
     String MY_PROFILE = "my-profile";
 
     String DISPLAY_MY_REQUESTS = "display-my-requested-orders";
-    
+
+    String CANCEL_ORDER = "cancel-order";
 }

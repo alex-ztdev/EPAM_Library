@@ -61,7 +61,8 @@ public class AuthenticationFilter implements Filter {
             UserCommands.ORDER_BOOK,
             UserCommands.DISPLAY_MY_ORDERS,
             UserCommands.MY_PROFILE,
-            UserCommands.DISPLAY_MY_REQUESTS
+            UserCommands.DISPLAY_MY_REQUESTS,
+            UserCommands.CANCEL_ORDER
     );
 
 

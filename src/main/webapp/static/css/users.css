@@ -177,3 +177,34 @@ body {
     color: rgb(85, 247, 85);
     text-align: center;
 }
+
+
+/*.ban-user{*/
+/*    background: #963c29;*/
+/*}*/
+/*.ban-user:hover{*/
+/*    background: #e55d3f;*/
+/*}*/
+
+/*.unban-user{*/
+/*    background: #30b220;*/
+/*}*/
+/*.unban-user{*/
+/*    background: #4CAF50;*/
+/*}*/
+.ban-user {
+    background: #d90f0f;
+}
+.ban-user:hover {
+    background: #31e331;
+}
+
+.unban-user {
+    background: #4CAF50;
+}
+
+
+
+.unban-user:hover {
+    background: #c95635;
+}
