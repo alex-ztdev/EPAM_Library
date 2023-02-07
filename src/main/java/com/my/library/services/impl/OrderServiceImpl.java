@@ -197,11 +197,26 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public boolean setOrderStatus(long id, OrderStatus orderStatus) throws ServiceException {
+    public boolean acceptOrder(long id) throws ServiceException {
         try {
-            return orderDAO.setOrderStatus(id , orderStatus);
+            logger.log(Level.DEBUG, "OrderServiceImpl/acceptOrder/Transaction started");
+            var orderContainer = orderDAO.find(id);
+            if (orderContainer.isEmpty()) {
+                throw new ServiceException("OrderServiceImpl/ acceptOrder order doesn't exists!");
+            }
+            var order = orderContainer.get();
+            order.setOrderStatus(OrderStatus.ACCEPTED);
+            var nowTime = LocalDateTime.now();
+
+            order.setOrderStartDate(nowTime);
+            order.setOrderEndDate(order.isOnSubscription() ? nowTime.plusDays(SUBSCRIPTION_DAYS) :
+                    LocalDateTime.of(nowTime.toLocalDate(), LocalTime.MAX));
+
+            return orderDAO.update(order);
+
         } catch (DaoException e) {
-            throw new ServiceException("Error while executing setOrderStatus method", e);
+
+            throw new ServiceException("Error while executing acceptOrder method", e);
         }
     }
 
