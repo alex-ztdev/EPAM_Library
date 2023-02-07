@@ -5,12 +5,9 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
-import com.my.library.dao.constants.OrderStatus;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
-import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
-import com.my.library.services.UserService;
 import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -38,7 +35,7 @@ public class AcceptOrderCommand implements Command {
             return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         try {
-            orderService.setOrderStatus(orderIdContainer.get(), OrderStatus.ACCEPTED);
+            orderService.acceptOrder(orderIdContainer.get());
 
             var prev_page = (String)session.getAttribute(Parameters.PREVIOUS_PAGE);
 
