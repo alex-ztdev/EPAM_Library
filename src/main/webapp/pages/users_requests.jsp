@@ -61,8 +61,7 @@
                     </c:if>
 
                     <th><fmt:message key="orders.common.book.title"/></th>
-                    <th><fmt:message key="orders.common.order.start.date"/></th>
-                    <th><fmt:message key="orders.common.order.end.date"/></th>
+                    <th><fmt:message key="orders.common.order.placed.date"/></th>
                     <th><fmt:message key="orders.common.order.place"/></th>
                     <th><fmt:message key="orders.common.status"/></th>
                 </tr>
@@ -85,8 +84,6 @@
                         <td> ${orders.bookTitle} </td>
 
                         <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:MM", language)} </td>
-                        <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:MM", language)} </td>
-
 
                         <c:choose>
                             <c:when test="${orders.onSubscription}">
