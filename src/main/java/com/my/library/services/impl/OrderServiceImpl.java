@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
             order.setOrderStartDate(nowTime);
 
 
-//            order.setOrderEndDate(order.isOnSubscription() ? nowTime.plusDays(SUBSCRIPTION_DAYS) : LocalDateTime.of(nowTime.toLocalDate(), LocalTime.MAX));
+            order.setOrderEndDate(order.isOnSubscription() ? nowTime.plusDays(SUBSCRIPTION_DAYS) : LocalDateTime.of(nowTime.toLocalDate(), LocalTime.MAX));
 
             orderDAO.save(order);
 
