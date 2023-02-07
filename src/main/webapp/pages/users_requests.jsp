@@ -51,7 +51,6 @@
         </div>
         <div class="orders_list_container">
             <table class="orders_table">
-
                 <tr>
                     <th><fmt:message key="common.label.counter"/></th>
 
@@ -66,8 +65,6 @@
                     <th><fmt:message key="orders.common.order.end.date"/></th>
                     <th><fmt:message key="orders.common.order.place"/></th>
                     <th><fmt:message key="orders.common.status"/></th>
-
-
                 </tr>
                 <c:forEach var="orders" items="${requestScope.ordersList}" varStatus="loop">
 
@@ -87,8 +84,8 @@
                         </c:if>
                         <td> ${orders.bookTitle} </td>
 
-                        <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:mm", language)} </td>
-                        <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:mm", language)} </td>
+                        <td> ${custom:formatLocalDateTime(orders.orderStartDate,"dd MMM yyyy HH:MM", language)} </td>
+                        <td> ${custom:formatLocalDateTime(orders.orderEndDate,"dd MMM yyyy HH:MM", language)} </td>
 
 
                         <c:choose>
