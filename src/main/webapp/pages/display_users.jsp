@@ -113,7 +113,7 @@
                                                     }
 
                                                 </style>
-                                                <div class="removed-book-div">
+                                                <div class="removed-order-div">
                                                     <a class="remove-link"
                                                        href="controller?command=unblock-user&user_id=${users.userId}">
                                                         <p class="label"><span class="align"><fmt:message
