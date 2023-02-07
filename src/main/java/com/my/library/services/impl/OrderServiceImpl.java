@@ -265,7 +265,8 @@ public class OrderServiceImpl implements OrderService {
             var order = orderContainer.get();
 
             if (orderDAO.delete(id)) {
-                logger.log(Level.DEBUG,"OrderServiceImpl/ order doesn't exists");
+                logger.log(Level.DEBUG,"OrderServiceImpl/ order deleted");
+                logger.log(Level.DEBUG,"Deleted order: " +  order);
                 bookService.incrementBookQuantity(order.getBookId());
             }
 

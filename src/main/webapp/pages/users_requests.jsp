@@ -112,14 +112,14 @@
                             <c:choose>
                                 <c:when test="${orders.orderStatus eq 'PROCESSING'}">
                                     <td class="accept-order">
-                                        <div class="accept-order2">
+                                        <div >
                                             <a href="${pageContext.request.contextPath}/controller?command=lib-accept-order&order_id=${orders.orderId}">
                                                 <fmt:message key="orders.common.action.accept"/>
                                             </a>
                                         </div>
                                     </td>
                                     <td class="decline-order">
-                                        <div class="decline-order2">
+                                        <div>
                                             <a href="${pageContext.request.contextPath}/controller?command=lib-decline-order&order_id=${orders.orderId}" >
                                                 <fmt:message key="orders.common.action.decline"/>
                                             </a>
@@ -130,6 +130,15 @@
 
 
                         </c:if>
+                    <c:if test="${sessionScope.user.role eq 'USER' and orders.orderStatus eq 'PROCESSING'}">
+                        <td class="decline-order">
+                            <div>
+                                <a href="${pageContext.request.contextPath}/controller?command=cancel-order&order_id=${orders.orderId}" >
+                                    <fmt:message key="orders.common.action.cancel"/>
+                                </a>
+                            </div>
+                        </td>
+                    </c:if>
                     </tr>
                 </c:forEach>
             </table>
