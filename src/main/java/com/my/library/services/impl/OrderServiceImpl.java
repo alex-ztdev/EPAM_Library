@@ -52,17 +52,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void save(Order order, BookService bookService, TransactionManager transactionManager) throws ServiceException {
+    public void placeOrder(Order order, BookService bookService, TransactionManager transactionManager) throws ServiceException {
 
         try {
-            logger.log(Level.DEBUG, "OrderServiceImpl/save/Transaction started");
+            logger.log(Level.DEBUG, "OrderServiceImpl/placeOrder/Transaction started");
             transactionManager.beginTransaction();
 
             var nowTime = LocalDateTime.now();
             order.setOrderStartDate(nowTime);
 
 
-            order.setOrderEndDate(order.isOnSubscription() ? nowTime.plusDays(SUBSCRIPTION_DAYS) : LocalDateTime.of(nowTime.toLocalDate(), LocalTime.MAX));
+//            order.setOrderEndDate(order.isOnSubscription() ? nowTime.plusDays(SUBSCRIPTION_DAYS) : LocalDateTime.of(nowTime.toLocalDate(), LocalTime.MAX));
 
             orderDAO.save(order);
 
@@ -70,14 +70,14 @@ public class OrderServiceImpl implements OrderService {
 
             transactionManager.commit();
 
-            logger.log(Level.DEBUG, "OrderServiceImpl/save/Transaction committed successfully");
+            logger.log(Level.DEBUG, "OrderServiceImpl/placeOrder/Transaction committed successfully");
         } catch (DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
-                throw new ServiceException("OrderServiceImpl/error while executing save method" + "Rollback method didn't work", ex);
+                throw new ServiceException("OrderServiceImpl/error while executing placeOrder method" + "Rollback method didn't work", ex);
             }
-            throw new ServiceException("OrderServiceImpl/error while executing save method ", e);
+            throw new ServiceException("OrderServiceImpl/error while executing placeOrder method ", e);
         } finally {
             transactionManager.endTransaction();
         }
@@ -98,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAll(int start, int offset) throws ServiceException {
-        try  {
+        try {
             return orderDAO.findAll(start, offset);
         } catch (DaoException e) {
             throw new ServiceException("OrderServiceImpl/error while executing findAll method", e);
@@ -107,9 +107,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int countUsersOrders(long userId, OrderStatus... orderStatuses) throws ServiceException {
-        try{
+        try {
             return orderDAO.countUserOrders(userId, orderStatuses);
-        }catch (DaoException e) {
+        } catch (DaoException e) {
             throw new ServiceException("OrderServiceImpl/error while executing countUsersOrders method", e);
         }
     }
@@ -128,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int countTotalOrders() throws ServiceException {
-        try{
+        try {
             return orderDAO.countTotalOrders();
         } catch (DaoException e) {
             throw new ServiceException("OrderServiceImpl/error while executing countTotalOrders method", e);
@@ -194,7 +194,6 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException("Error while executing countOrdersByStatus method", e);
         }
     }
-
 
 
     @Override
