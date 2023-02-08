@@ -59,7 +59,7 @@ public class UserValidator {
         if (!isValidLogin(login)) {
             validationList.add(UserParameters.REG_INVALID_LOGIN);
         }
-        if (!isValidLogin(password)) {
+        if (!isValidPassword(password)) {
             validationList.add(UserParameters.REG_INVALID_PASSWORD);
         }
         if (!isValidEmail(email)) {
