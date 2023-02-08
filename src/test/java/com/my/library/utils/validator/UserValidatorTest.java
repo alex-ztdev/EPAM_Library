@@ -19,7 +19,7 @@ class UserValidatorTest {
     private final UserValidator userValidator = new UserValidator();
 
     @Test
-    void ValidateUserParametersTest() {
+    void validateUserParameters_ValidInput_ReturnsEmptyList() {
         User user = new User();
         user.setLogin("validLogin");
         user.setEmail("validEmail@example.com");
@@ -65,46 +65,38 @@ class UserValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"invalidmail", "invalid@@mail.com", "invalid@my..com", "invalid@qwe.com1"})
-    void InvalidEmailTest_invalidEmail(String invalidEmail) {
+    void isValidEmail_invalidEmailInput_ReturnsFalse(String invalidEmail) {
         assertThat(userValidator.isValidEmail(invalidEmail)).isFalse();
     }
 
     @ParameterizedTest
     @NullSource
-    void InvalidEmailTest_nullEmail(String invalidEmail) {
+    void isValidEmail_nullInput_ReturnsFalse(String invalidEmail) {
         assertThat(userValidator.isValidEmail(invalidEmail)).isFalse();
     }
 
     @ParameterizedTest
     @EmptySource
-    void InvalidEmailTest_emptyEmail(String invalidEmail) {
+    void isValidEmail_emptyInput_ReturnsFalse(String invalidEmail) {
         assertThat(userValidator.isValidEmail(invalidEmail)).isFalse();
     }
 
-
     @Test
-    public void IsValidPasswordTest_validPassword() {
-        String password = "validPassword123";
-        boolean result = userValidator.isValidPassword(password);
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    public void IsValidPasswordTest_lessThanSixChars() {
+    public void IsValidPassword_lessThanSixChars() {
         String password = "q123";
         boolean result = userValidator.isValidPassword(password);
         assertThat(result).isFalse();
     }
 
     @Test
-    public void IsValidPasswordTest_noLetters() {
+    public void IsValidPassword_noLetters() {
         String password = "12345678";
         boolean result = userValidator.isValidPassword(password);
         assertThat(result).isFalse();
     }
 
     @Test
-    public void IsValidPasswordTest_noNumbers() {
+    public void IsValidPassword_noNumbers() {
         String password = "password";
         boolean result = userValidator.isValidPassword(password);
         assertThat(result).isFalse();
@@ -113,14 +105,14 @@ class UserValidatorTest {
     @ParameterizedTest
     @NullSource
     @EmptySource
-    public void IsValidPasswordTest_nullOrEmptyPassword(String password) {
+    public void IsValidPassword_NullOrEmptyPassword_ReturnsFalse(String password) {
         boolean result = userValidator.isValidPassword(password);
         assertThat(result).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"qwe1231", "Aa1Bb2Cc3Dd4Ee5Ff6Gg7Hh8", "myPassword123", "qwe3qwe321"})
-    public void isValidPassword_validPasswords_returnsTrue(String password) {
+    public void isValidPassword_ValidPasswords_ReturnsTrue(String password) {
         boolean result = userValidator.isValidPassword(password);
 
         assertThat(result).isTrue();
@@ -128,7 +120,7 @@ class UserValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user123", "login_1", "validLogin123"})
-    void isValidLoginTest(String login) {
+    void isValidLogin_ValidLogin_ReturnsTrue(String login) {
         boolean result = userValidator.isValidLogin(login);
 
         assertThat(result).isTrue();
@@ -136,7 +128,7 @@ class UserValidatorTest {
     @ParameterizedTest
     @EmptySource
     @NullSource
-    void isValidLoginTest_nullEmptySource(String login) {
+    void isValidLogin_NullAndEmptySource_ReturnsFalse(String login) {
         boolean result = userValidator.isValidLogin(login);
 
         assertThat(result).isFalse();
@@ -144,7 +136,7 @@ class UserValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"11", "qw", "22", "lo"})
-    void isValidLoginTest_shortLogin(String login) {
+    void isValidLogin_shortLogin_ReturnsFalse(String login) {
         boolean result = userValidator.isValidLogin(login);
 
         assertThat(result).isFalse();
@@ -152,7 +144,7 @@ class UserValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"symbols++--", "\\---", "invalid+login", "qwe|/"})
-    void isValidLoginTest_invalidSymbolsLogin(String login) {
+    void isValidLogin_InvalidSymbolsLogin_ReturnsFalse(String login) {
         boolean result = userValidator.isValidLogin(login);
 
         assertThat(result).isFalse();
@@ -163,14 +155,14 @@ class UserValidatorTest {
     @ParameterizedTest
     @NullSource
     @EmptySource
-    public void isValidNameTest_emptyOrNull(String name) {
+    public void isValidName_EmptyOrNull_ReturnsFalse(String name) {
         boolean result = userValidator.isValidName(name);
 
         assertThat(result).isFalse();
     }
     @ParameterizedTest
     @ValueSource(strings = {"Jo213n", "J123", "JohnJohnJohnJohnJohnJohnJohnJohn", "John+John" })
-    public void isValidNameTest_invalidName(String name) {
+    public void isValidName_InvalidName_ReturnsFalse(String name) {
         boolean result = userValidator.isValidName(name);
 
         assertThat(result).isFalse();
@@ -178,21 +170,21 @@ class UserValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = { "John", "Sophie", "Michael Jackson", "Mary-Jane", "O'Neil" })
-    public void isValidNameTest_validName(String name) {
+    public void isValidName_ValidName_ReturnsTrue(String name) {
         boolean result = userValidator.isValidName(name);
 
         assertThat(result).isTrue();
     }@ParameterizedTest
     @NullSource
     @EmptySource
-    public void isValidPhoneTest_emptyOrNull(String name) {
+    public void isValidPhone_emptyOrNull_ReturnsFalse(String name) {
         boolean result = userValidator.isValidPhone(name);
         assertThat(result).isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"23909", "390121654", "12312312312312332121" })
-    public void isInvalidPhoneTest_wrongLength(String name) {
+    public void isInvalidPhone_WrongLength_ReturnsFalse(String name) {
         boolean result = userValidator.isValidPhone(name);
 
         assertThat(result).isFalse();
@@ -200,7 +192,7 @@ class UserValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = { "380687777777", "380687777777", "044068777777"})
-    public void isValidPhoneTest_validPhone(String name) {
+    public void isValidPhone_ValidPhone_ReturnsTrue(String name) {
         boolean result = userValidator.isValidPhone(name);
 
         assertThat(result).isTrue();
