@@ -118,12 +118,9 @@ public class OrderServiceImpl implements OrderService {
     public double countFine(Order order) {
         long daysPassed = ChronoUnit.DAYS.between(order.getOrderEndDate(), order.getReturnDate() == null ? LocalDateTime.now() : order.getReturnDate());
         if (daysPassed <= 0) {
-//            logger.log(Level.DEBUG, "OrderServiceImpl/countFine/ order_id: fine: " + 0);
             return 0;
         }
-        double fine = daysPassed * DAY_OVERDUE_FEE;
-//        logger.log(Level.DEBUG, "OrderServiceImpl/countFine/ fine: " + fine);
-        return fine;
+        return daysPassed * DAY_OVERDUE_FEE;
     }
 
     @Override
@@ -253,18 +250,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void cancelOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException {
+    public void cancelOrder(long userId, long orderId, BookService bookService, TransactionManager transactionManager) throws ServiceException {
         try {
             logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder/Transaction started");
             transactionManager.beginTransaction();
 
-            var orderContainer = orderDAO.find(id);
+            var orderContainer = orderDAO.find(orderId);
             if (orderContainer.isEmpty()) {
                 throw new ServiceException("OrderServiceImpl/ order doesn't exists!");
             }
             var order = orderContainer.get();
 
-            if (orderDAO.delete(id)) {
+            if (order.getUserId() != userId) {
+                throw new ServiceException("OrderServiceImpl/ user with id:%s trying to cancel somebody else's order!".formatted(userId));
+            }
+
+            if (orderDAO.delete(orderId)) {
                 logger.log(Level.DEBUG,"OrderServiceImpl/ order deleted");
                 logger.log(Level.DEBUG,"Deleted order: " +  order);
                 bookService.incrementBookQuantity(order.getBookId());

@@ -31,7 +31,7 @@ public interface OrderService extends Service<Order> {
 
     void declineOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 
-    void cancelOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException;
+    void cancelOrder(long userId, long orderId, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 }
 
 
