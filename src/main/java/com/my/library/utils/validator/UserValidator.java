@@ -36,13 +36,14 @@ public class UserValidator {
             System.out.println(phoneNumber);
             validationList.add(UserParameters.REG_INVALID_PHONE);
         }
-        if (!isValidName(firstName) || !isValidName(secondName)) { //FIXME: split into first and sec
+        if (!isValidName(firstName) || !isValidName(secondName)) {
             validationList.add(UserParameters.REG_INVALID_NAME);
         }
         return validationList;
     }
 
-    private boolean isValidPhone(String phone) {
+    public boolean isValidPhone(String phone) {
+        if (phone == null || phone.isEmpty()) return false;
         return Pattern.matches(UserRegex.PHONE.getRegex(), phone);
     }
 
