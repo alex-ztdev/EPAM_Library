@@ -62,9 +62,10 @@ public class DisplayMyRequestsCommand implements Command {
             List<Order> orderList = orderService.findAllUsersOrders(user.getUserId(),
                     (currPage - 1) * RECORDS_PER_PAGE,
                     RECORDS_PER_PAGE,
-                    OrderStatus.PROCESSING);
+                    OrderStatus.PROCESSING,
+                    OrderStatus.REJECTED);
 
-            int totalRecords = orderService.countUsersOrders(user.getUserId(), OrderStatus.PROCESSING);
+            int totalRecords = orderService.countUsersOrders(user.getUserId(), OrderStatus.PROCESSING, OrderStatus.REJECTED);
 
             logger.log(Level.DEBUG, "DisplayMyRequestsCommand/ total orders: " + totalRecords);
 
