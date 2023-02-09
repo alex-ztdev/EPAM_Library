@@ -253,18 +253,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void cancelOrder(long id, BookService bookService, TransactionManager transactionManager) throws ServiceException {
+    public void cancelOrder(long userId, long orderId, BookService bookService, TransactionManager transactionManager) throws ServiceException {
         try {
             logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder/Transaction started");
             transactionManager.beginTransaction();
 
-            var orderContainer = orderDAO.find(id);
+            var orderContainer = orderDAO.find(orderId);
             if (orderContainer.isEmpty()) {
                 throw new ServiceException("OrderServiceImpl/ order doesn't exists!");
             }
             var order = orderContainer.get();
 
-            if (orderDAO.delete(id)) {
+            if (order.getUserId() != userId) {
+                throw new ServiceException("OrderServiceImpl/ user with id:%s trying to cancel somebody else's order!".formatted(userId));
+            }
+
+            if (orderDAO.delete(orderId)) {
                 logger.log(Level.DEBUG,"OrderServiceImpl/ order deleted");
                 logger.log(Level.DEBUG,"Deleted order: " +  order);
                 bookService.incrementBookQuantity(order.getBookId());

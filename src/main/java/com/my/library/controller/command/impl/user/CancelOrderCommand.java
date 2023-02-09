@@ -5,7 +5,9 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
+import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.TransactionManager;
+import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
@@ -41,8 +43,10 @@ public class CancelOrderCommand implements Command {
         if (orderIdContainer.isEmpty()) {
             return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
+        var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+
         try {
-            orderService.cancelOrder(orderIdContainer.get(), bookService, transactionManager);
+            orderService.cancelOrder(user.getUserId(), orderIdContainer.get(), bookService, transactionManager);
 
             var prev_page = (String)session.getAttribute(Parameters.PREVIOUS_PAGE);
 
