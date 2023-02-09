@@ -9,6 +9,7 @@ import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
 import com.my.library.controller.command.impl.librarian.*;
 import com.my.library.controller.command.impl.user.*;
+import com.my.library.dao.DaoFactory;
 import com.my.library.dao.TransactionManager;
 import com.my.library.services.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +26,7 @@ public class CommandFactory implements AutoCloseable {
 
     public CommandFactory() {
         this.connection = ConnectionPool.getInstance().getConnection();
-        this.serviceFactory = new ServiceFactory(connection);
+        this.serviceFactory = new ServiceFactory(connection, new DaoFactory(connection));
     }
 
     //TODO: implement initialization only when command need services!
