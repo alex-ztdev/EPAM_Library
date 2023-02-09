@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class UserValidator {
+    
     public List<String> validateUserParameters(User user) {
         List<String> validationList = new ArrayList<>();
 
@@ -25,7 +26,7 @@ public class UserValidator {
         if (!isValidLogin(login)) {
             validationList.add(UserParameters.REG_INVALID_LOGIN);
         }
-        if (!isValidLogin(password)) {
+        if (!isValidPassword(password)) {
             validationList.add(UserParameters.REG_INVALID_PASSWORD);
         }
         if (!isValidEmail(email)) {
@@ -35,13 +36,14 @@ public class UserValidator {
             System.out.println(phoneNumber);
             validationList.add(UserParameters.REG_INVALID_PHONE);
         }
-        if (!isValidName(firstName) || !isValidName(secondName)) { //FIXME: split into first and sec
+        if (!isValidName(firstName) || !isValidName(secondName)) {
             validationList.add(UserParameters.REG_INVALID_NAME);
         }
         return validationList;
     }
 
-    private boolean isValidPhone(String phone) {
+    public boolean isValidPhone(String phone) {
+        if (phone == null || phone.isEmpty()) return false;
         return Pattern.matches(UserRegex.PHONE.getRegex(), phone);
     }
 
