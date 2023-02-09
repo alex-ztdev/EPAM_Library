@@ -118,12 +118,9 @@ public class OrderServiceImpl implements OrderService {
     public double countFine(Order order) {
         long daysPassed = ChronoUnit.DAYS.between(order.getOrderEndDate(), order.getReturnDate() == null ? LocalDateTime.now() : order.getReturnDate());
         if (daysPassed <= 0) {
-//            logger.log(Level.DEBUG, "OrderServiceImpl/countFine/ order_id: fine: " + 0);
             return 0;
         }
-        double fine = daysPassed * DAY_OVERDUE_FEE;
-//        logger.log(Level.DEBUG, "OrderServiceImpl/countFine/ fine: " + fine);
-        return fine;
+        return daysPassed * DAY_OVERDUE_FEE;
     }
 
     @Override
