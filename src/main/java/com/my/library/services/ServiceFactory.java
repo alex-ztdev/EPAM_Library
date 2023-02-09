@@ -15,9 +15,10 @@ public class ServiceFactory {
     private Connection connection;
 
     private DaoFactory daoFactory;
-    public ServiceFactory(Connection connection) {
+
+    public ServiceFactory(Connection connection, DaoFactory daoFactory) {
         this.connection = connection;
-        this.daoFactory = new DaoFactory(connection);
+        this.daoFactory = daoFactory;
     }
 
     public UserService getUserService() {
