@@ -7,6 +7,7 @@ import com.my.library.dao.constants.columns.UsersColumns;
 import com.my.library.entities.User;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class UserBuilder {
@@ -20,9 +21,22 @@ public class UserBuilder {
         String password = request.getParameter(UserParameters.REG_PASSWORD);
         String confPassword = request.getParameter(UserParameters.REG_CONF_PASSWORD);
 
-        if (login.isEmpty() || email.isEmpty() || firstName.isEmpty() || secondName.isEmpty() || password.isEmpty() || confPassword.isEmpty() || !password.equals(confPassword)) {
+        if (containsNullOrBlankStringCheck(login, email, firstName, secondName, password, confPassword) || !password.equals(confPassword)) {
             return Optional.empty();
         }
-        return Optional.of(new User(login, password, UserRole.USER, UserStatus.NORMAL, email, phoneNumber.isEmpty() ? null : phoneNumber, firstName, secondName));
+
+        return Optional.of(new User(login, password, UserRole.USER, UserStatus.NORMAL, email, (phoneNumber==null || phoneNumber.isEmpty()) ? null : phoneNumber, firstName, secondName));
+    }
+
+    private boolean containsNullOrBlankStringCheck(String... strings) {
+        if (strings == null) {
+            return true;
+        }
+        for (String string : strings) {
+            if (string == null || string.isBlank()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
