@@ -9,18 +9,14 @@ import org.junit.jupiter.params.provider.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class BookValidatorTest {
     private BookValidator bookValidator = new BookValidator();
-
-
 
     @ParameterizedTest
     @ValueSource(strings = {"||+++***|", "Almost valid title@", "майже правильна назва/", "123 <>"})
@@ -83,9 +79,6 @@ class BookValidatorTest {
     @NullSource
     void validateBook_emptyOrNullPublisher_ShouldReturnFalse(String publisher) {
         Author author = mock(Author.class);
-        when(author.getFirstName()).thenReturn("ValidName");
-        when(author.getSecondName()).thenReturn("ValidName");
-
 
         var res = bookValidator.validateBook(new Book("Valid Title",
                 publisher,
@@ -135,8 +128,6 @@ class BookValidatorTest {
     @ValueSource(ints = {-100, -50, -25, -10, -5, 0})
     void validateBook_negativePageNumber_ShouldReturnFalse(int pages) {
         Author author = mock(Author.class);
-        when(author.getFirstName()).thenReturn("ValidName");
-        when(author.getSecondName()).thenReturn("ValidName");
 
         var res = bookValidator.validateBook(new Book("Valid Title",
                 "publisher",
@@ -171,7 +162,7 @@ class BookValidatorTest {
         Author author = mock(Author.class);
         when(author.getFirstName()).thenReturn("ValidName");
         when(author.getSecondName()).thenReturn("ValidName");
-        ;
+
         var res = bookValidator.validateBook(new Book("Valid Title",
                 "publisher",
                 "other",
