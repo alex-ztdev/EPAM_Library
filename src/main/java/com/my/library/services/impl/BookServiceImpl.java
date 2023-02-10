@@ -1,6 +1,6 @@
 package com.my.library.services.impl;
 
-import com.my.library.controller.command.constant.BooksOrderDir;
+import com.my.library.controller.command.constant.OrderDir;
 import com.my.library.dao.BookDAO;
 import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.BooksOrderTypes;
@@ -53,14 +53,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findAll() throws ServiceException {
         try {
-            return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, BooksOrderDir.ASC, false);
+            return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, OrderDir.ASC, false);
         } catch (DaoException e) {
             throw new ServiceException("Error while default findAll in BookServiceImpl", e);
         }
     }
 
     @Override
-    public List<Book> findAll(int from, int to, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws ServiceException {
+    public List<Book> findAll(int from, int to, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException {
         try {
             return bookDAO.findAll(from, to, orderBy, dir, includeRemoved);
         } catch (DaoException e) {
@@ -199,7 +199,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws ServiceException {
+    public List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException {
         logger.log(Level.DEBUG, "findByTitle invoked with parameters: title=%s start=%s offset=%s orderBy=%s dir=%s includeRemoved=%s".formatted(title, start, offset, orderBy, dir, includeRemoved));
         try {
             return bookDAO.findByTitle(title, start, offset, orderBy, dir, includeRemoved);
@@ -218,7 +218,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir orderDir, boolean includeRemoved) throws ServiceException {
+    public List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, OrderDir orderDir, boolean includeRemoved) throws ServiceException {
         try {
             return bookDAO.findByAuthor(author, start, offset, orderBy, orderDir, includeRemoved);
         } catch (DaoException e) {

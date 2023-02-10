@@ -2,7 +2,7 @@ package com.my.library.controller.command.impl.common;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
-import com.my.library.controller.command.constant.BooksOrderDir;
+import com.my.library.controller.command.constant.OrderDir;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.SearchBy;
@@ -47,7 +47,7 @@ public class SearchBookCommand implements Command {
 
         int currPage = 1;
 
-        BooksOrderDir orderDir = BooksOrderDir.ASC;
+        OrderDir orderDir = OrderDir.ASC;
         BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
 
 
@@ -79,7 +79,7 @@ public class SearchBookCommand implements Command {
             currPage = Integer.parseInt(reqCurrPage);
         }
         if (reqOrderDir != null && !reqOrderDir.isBlank()) {
-            orderDir = BooksOrderDir.valueOf(reqOrderDir.toUpperCase());
+            orderDir = OrderDir.valueOf(reqOrderDir.toUpperCase());
         }
         if (reqOrderBy != null && !reqOrderBy.isBlank()) {
             orderBy = BooksOrderTypes.valueOf(reqOrderBy.toUpperCase());

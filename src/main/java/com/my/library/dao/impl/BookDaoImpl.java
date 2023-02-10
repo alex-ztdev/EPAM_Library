@@ -1,6 +1,6 @@
 package com.my.library.dao.impl;
 
-import com.my.library.controller.command.constant.BooksOrderDir;
+import com.my.library.controller.command.constant.OrderDir;
 import com.my.library.dao.AbstractDao;
 import com.my.library.dao.BookDAO;
 import com.my.library.dao.builder.impl.DaoBookBuilder;
@@ -49,7 +49,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
 
 
     @Override
-    public List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws DaoException {
+    public List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws DaoException {
         List<Book> bookList = new ArrayList<>();
         var unformattedQ = includeRemoved ? BookQueries.FIND_ALL_BOOKS_PAGINATION : BookQueries.FIND_ALL_NOT_REMOVED_BOOKS_PAGINATION;
 
@@ -273,7 +273,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
     }
 
     @Override
-    public List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws DaoException {
+    public List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws DaoException {
         List<Book> bookList = new ArrayList<>();
         var unformattedQ = includeRemoved ? BookQueries.FIND_BY_TITLE_INCLUDE_REMOVED : BookQueries.FIND_BY_TITLE;
 
@@ -315,7 +315,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
     }
 
     @Override
-    public List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, BooksOrderDir dir, boolean includeRemoved) throws DaoException {
+    public List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws DaoException {
         List<Book> bookList = new ArrayList<>();
         var unformattedQ = includeRemoved ? BookQueries.FIND_BY_AUTHOR_INCLUDE_REMOVED : BookQueries.FIND_BY_AUTHOR;
 
