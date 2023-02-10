@@ -2,6 +2,7 @@ package com.my.library.utils.validator;
 
 import com.my.library.entities.Book;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -14,11 +15,16 @@ public class BookValidator {
                 || book.getPublicationDate() == null
                 || book.getGenre() == null
                 || book.getTitle() == null
-                || book.getPublisherTitle() == null) {
+                || book.getPublisherTitle() == null || book.getPublisherTitle().isBlank()
+                || book.getPageNumber() <= 0
+        ) {
             return false;
-        } else return !Pattern.matches(TITLE_PATTERN, book.getTitle())
-                && !Pattern.matches(NAME_PATTERN, book.getAuthor().getFirstName())
-                && !Pattern.matches(NAME_PATTERN, book.getAuthor().getSecondName());
+        } else {
+            return Pattern.matches(TITLE_PATTERN, book.getTitle())
+                    && Pattern.matches(NAME_PATTERN, book.getAuthor().getFirstName())
+                    && Pattern.matches(NAME_PATTERN, book.getAuthor().getSecondName())
+                    && book.getPublicationDate().compareTo(LocalDate.now()) <= 0;
+        }
     }
 
 }
