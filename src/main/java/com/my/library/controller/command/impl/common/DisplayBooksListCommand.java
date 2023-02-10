@@ -22,7 +22,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
-import java.util.Optional;
 
 public class DisplayBooksListCommand implements Command {
     private static final int RECORDS_PER_PAGE = 15;
@@ -41,7 +40,7 @@ public class DisplayBooksListCommand implements Command {
 
         int currPage = 1;
 
-        BooksOrderDir orderDir = BooksOrderDir.ASC;
+        OrderDir orderDir = OrderDir.ASC;
         BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
 
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
@@ -55,7 +54,7 @@ public class DisplayBooksListCommand implements Command {
             }
         }
         if (reqOrderDir != null && !reqOrderDir.isBlank()) {
-            orderDir = BooksOrderDir.valueOf(reqOrderDir.toUpperCase());
+            orderDir = OrderDir.valueOf(reqOrderDir.toUpperCase());
         }
         if (reqOrderBy != null && !reqOrderBy.isBlank()) {
             orderBy = BooksOrderTypes.valueOf(reqOrderBy.toUpperCase());
