@@ -7,11 +7,12 @@ import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
+import com.my.library.utils.Encrypt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -151,7 +152,7 @@ class UserServiceImplTest {
     @ValueSource(ints = {0, 1, 2})
     void authenticate_SuccessfulAuthentication_ShouldReturnOptionalOfUser(int userIndex) throws DaoException, ServiceException {
         doReturn(Optional.of(validUsersList.get(userIndex)))
-                .when(userDAO).authenticate(validUsersList.get(userIndex).getLogin(),  validUsersList.get(userIndex).getPassword());
+                .when(userDAO).authenticate(validUsersList.get(userIndex).getLogin(), Encrypt.encryptWithSha512Hex(validUsersList.get(userIndex).getPassword()));
 
         Optional<User> userOptional = userService.authenticate(validUsersList.get(userIndex).getLogin(), validUsersList.get(userIndex).getPassword());
 
@@ -161,6 +162,33 @@ class UserServiceImplTest {
 
         assertThat(user).isEqualTo(validUsersList.get(userIndex));
     }
+
+    @Test
+    void authenticate_authenticateByNotExistingLogin_ShouldReturnEmptyOptional() throws DaoException, ServiceException {
+        doReturn(Optional.empty()).when(userDAO).authenticate(anyString(), anyString());
+
+        Optional<User> userOptional = userService.authenticate("randomLogin", "randompassword123");
+
+        assertThat(userOptional).isEmpty();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"invalidLogin!", "another_invalid_-+login"})
+    void authenticate_authenticateInvalidLogin_ShouldReturnEmptyOptional(String login) throws ServiceException {
+
+        Optional<User> userOptional = userService.authenticate(login, "randompassword123");
+
+        assertThat(userOptional).isEmpty();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"invalidPassword!", "", "another_invalid_-+login"})
+    void authenticate_authenticateInvalidPassword_ShouldReturnEmptyOptional(String password) throws ServiceException {
+        Optional<User> userOptional = userService.authenticate("validLogin", password);
+
+        assertThat(userOptional).isEmpty();
+    }
+
 
 //    List<String> canBeRegistered(User user) throws ServiceException;
 //
