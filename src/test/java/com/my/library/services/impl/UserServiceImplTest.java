@@ -9,20 +9,27 @@ import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
+    @Mock
     private UserDAO userDAO;
     private UserService userService;
 
@@ -54,7 +61,7 @@ class UserServiceImplTest {
 
     private final List<User> invalidUsers = Arrays.asList(
             new User("mikeLogin",
-                    "mikenpass", UserRole.ADMIN,
+                    "mikepass", UserRole.ADMIN,
                     UserStatus.NORMAL, "mike@gmail.com",
                     "380662222222",
                     "Mike", "Tyson")
@@ -63,41 +70,39 @@ class UserServiceImplTest {
 
     @BeforeEach
     void prepare() throws DaoException {
-        this.userDAO = Mockito.mock(UserDAO.class);
+        this.userDAO = mock(UserDAO.class);
         this.userService = new UserServiceImpl(userDAO);
 
-        Mockito.doReturn(Optional.of(validUsersList.get(0))).when(userDAO).find(validUsersList.get(0).getUserId());
-        Mockito.doReturn(Optional.of(validUsersList.get(1))).when(userDAO).find(validUsersList.get(1).getUserId());
-        Mockito.doReturn(Optional.of(validUsersList.get(2))).when(userDAO).find(validUsersList.get(2).getUserId());
-        Mockito.doReturn(Optional.empty()).when(userDAO).find(anyInt());
-
-        Mockito.doReturn(validUsersList).when(userDAO).findAll();
-
-        Mockito.doThrow(DaoException.class).when(userDAO).save(validUsersList.get(0));
-        Mockito.doThrow(DaoException.class).when(userDAO).save(validUsersList.get(1));
-        Mockito.doThrow(DaoException.class).when(userDAO).save(validUsersList.get(2));
-
-
-        Mockito.doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByPhone(validUsersList.get(0).getPhoneNumber());
-        Mockito.doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByPhone(validUsersList.get(1).getPhoneNumber());
-        Mockito.doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByPhone(validUsersList.get(2).getPhoneNumber());
-
-
-        Mockito.doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByLogin(validUsersList.get(0).getLogin());
-        Mockito.doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByLogin(validUsersList.get(1).getLogin());
-        Mockito.doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByLogin(validUsersList.get(2).getLogin());
-
-
-        Mockito.doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByEmail(validUsersList.get(0).getEmail());
-        Mockito.doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByEmail(validUsersList.get(1).getEmail());
-        Mockito.doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByEmail(validUsersList.get(2).getEmail());
+//
+//
+//        doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByPhone(validUsersList.get(0).getPhoneNumber());
+//        doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByPhone(validUsersList.get(1).getPhoneNumber());
+//        doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByPhone(validUsersList.get(2).getPhoneNumber());
+//
+//
+//        doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByLogin(validUsersList.get(0).getLogin());
+//        doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByLogin(validUsersList.get(1).getLogin());
+//        doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByLogin(validUsersList.get(2).getLogin());
+//
+//
+//        doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByEmail(validUsersList.get(0).getEmail());
+//        doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByEmail(validUsersList.get(1).getEmail());
+//        doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByEmail(validUsersList.get(2).getEmail());
 
     }
 
     @Test
-    void findExistingUser() throws ServiceException {
-        var userOptional = userService.find(1);
-        assertThat(userOptional).isPresent().get().isEqualTo(validUsersList.get(0));
+    void find_ExistingUser_ShouldReturnOptionalOfUser() throws ServiceException, DaoException {
+        doReturn(Optional.of(validUsersList.get(0))).when(userDAO).find(validUsersList.get(0).getUserId());
+        doReturn(Optional.of(validUsersList.get(1))).when(userDAO).find(validUsersList.get(1).getUserId());
+        doReturn(Optional.of(validUsersList.get(2))).when(userDAO).find(validUsersList.get(2).getUserId());
+
+        Optional<User> userOptional = userService.find(1);
+        assertThat(userOptional).isPresent();
+
+        User user = userOptional.get();
+
+        assertThat(user).isEqualTo(validUsersList.get(0));
 
         userOptional = userService.find(2);
         assertThat(userOptional).isPresent().get().isEqualTo(validUsersList.get(1));
@@ -107,18 +112,27 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findUserThatDoesntExist() throws ServiceException {
+    void find_UserThatDoesntExist_ShouldReturnEmptyOptional() throws ServiceException, DaoException {
+        lenient().doReturn(Optional.empty()).when(userDAO).find(anyInt());
+
         var userOptional = userService.find(anyInt());
         assertThat(userOptional).isEmpty();
     }
 
     @Test
-    void findAllUsers() throws ServiceException {
+    void findAllUsers() throws ServiceException, DaoException {
+        doReturn(validUsersList).when(userDAO).findAll();
+
         assertThat(userService.findAll()).isEqualTo(validUsersList);
     }
 
     @Test
-    void saveExistingUser() {
+    void saveExistingUser() throws DaoException {
+        doThrow(DaoException.class).when(userDAO).save(validUsersList.get(0));
+        doThrow(DaoException.class).when(userDAO).save(validUsersList.get(1));
+        doThrow(DaoException.class).when(userDAO).save(validUsersList.get(2));
+
+
         assertAll(
                 () -> assertThrows(ServiceException.class, () -> userService.save(validUsersList.get(0))),
                 () -> assertThrows(ServiceException.class, () -> userService.save(validUsersList.get(1))),
@@ -128,21 +142,40 @@ class UserServiceImplTest {
 
     @Test
     void saveValidNewUser() {
-
         assertAll(
                 () -> assertDoesNotThrow(() -> userService.save(usersToSave.get(0)))
         );
     }
 
-    @Test
-    void update() {
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2})
+    void authenticate_SuccessfulAuthentication_ShouldReturnOptionalOfUser(int userIndex) throws DaoException, ServiceException {
+        doReturn(Optional.of(validUsersList.get(userIndex)))
+                .when(userDAO).authenticate(validUsersList.get(userIndex).getLogin(),  validUsersList.get(userIndex).getPassword());
+
+        Optional<User> userOptional = userService.authenticate(validUsersList.get(userIndex).getLogin(), validUsersList.get(userIndex).getPassword());
+
+        assertThat(userOptional).isPresent();
+
+        User user = userOptional.get();
+
+        assertThat(user).isEqualTo(validUsersList.get(userIndex));
     }
 
-    @Test
-    void authenticate() {
-    }
+//    List<String> canBeRegistered(User user) throws ServiceException;
+//
+//    List<User> findAll(int start, int offset) throws ServiceException;
+//
+//    int countTotalUsers() throws ServiceException;
+//
+//    void blockUser(long userId) throws ServiceException;
+//
+//    void unblockUser(long userId) throws ServiceException;
+//
+//    void setUserRole(long userId, UserRole newUserRole) throws ServiceException;
+//
+//    List<User> findAllReaders(int start, int offset) throws ServiceException;
+//
+//    int countReaders(boolean includeBlocked) throws ServiceException;
 
-    @Test
-    void canBeRegistered() {
-    }
 }
