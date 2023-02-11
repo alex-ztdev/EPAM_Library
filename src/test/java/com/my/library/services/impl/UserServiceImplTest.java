@@ -1,5 +1,6 @@
 package com.my.library.services.impl;
 
+import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.UserDAO;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dao.constants.UserStatus;
@@ -34,7 +35,7 @@ class UserServiceImplTest {
     private UserDAO userDAO;
     private UserService userService;
 
-    private final List<User> validUsersList = Arrays.asList(
+    private final List<User> validUsersList = List.of(
             new User(1L, "alexLogin",
                     "alexpass123", UserRole.USER,
                     UserStatus.NORMAL, "alex@gmail.com",
@@ -49,10 +50,15 @@ class UserServiceImplTest {
                     "jimnpass123", UserRole.ADMIN,
                     UserStatus.NORMAL, "jim@gmail.com",
                     "380662222222",
-                    "Jim", "Johns")
+                    "Jim", "Johns"),
+            new User("existingLogin",
+                    "validPassword123", UserRole.ADMIN,
+                    UserStatus.NORMAL, "valid_mail2@gmail.com",
+                    "380111111112",
+                    "Mike", "Tyson")
     );
 
-    private final List<User> usersToSave = Arrays.asList(
+    private final List<User> usersToSave = List.of(
             new User("validLogin",
                     "validPassword123", UserRole.ADMIN,
                     UserStatus.NORMAL, "valid_mail@gmail.com",
@@ -60,7 +66,7 @@ class UserServiceImplTest {
                     "Mike", "Tyson")
     );
 
-    private final List<User> invalidUsers = Arrays.asList(
+    private final List<User> invalidUsers = List.of(
             new User("mikeLogin",
                     "mikepass", UserRole.ADMIN,
                     UserStatus.NORMAL, "mike@gmail.com",
@@ -73,7 +79,6 @@ class UserServiceImplTest {
     void prepare() throws DaoException {
         this.userDAO = mock(UserDAO.class);
         this.userService = new UserServiceImpl(userDAO);
-
 //
 //
 //        doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByPhone(validUsersList.get(0).getPhoneNumber());
@@ -114,9 +119,10 @@ class UserServiceImplTest {
 
     @Test
     void find_UserThatDoesntExist_ShouldReturnEmptyOptional() throws ServiceException, DaoException {
-        lenient().doReturn(Optional.empty()).when(userDAO).find(anyInt());
+//        doReturn(Optional.empty()).when(userDAO).find(anyInt());
 
-        var userOptional = userService.find(anyInt());
+        when(userDAO.find(anyLong())).thenReturn(Optional.empty());
+        var userOptional = userService.find(100);
         assertThat(userOptional).isEmpty();
     }
 
@@ -189,8 +195,60 @@ class UserServiceImplTest {
         assertThat(userOptional).isEmpty();
     }
 
+    @Test
+    void canBeRegistered_validUser_ShouldReturnEmptyValidationList() throws ServiceException, DaoException {
+        doReturn(Optional.empty()).when(userDAO).findByPhone(usersToSave.get(0).getPhoneNumber());
+        doReturn(Optional.empty()).when(userDAO).findByEmail(usersToSave.get(0).getEmail());
+        doReturn(Optional.empty()).when(userDAO).findByLogin(usersToSave.get(0).getLogin());
 
-//    List<String> canBeRegistered(User user) throws ServiceException;
+        User userToSave = usersToSave.get(0);
+
+        List<String> validationList = userService.canBeRegistered(userToSave);
+
+        assertThat(validationList).isEmpty();
+    }
+
+    @Test
+    void canBeRegistered_LoginEmailPhoneAlreadyExists_ShouldReturnLoginAlreadyExistsMsg() throws ServiceException, DaoException {
+        doReturn(Optional.of(validUsersList.get(3))).when(userDAO).findByPhone(validUsersList.get(3).getPhoneNumber());
+        doReturn(Optional.of(validUsersList.get(3))).when(userDAO).findByEmail(validUsersList.get(3).getEmail());
+        doReturn(Optional.of(validUsersList.get(3))).when(userDAO).findByLogin(validUsersList.get(3).getLogin());
+
+        User userToSave = validUsersList.get(3);
+
+        var validationList = userService.canBeRegistered(userToSave);
+
+
+        assertThat(validationList).containsExactly(UserParameters.USER_EMAIL_ALREADY_EXISTS,
+                        UserParameters.USER_LOGIN_ALREADY_EXISTS,
+                        UserParameters.USER_PHONE_ALREADY_EXISTS);
+    }
+
+    @Test
+    void canBeRegistered_LoginAlreadyExists_ShouldReturnLoginAlreadyExistsMsg() throws ServiceException, DaoException {
+        doReturn(Optional.empty()).when(userDAO).findByPhone(validUsersList.get(3).getPhoneNumber());
+        doReturn(Optional.empty()).when(userDAO).findByEmail(validUsersList.get(3).getEmail());
+        doReturn(Optional.of(validUsersList.get(3))).when(userDAO).findByLogin(validUsersList.get(3).getLogin());
+
+        User userToSave = validUsersList.get(3);
+
+        var validationList = userService.canBeRegistered(userToSave);
+
+        assertThat(validationList).containsExactly(UserParameters.USER_LOGIN_ALREADY_EXISTS);
+    }
+
+    @Test
+    void canBeRegistered_PhoneAlreadyExists_ShouldReturnLoginAlreadyExistsMsg() throws ServiceException, DaoException {
+        doReturn(Optional.of(validUsersList.get(3))).when(userDAO).findByPhone(validUsersList.get(3).getPhoneNumber());
+        doReturn(Optional.empty()).when(userDAO).findByEmail(validUsersList.get(3).getEmail());
+        doReturn(Optional.empty()).when(userDAO).findByLogin(validUsersList.get(3).getLogin());
+
+        User userToSave = validUsersList.get(3);
+
+        var validationList = userService.canBeRegistered(userToSave);
+
+        assertThat(validationList).containsExactly(UserParameters.USER_PHONE_ALREADY_EXISTS);
+    }
 //
 //    List<User> findAll(int start, int offset) throws ServiceException;
 //
