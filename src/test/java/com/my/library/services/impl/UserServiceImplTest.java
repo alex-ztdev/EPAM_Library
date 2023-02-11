@@ -13,18 +13,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -121,12 +120,18 @@ class UserServiceImplTest {
 
     @Test
     void find_UserThatDoesntExist_ShouldReturnEmptyOptional() throws ServiceException, DaoException {
-//        doReturn(Optional.empty()).when(userDAO).find(anyInt());
-
         when(userDAO.find(anyLong())).thenReturn(Optional.empty());
         var userOptional = userService.find(100);
         assertThat(userOptional).isEmpty();
     }
+
+    @Test
+    void find_DaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        doThrow(DaoException.class).when(userDAO).find(anyLong());
+
+        assertThatThrownBy(() -> userService.find(anyLong())).isExactlyInstanceOf(ServiceException.class);
+    }
+
 
     @Test
     void findAllUsers() throws ServiceException, DaoException {
@@ -134,6 +139,14 @@ class UserServiceImplTest {
 
         assertThat(userService.findAll()).isEqualTo(validUsersList);
     }
+
+    @Test
+    void findAllUsers_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        doThrow(DaoException.class).when(userDAO).findAll();
+
+        assertThatThrownBy(() -> userService.findAll()).isExactlyInstanceOf(ServiceException.class);
+    }
+
 
     @Test
     void saveExistingUser() throws DaoException {
@@ -147,14 +160,28 @@ class UserServiceImplTest {
                 () -> assertThrows(ServiceException.class, () -> userService.save(validUsersList.get(1))),
                 () -> assertThrows(ServiceException.class, () -> userService.save(validUsersList.get(2)))
         );
+
+        verify(userDAO, times(1)).save(validUsersList.get(0));
+        verify(userDAO, times(1)).save(validUsersList.get(1));
+        verify(userDAO, times(1)).save(validUsersList.get(2));
     }
 
     @Test
-    void saveValidNewUser() {
+    void saveValidNewUser() throws DaoException {
+        User userToSave = usersToSave.get(0);
         assertAll(
-                () -> assertDoesNotThrow(() -> userService.save(usersToSave.get(0)))
+                () -> assertDoesNotThrow(() -> userService.save(userToSave))
         );
+        verify(userDAO, times(1)).save(userToSave);
     }
+
+    @Test
+    void save_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        doThrow(DaoException.class).when(userDAO).save(usersToSave.get(0));
+
+        assertThatThrownBy(() -> userService.save(usersToSave.get(0))).isExactlyInstanceOf(ServiceException.class);
+    }
+
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2})
@@ -197,6 +224,14 @@ class UserServiceImplTest {
         assertThat(userOptional).isEmpty();
     }
 
+    @ParameterizedTest
+    @CsvFileSource(resources = "/password_encryption.csv")
+    void authenticate_whenDaoThrowsException_ShouldThrowServiceException(String password, String encryptedPassword) throws DaoException {
+        doThrow(DaoException.class).when(userDAO).authenticate("login", encryptedPassword);
+
+        assertThatThrownBy(() -> userService.authenticate("login", password)).isExactlyInstanceOf(ServiceException.class);
+    }
+
     @Test
     void canBeRegistered_validUser_ShouldReturnEmptyValidationList() throws ServiceException, DaoException {
         doReturn(Optional.empty()).when(userDAO).findByPhone(usersToSave.get(0).getPhoneNumber());
@@ -219,7 +254,6 @@ class UserServiceImplTest {
         User userToSave = validUsersList.get(3);
 
         var validationList = userService.canBeRegistered(userToSave);
-
 
         assertThat(validationList).containsExactly(UserParameters.USER_EMAIL_ALREADY_EXISTS,
                         UserParameters.USER_LOGIN_ALREADY_EXISTS,
@@ -265,6 +299,13 @@ class UserServiceImplTest {
         assertThat(validationList).containsExactly(UserParameters.USER_EMAIL_ALREADY_EXISTS);
     }
 
+    @Test
+    void canBeRegistered_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        doThrow(DaoException.class).when(userDAO).findByEmail(anyString());
+
+        assertThatThrownBy(() -> userService.canBeRegistered(usersToSave.get(0))).isExactlyInstanceOf(ServiceException.class);
+    }
+
 
     @ParameterizedTest
     @CsvSource({"1, 4", "1 , 3", "1, 2", "1, 3"})
@@ -286,6 +327,12 @@ class UserServiceImplTest {
         assertThat(userList).isEmpty();
     }
 
+    @Test
+    void findAll_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        doThrow(DaoException.class).when(userDAO).findAll(anyInt(), anyInt());
+
+        assertThatThrownBy(() -> userService.findAll(1, 100)).isExactlyInstanceOf(ServiceException.class);
+    }
 
 //    int countTotalUsers() throws ServiceException;
 //
