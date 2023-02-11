@@ -4,6 +4,8 @@ import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
+import com.my.library.utils.IntegerParser;
+import com.my.library.utils.LongParser;
 import com.my.library.utils.validator.BookValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
@@ -19,8 +21,19 @@ public class RequestBookBuilder {
 
     public Optional<Book> buildBookForUpdate(HttpServletRequest request) {
 
-        Long bookId = Long.valueOf(request.getParameter(Parameters.BOOK_ID));
-        int copies = Integer.parseInt(request.getParameter(BookParameters.COPIES));
+        Optional<Long> bookIdContainer = LongParser.parseLong(request.getParameter(Parameters.BOOK_ID));
+        Optional<Integer> copiesContainer = IntegerParser.parseInt(request.getParameter(BookParameters.COPIES));
+
+        if (bookIdContainer.isEmpty() || copiesContainer.isEmpty()) {
+            return Optional.empty();
+        }
+        var bookId = bookIdContainer.get();
+        var copies = copiesContainer.get();
+
+        if (bookId < 0 || copies < 0) {
+            return Optional.empty();
+        }
+
         var bookContainer = buildBookForSave(request);
 
         bookContainer.ifPresent(book -> book.setBookId(bookId));
@@ -44,9 +57,8 @@ public class RequestBookBuilder {
         logger.log(Level.INFO, "buildBookForSave was called. Received data: " + book + " copies: " + copies);
 
         if (new BookValidator().validateBook(book)) {
-            return Optional.empty();
-        } else return Optional.of(book);
+            return Optional.of(book);
+        } else return Optional.empty();
     }
-
 
 }
