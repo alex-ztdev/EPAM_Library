@@ -78,25 +78,9 @@ class UserServiceImplTest {
 
 
     @BeforeEach
-    void prepare() throws DaoException {
+    void setUp() {
         this.userDAO = mock(UserDAO.class);
         this.userService = new UserServiceImpl(userDAO);
-//
-//
-//        doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByPhone(validUsersList.get(0).getPhoneNumber());
-//        doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByPhone(validUsersList.get(1).getPhoneNumber());
-//        doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByPhone(validUsersList.get(2).getPhoneNumber());
-//
-//
-//        doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByLogin(validUsersList.get(0).getLogin());
-//        doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByLogin(validUsersList.get(1).getLogin());
-//        doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByLogin(validUsersList.get(2).getLogin());
-//
-//
-//        doReturn(Optional.of(validUsersList.get(0))).when(userDAO).findByEmail(validUsersList.get(0).getEmail());
-//        doReturn(Optional.of(validUsersList.get(1))).when(userDAO).findByEmail(validUsersList.get(1).getEmail());
-//        doReturn(Optional.of(validUsersList.get(2))).when(userDAO).findByEmail(validUsersList.get(2).getEmail());
-
     }
 
     @Test

@@ -80,7 +80,6 @@ class RequestBookBuilderTest {
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.COPIES)).thenReturn("2");
         when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
         when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
@@ -112,7 +111,6 @@ class RequestBookBuilderTest {
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.COPIES)).thenReturn("2");
         when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
         when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
@@ -132,7 +130,6 @@ class RequestBookBuilderTest {
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.COPIES)).thenReturn("2");
         when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
         when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
@@ -151,7 +148,6 @@ class RequestBookBuilderTest {
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.COPIES)).thenReturn("2");
         when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
         when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
@@ -171,7 +167,6 @@ class RequestBookBuilderTest {
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.COPIES)).thenReturn("2");
         when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
         when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
@@ -191,7 +186,6 @@ class RequestBookBuilderTest {
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.COPIES)).thenReturn("2");
         when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
         when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
@@ -210,7 +204,6 @@ class RequestBookBuilderTest {
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.COPIES)).thenReturn("2");
         when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
         when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
@@ -229,7 +222,6 @@ class RequestBookBuilderTest {
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.COPIES)).thenReturn("2");
         when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
         when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
