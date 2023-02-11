@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
@@ -21,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -249,9 +251,42 @@ class UserServiceImplTest {
 
         assertThat(validationList).containsExactly(UserParameters.USER_PHONE_ALREADY_EXISTS);
     }
-//
-//    List<User> findAll(int start, int offset) throws ServiceException;
-//
+
+    @Test
+    void canBeRegistered_EmailAlreadyExists_ShouldReturnLoginAlreadyExistsMsg() throws ServiceException, DaoException {
+        doReturn(Optional.empty()).when(userDAO).findByPhone(validUsersList.get(3).getPhoneNumber());
+        doReturn(Optional.of(validUsersList.get(3))).when(userDAO).findByEmail(validUsersList.get(3).getEmail());
+        doReturn(Optional.empty()).when(userDAO).findByLogin(validUsersList.get(3).getLogin());
+
+        User userToSave = validUsersList.get(3);
+
+        var validationList = userService.canBeRegistered(userToSave);
+
+        assertThat(validationList).containsExactly(UserParameters.USER_EMAIL_ALREADY_EXISTS);
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({"1, 4", "1 , 3", "1, 2", "1, 3"})
+    void findAll_validRange_ShouldReturnUsersList(int start, int offset) throws DaoException, ServiceException {
+        doReturn(validUsersList.subList(start - 1, offset - 1)).when(userDAO).findAll(start, offset);
+
+        List<User> userList = userService.findAll(start, offset);
+
+        assertThat(userList).containsExactly(validUsersList.subList(start - 1, offset - 1).toArray(User[]::new));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"-1, 4", "-2 , 3", "-3, 2", "-4, 3"})
+    void findAll_startIsNegative_ShouldReturnEmptyList(int start, int offset) throws DaoException, ServiceException {
+        doReturn(List.of()).when(userDAO).findAll(start, offset);
+
+        List<User> userList = userService.findAll(start, offset);
+
+        assertThat(userList).isEmpty();
+    }
+
+
 //    int countTotalUsers() throws ServiceException;
 //
 //    void blockUser(long userId) throws ServiceException;
