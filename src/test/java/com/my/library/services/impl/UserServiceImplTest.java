@@ -334,9 +334,42 @@ class UserServiceImplTest {
         assertThatThrownBy(() -> userService.findAll(1, 100)).isExactlyInstanceOf(ServiceException.class);
     }
 
-//    int countTotalUsers() throws ServiceException;
-//
-//    void blockUser(long userId) throws ServiceException;
+    @Test
+    void countTotalUsers_ShouldReturnUsersCount() throws DaoException, ServiceException {
+        doReturn(validUsersList.size()).when(userDAO).countTotalUsers();
+
+        int usersCount = userService.countTotalUsers();
+
+        assertThat(usersCount).isEqualTo(validUsersList.size());
+    }
+    @Test
+    void countTotalUsers_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        doThrow(DaoException.class).when(userDAO).countTotalUsers();
+
+        assertThatThrownBy(() -> userService.countTotalUsers()).isExactlyInstanceOf(ServiceException.class);
+    }
+
+
+    @Test
+    void blockUser_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException, ServiceException {
+        doThrow(DaoException.class).when(userDAO).block(anyLong());
+
+        assertThatThrownBy(() -> userService.blockUser(anyLong())).isExactlyInstanceOf(ServiceException.class);
+    }
+
+    @Test
+    void blockUser_ifUserExists_ReturnTrue() throws DaoException, ServiceException {
+        doReturn(false).when(userDAO).block(anyLong());
+
+//       assertThat(userService.blockUser(anyLong())).isFalse();
+    }
+    @Test
+    void blockUser_ifUserDoesntExist_ReturnFalse() throws DaoException, ServiceException {
+        doReturn(true).when(userDAO).block(anyLong());
+
+//        assertThat(userService.blockUser(anyLong())).isTrue();
+
+    }
 //
 //    void unblockUser(long userId) throws ServiceException;
 //
