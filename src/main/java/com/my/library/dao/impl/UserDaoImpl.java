@@ -118,27 +118,26 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     }
 
     @Override
-    public void block(long id) throws DaoException {
+    public boolean block(long id) throws DaoException {
         try (var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
             statement.setLong(1, UserStatus.BLOCKED.ordinal() + 1);
             statement.setLong(2, id);
 
-            statement.executeUpdate();
-
+            return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
     }
 
     @Override
-    public void unblock(long id) throws DaoException {
+    public boolean unblock(long id) throws DaoException {
         try (var statement = connection.prepareStatement(UserQueries.CHANGE_USER_STATUS_USER)) {
 
             statement.setLong(1, UserStatus.NORMAL.ordinal() + 1);
             statement.setLong(2, id);
 
-            statement.executeUpdate();
+           return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
