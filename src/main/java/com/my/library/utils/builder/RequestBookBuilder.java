@@ -30,7 +30,7 @@ public class RequestBookBuilder {
         var bookId = bookIdContainer.get();
         var copies = copiesContainer.get();
 
-        if (bookId <= 0 || copies < 0) {
+        if (bookId < 0 || copies < 0) {
             return Optional.empty();
         }
 
