@@ -30,7 +30,7 @@ class RequestBookBuilderTest {
     @Test
     void buildBookForSave_ValidBook_ReturnsOptionalOfBook() {
         when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
+        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("Scott");
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
@@ -45,7 +45,7 @@ class RequestBookBuilderTest {
         Book book = optionalBook.get();
 
         assertThat(book.getTitle()).isEqualTo("The Great Gatsby");
-        assertThat(book.getAuthor().getFirstName()).isEqualTo("F. Scott");
+        assertThat(book.getAuthor().getFirstName()).isEqualTo("Scott");
         assertThat(book.getAuthor().getSecondName()).isEqualTo("Fitzgerald");
         assertThat(book.getGenre()).isEqualTo("Novel");
         assertThat(book.getPublisherTitle()).isEqualTo("Scribner");
@@ -58,7 +58,7 @@ class RequestBookBuilderTest {
     @NullSource
     void buildBookForSave_InvalidTitle_ReturnsEmptyOptional(String title) {
         when(request.getParameter(BookParameters.TITLE)).thenReturn(title);
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
+        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("Scott");
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
@@ -76,7 +76,7 @@ class RequestBookBuilderTest {
         when(request.getParameter(Parameters.BOOK_ID)).thenReturn("1");
         when(request.getParameter(BookParameters.COPIES)).thenReturn("10");
         when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
+        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("Scott");
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
@@ -92,7 +92,7 @@ class RequestBookBuilderTest {
 
         assertThat(book.getBookId()).isEqualTo(1L);
         assertThat(book.getTitle()).isEqualTo("The Great Gatsby");
-        assertThat(book.getAuthor().getFirstName()).isEqualTo("F. Scott");
+        assertThat(book.getAuthor().getFirstName()).isEqualTo("Scott");
         assertThat(book.getAuthor().getSecondName()).isEqualTo("Fitzgerald");
         assertThat(book.getGenre()).isEqualTo("Novel");
         assertThat(book.getPublisherTitle()).isEqualTo("Scribner");
@@ -106,13 +106,6 @@ class RequestBookBuilderTest {
     public void buildBookForUpdate_EmptyOrNullBookId_ReturnsEmptyOptional(String invalidId) {
         when(request.getParameter(Parameters.BOOK_ID)).thenReturn(invalidId);
         when(request.getParameter(BookParameters.COPIES)).thenReturn("10");
-        when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
-        when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
-        when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
-        when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
-        when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
         Optional<Book> optionalBook = requestBookBuilder.buildBookForUpdate(request);
 
@@ -125,13 +118,6 @@ class RequestBookBuilderTest {
     public void buildBookForUpdate_NaNBookId_ReturnsEmptyOptional(String invalidId) {
         when(request.getParameter(Parameters.BOOK_ID)).thenReturn(invalidId);
         when(request.getParameter(BookParameters.COPIES)).thenReturn("10");
-        when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
-        when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
-        when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
-        when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
-        when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
         Optional<Book> optionalBook = requestBookBuilder.buildBookForUpdate(request);
 
@@ -143,13 +129,6 @@ class RequestBookBuilderTest {
     public void buildBookForUpdate_NegativeBookId_ReturnsEmptyOptional(String invalidId) {
         when(request.getParameter(Parameters.BOOK_ID)).thenReturn(invalidId);
         when(request.getParameter(BookParameters.COPIES)).thenReturn("10");
-        when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
-        when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
-        when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
-        when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
-        when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
         Optional<Book> optionalBook = requestBookBuilder.buildBookForUpdate(request);
 
@@ -174,13 +153,6 @@ class RequestBookBuilderTest {
     public void buildBookForUpdate_NaNCopies_ReturnsEmptyOptional(String invalidCopies) {
         when(request.getParameter(Parameters.BOOK_ID)).thenReturn("1");
         when(request.getParameter(BookParameters.COPIES)).thenReturn(invalidCopies);
-        when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
-        when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
-        when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
-        when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
-        when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
         Optional<Book> optionalBook = requestBookBuilder.buildBookForUpdate(request);
 
@@ -192,13 +164,6 @@ class RequestBookBuilderTest {
     public void buildBookForUpdate_NegativeCopies_ReturnsEmptyOptional(String invalidId) {
         when(request.getParameter(Parameters.BOOK_ID)).thenReturn(invalidId);
         when(request.getParameter(BookParameters.COPIES)).thenReturn("10");
-        when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
-        when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
-        when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
-        when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
-        when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
         Optional<Book> optionalBook = requestBookBuilder.buildBookForUpdate(request);
 
@@ -211,7 +176,7 @@ class RequestBookBuilderTest {
         when(request.getParameter(Parameters.BOOK_ID)).thenReturn(invalidId);
         when(request.getParameter(BookParameters.COPIES)).thenReturn("10");
         when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
+        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("Scott");
         when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
         when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
         when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
