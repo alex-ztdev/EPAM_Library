@@ -22,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.concurrent.ThreadLocalRandom.current;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
@@ -256,8 +257,8 @@ class UserServiceImplTest {
         var validationList = userService.canBeRegistered(userToSave);
 
         assertThat(validationList).containsExactly(UserParameters.USER_EMAIL_ALREADY_EXISTS,
-                        UserParameters.USER_LOGIN_ALREADY_EXISTS,
-                        UserParameters.USER_PHONE_ALREADY_EXISTS);
+                UserParameters.USER_LOGIN_ALREADY_EXISTS,
+                UserParameters.USER_PHONE_ALREADY_EXISTS);
     }
 
     @Test
@@ -342,6 +343,7 @@ class UserServiceImplTest {
 
         assertThat(usersCount).isEqualTo(validUsersList.size());
     }
+
     @Test
     void countTotalUsers_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
         doThrow(DaoException.class).when(userDAO).countTotalUsers();
@@ -355,19 +357,26 @@ class UserServiceImplTest {
         doThrow(DaoException.class).when(userDAO).block(anyLong());
 
         assertThatThrownBy(() -> userService.blockUser(anyLong())).isExactlyInstanceOf(ServiceException.class);
+
+        verify(userDAO, times(1)).block(anyLong());
     }
 
     @Test
     void blockUser_ifUserExists_ReturnTrue() throws DaoException, ServiceException {
         doReturn(false).when(userDAO).block(anyLong());
 
-       assertThat(userService.blockUser(anyLong())).isFalse();
+        assertThat(userService.blockUser(anyLong())).isFalse();
+
+        verify(userDAO, times(1)).block(anyLong());
     }
+
     @Test
     void blockUser_ifUserDoesntExist_ReturnFalse() throws DaoException, ServiceException {
         doReturn(true).when(userDAO).block(anyLong());
 
         assertThat(userService.blockUser(anyLong())).isTrue();
+
+        verify(userDAO, times(1)).block(anyLong());
     }
 
     @Test
@@ -375,6 +384,8 @@ class UserServiceImplTest {
         doThrow(DaoException.class).when(userDAO).unblock(anyLong());
 
         assertThatThrownBy(() -> userService.unblockUser(anyLong())).isExactlyInstanceOf(ServiceException.class);
+
+        verify(userDAO, times(1)).unblock(anyLong());
     }
 
     @Test
@@ -382,18 +393,88 @@ class UserServiceImplTest {
         doReturn(false).when(userDAO).unblock(anyLong());
 
         assertThat(userService.unblockUser(anyLong())).isFalse();
+
+        verify(userDAO, times(1)).unblock(anyLong());
     }
+
     @Test
     void unblockUser_ifUserDoesntExist_ReturnFalse() throws DaoException, ServiceException {
         doReturn(true).when(userDAO).unblock(anyLong());
 
         assertThat(userService.unblockUser(anyLong())).isTrue();
+
+        verify(userDAO, times(1)).unblock(anyLong());
     }
 
-//    void setUserRole(long userId, UserRole newUserRole) throws ServiceException;
-//
-//    List<User> findAllReaders(int start, int offset) throws ServiceException;
-//
-//    int countReaders(boolean includeBlocked) throws ServiceException;
+    @ParameterizedTest
+    @CsvSource({"1, ADMIN", "2, USER", "3, LIBRARIAN"})
+    void setUserRole(long userId, UserRole newUserRole) throws ServiceException, DaoException {
+        userService.setUserRole(userId, newUserRole);
 
+        verify(userDAO, times(1)).setUserRole(userId, newUserRole);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"USER", "ADMIN", "LIBRARIAN"})
+    void setUserRole_whenDaoThrowsException_ShouldThrowServiceException(UserRole userRole) throws DaoException {
+
+        doThrow(DaoException.class).when(userDAO).setUserRole(anyLong(), any());
+
+        assertThatThrownBy(() -> userService.setUserRole(current().nextLong(), userRole)).isExactlyInstanceOf(ServiceException.class);
+
+        verify(userDAO, times(1)).setUserRole(anyLong(), any());
+    }
+
+    @Test
+    void findAllReaders_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+
+        doThrow(DaoException.class).when(userDAO).findAllReaders(anyInt(), anyInt());
+
+        assertThatThrownBy(() -> userService.findAllReaders(current().nextInt(), current().nextInt())).isExactlyInstanceOf(ServiceException.class);
+
+        verify(userDAO, times(1)).findAllReaders(anyInt(), anyInt());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1, 2"})
+    void findAllReaders_validRange_ShouldReturnReadersList(int start, int offset) throws DaoException, ServiceException {
+        List<User> expectedReadersList = validUsersList.stream().filter(u -> u.getRole().equals(UserRole.USER)).toList();
+
+        doReturn(expectedReadersList.subList(start - 1, offset - 1)).when(userDAO).findAllReaders(start, offset);
+
+        var readersListActual = userService.findAllReaders(start, offset);
+
+        assertThat(readersListActual).isEqualTo(expectedReadersList);
+
+        verify(userDAO, times(1)).findAllReaders(start, offset);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1, 4", "1 , 3", "1, 2", "1, 3"})
+    void findAllReaders_validRange_ShouldReturnUsersList(int start, int offset) throws DaoException, ServiceException {
+        doReturn(validUsersList.subList(start - 1, offset - 1)).when(userDAO).findAll(start, offset);
+
+        List<User> userList = userService.findAll(start, offset);
+
+        assertThat(userList).containsExactly(validUsersList.subList(start - 1, offset - 1).toArray(User[]::new));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"-1, 4", "-2 , 3", "-3, 2", "-4, 3"})
+    void findAllReaders_startIsNegative_ShouldReturnEmptyList(int start, int offset) throws DaoException, ServiceException {
+        doReturn(List.of()).when(userDAO).findAllReaders(start, offset);
+
+        List<User> userList = userService.findAllReaders(start, offset);
+
+        assertThat(userList).isEmpty();
+    }
+
+    @Test
+    void countReaders_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        doThrow(DaoException.class).when(userDAO).countReaders(anyBoolean());
+
+        assertThatThrownBy(() -> userService.countReaders(anyBoolean())).isExactlyInstanceOf(ServiceException.class);
+
+        verify(userDAO, times(1)).countReaders(anyBoolean());
+    }
 }
