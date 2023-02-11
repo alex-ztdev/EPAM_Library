@@ -3,13 +3,12 @@ package com.my.library.services.impl;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.UserDAO;
 import com.my.library.dao.constants.UserRole;
-import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
+import com.my.library.utils.Encrypt;
 import com.my.library.utils.validator.UserValidator;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public void save(User user) throws ServiceException {
         try {
             if (canBeRegistered(user).isEmpty()) {
-                user.setPassword(encryptPassword(user.getPassword()));
+                user.setPassword(Encrypt.encryptWithSha512Hex(user.getPassword()) );
                 userDAO.save(user);
             } else {
                 throw new ServiceException("User already exists!" + canBeRegistered(user));
@@ -75,7 +74,7 @@ public class UserServiceImpl implements UserService {
             return Optional.empty();
         }
         try {
-            return userDAO.authenticate(login, encryptPassword(password));
+            return userDAO.authenticate(login, Encrypt.encryptWithSha512Hex(password));
         } catch (DaoException e) {
             throw new ServiceException("Error in authenticate method", e);
         }
@@ -165,9 +164,5 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             throw new ServiceException("Error while executing countReaders method",e);
         }
-    }
-
-    private String encryptPassword(String password) {
-        return DigestUtils.sha512Hex(password);
     }
 }
