@@ -17,9 +17,9 @@ public interface UserService extends Service<User> {
 
     int countTotalUsers() throws ServiceException;
 
-    void blockUser(long userId) throws ServiceException;
+    boolean blockUser(long userId) throws ServiceException;
 
-    void unblockUser(long userId) throws ServiceException;
+    boolean unblockUser(long userId) throws ServiceException;
 
     void setUserRole(long userId, UserRole newUserRole) throws ServiceException;
 

@@ -122,18 +122,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void blockUser(long userId) throws ServiceException {
+    public boolean blockUser(long userId) throws ServiceException {
         try {
-            userDAO.block(userId);
+           return userDAO.block(userId);
         } catch (DaoException e) {
             throw new ServiceException("Error while executing blockUser method", e);
         }
     }
 
     @Override
-    public void unblockUser(long userId) throws ServiceException {
+    public boolean unblockUser(long userId) throws ServiceException {
         try {
-            userDAO.unblock(userId);
+            return userDAO.unblock(userId);
         } catch (DaoException e) {
             throw new ServiceException("Error while executing unblockUser method", e);
         }
