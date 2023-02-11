@@ -162,13 +162,6 @@ class RequestBookBuilderTest {
     public void buildBookForUpdate_EmptyOrNullCopies_ReturnsEmptyOptional(String invalidCopies) {
         when(request.getParameter(Parameters.BOOK_ID)).thenReturn("1");
         when(request.getParameter(BookParameters.COPIES)).thenReturn(invalidCopies);
-        when(request.getParameter(BookParameters.TITLE)).thenReturn("The Great Gatsby");
-        when(request.getParameter(BookParameters.AUTHOR_FIRST_NAME)).thenReturn("F. Scott");
-        when(request.getParameter(BookParameters.AUTHOR_SECOND_NAME)).thenReturn("Fitzgerald");
-        when(request.getParameter(BookParameters.GENRE)).thenReturn("Novel");
-        when(request.getParameter(BookParameters.PUBLISHER)).thenReturn("Scribner");
-        when(request.getParameter(BookParameters.PAGES)).thenReturn("180");
-        when(request.getParameter(BookParameters.PUBLICATION_DATE)).thenReturn("1925-04-10");
 
         Optional<Book> optionalBook = requestBookBuilder.buildBookForUpdate(request);
 
