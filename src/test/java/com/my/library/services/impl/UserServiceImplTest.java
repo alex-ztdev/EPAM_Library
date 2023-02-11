@@ -361,18 +361,35 @@ class UserServiceImplTest {
     void blockUser_ifUserExists_ReturnTrue() throws DaoException, ServiceException {
         doReturn(false).when(userDAO).block(anyLong());
 
-//       assertThat(userService.blockUser(anyLong())).isFalse();
+       assertThat(userService.blockUser(anyLong())).isFalse();
     }
     @Test
     void blockUser_ifUserDoesntExist_ReturnFalse() throws DaoException, ServiceException {
         doReturn(true).when(userDAO).block(anyLong());
 
-//        assertThat(userService.blockUser(anyLong())).isTrue();
-
+        assertThat(userService.blockUser(anyLong())).isTrue();
     }
-//
-//    void unblockUser(long userId) throws ServiceException;
-//
+
+    @Test
+    void unblockUser_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException, ServiceException {
+        doThrow(DaoException.class).when(userDAO).unblock(anyLong());
+
+        assertThatThrownBy(() -> userService.unblockUser(anyLong())).isExactlyInstanceOf(ServiceException.class);
+    }
+
+    @Test
+    void unblockUser_ifUserExists_ReturnTrue() throws DaoException, ServiceException {
+        doReturn(false).when(userDAO).unblock(anyLong());
+
+        assertThat(userService.unblockUser(anyLong())).isFalse();
+    }
+    @Test
+    void unblockUser_ifUserDoesntExist_ReturnFalse() throws DaoException, ServiceException {
+        doReturn(true).when(userDAO).unblock(anyLong());
+
+        assertThat(userService.unblockUser(anyLong())).isTrue();
+    }
+
 //    void setUserRole(long userId, UserRole newUserRole) throws ServiceException;
 //
 //    List<User> findAllReaders(int start, int offset) throws ServiceException;
