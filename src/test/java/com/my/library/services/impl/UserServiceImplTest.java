@@ -285,6 +285,20 @@ class UserServiceImplTest {
     }
 
     @Test
+    void canBeRegistered_whenInvalidUser_ShouldReturnValidationList() throws DaoException, ServiceException {
+        User invalidUser = new User("",
+                " ", UserRole.ADMIN,
+                UserStatus.NORMAL, " ",
+                " ", " ", " ");
+        List<String> validationList = userService.canBeRegistered(invalidUser);
+
+        assertThat(validationList).containsOnly(UserParameters.REG_INVALID_LOGIN,
+                UserParameters.REG_INVALID_EMAIL,
+                UserParameters.REG_INVALID_PASSWORD,
+                UserParameters.REG_INVALID_PHONE);
+    }
+
+    @Test
     void canBeRegistered_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
         doThrow(DaoException.class).when(userDAO).findByEmail(anyString());
 
