@@ -57,9 +57,8 @@ public class RequestBookBuilder {
         logger.log(Level.INFO, "buildBookForSave was called. Received data: " + book + " copies: " + copies);
 
         if (new BookValidator().validateBook(book)) {
-            return Optional.empty();
-        } else return Optional.of(book);
+            return Optional.of(book);
+        } else return Optional.empty();
     }
-
 
 }
