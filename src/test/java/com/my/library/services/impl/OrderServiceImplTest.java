@@ -67,13 +67,13 @@ class OrderServiceImplTest {
         int start = 0;
         int offset = 10;
         OrderStatus orderStatus = OrderStatus.ACCEPTED;
-        List<Order> orders = List.of(new Order(), new Order(), new Order());
+        List<Order> expectedOrders = List.of(new Order(), new Order(), new Order());
 
-        when(orderDAO.findAllUsersOrders(userId, start, offset, orderStatus)).thenReturn(orders);
+        when(orderDAO.findAllUsersOrders(userId, start, offset, orderStatus)).thenReturn(expectedOrders);
 
         List<Order> actualOrders = orderService.findAllUsersOrders(userId, start, offset, orderStatus);
 
-        assertThat(actualOrders).isEqualTo(orders);
+        assertThat(actualOrders).isEqualTo(expectedOrders);
         verify(orderDAO, times(1)).findAllUsersOrders(userId, start, offset, orderStatus);
     }
 
@@ -118,6 +118,32 @@ class OrderServiceImplTest {
         verify(orderDAO).findAllUsersOrders(userId, start, offset, orderStatus);
     }
 
+    @Test
+    public void findAll_ValidParams_ShouldReturnOrders() throws ServiceException, DaoException {
+        int start = 0;
+        int offset = 10;
+
+        List<Order> expectedOrders = List.of(new Order(),new Order(), new Order());
+        doReturn(expectedOrders).when(orderDAO).findAll(start, offset);
+
+        List<Order> actualOrders = orderService.findAll(start, offset);
+
+        assertThat(actualOrders).isEqualTo(expectedOrders);
+        verify(orderDAO, times(1)).findAll(start, offset);
+    }
+    @Test
+    public void findAll_DaoException_ShouldThrowServiceException() throws DaoException {
+        int start = 0;
+        int offset = 10;
+
+        doThrow(DaoException.class).when(orderDAO).findAll(start, offset);
+
+        assertThatThrownBy(() -> orderService.findAll(start, offset))
+                .isExactlyInstanceOf(ServiceException.class)
+                .hasCauseExactlyInstanceOf(DaoException.class);
+
+        verify(orderDAO, times(1)).findAll(start, offset);
+    }
 
 
 }
