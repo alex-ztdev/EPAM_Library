@@ -24,14 +24,6 @@ public class BookServiceImpl implements BookService {
         this.bookDAO = bookDAO;
     }
 
-    @Override
-    public void delete(Book book) throws ServiceException {
-        try {
-            bookDAO.delete(book);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while deleting book in BookServiceImpl", e);
-        }
-    }
 
     public void deleteById(long id) throws ServiceException {
         try {
@@ -111,7 +103,6 @@ public class BookServiceImpl implements BookService {
         } catch (DaoException e) {
             throw new ServiceException("Error while exec alreadyExists method in BookServiceImpl", e);
         }
-
     }
 
     @Override
@@ -173,7 +164,7 @@ public class BookServiceImpl implements BookService {
             } catch (DaoException ex) {
                 throw new ServiceException("Error while executing rollback in save method BookServiceImpl", e);
             }
-            throw new ServiceException("Error while executing update", e);
+            throw new ServiceException("Error while executing save", e);
         } finally {
             transactionManager.endTransaction();
             logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction ended successfully");
