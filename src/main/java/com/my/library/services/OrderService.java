@@ -15,15 +15,12 @@ public interface OrderService {
 
     List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws ServiceException;
 
-    List<Order> findAll(int start, int offset) throws ServiceException;
 
     int countUsersOrders(long userId, OrderStatus... orderStatuses) throws ServiceException;
 
     double countFine(Order order);
 
-    int countTotalOrders() throws ServiceException;
-
-    void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException;
+    void returnOrder(long orderId, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 
     List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws ServiceException;
 

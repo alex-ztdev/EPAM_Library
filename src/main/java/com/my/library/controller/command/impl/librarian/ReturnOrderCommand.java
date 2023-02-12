@@ -49,7 +49,7 @@ public class ReturnOrderCommand implements Command {
         var orderId = orderIdContainer.get();
 
         try{
-            orderService.returnOrder(orderId, bookService, userService, transactionManager);
+            orderService.returnOrder(orderId, bookService, transactionManager);
             return new CommandResult(RedirectToPage.DISPLAY_USERS_ORDERS);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing ReturnOrderCommand",e);
