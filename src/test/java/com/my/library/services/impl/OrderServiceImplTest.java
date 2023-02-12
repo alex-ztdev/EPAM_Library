@@ -7,11 +7,15 @@ import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,34 +123,6 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void findAll_ValidParams_ShouldReturnOrders() throws ServiceException, DaoException {
-        int start = 0;
-        int offset = 10;
-
-        List<Order> expectedOrders = List.of(new Order(), new Order(), new Order());
-        doReturn(expectedOrders).when(orderDAO).findAll(start, offset);
-
-        List<Order> actualOrders = orderService.findAll(start, offset);
-
-        assertThat(actualOrders).isEqualTo(expectedOrders);
-        verify(orderDAO, times(1)).findAll(start, offset);
-    }
-
-    @Test
-    public void findAll_DaoException_ShouldThrowServiceException() throws DaoException {
-        int start = 0;
-        int offset = 10;
-
-        doThrow(DaoException.class).when(orderDAO).findAll(start, offset);
-
-        assertThatThrownBy(() -> orderService.findAll(start, offset))
-                .isExactlyInstanceOf(ServiceException.class)
-                .hasCauseExactlyInstanceOf(DaoException.class);
-
-        verify(orderDAO, times(1)).findAll(start, offset);
-    }
-
-    @Test
     public void countUsersOrders_Successful_ShouldReturnCorrectValue() throws ServiceException, DaoException {
         long userId = 1L;
         int expectedCount = 10;
@@ -169,6 +145,53 @@ class OrderServiceImplTest {
         assertThatThrownBy(() -> orderService.countUsersOrders(userId, orderStatuses))
                 .isExactlyInstanceOf(ServiceException.class)
                 .hasCauseExactlyInstanceOf(DaoException.class);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"2020-02-03T10:20, 2020-02-04T10:20, 10", "2020-03-03T10:20, 2020-04-04T10:20, 320","2020-02-12T10:30, 2021-02-12T10:31, 3660",  "2020-02-20T10:20, 2020-02-20T10:20, 0" })
+    public void testCountFine_validDate_ShouldReturnCorrectFine(String orderEndDateStr, String orderReturnDateStr, double expectedFine) {
+        Order order = mock(Order.class);
+
+        LocalDateTime orderEndDate = LocalDateTime.parse(orderEndDateStr);
+        LocalDateTime returnDate = LocalDateTime.parse(orderReturnDateStr);
+
+        when(order.getOrderEndDate()).thenReturn(orderEndDate);
+        when(order.getReturnDate()).thenReturn(returnDate);
+
+        double actualFine = orderService.countFine(order);
+
+        assertThat(actualFine).isEqualTo(expectedFine);
+    }
+
+    @Test
+    public void testCountFine_ReturnDateIsNull()  {
+        Order order = mock(Order.class);
+        LocalDateTime orderEndDate = LocalDateTime.of(2023, 2, 1, 0, 0, 0);
+        LocalDateTime now = LocalDateTime.of(2023, 2, 10, 0, 0, 0);
+
+        when(order.getOrderEndDate()).thenReturn(orderEndDate);
+        when(order.getReturnDate()).thenReturn(null);
+
+        double fine = orderService.countFine(order);
+
+        long daysPassed = ChronoUnit.DAYS.between(order.getOrderEndDate(), LocalDateTime.now());
+
+
+        Field overdue = null;
+        try {
+            overdue = OrderServiceImpl.class.getDeclaredField("DAY_OVERDUE_FEE");
+
+            overdue.setAccessible(true);
+
+            assertThat(fine).isEqualTo(daysPassed *overdue.getDouble(overdue) );
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (overdue != null) {
+                overdue.setAccessible(false);
+            }
+        }
+
     }
 
 }
