@@ -7,8 +7,12 @@ import com.my.library.entities.Book;
 import com.my.library.exceptions.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface BookService extends Service<Book> {
+public interface BookService {
+
+    void save(Book book) throws ServiceException;
+    Optional<Book> find(long id) throws ServiceException;
     boolean deleteById(long id) throws ServiceException;
 
     List<Book> findAll(int from, int to, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException;

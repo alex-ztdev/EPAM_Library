@@ -43,10 +43,6 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    @Override
-    public List<Book> findAll() throws ServiceException {
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     public List<Book> findAll(int from, int to, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException {
@@ -231,11 +227,6 @@ public class BookServiceImpl implements BookService {
         } catch (DaoException e) {
             throw new ServiceException("Error while saving book BookService", e);
         }
-    }
-
-    @Override
-    public boolean update(Book book) throws ServiceException {
-        throw new UnsupportedOperationException();
     }
 
 }
