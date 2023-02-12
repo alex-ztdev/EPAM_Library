@@ -8,12 +8,11 @@ import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.constant.SubscriptionInfo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
@@ -27,10 +26,9 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceImplTest {
-    @Mock
+
     private OrderDAO orderDAO;
 
-    @InjectMocks
     private OrderServiceImpl orderService;
 
     @Test
@@ -43,6 +41,12 @@ class OrderServiceImplTest {
                 .isNotEmpty()
                 .hasValue(order);
         verify(orderDAO).find(1L);
+    }
+
+    @BeforeEach
+    void setUp() {
+        orderDAO = mock(OrderDAO.class);
+        orderService = new OrderServiceImpl(orderDAO);
     }
 
     @Test
@@ -368,7 +372,7 @@ class OrderServiceImplTest {
 
 
     @Test
-    void placeOrder_orderDaoThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException, ServiceException {
+    void placeOrder_orderDaoThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException {
         TransactionManager transactionManager = mock(TransactionManager.class);
         BookService bookService = mock(BookServiceImpl.class);
         Order order = mock(Order.class);
@@ -410,6 +414,65 @@ class OrderServiceImplTest {
         verify(transactionManager, times(1)).beginTransaction();
         verify(transactionManager, times(1)).commit();
         verify(transactionManager, times(1)).endTransaction();
+    }
+
+
+    @Test
+    void acceptOrder_OrderNotFound_ShouldThrowServiceException() throws DaoException {
+        doReturn(Optional.empty()).when(orderDAO).find(anyLong());
+
+        assertThatThrownBy(() -> orderService.acceptOrder(1L))
+                .isExactlyInstanceOf(ServiceException.class);
+
+        verify(orderDAO, times(1)).find(anyLong());
+    }
+
+    @Test
+    void acceptOrder_OrderDaoFindThrowsException_ShouldThrowServiceException() throws DaoException {
+        doThrow(DaoException.class).when(orderDAO).find(anyLong());
+
+        assertThatThrownBy(() -> orderService.acceptOrder(1L))
+                .isExactlyInstanceOf(ServiceException.class)
+                .hasCauseExactlyInstanceOf(DaoException.class);
+
+        verify(orderDAO, times(1)).find(anyLong());
+    }
+
+    @Test
+    void acceptOrder_OrderDaoUpdateThrowsException_ShouldThrowServiceException() throws DaoException, ServiceException {
+        Order order = mock(Order.class);
+
+        doReturn(Optional.of(order)).when(orderDAO).find(anyLong());
+        doThrow(DaoException.class).when(orderDAO).update(order);
+
+
+        assertThatThrownBy(() -> orderService.acceptOrder(1L))
+                .isExactlyInstanceOf(ServiceException.class)
+                .hasCauseExactlyInstanceOf(DaoException.class);
+
+        verify(orderDAO, times(1)).find(anyLong());
+        verify(orderDAO, times(1)).update(order);
+    }
+
+    @Test
+    void acceptOrder_validDataNoExceptions_ShouldReturnTrue() throws DaoException, ServiceException {
+        Order order = mock(Order.class);
+
+        doReturn(Optional.of(order)).when(orderDAO).find(anyLong());
+
+        doReturn(true).when(orderDAO).update(order);
+
+
+        boolean isAccepted = orderService.acceptOrder(1L);
+
+        assertThat(isAccepted).isTrue();
+
+        verify(order, times(1)).setOrderStartDate(any());
+        verify(order, times(1)).setOrderEndDate(any());
+        verify(order, times(1)).setOrderStatus(OrderStatus.ACCEPTED);
+
+        verify(orderDAO, times(1)).find(anyLong());
+        verify(orderDAO, times(1)).update(order);
     }
 
 
