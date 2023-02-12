@@ -2,7 +2,6 @@ package com.my.library.services.impl;
 
 import com.my.library.dao.OrderDAO;
 import com.my.library.dao.constants.OrderStatus;
-import com.my.library.dao.impl.OrderDaoImpl;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
@@ -13,11 +12,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,6 +49,7 @@ class OrderServiceImplTest {
 
         verify(orderDAO).find(1L);
     }
+
     @Test
     void find_daoExceptionThrown_ShouldThrowServiceException() throws DaoException {
         doThrow(DaoException.class).when(orderDAO).find(1L);
@@ -60,4 +60,64 @@ class OrderServiceImplTest {
 
         verify(orderDAO).find(1L);
     }
+
+    @Test
+    void findAllUsersOrders_ValidInput_ShouldReturnOrdersList() throws ServiceException, DaoException {
+        long userId = 1L;
+        int start = 0;
+        int offset = 10;
+        OrderStatus orderStatus = OrderStatus.ACCEPTED;
+        List<Order> orders = List.of(new Order(), new Order(), new Order());
+
+        when(orderDAO.findAllUsersOrders(userId, start, offset, orderStatus)).thenReturn(orders);
+
+        List<Order> actualOrders = orderService.findAllUsersOrders(userId, start, offset, orderStatus);
+
+        assertThat(actualOrders).isEqualTo(orders);
+        verify(orderDAO, times(1)).findAllUsersOrders(userId, start, offset, orderStatus);
+    }
+
+    @Test
+    void findAllUsersOrders_ArrayIsEmpty_ShouldThrowServiceException() {
+        long userId = 1L;
+        int start = 0;
+        int offset = 10;
+
+        assertThatThrownBy(() -> orderService.findAllUsersOrders(userId, start, offset))
+                .isExactlyInstanceOf(ServiceException.class);
+
+        verifyNoInteractions(orderDAO);
+    }
+
+    @Test
+    void findAllUsersOrders_ArrayLengthIsGreaterOrdersStatusValues_ShouldThrowServiceException() {
+        long userId = 1L;
+        int start = 0;
+        int offset = 10;
+        OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.REJECTED, OrderStatus.PROCESSING, OrderStatus.PROCESSING};
+
+        assertThatThrownBy(() -> orderService.findAllUsersOrders(userId, start, offset, orderStatus))
+                .isExactlyInstanceOf(ServiceException.class);
+
+        verifyNoInteractions(orderDAO);
+    }
+
+    @Test
+    void findAllUsersOrders_DaoException_ShouldThrowServiceException() throws DaoException {
+        long userId = 1L;
+        int start = 0;
+        int offset = 5;
+        OrderStatus[] orderStatus = {OrderStatus.ACCEPTED};
+
+        doThrow(DaoException.class).when(orderDAO).findAllUsersOrders(userId, start, offset, orderStatus);
+
+        assertThatThrownBy(() -> orderService.findAllUsersOrders(userId, start, offset, orderStatus))
+                .isExactlyInstanceOf(ServiceException.class)
+                .hasCauseExactlyInstanceOf(DaoException.class);
+
+        verify(orderDAO).findAllUsersOrders(userId, start, offset, orderStatus);
+    }
+
+
+
 }
