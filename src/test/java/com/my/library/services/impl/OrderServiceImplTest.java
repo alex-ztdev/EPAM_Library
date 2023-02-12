@@ -238,4 +238,53 @@ class OrderServiceImplTest {
 
         verify(orderDAO, times(1)).findAllByStatus(start, offset, orderStatus);
     }
+
+
+    @Test
+    public void countOrdersByStatus_WithValidInputs_ShouldReturnOrdersCount() throws ServiceException, DaoException {
+        int expectedCount = 5;
+        OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.PROCESSING};
+
+        when(orderDAO.countOrdersByStatus(orderStatus)).thenReturn(expectedCount);
+
+        int actualCount = orderService.countOrdersByStatus(orderStatus);
+
+        assertThat(actualCount).isEqualTo(expectedCount);
+
+        verify(orderDAO).countOrdersByStatus(orderStatus);
+    }
+
+    @Test
+    public void countOrdersByStatus_WithZeroOrderStatus_ShouldThrowServiceException() {
+        OrderStatus[] orderStatus = {};
+
+        assertThatThrownBy(() -> orderService.countOrdersByStatus(orderStatus))
+                .isExactlyInstanceOf(ServiceException.class);
+
+        verifyNoInteractions(orderDAO);
+    }
+
+    @Test
+    public void countOrdersByStatus_IsGreaterOrdersStatusValuesLength_ShouldThrowServiceException() {
+        OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.PROCESSING, OrderStatus.REJECTED, OrderStatus.REJECTED};
+
+        assertThatThrownBy(() -> orderService.countOrdersByStatus(orderStatus))
+                .isExactlyInstanceOf(ServiceException.class);
+
+        verifyNoInteractions(orderDAO);
+    }
+
+    @Test
+    public void countOrdersByStatus_DaoException_ShouldThrowServiceException() throws DaoException {
+        OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.REJECTED};
+
+        when(orderDAO.countOrdersByStatus(orderStatus)).thenThrow(DaoException.class);
+
+        assertThatThrownBy(() -> orderService.countOrdersByStatus(orderStatus))
+                .isExactlyInstanceOf(ServiceException.class)
+                .hasCauseExactlyInstanceOf(DaoException.class);
+
+        verify(orderDAO, times(1)).countOrdersByStatus(orderStatus);
+    }
+
 }
