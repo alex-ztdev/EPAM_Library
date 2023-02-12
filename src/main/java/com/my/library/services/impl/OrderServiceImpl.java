@@ -42,16 +42,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAll() throws ServiceException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void save(Order order) throws ServiceException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void placeOrder(Order order, BookService bookService, TransactionManager transactionManager) throws ServiceException {
 
         try {
@@ -285,11 +275,5 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.endTransaction();
         }
         logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder executed successfully ");
-    }
-
-
-    @Override
-    public boolean update(Order order) throws ServiceException {
-        throw new UnsupportedOperationException();
     }
 }
