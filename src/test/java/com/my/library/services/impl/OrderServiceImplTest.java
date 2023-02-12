@@ -5,6 +5,7 @@ import com.my.library.dao.constants.OrderStatus;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
+import com.my.library.services.constant.SubscriptionInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -148,8 +148,8 @@ class OrderServiceImplTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"2020-02-03T10:20, 2020-02-04T10:20, 10", "2020-03-03T10:20, 2020-04-04T10:20, 320","2020-02-12T10:30, 2021-02-12T10:31, 3660",  "2020-02-20T10:20, 2020-02-20T10:20, 0" })
-    public void testCountFine_validDate_ShouldReturnCorrectFine(String orderEndDateStr, String orderReturnDateStr, double expectedFine) {
+    @CsvSource({"2020-02-03T10:20, 2020-02-04T10:20, 10", "2020-03-03T10:20, 2020-04-04T10:20, 320", "2020-02-12T10:30, 2021-02-12T10:31, 3660", "2020-02-20T10:20, 2020-02-20T10:20, 0"})
+    public void countFine_validDate_ShouldReturnCorrectFine(String orderEndDateStr, String orderReturnDateStr, double expectedFine) {
         Order order = mock(Order.class);
 
         LocalDateTime orderEndDate = LocalDateTime.parse(orderEndDateStr);
@@ -163,35 +163,24 @@ class OrderServiceImplTest {
         assertThat(actualFine).isEqualTo(expectedFine);
     }
 
-    @Test
-    public void testCountFine_ReturnDateIsNull()  {
+    @ParameterizedTest
+    @CsvSource({"2023-01-11T10:20", "2023-02-03T10:23", "2023-02-02T14:14"})
+    public void countFine_ReturnDateIsNull(String endDate) {
         Order order = mock(Order.class);
-        LocalDateTime orderEndDate = LocalDateTime.of(2023, 2, 1, 0, 0, 0);
-        LocalDateTime now = LocalDateTime.of(2023, 2, 10, 0, 0, 0);
+        LocalDateTime orderEndDate = LocalDateTime.parse(endDate);
 
         when(order.getOrderEndDate()).thenReturn(orderEndDate);
         when(order.getReturnDate()).thenReturn(null);
 
-        double fine = orderService.countFine(order);
 
         long daysPassed = ChronoUnit.DAYS.between(order.getOrderEndDate(), LocalDateTime.now());
+        double overdue = SubscriptionInfo.DAY_OVERDUE_FEE;
 
+        double expectedFine = daysPassed * overdue;
 
-        Field overdue = null;
-        try {
-            overdue = OrderServiceImpl.class.getDeclaredField("DAY_OVERDUE_FEE");
+        double actualFine = orderService.countFine(order);
 
-            overdue.setAccessible(true);
-
-            assertThat(fine).isEqualTo(daysPassed *overdue.getDouble(overdue) );
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (overdue != null) {
-                overdue.setAccessible(false);
-            }
-        }
-
+        assertThat(actualFine).isEqualTo(daysPassed * overdue);
     }
 
 }
