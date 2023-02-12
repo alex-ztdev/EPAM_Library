@@ -123,7 +123,7 @@ class OrderServiceImplTest {
         int start = 0;
         int offset = 10;
 
-        List<Order> expectedOrders = List.of(new Order(),new Order(), new Order());
+        List<Order> expectedOrders = List.of(new Order(), new Order(), new Order());
         doReturn(expectedOrders).when(orderDAO).findAll(start, offset);
 
         List<Order> actualOrders = orderService.findAll(start, offset);
@@ -131,6 +131,7 @@ class OrderServiceImplTest {
         assertThat(actualOrders).isEqualTo(expectedOrders);
         verify(orderDAO, times(1)).findAll(start, offset);
     }
+
     @Test
     public void findAll_DaoException_ShouldThrowServiceException() throws DaoException {
         int start = 0;
@@ -145,5 +146,29 @@ class OrderServiceImplTest {
         verify(orderDAO, times(1)).findAll(start, offset);
     }
 
+    @Test
+    public void countUsersOrders_Successful_ShouldReturnCorrectValue() throws ServiceException, DaoException {
+        long userId = 1L;
+        int expectedCount = 10;
+
+        doReturn(expectedCount).when(orderDAO).countUserOrders(userId, OrderStatus.ACCEPTED);
+
+        int actualCount = orderService.countUsersOrders(userId, OrderStatus.ACCEPTED);
+
+        assertThat(actualCount).isEqualTo(expectedCount);
+        verify(orderDAO, times(1)).countUserOrders(userId, OrderStatus.ACCEPTED);
+    }
+
+    @Test
+    public void countUsersOrders_DaoException_ShouldThrowServiceException() throws DaoException {
+        long userId = 1L;
+        OrderStatus[] orderStatuses = {OrderStatus.ACCEPTED, OrderStatus.PROCESSING};
+
+        doThrow(DaoException.class).when(orderDAO).countUserOrders(userId, orderStatuses);
+
+        assertThatThrownBy(() -> orderService.countUsersOrders(userId, orderStatuses))
+                .isExactlyInstanceOf(ServiceException.class)
+                .hasCauseExactlyInstanceOf(DaoException.class);
+    }
 
 }
