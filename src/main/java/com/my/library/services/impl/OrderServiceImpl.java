@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws ServiceException {
-        if (orderStatus.length == 0 || orderStatus.length > 3) {
+        if (orderStatus.length == 0 || orderStatus.length > OrderStatus.values().length) {
             throw new ServiceException("Error while executing findAllUsersOrders method: orderStatus array must contain from one to three elements");
         }
         try {
