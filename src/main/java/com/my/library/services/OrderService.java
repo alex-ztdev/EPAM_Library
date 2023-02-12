@@ -7,8 +7,10 @@ import com.my.library.entities.Order;
 import com.my.library.exceptions.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface OrderService extends Service<Order> {
+public interface OrderService {
+    Optional<Order> find(long id) throws ServiceException;
     void placeOrder(Order order, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 
     List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws ServiceException;
