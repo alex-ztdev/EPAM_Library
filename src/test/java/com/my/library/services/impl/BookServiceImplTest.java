@@ -109,8 +109,8 @@ class BookServiceImplTest {
     }
 
     @Nested
-    @DisplayName("find")
-    class findAll {
+    @DisplayName("findAll")
+    class FindAll {
         @Test
         void findAll_ReturnsCorrectBooks() throws DaoException, ServiceException {
             Book book = mock(Book.class);
@@ -128,7 +128,7 @@ class BookServiceImplTest {
         }
 
         @Test
-        void findAll_BookDaoExceptionThrown_ShouldThrowServiceException() throws DaoException, ServiceException {
+        void findAll_BookDaoExceptionThrown_ShouldThrowServiceException() throws DaoException {
             int start = 0;
             int offset = 5;
 
@@ -139,6 +139,45 @@ class BookServiceImplTest {
                     .hasCauseExactlyInstanceOf(DaoException.class);
 
             verify(bookDAO).findAll(start, offset, BooksOrderTypes.BY_ID, OrderDir.ASC, false);
+        }
+    }
+
+
+    @Nested
+    @DisplayName("countBooks")
+    class CountBooks {
+
+        @Test
+        void countBooks_ShouldReturnCorrectCount() throws ServiceException, DaoException {
+
+            when(bookDAO.countBooks(false)).thenReturn(5);
+
+            int count = bookServiceImpl.countBooks(false);
+
+            assertThat(count).isEqualTo(5);
+
+            verify(bookServiceImpl, times(1)).countBooks(false);
+        }
+
+        @Test
+        void countBooks_IncludedRemovedBooks_ShouldReturnCorrectCount() throws ServiceException, DaoException {
+            when(bookDAO.countBooks(true)).thenReturn(10);
+
+            int count = bookServiceImpl.countBooks(true);
+
+            assertThat(count).isEqualTo(10);
+            verify(bookDAO, times(1)).countBooks(true);
+            verifyNoMoreInteractions(bookDAO);
+        }
+        @Test
+        void countBooks_WhenBookDaoThrowsDaoException_ShouldThrowServiceException() throws DaoException {
+            when(bookDAO.countBooks(false)).thenThrow(DaoException.class);
+
+            assertThatThrownBy(() -> bookServiceImpl.countBooks(false))
+                    .isInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).countBooks(false);
         }
     }
 }
