@@ -94,7 +94,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    void findAllUsersOrders_ArrayLengthIsGreaterOrdersStatusValues_ShouldThrowServiceException() {
+    void findAllUsersOrders_IsGreaterOrdersStatusValuesLength_ShouldThrowServiceException() {
         long userId = 1L;
         int start = 0;
         int offset = 10;
@@ -180,7 +180,62 @@ class OrderServiceImplTest {
 
         double actualFine = orderService.countFine(order);
 
-        assertThat(actualFine).isEqualTo(daysPassed * overdue);
+        assertThat(actualFine).isEqualTo(expectedFine);
     }
 
+
+    @Test
+    public void findAllByStatus_WithValidInputs_ShouldReturnListOfOrders() throws ServiceException, DaoException {
+        int start = 0;
+        int offset = 10;
+        OrderStatus[] orderStatus = new OrderStatus[]{OrderStatus.ACCEPTED, OrderStatus.PROCESSING};
+
+        List<Order> expectedOrders = List.of(new Order(), new Order(), new Order());
+        when(orderDAO.findAllByStatus(start, offset, orderStatus)).thenReturn(expectedOrders);
+
+        List<Order> actualOrders = orderService.findAllByStatus(start, offset, orderStatus);
+
+        assertThat(actualOrders).isEqualTo(expectedOrders);
+
+        verify(orderDAO).findAllByStatus(start, offset, orderStatus);
+    }
+
+    @Test
+    public void findAllByStatus_WithZeroOrderStatus_ShouldThrowServiceException() {
+        int start = 0;
+        int offset = 10;
+        OrderStatus[] orderStatus = new OrderStatus[]{};
+
+        assertThatThrownBy(() -> orderService.findAllByStatus(start, offset, orderStatus))
+                .isExactlyInstanceOf(ServiceException.class);
+
+        verifyNoInteractions(orderDAO);
+    }
+
+    @Test
+    public void findAllByStatus_IsGreaterOrdersStatusValuesLength_ShouldThrowServiceException() {
+        int start = 0;
+        int offset = 10;
+        OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.PROCESSING, OrderStatus.REJECTED, OrderStatus.REJECTED};
+
+        assertThatThrownBy(() -> orderService.findAllByStatus(start, offset, orderStatus))
+                .isExactlyInstanceOf(ServiceException.class);
+
+        verifyNoInteractions(orderDAO);
+    }
+
+    @Test
+    public void findAllByStatus_DaoException_ShouldThrowServiceException() throws DaoException {
+        int start = 0;
+        int offset = 10;
+        OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.REJECTED};
+
+        when(orderDAO.findAllByStatus(start, offset, orderStatus)).thenThrow(DaoException.class);
+
+        assertThatThrownBy(() -> orderService.findAllByStatus(start, offset, orderStatus))
+                .isExactlyInstanceOf(ServiceException.class)
+                .hasCauseExactlyInstanceOf(DaoException.class);
+
+        verify(orderDAO, times(1)).findAllByStatus(start, offset, orderStatus);
+    }
 }
