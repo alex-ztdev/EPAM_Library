@@ -19,12 +19,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+import static com.my.library.services.constant.SubscriptionInfo.DAY_OVERDUE_FEE;
+import static com.my.library.services.constant.SubscriptionInfo.SUBSCRIPTION_DAYS;
+
 public class OrderServiceImpl implements OrderService {
     //TODO: Check if user is banned! Before returning orders!
     private static final Logger logger = LogManager.getLogger();
-
-    private static final int SUBSCRIPTION_DAYS = 30;
-    private static final double DAY_OVERDUE_FEE = 10;
 
     private final OrderDAO orderDAO;
 
@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws ServiceException {
-        if (orderStatus.length == 0 || orderStatus.length > 3) {
+        if (orderStatus.length == 0 || orderStatus.length > OrderStatus.values().length) {
             throw new ServiceException("Error while executing findAllUsersOrders method: orderStatus array must contain from one to three elements");
         }
         try {
@@ -143,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws ServiceException {
-        if (orderStatus.length == 0 || orderStatus.length > 3) {
+        if (orderStatus.length == 0 || orderStatus.length > OrderStatus.values().length) {
             throw new ServiceException("Error while executing findAllByStatus method: orderStatus array must contain from one to three elements");
         }
         try {
@@ -156,7 +156,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int countOrdersByStatus(OrderStatus... orderStatus) throws ServiceException {
-        if (orderStatus.length == 0 || orderStatus.length > 3) {
+        if (orderStatus.length == 0 || orderStatus.length > OrderStatus.values().length) {
             throw new ServiceException("Error while executing findAllByStatus method: orderStatus array must contain from one to three elements");
         }
         try {
