@@ -20,7 +20,7 @@ public interface OrderService {
 
     double countFine(Order order);
 
-    void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException;
+    void returnOrder(long orderId, BookService bookService, TransactionManager transactionManager) throws ServiceException;
 
     List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws ServiceException;
 
