@@ -127,12 +127,12 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
     }
 
     @Override
-    public void deleteById(long id) throws DaoException {
+    public boolean deleteById(long id) throws DaoException {
         try (var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
             int k = 1;
             statement.setLong(k, id);
 
-            statement.executeUpdate();
+            return statement.executeUpdate()==1;
 
         } catch (SQLException e) {
             throw new DaoException(e);

@@ -25,9 +25,10 @@ public class BookServiceImpl implements BookService {
     }
 
 
-    public void deleteById(long id) throws ServiceException {
+    @Override
+    public boolean deleteById(long id) throws ServiceException {
         try {
-            bookDAO.deleteById(id);
+            return bookDAO.deleteById(id);
         } catch (DaoException e) {
             throw new ServiceException("Error while deleting book by id in BookServiceImpl", e);
         }
@@ -44,11 +45,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() throws ServiceException {
-        try {
-            return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, OrderDir.ASC, false);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while default findAll in BookServiceImpl", e);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override

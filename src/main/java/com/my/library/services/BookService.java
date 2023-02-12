@@ -9,7 +9,7 @@ import com.my.library.exceptions.ServiceException;
 import java.util.List;
 
 public interface BookService extends Service<Book> {
-    void deleteById(long id) throws ServiceException;
+    boolean deleteById(long id) throws ServiceException;
 
     List<Book> findAll(int from, int to, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException;
 

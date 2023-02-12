@@ -19,7 +19,7 @@ public interface BookDAO {
 
     void delete(Book book) throws DaoException;
 
-    void deleteById(long id) throws DaoException;
+    boolean deleteById(long id) throws DaoException;
 
     int countBooks(boolean includeRemoved) throws DaoException;
 
