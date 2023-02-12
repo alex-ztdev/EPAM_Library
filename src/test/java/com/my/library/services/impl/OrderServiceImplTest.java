@@ -1,10 +1,12 @@
 package com.my.library.services.impl;
 
 import com.my.library.dao.OrderDAO;
+import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.OrderStatus;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
+import com.my.library.services.BookService;
 import com.my.library.services.constant.SubscriptionInfo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -123,7 +125,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void countUsersOrders_Successful_ShouldReturnCorrectValue() throws ServiceException, DaoException {
+    void countUsersOrders_Successful_ShouldReturnCorrectValue() throws ServiceException, DaoException {
         long userId = 1L;
         int expectedCount = 10;
 
@@ -136,7 +138,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void countUsersOrders_DaoException_ShouldThrowServiceException() throws DaoException {
+    void countUsersOrders_DaoException_ShouldThrowServiceException() throws DaoException {
         long userId = 1L;
         OrderStatus[] orderStatuses = {OrderStatus.ACCEPTED, OrderStatus.PROCESSING};
 
@@ -149,7 +151,7 @@ class OrderServiceImplTest {
 
     @ParameterizedTest
     @CsvSource({"2020-02-03T10:20, 2020-02-04T10:20, 10", "2020-03-03T10:20, 2020-04-04T10:20, 320", "2020-02-12T10:30, 2021-02-12T10:31, 3660", "2020-02-20T10:20, 2020-02-20T10:20, 0"})
-    public void countFine_validDate_ShouldReturnCorrectFine(String orderEndDateStr, String orderReturnDateStr, double expectedFine) {
+    void countFine_validDate_ShouldReturnCorrectFine(String orderEndDateStr, String orderReturnDateStr, double expectedFine) {
         Order order = mock(Order.class);
 
         LocalDateTime orderEndDate = LocalDateTime.parse(orderEndDateStr);
@@ -165,7 +167,7 @@ class OrderServiceImplTest {
 
     @ParameterizedTest
     @CsvSource({"2023-01-11T10:20", "2023-02-03T10:23", "2023-02-02T14:14"})
-    public void countFine_ReturnDateIsNull(String endDate) {
+    void countFine_ReturnDateIsNull(String endDate) {
         Order order = mock(Order.class);
         LocalDateTime orderEndDate = LocalDateTime.parse(endDate);
 
@@ -185,7 +187,7 @@ class OrderServiceImplTest {
 
 
     @Test
-    public void findAllByStatus_WithValidInputs_ShouldReturnListOfOrders() throws ServiceException, DaoException {
+    void findAllByStatus_WithValidInputs_ShouldReturnListOfOrders() throws ServiceException, DaoException {
         int start = 0;
         int offset = 10;
         OrderStatus[] orderStatus = new OrderStatus[]{OrderStatus.ACCEPTED, OrderStatus.PROCESSING};
@@ -201,7 +203,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void findAllByStatus_WithZeroOrderStatus_ShouldThrowServiceException() {
+    void findAllByStatus_WithZeroOrderStatus_ShouldThrowServiceException() {
         int start = 0;
         int offset = 10;
         OrderStatus[] orderStatus = new OrderStatus[]{};
@@ -213,7 +215,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void findAllByStatus_IsGreaterOrdersStatusValuesLength_ShouldThrowServiceException() {
+    void findAllByStatus_IsGreaterOrdersStatusValuesLength_ShouldThrowServiceException() {
         int start = 0;
         int offset = 10;
         OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.PROCESSING, OrderStatus.REJECTED, OrderStatus.REJECTED};
@@ -225,7 +227,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void findAllByStatus_DaoException_ShouldThrowServiceException() throws DaoException {
+    void findAllByStatus_DaoException_ShouldThrowServiceException() throws DaoException {
         int start = 0;
         int offset = 10;
         OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.REJECTED};
@@ -241,7 +243,7 @@ class OrderServiceImplTest {
 
 
     @Test
-    public void countOrdersByStatus_WithValidInputs_ShouldReturnOrdersCount() throws ServiceException, DaoException {
+    void countOrdersByStatus_WithValidInputs_ShouldReturnOrdersCount() throws ServiceException, DaoException {
         int expectedCount = 5;
         OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.PROCESSING};
 
@@ -255,7 +257,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void countOrdersByStatus_WithZeroOrderStatus_ShouldThrowServiceException() {
+    void countOrdersByStatus_WithZeroOrderStatus_ShouldThrowServiceException() {
         OrderStatus[] orderStatus = {};
 
         assertThatThrownBy(() -> orderService.countOrdersByStatus(orderStatus))
@@ -265,7 +267,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void countOrdersByStatus_IsGreaterOrdersStatusValuesLength_ShouldThrowServiceException() {
+    void countOrdersByStatus_IsGreaterOrdersStatusValuesLength_ShouldThrowServiceException() {
         OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.PROCESSING, OrderStatus.REJECTED, OrderStatus.REJECTED};
 
         assertThatThrownBy(() -> orderService.countOrdersByStatus(orderStatus))
@@ -275,7 +277,7 @@ class OrderServiceImplTest {
     }
 
     @Test
-    public void countOrdersByStatus_DaoException_ShouldThrowServiceException() throws DaoException {
+    void countOrdersByStatus_DaoException_ShouldThrowServiceException() throws DaoException {
         OrderStatus[] orderStatus = {OrderStatus.ACCEPTED, OrderStatus.REJECTED};
 
         when(orderDAO.countOrdersByStatus(orderStatus)).thenThrow(DaoException.class);
@@ -286,5 +288,18 @@ class OrderServiceImplTest {
 
         verify(orderDAO, times(1)).countOrdersByStatus(orderStatus);
     }
+
+
+    @Test
+    void placeOrder_transactionManagerThrowsException_ShouldRollbackTransactionThrowServiceException() {
+        TransactionManager transactionManager = mock(TransactionManager.class);
+
+//        doThrow(DaoException.class).when()
+
+
+    }
+
+
+
 
 }
