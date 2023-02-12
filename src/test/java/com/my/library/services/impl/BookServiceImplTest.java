@@ -253,6 +253,7 @@ class BookServiceImplTest {
             verify(bookDAO, times(1)).getQuantity(anyLong());
 
         }
+
         @Test
         void getQuantity_DaoException_ShouldThrowServiceException() throws DaoException {
             doThrow(DaoException.class).when(bookDAO).getQuantity(anyLong());
@@ -262,6 +263,31 @@ class BookServiceImplTest {
                     .hasCauseExactlyInstanceOf(DaoException.class);
 
             verify(bookDAO, times(1)).getQuantity(anyLong());
+        }
+    }
+
+    @Nested
+    @DisplayName("restore")
+    class Restore {
+        @Test
+        public void restore_withValidId_ShouldCallRestoreMethodOfBookDao() throws ServiceException, DaoException {
+            long id = 1L;
+            bookServiceImpl.restore(id);
+
+            verify(bookDAO, times(1)).restore(id);
+        }
+
+        @Test
+        public void restore_BookDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+            long id = -1L;
+
+            doThrow(DaoException.class).when(bookDAO).restore(id);
+
+            assertThatThrownBy(() -> bookServiceImpl.restore(id))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).restore(id);
         }
     }
 }
