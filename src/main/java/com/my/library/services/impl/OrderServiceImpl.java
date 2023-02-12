@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException {
+    public void returnOrder(long orderId, BookService bookService, TransactionManager transactionManager) throws ServiceException {
         try {
             logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder/Transaction started");
             transactionManager.beginTransaction();
