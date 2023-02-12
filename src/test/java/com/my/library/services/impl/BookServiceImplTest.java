@@ -146,7 +146,6 @@ class BookServiceImplTest {
     @Nested
     @DisplayName("countBooks")
     class CountBooks {
-
         @Test
         void countBooks_ShouldReturnCorrectCount() throws ServiceException, DaoException {
 
@@ -156,7 +155,7 @@ class BookServiceImplTest {
 
             assertThat(count).isEqualTo(5);
 
-            verify(bookServiceImpl, times(1)).countBooks(false);
+            verify(bookDAO, times(1)).countBooks(false);
         }
 
         @Test
@@ -178,6 +177,47 @@ class BookServiceImplTest {
                     .hasCauseExactlyInstanceOf(DaoException.class);
 
             verify(bookDAO, times(1)).countBooks(false);
+        }
+    }
+
+    @Nested
+    @DisplayName("isRemoved")
+    class IsRemoved {
+        @Test
+        public void isRemoved_WhenBookIsRemoved_ShouldReturnTrue() throws ServiceException, DaoException {
+            long id = 1L;
+            when(bookDAO.isRemoved(id)).thenReturn(true);
+
+            boolean result = bookServiceImpl.isRemoved(id);
+
+            assertThat(result).isTrue();
+
+            verify(bookDAO, times(1)).isRemoved(id);
+        }
+
+        @Test
+        public void isRemoved_WhenBookIsNotRemoved_ShouldReturnFalse() throws ServiceException, DaoException {
+            long id = 1L;
+            when(bookDAO.isRemoved(id)).thenReturn(false);
+
+            boolean result = bookServiceImpl.isRemoved(id);
+
+            assertThat(result).isFalse();
+
+            verify(bookDAO, times(1)).isRemoved(id);
+        }
+
+        @Test
+        public void isRemoved_WhenBookDaoExceptionThrown_ShouldThrowServiceException() throws DaoException {
+            long id = 1L;
+
+            doThrow(DaoException.class).when(bookDAO).isRemoved(id);
+
+            assertThatThrownBy(() -> bookServiceImpl.isRemoved(id))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).isRemoved(id);
         }
     }
 }
