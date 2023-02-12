@@ -290,4 +290,47 @@ class BookServiceImplTest {
             verify(bookDAO, times(1)).restore(id);
         }
     }
+
+    @Nested
+    @DisplayName("alreadyExists")
+    class AlreadyExists {
+        @Test
+        void alreadyExists_BookAlreadyExists_ShouldReturnFalse() throws ServiceException, DaoException {
+            Book book = mock(Book.class);
+
+            doReturn(false).when(bookDAO).alreadyExists(book);
+
+            boolean alreadyExistsRes = bookServiceImpl.alreadyExists(book);
+
+            assertThat(alreadyExistsRes).isFalse();
+
+            verify(bookDAO, times(1)).alreadyExists(book);
+        }
+
+        @Test
+        void alreadyExists_BookDoesntExists_ShouldReturnTrue() throws ServiceException, DaoException {
+            Book book = mock(Book.class);
+
+            doReturn(true).when(bookDAO).alreadyExists(book);
+
+            boolean alreadyExistsRes = bookServiceImpl.alreadyExists(book);
+
+            assertThat(alreadyExistsRes).isTrue();
+
+            verify(bookDAO, times(1)).alreadyExists(book);
+        }
+
+        @Test
+        public void alreadyExists_BookDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+            Book book = mock(Book.class);
+
+            doThrow(DaoException.class).when(bookDAO).alreadyExists(book);
+
+            assertThatThrownBy(() -> bookServiceImpl.alreadyExists(book))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO).alreadyExists(book);
+        }
+    }
 }
