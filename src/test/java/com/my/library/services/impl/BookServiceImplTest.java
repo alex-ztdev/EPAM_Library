@@ -54,6 +54,7 @@ class BookServiceImplTest {
 
             verify(bookDAO).deleteById(eq(id));
         }
+
         @Test
         void deleteById_UnsuccessfulDeletion_ShouldReturnFalse() throws DaoException, ServiceException {
             long id = 1L;
@@ -69,7 +70,7 @@ class BookServiceImplTest {
     @DisplayName("find")
     class Find {
         @Test
-        public void find_ExistingBook_ShouldReturnOptionalOfBook() throws ServiceException, DaoException {
+        void find_ExistingBook_ShouldReturnOptionalOfBook() throws ServiceException, DaoException {
             long id = 1L;
             Book expectedBook = mock(Book.class);
 
@@ -83,7 +84,7 @@ class BookServiceImplTest {
         }
 
         @Test
-        public void find_NonExisting_ShouldReturnEmptyOptional() throws ServiceException, DaoException {
+        void find_NonExisting_ShouldReturnEmptyOptional() throws ServiceException, DaoException {
             long id = 1L;
 
             doReturn(Optional.empty()).when(bookDAO).find(id);
@@ -94,8 +95,9 @@ class BookServiceImplTest {
 
             verify(bookDAO, times(1)).find(id);
         }
+
         @Test
-        public void find_BookDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        void find_BookDaoThrowsException_ShouldThrowServiceException() throws DaoException {
             long id = 1L;
             doThrow(DaoException.class).when(bookDAO).find(id);
 
@@ -168,6 +170,7 @@ class BookServiceImplTest {
             verify(bookDAO, times(1)).countBooks(true);
             verifyNoMoreInteractions(bookDAO);
         }
+
         @Test
         void countBooks_WhenBookDaoThrowsDaoException_ShouldThrowServiceException() throws DaoException {
             when(bookDAO.countBooks(false)).thenThrow(DaoException.class);
@@ -184,7 +187,7 @@ class BookServiceImplTest {
     @DisplayName("isRemoved")
     class IsRemoved {
         @Test
-        public void isRemoved_WhenBookIsRemoved_ShouldReturnTrue() throws ServiceException, DaoException {
+        void isRemoved_WhenBookIsRemoved_ShouldReturnTrue() throws ServiceException, DaoException {
             long id = 1L;
             when(bookDAO.isRemoved(id)).thenReturn(true);
 
@@ -196,7 +199,7 @@ class BookServiceImplTest {
         }
 
         @Test
-        public void isRemoved_WhenBookIsNotRemoved_ShouldReturnFalse() throws ServiceException, DaoException {
+        void isRemoved_WhenBookIsNotRemoved_ShouldReturnFalse() throws ServiceException, DaoException {
             long id = 1L;
             when(bookDAO.isRemoved(id)).thenReturn(false);
 
@@ -208,7 +211,7 @@ class BookServiceImplTest {
         }
 
         @Test
-        public void isRemoved_WhenBookDaoExceptionThrown_ShouldThrowServiceException() throws DaoException {
+        void isRemoved_WhenBookDaoExceptionThrown_ShouldThrowServiceException() throws DaoException {
             long id = 1L;
 
             doThrow(DaoException.class).when(bookDAO).isRemoved(id);
@@ -218,6 +221,47 @@ class BookServiceImplTest {
                     .hasCauseExactlyInstanceOf(DaoException.class);
 
             verify(bookDAO, times(1)).isRemoved(id);
+        }
+    }
+
+    @Nested
+    @DisplayName("getQuantity")
+    class GetQuantity {
+        @Test
+        void getQuantity_ValidId_ShouldReturnBookQuantity() throws ServiceException, DaoException {
+            long id = 1L;
+            int expectedQuantity = 10;
+
+            doReturn(expectedQuantity).when(bookDAO).getQuantity(id);
+
+            int actualQuantity = bookServiceImpl.getQuantity(id);
+
+            assertThat(actualQuantity).isEqualTo(expectedQuantity);
+
+            verify(bookDAO, times(1)).getQuantity(id);
+        }
+
+        @Test
+        void getQuantity_IdNotFound_ShouldReturnMinusOne() throws ServiceException, DaoException {
+
+            doReturn(-1).when(bookDAO).getQuantity((anyLong()));
+
+            int result = bookServiceImpl.getQuantity(123);
+
+            assertThat(result).isEqualTo(-1);
+
+            verify(bookDAO, times(1)).getQuantity(anyLong());
+
+        }
+        @Test
+        void getQuantity_DaoException_ShouldThrowServiceException() throws DaoException {
+            doThrow(DaoException.class).when(bookDAO).getQuantity(anyLong());
+
+            assertThatThrownBy(() -> bookServiceImpl.getQuantity(123))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).getQuantity(anyLong());
         }
     }
 }

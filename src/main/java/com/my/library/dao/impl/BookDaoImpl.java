@@ -174,8 +174,10 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
             statement.setLong(1, id);
 
             try (var rs = statement.executeQuery()) {
-                rs.next();
-                return rs.getInt(BooksColumns.QUANTITY);
+                if (rs.next()) {
+                    return rs.getInt(BooksColumns.QUANTITY);
+                }
+                return -1;
             }
         } catch (SQLException e) {
             throw new DaoException(e);
