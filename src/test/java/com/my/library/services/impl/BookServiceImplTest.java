@@ -475,4 +475,56 @@ class BookServiceImplTest {
         }
     }
 
+    @Nested
+    @DisplayName("countFoundByTitle")
+    class CountFoundByTitle {
+
+        @Test
+        void countFoundByTitle_ShouldReturnCorrectCount() throws ServiceException, DaoException {
+            String title = "My title";
+
+            when(bookDAO.countFoundByTitle(title, false)).thenReturn(5);
+
+            int count = bookServiceImpl.countFoundByTitle(title, false);
+
+            assertThat(count).isEqualTo(5);
+
+            verify(bookDAO, times(1)).countFoundByTitle(title, false);
+        }
+
+        @Test
+        void countFoundByTitle_IncludedRemovedBooks_ShouldReturnCorrectCount() throws ServiceException, DaoException {
+            String title = "My title";
+            when(bookDAO.countFoundByTitle(title, true)).thenReturn(10);
+
+            int count = bookServiceImpl.countFoundByTitle(title, true);
+
+            assertThat(count).isEqualTo(10);
+            verify(bookDAO, times(1)).countFoundByTitle(title, true);
+            verifyNoMoreInteractions(bookDAO);
+        }
+
+        @ParameterizedTest
+        @NullSource
+        void countFoundByTitle_WhenTitleIsNull_ShouldThrowServiceException(String title) throws DaoException {
+            assertThatThrownBy(() -> bookServiceImpl.countFoundByTitle(title, false))
+                    .isInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verifyNoInteractions(bookDAO);
+        }
+
+        @Test
+        void countFoundByTitle_WhenBookDaoThrowsDaoException_ShouldThrowServiceException() throws DaoException {
+            String title = "My title";
+
+            doThrow(DaoException.class).when(bookDAO).countFoundByTitle(title, false);
+
+            assertThatThrownBy(() -> bookServiceImpl.countFoundByTitle(title, false))
+                    .isInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).countFoundByTitle(title, false);
+        }
+    }
 }
