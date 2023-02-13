@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -117,7 +116,7 @@ public class AuthorServiceImplTest {
         }
 
         @Test
-        public void findAll_ShouldThrowServiceException() throws ServiceException, DaoException {
+        public void findAll_ShouldThrowServiceException() throws DaoException {
             when(authorDAO.findAll()).thenThrow(DaoException.class);
 
             assertThatExceptionOfType(ServiceException.class)
@@ -128,12 +127,10 @@ public class AuthorServiceImplTest {
         }
 
         @Test
-        public void findAll_whenThrowsDaoException_shouldThrowServiceException() throws DaoException, ServiceException {
+        public void findAll_whenThrowsDaoException_shouldThrowServiceException() throws DaoException {
             doThrow(DaoException.class).when(authorDAO).findAll();
 
-            assertThatExceptionOfType(ServiceException.class).isThrownBy(() -> {
-                authorServiceImpl.findAll();
-            });
+            assertThatExceptionOfType(ServiceException.class).isThrownBy(() -> authorServiceImpl.findAll());
         }
     }
 
@@ -153,7 +150,7 @@ public class AuthorServiceImplTest {
 
         @ParameterizedTest
         @NullSource
-        void save_NullAuthor_ShouldThrowServiceException(Author author) throws ServiceException, DaoException {
+        void save_NullAuthor_ShouldThrowServiceException(Author author) throws DaoException {
             doThrow(DaoException.class).when(authorDAO).save(author);
 
             assertThatThrownBy(() -> authorServiceImpl.save(author))
@@ -203,7 +200,7 @@ public class AuthorServiceImplTest {
         }
 
         @Test
-        void update_throwsDaoException_ShouldThrowServiceException() throws ServiceException, DaoException {
+        void update_throwsDaoException_ShouldThrowServiceException() throws DaoException {
             Author author = new Author("Firstname", "SecondName");
 
             doThrow(DaoException.class).when(authorDAO).update(author);
