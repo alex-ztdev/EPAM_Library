@@ -360,5 +360,30 @@ class BookServiceImplTest {
         }
     }
 
+    @Nested
+    @DisplayName("incrementBookQuantity")
+    class IncrementBookQuantity {
+        @Test
+        void incrementBookQuantity_BookExists_ShouldincrementQuantity() throws ServiceException, DaoException {
+            long bookId = 1L;
+
+            bookServiceImpl.incrementBookQuantity(bookId);
+
+            verify(bookDAO, times(1)).incrementBookQuantity(bookId);
+        }
+
+        @Test
+        void incrementBookQuantity_BookDAoException_ShouldThrowServiceException() throws DaoException {
+            long bookId = 1L;
+
+            doThrow(DaoException.class).when(bookDAO).incrementBookQuantity(anyLong());
+
+            assertThatThrownBy(() -> bookServiceImpl.incrementBookQuantity(bookId))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).incrementBookQuantity(bookId);
+        }
+    }
 
 }
