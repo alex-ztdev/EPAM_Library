@@ -4,12 +4,11 @@ import com.my.library.controller.command.constant.OrderDir;
 import com.my.library.dao.BookDAO;
 import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.BooksOrderTypes;
+import com.my.library.entities.Author;
 import com.my.library.entities.Book;
-import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.AuthorService;
-import com.my.library.services.BookService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -673,6 +673,22 @@ class BookServiceImplTest {
     @Nested
     @DisplayName("save")
     class Save {
+
+        Book validBook = new Book("Valid title",
+                "Hachette",
+                "Drama",
+                100,
+                LocalDate.parse("2023-02-06"),
+                new Author("John", "Smith"));
+
+        Book validBookAfterSave = new Book(1L, "Valid title",
+                "Hachette",
+                "Drama",
+                100,
+                LocalDate.parse("2023-02-06"),
+                new Author("John", "Smith"));
+
+
         @Test
         void save_beginTransactionThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException {
             TransactionManager transactionManager = mock(TransactionManager.class);
@@ -690,130 +706,106 @@ class BookServiceImplTest {
             verify(transactionManager, times(1)).endTransaction();
         }
 
-//        @Test
-//        void save_commitThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException {
-//            TransactionManager transactionManager = mock(TransactionManager.class);
-//            AuthorService authorService = mock(AuthorServiceImpl.class);
-//            Order order = mock(Order.class);
-//
-//
-//            doReturn(1L).when(order).getOrderId();
-//
-//            long orderId = order.getOrderId();
-//
-//            doReturn(Optional.of(order)).when(orderDAO).find(orderId);
-//
-//            doThrow(DaoException.class).when(transactionManager).commit();
-//
-//            assertThatThrownBy(() -> bookServiceImpl.save(orderId, bookService, transactionManager))
-//                    .isExactlyInstanceOf(ServiceException.class)
-//                    .hasCauseExactlyInstanceOf(DaoException.class);
-//
-//            verify(orderDAO, times(1)).find(orderId);
-//            verify(orderDAO, times(1)).update(order);
-//
-//            verify(transactionManager, times(1)).beginTransaction();
-//            verify(transactionManager, times(1)).rollback();
-//            verify(transactionManager, times(1)).endTransaction();
-//        }
-//
-//        @Test
-//        void save_rollbackThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException {
-//            TransactionManager transactionManager = mock(TransactionManager.class);
-//            AuthorService authorService = mock(AuthorServiceImpl.class);
-//            Order order = mock(Order.class);
-//
-//            doReturn(1L).when(order).getOrderId();
-//
-//            long orderId = order.getOrderId();
-//
-//            doReturn(Optional.of(order)).when(orderDAO).find(orderId);
-//
-//            doThrow(DaoException.class).when(transactionManager).commit();
-//            doThrow(DaoException.class).when(transactionManager).rollback();
-//
-//            assertThatThrownBy(() -> bookServiceImpl.save(orderId, bookService, transactionManager))
-//                    .isExactlyInstanceOf(ServiceException.class)
-//                    .hasCauseExactlyInstanceOf(DaoException.class);
-//
-//            verify(orderDAO, times(1)).find(orderId);
-//            verify(orderDAO, times(1)).update(order);
-//
-//            verify(transactionManager, times(1)).beginTransaction();
-//            verify(transactionManager, times(1)).rollback();
-//            verify(transactionManager, times(1)).endTransaction();
-//        }
-//
-//        @Test
-//        void save_BookServiceThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException, ServiceException {
-//            TransactionManager transactionManager = mock(TransactionManager.class);
-//            AuthorService authorService = mock(AuthorServiceImpl.class);
-//            Order order = mock(Order.class);
-//
-//            doReturn(1L).when(order).getOrderId();
-//            doReturn(1L).when(order).getBookId();
-//
-//            long orderId = order.getOrderId();
-//
-//            doReturn(Optional.of(order)).when(orderDAO).find(orderId);
-//
-//            doThrow(ServiceException.class).when(bookService).incrementBookQuantity(anyLong());
-//
-//            assertThatThrownBy(() -> bookServiceImpl.save(orderId, bookService, transactionManager))
-//                    .isExactlyInstanceOf(ServiceException.class);
-//
-//            verify(bookService, times(1)).incrementBookQuantity(1L);
-//
-//            verify(orderDAO, times(1)).find(orderId);
-//            verify(orderDAO, times(1)).update(order);
-//
-//            verify(transactionManager, times(1)).beginTransaction();
-//            verify(transactionManager, times(1)).rollback();
-//            verify(transactionManager, times(1)).endTransaction();
-//        }
-//
-//
-//        @Test
-//        void save_NoSuchOrder_ShouldThrowServiceException() throws DaoException, ServiceException {
-//            TransactionManager transactionManager = mock(TransactionManager.class);
-//            AuthorService authorService = mock(AuthorServiceImpl.class);
-//            Order order = mock(Order.class);
-//
-//            doReturn(1L).when(order).getOrderId();
-//
-//            long orderId = order.getOrderId();
-//
-//            doReturn(Optional.empty()).when(orderDAO).find(orderId);
-//
-//            assertThatThrownBy(() -> bookServiceImpl.save(1L, bookService, transactionManager))
-//                    .isExactlyInstanceOf(ServiceException.class);
-//
-//            verify(transactionManager, times(1)).beginTransaction();
-//            verify(transactionManager, times(1)).endTransaction();
-//        }
-//
-//        @Test
-//        void save_validData_shouldIncrementBooksQuantity() throws DaoException, ServiceException {
-//            TransactionManager transactionManager = mock(TransactionManager.class);
-//            AuthorService authorService = mock(AuthorServiceImpl.class);
-//            Order order = mock(Order.class);
-//
-//            doReturn(1L).when(order).getOrderId();
-//            doReturn(1L).when(order).getBookId();
-//
-//            long orderId = order.getOrderId();
-//
-//            doReturn(Optional.of(order)).when(orderDAO).find(orderId);
-//
-//            bookServiceImpl.save(1L, bookService, transactionManager);
-//
-//
-//            verify(bookService, times(1)).incrementBookQuantity(1L);
-//
-//            verify(transactionManager, times(1)).beginTransaction();
-//            verify(transactionManager, times(1)).commit();
-//            verify(transactionManager, times(1)).endTransaction();
-//        }
+        @Test
+        void save_commitThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException {
+            TransactionManager transactionManager = mock(TransactionManager.class);
+            AuthorService authorService = mock(AuthorServiceImpl.class);
 
+            doReturn(validBookAfterSave).when(bookDAO).save(validBook);
+
+            doThrow(DaoException.class).when(transactionManager).commit();
+
+            assertThatThrownBy(() -> bookServiceImpl.save(validBook, 1, authorService, transactionManager))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).save(validBook);
+
+            verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).rollback();
+            verify(transactionManager, times(1)).endTransaction();
+        }
+
+        @Test
+        void save_rollbackThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException {
+            TransactionManager transactionManager = mock(TransactionManager.class);
+            AuthorService authorService = mock(AuthorServiceImpl.class);
+
+            doReturn(validBookAfterSave).when(bookDAO).save(validBook);
+
+            doThrow(DaoException.class).when(transactionManager).commit();
+            doThrow(DaoException.class).when(transactionManager).rollback();
+
+            assertThatThrownBy(() -> bookServiceImpl.save(validBook, 1, authorService, transactionManager))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+
+            verify(bookDAO, times(1)).save(validBook);
+
+            verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).rollback();
+            verify(transactionManager, times(1)).endTransaction();
+        }
+
+        @Test
+        void save_AuthorServiceThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException, ServiceException {
+            TransactionManager transactionManager = mock(TransactionManager.class);
+            AuthorService authorService = mock(AuthorServiceImpl.class);
+
+            doReturn(validBookAfterSave).when(bookDAO).save(validBook);
+
+            doThrow(ServiceException.class).when(authorService).findByNames(anyString(), anyString());
+
+
+            assertThatThrownBy(() -> bookServiceImpl.save(validBook, 1, authorService, transactionManager))
+                    .isExactlyInstanceOf(ServiceException.class);
+
+            verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).rollback();
+            verify(transactionManager, times(1)).endTransaction();
+        }
+
+
+        @Test
+        void save_NoSuchAuthor_ShouldCallSaveMethodOnAuthorService() throws DaoException, ServiceException {
+            TransactionManager transactionManager = mock(TransactionManager.class);
+            AuthorService authorService = mock(AuthorServiceImpl.class);
+
+            doReturn(validBookAfterSave).when(bookDAO).save(validBook);
+            int copies = 1;
+
+
+            bookServiceImpl.save(validBook, copies, authorService, transactionManager);
+
+            verify(authorService, times(1)).save(validBookAfterSave.getAuthor());
+
+            verify(bookDAO, times(1)).save(validBook);
+            verify(bookDAO, times(1)).addToStorage(validBookAfterSave.getBookId(), copies);
+
+            verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).endTransaction();
+        }
+
+        @Test
+        void save_AuthorAlreadyExists_ShouldFindAuthorAndSetToBook() throws DaoException, ServiceException {
+            TransactionManager transactionManager = mock(TransactionManager.class);
+            AuthorService authorService = mock(AuthorServiceImpl.class);
+
+            doReturn(Optional.of(validBookAfterSave.getAuthor())).when(authorService).findByNames(anyString(), anyString());
+
+            doReturn(validBookAfterSave).when(bookDAO).save(validBook);
+            int copies = 1;
+
+            bookServiceImpl.save(validBook, copies, authorService, transactionManager);
+
+            verify(authorService, times(0)).save(validBookAfterSave.getAuthor());
+
+            verify(bookDAO, times(1)).save(validBook);
+            verify(bookDAO, times(1)).addToStorage(validBookAfterSave.getBookId(), copies);
+
+            verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).endTransaction();
+        }
     }
 }
