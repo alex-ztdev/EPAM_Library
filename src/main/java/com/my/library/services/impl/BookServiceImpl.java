@@ -142,7 +142,7 @@ public class BookServiceImpl implements BookService {
             } else {
                 book.setAuthor(authorContainer.get());
             }
-            bookDAO.save(book);
+            book = bookDAO.save(book);
             logger.log(Level.DEBUG, "BookServiceImpl/save book_id after save:" + book.getBookId());
 
             bookDAO.addToStorage(book.getBookId(), bookCopies);

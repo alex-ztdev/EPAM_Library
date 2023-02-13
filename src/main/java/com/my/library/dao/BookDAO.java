@@ -13,7 +13,7 @@ public interface BookDAO {
 
     List<Book> findAll(int start, int fetchNext, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws DaoException;
 
-    void save(Book book) throws DaoException;
+    Book save(Book book) throws DaoException;
 
     boolean update(Book book) throws DaoException;
 

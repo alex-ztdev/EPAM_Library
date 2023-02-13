@@ -73,7 +73,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
     }
 
     @Override
-    public void save(Book book) throws DaoException {
+    public Book save(Book book) throws DaoException {
         logger.log(Level.DEBUG, "BookDaoImpl/save method invoked with book: " + book);
 
         try (var statement = connection.prepareStatement(BookQueries.INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
@@ -87,10 +87,12 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
 
             statement.executeUpdate();
             try (var keysRS = statement.getGeneratedKeys()) {
-                if (keysRS.next()) {
-                    book.setBookId(keysRS.getLong(1));
-                    logger.log(Level.DEBUG, "BookDaoImpl/save method returned key: " + keysRS.getLong(1));
-                }
+                keysRS.next();
+
+                book.setBookId(keysRS.getLong(1));
+                logger.log(Level.DEBUG, "BookDaoImpl/save method returned key: " + keysRS.getLong(1));
+
+                return book;
             }
 
         } catch (SQLException e) {
@@ -132,7 +134,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
             int k = 1;
             statement.setLong(k, id);
 
-            return statement.executeUpdate()==1;
+            return statement.executeUpdate() == 1;
 
         } catch (SQLException e) {
             throw new DaoException(e);
