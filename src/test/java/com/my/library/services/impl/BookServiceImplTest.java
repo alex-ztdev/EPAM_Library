@@ -11,11 +11,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.NotExtensible;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -507,7 +505,7 @@ class BookServiceImplTest {
 
         @ParameterizedTest
         @NullSource
-        void countFoundByTitle_WhenTitleIsNull_ShouldThrowServiceException(String title) throws DaoException {
+        void countFoundByTitle_WhenTitleIsNull_ShouldThrowServiceException(String title) {
             assertThatThrownBy(() -> bookServiceImpl.countFoundByTitle(title, false))
                     .isInstanceOf(ServiceException.class)
                     .hasCauseExactlyInstanceOf(DaoException.class);
@@ -530,8 +528,95 @@ class BookServiceImplTest {
     }
 
     @Nested
+    @DisplayName("findByAuthor")
+    class FindByAuthor {
+        @Test
+        void findByAuthor_ValidData_ShouldReturnListOfBooksWithMatchingAuthor() throws ServiceException, DaoException {
+            String author = "My author";
+            int start = 0;
+            int offset = 5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_AUTHOR;
+
+            Book book = mock(Book.class);
+
+            var expectedBooksList = List.of(book, book, book);
+
+            doReturn(expectedBooksList).when(bookDAO).findByAuthor(author, start, offset, orderBy, dir, false);
+
+            List<Book> actualBooksList = bookServiceImpl.findByAuthor(author, start, offset, orderBy, dir, false);
+
+            assertThat(actualBooksList).isEqualTo(expectedBooksList);
+
+            verify(bookDAO, times(1)).findByAuthor(author, start, offset, orderBy, dir, false);
+        }
+
+        @Test
+        void findByAuthor_StartIsNegative_ShouldThrowServiceException() {
+            String author = "My author";
+            int start = -5;
+            int offset = 5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_AUTHOR;
+
+
+            assertThatThrownBy(() -> bookServiceImpl.findByAuthor(author, start, offset, orderBy, dir, false))
+                    .isExactlyInstanceOf(ServiceException.class);
+
+            verifyNoInteractions(bookDAO);
+        }
+
+        @Test
+        void findByAuthor_OffsetIsNegative_ShouldThrowServiceException() {
+            String author = "My author";
+            int start = 5;
+            int offset = -5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_AUTHOR;
+
+            assertThatThrownBy(() -> bookServiceImpl.findByAuthor(author, start, offset, orderBy, dir, false))
+                    .isExactlyInstanceOf(ServiceException.class);
+
+            verifyNoInteractions(bookDAO);
+        }
+
+
+        @Test
+        void findByAuthor_BookDaoException_ShouldThrowServiceException() throws DaoException {
+            String author = "My author";
+            int start = 0;
+            int offset = 5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_AUTHOR;
+
+            doThrow(DaoException.class).when(bookDAO).findByAuthor(author, start, offset, orderBy, dir, false);
+
+            assertThatThrownBy(() -> bookServiceImpl.findByAuthor(author, start, offset, orderBy, dir, false))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).findByAuthor(author, start, offset, orderBy, dir, false);
+        }
+
+        @ParameterizedTest
+        @NullSource
+        void findByAuthor_WhenAuthorIsNull_ShouldThrowServiceException(String author) {
+            int start = 0;
+            int offset = 5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_AUTHOR;
+
+            assertThatThrownBy(() -> bookServiceImpl.findByAuthor(author, start, offset, orderBy, dir, false))
+                    .isExactlyInstanceOf(ServiceException.class);
+
+            verifyNoInteractions(bookDAO);
+        }
+    }
+
+
+    @Nested
     @DisplayName("countFoundByAuthor")
-    class CountFoundByAuthor{
+    class CountFoundByAuthor {
         @Test
         void countFoundByAuthor_ShouldReturnCorrectCount() throws ServiceException, DaoException {
             String author = "My author";
@@ -559,7 +644,7 @@ class BookServiceImplTest {
 
         @ParameterizedTest
         @NullSource
-        void countFoundByAuthor_WhenauthorIsNull_ShouldThrowServiceException(String author) throws DaoException {
+        void countFoundByAuthor_WhenAuthorIsNull_ShouldThrowServiceException(String author) {
             assertThatThrownBy(() -> bookServiceImpl.countFoundByAuthor(author, false))
                     .isInstanceOf(ServiceException.class)
                     .hasCauseExactlyInstanceOf(DaoException.class);
@@ -580,4 +665,6 @@ class BookServiceImplTest {
             verify(bookDAO, times(1)).countFoundByAuthor(author, false);
         }
     }
+
+
 }
