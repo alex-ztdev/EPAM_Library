@@ -511,8 +511,7 @@ class BookServiceImplTest {
         @NullSource
         void countFoundByTitle_WhenTitleIsNull_ShouldThrowServiceException(String title) {
             assertThatThrownBy(() -> bookServiceImpl.countFoundByTitle(title, false))
-                    .isInstanceOf(ServiceException.class)
-                    .hasCauseExactlyInstanceOf(DaoException.class);
+                    .isInstanceOf(ServiceException.class);
 
             verifyNoInteractions(bookDAO);
         }
@@ -650,8 +649,7 @@ class BookServiceImplTest {
         @NullSource
         void countFoundByAuthor_WhenAuthorIsNull_ShouldThrowServiceException(String author) {
             assertThatThrownBy(() -> bookServiceImpl.countFoundByAuthor(author, false))
-                    .isInstanceOf(ServiceException.class)
-                    .hasCauseExactlyInstanceOf(DaoException.class);
+                    .isInstanceOf(ServiceException.class);
 
             verifyNoInteractions(bookDAO);
         }
@@ -752,8 +750,6 @@ class BookServiceImplTest {
         void save_AuthorServiceThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException, ServiceException {
             TransactionManager transactionManager = mock(TransactionManager.class);
             AuthorService authorService = mock(AuthorServiceImpl.class);
-
-            doReturn(validBookAfterSave).when(bookDAO).save(validBook);
 
             doThrow(ServiceException.class).when(authorService).findByNames(anyString(), anyString());
 
@@ -882,7 +878,6 @@ class BookServiceImplTest {
             TransactionManager transactionManager = mock(TransactionManager.class);
             AuthorService authorService = mock(AuthorServiceImpl.class);
 
-            doReturn(true).when(bookDAO).update(validBook);
 
             doThrow(ServiceException.class).when(authorService).findByNames(anyString(), anyString());
 

@@ -116,7 +116,7 @@ public class BookServiceImpl implements BookService {
             logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed: operation_result=" + operationRes);
             return operationRes;
 
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
                 logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction rolledBack successfully");
@@ -149,7 +149,7 @@ public class BookServiceImpl implements BookService {
 
             transactionManager.commit();
             logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
                 logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction rolledBack successfully");
@@ -184,6 +184,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException {
         logger.log(Level.DEBUG, "findByTitle invoked with parameters: title=%s start=%s offset=%s orderBy=%s dir=%s includeRemoved=%s".formatted(title, start, offset, orderBy, dir, includeRemoved));
+        if (title == null) {
+            throw new ServiceException("error while executing findByTitle method: title may not be null!");
+        }
+        if (start < 0) {
+            throw new ServiceException("error while executing findByTitle method: start may not be negative!");
+        }
+        if (offset < 0) {
+            throw new ServiceException("error while executing findByTitle method: offset  must be greater then zero!");
+        }
+
         try {
             return bookDAO.findByTitle(title, start, offset, orderBy, dir, includeRemoved);
         } catch (DaoException e) {
@@ -193,6 +203,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int countFoundByTitle(String title, boolean includeRemoved) throws ServiceException {
+        if (title == null) {
+            throw new ServiceException("error while executing countFoundByTitle method: title may not be null!");
+        }
         try {
             return bookDAO.countFoundByTitle(title, includeRemoved);
         } catch (DaoException e) {
@@ -202,6 +215,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, OrderDir orderDir, boolean includeRemoved) throws ServiceException {
+        if (author == null) {
+            throw new ServiceException("error while executing findByAuthor method: author may not be null!");
+        }
+        if (start < 0) {
+            throw new ServiceException("error while executing findByAuthor method: start may not be negative!");
+        }
+        if (offset < 0) {
+            throw new ServiceException("error while executing findByAuthor method: offset  must be greater then zero!");
+        }
         try {
             return bookDAO.findByAuthor(author, start, offset, orderBy, orderDir, includeRemoved);
         } catch (DaoException e) {
@@ -212,6 +234,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int countFoundByAuthor(String author, boolean includeRemoved) throws ServiceException {
+        if (author == null) {
+            throw new ServiceException("error while executing countByAuthor method: author may not be null!");
+        }
         try {
             return bookDAO.countFoundByAuthor(author, includeRemoved);
         } catch (DaoException e) {
