@@ -338,11 +338,23 @@ class BookServiceImplTest {
     @DisplayName("decrementBookQuantity")
     class DecrementBookQuantity {
         @Test
-        void decrementBookQuantity_BookExists_shouldDecrementQuantity() throws ServiceException, DaoException {
+        void decrementBookQuantity_BookExists_ShouldDecrementQuantity() throws ServiceException, DaoException {
             long bookId = 1L;
-            Book book = mock(Book.class);
 
             bookServiceImpl.decrementBookQuantity(bookId);
+
+            verify(bookDAO, times(1)).decrementBookQuantity(bookId);
+        }
+
+        @Test
+        void decrementBookQuantity_BookDAoException_ShouldThrowServiceException() throws DaoException {
+            long bookId = 1L;
+
+            doThrow(DaoException.class).when(bookDAO).decrementBookQuantity(anyLong());
+
+            assertThatThrownBy(() -> bookServiceImpl.decrementBookQuantity(bookId))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
 
             verify(bookDAO, times(1)).decrementBookQuantity(bookId);
         }
