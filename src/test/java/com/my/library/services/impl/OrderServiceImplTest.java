@@ -3,7 +3,6 @@ package com.my.library.services.impl;
 import com.my.library.dao.OrderDAO;
 import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.OrderStatus;
-import com.my.library.entities.Book;
 import com.my.library.entities.Order;
 import com.my.library.exceptions.DaoException;
 import com.my.library.exceptions.ServiceException;
@@ -621,7 +620,7 @@ class OrderServiceImplTest {
 
 
         @Test
-        void returnOrder_NoSuchOrder_ShouldThrowServiceException() throws DaoException, ServiceException {
+        void returnOrder_NoSuchOrder_ShouldThrowServiceException() throws DaoException {
             TransactionManager transactionManager = mock(TransactionManager.class);
             BookService bookService = mock(BookServiceImpl.class);
             Order order = mock(Order.class);
@@ -636,6 +635,8 @@ class OrderServiceImplTest {
                     .isExactlyInstanceOf(ServiceException.class);
 
             verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).commit();
+
             verify(transactionManager, times(1)).endTransaction();
         }
 
@@ -790,7 +791,7 @@ class OrderServiceImplTest {
         }
 
         @Test
-        void declineOrder_NoSuchOrder_ShouldThrowServiceException() throws DaoException, ServiceException {
+        void declineOrder_NoSuchOrder_ShouldThrowServiceException() throws DaoException {
             TransactionManager transactionManager = mock(TransactionManager.class);
             BookService bookService = mock(BookServiceImpl.class);
             Order order = mock(Order.class);
@@ -808,6 +809,8 @@ class OrderServiceImplTest {
             verify(orderDAO, times(1)).find(orderId);
 
             verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).commit();
+
             verify(transactionManager, times(1)).endTransaction();
         }
     }
@@ -832,7 +835,7 @@ class OrderServiceImplTest {
         }
 
         @Test
-        void cancelOrder_commitThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException, ServiceException {
+        void cancelOrder_commitThrowsException_ShouldRollbackTransactionThrowServiceException() throws DaoException {
             TransactionManager transactionManager = mock(TransactionManager.class);
             BookService bookService = mock(BookServiceImpl.class);
             Order order = mock(Order.class);
@@ -939,6 +942,30 @@ class OrderServiceImplTest {
             verify(transactionManager, times(1)).commit();
             verify(transactionManager, times(1)).endTransaction();
         }
+        @Test
+        void cancelOrder_UserIdInOrderAndUserIdProvidedAreNotTheSame_ShouldThrowServiceException() throws DaoException, ServiceException {
+            TransactionManager transactionManager = mock(TransactionManager.class);
+            BookService bookService = mock(BookServiceImpl.class);
+            Order order = mock(Order.class);
+
+            doReturn(1L).when(order).getOrderId();
+            doReturn(2L).when(order).getUserId();
+
+            long orderId = order.getOrderId();
+
+            doReturn(Optional.of(order)).when(orderDAO).find(orderId);
+
+            assertThatThrownBy(() -> orderService.cancelOrder(1L, 1L, bookService, transactionManager))
+                    .isExactlyInstanceOf(ServiceException.class);
+
+            verify(bookService, times(0)).incrementBookQuantity(1L);
+
+            verify(orderDAO, times(1)).find(orderId);
+
+            verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).commit();
+            verify(transactionManager, times(1)).endTransaction();
+        }
 
         @Test
         void cancelOrder_NoSuchOrder_ShouldThrowServiceException() throws DaoException {
@@ -959,6 +986,7 @@ class OrderServiceImplTest {
             verify(orderDAO, times(1)).find(orderId);
 
             verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).commit();
             verify(transactionManager, times(1)).endTransaction();
         }
     }
