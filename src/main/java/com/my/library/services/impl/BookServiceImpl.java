@@ -43,7 +43,6 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-
     @Override
     public List<Book> findAll(int from, int to, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException {
         try {
@@ -219,14 +218,4 @@ public class BookServiceImpl implements BookService {
             throw new ServiceException("error while executing countByAuthor method",e);
         }
     }
-
-    @Override
-    public void save(Book book) throws ServiceException {
-        try {
-            bookDAO.save(book);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while saving book BookService", e);
-        }
-    }
-
 }
