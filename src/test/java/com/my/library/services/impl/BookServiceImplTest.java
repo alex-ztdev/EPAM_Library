@@ -863,8 +863,6 @@ class BookServiceImplTest {
             TransactionManager transactionManager = mock(TransactionManager.class);
             AuthorService authorService = mock(AuthorServiceImpl.class);
 
-            doReturn(true).when(bookDAO).update(validBook);
-
             doThrow(DaoException.class).when(transactionManager).beginTransaction();
             doThrow(DaoException.class).when(transactionManager).rollback();
 
