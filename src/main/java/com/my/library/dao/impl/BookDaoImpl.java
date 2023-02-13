@@ -73,7 +73,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
     }
 
     @Override
-    public void save(Book book) throws DaoException {
+    public Book save(Book book) throws DaoException {
         logger.log(Level.DEBUG, "BookDaoImpl/save method invoked with book: " + book);
 
         try (var statement = connection.prepareStatement(BookQueries.INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
@@ -87,10 +87,12 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
 
             statement.executeUpdate();
             try (var keysRS = statement.getGeneratedKeys()) {
-                if (keysRS.next()) {
-                    book.setBookId(keysRS.getLong(1));
-                    logger.log(Level.DEBUG, "BookDaoImpl/save method returned key: " + keysRS.getLong(1));
-                }
+                keysRS.next();
+
+                book.setBookId(keysRS.getLong(1));
+                logger.log(Level.DEBUG, "BookDaoImpl/save method returned key: " + keysRS.getLong(1));
+
+                return book;
             }
 
         } catch (SQLException e) {
@@ -127,12 +129,12 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
     }
 
     @Override
-    public void deleteById(long id) throws DaoException {
+    public boolean deleteById(long id) throws DaoException {
         try (var statement = connection.prepareStatement(BookQueries.SET_BOOK_TO_REMOVED)) {
             int k = 1;
             statement.setLong(k, id);
 
-            statement.executeUpdate();
+            return statement.executeUpdate() == 1;
 
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -174,8 +176,10 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
             statement.setLong(1, id);
 
             try (var rs = statement.executeQuery()) {
-                rs.next();
-                return rs.getInt(BooksColumns.QUANTITY);
+                if (rs.next()) {
+                    return rs.getInt(BooksColumns.QUANTITY);
+                }
+                return -1;
             }
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -354,9 +358,4 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
             throw new DaoException(e);
         }
     }
-
-
-//    public void update(Book book, int quantity) {
-//        throw new UnsupportedOperationException();
-//    }
 }
