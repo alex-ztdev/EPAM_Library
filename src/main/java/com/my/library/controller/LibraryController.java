@@ -1,11 +1,13 @@
 package com.my.library.controller;
 
+import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.CommandFactory;
 import com.my.library.controller.command.CommandResult;
-import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.constant.RedirectToPage;
+import com.my.library.controller.command.constant.commands.GeneralCommands;
+import com.my.library.dao.DaoFactory;
 import com.my.library.exceptions.CommandException;
-import com.my.library.utils.Pages;
+import com.my.library.services.ServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -34,7 +36,12 @@ public class LibraryController extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandReq = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
 
-        try (var commandFactory = new CommandFactory()){
+        //TODO: Add ApplicationContext
+
+        var connection = ConnectionPool.getInstance().getConnection();
+        var serviceFactory = new ServiceFactory(connection, new DaoFactory(connection));
+
+        try (var commandFactory = new CommandFactory(connection, serviceFactory)) {
             var command = commandFactory.createCommand(commandReq);
 
             logger.log(Level.DEBUG, "Command " + command.getClass().getSimpleName() + " was received");
@@ -44,7 +51,7 @@ public class LibraryController extends HttpServlet {
 
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Command exception while processingRequest", e);
-            response.sendRedirect(request.getContextPath() +  RedirectToPage.ERROR_PAGE);
+            response.sendRedirect(request.getContextPath() + RedirectToPage.ERROR_PAGE);
         }
     }
 
