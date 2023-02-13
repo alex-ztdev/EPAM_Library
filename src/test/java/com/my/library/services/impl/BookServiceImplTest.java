@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.NotExtensible;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -525,6 +526,58 @@ class BookServiceImplTest {
                     .hasCauseExactlyInstanceOf(DaoException.class);
 
             verify(bookDAO, times(1)).countFoundByTitle(title, false);
+        }
+    }
+
+    @Nested
+    @DisplayName("countFoundByAuthor")
+    class CountFoundByAuthor{
+        @Test
+        void countFoundByAuthor_ShouldReturnCorrectCount() throws ServiceException, DaoException {
+            String author = "My author";
+
+            when(bookDAO.countFoundByAuthor(author, false)).thenReturn(5);
+
+            int count = bookServiceImpl.countFoundByAuthor(author, false);
+
+            assertThat(count).isEqualTo(5);
+
+            verify(bookDAO, times(1)).countFoundByAuthor(author, false);
+        }
+
+        @Test
+        void countFoundByAuthor_IncludedRemovedBooks_ShouldReturnCorrectCount() throws ServiceException, DaoException {
+            String author = "My author";
+            when(bookDAO.countFoundByAuthor(author, true)).thenReturn(10);
+
+            int count = bookServiceImpl.countFoundByAuthor(author, true);
+
+            assertThat(count).isEqualTo(10);
+            verify(bookDAO, times(1)).countFoundByAuthor(author, true);
+            verifyNoMoreInteractions(bookDAO);
+        }
+
+        @ParameterizedTest
+        @NullSource
+        void countFoundByAuthor_WhenauthorIsNull_ShouldThrowServiceException(String author) throws DaoException {
+            assertThatThrownBy(() -> bookServiceImpl.countFoundByAuthor(author, false))
+                    .isInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verifyNoInteractions(bookDAO);
+        }
+
+        @Test
+        void countFoundByAuthor_WhenBookDaoThrowsDaoException_ShouldThrowServiceException() throws DaoException {
+            String author = "My author";
+
+            doThrow(DaoException.class).when(bookDAO).countFoundByAuthor(author, false);
+
+            assertThatThrownBy(() -> bookServiceImpl.countFoundByAuthor(author, false))
+                    .isInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).countFoundByAuthor(author, false);
         }
     }
 }
