@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.commit();
 
             logger.log(Level.DEBUG, "OrderServiceImpl/placeOrder/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
@@ -127,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.commit();
 
             logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
@@ -210,7 +210,7 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.commit();
 
             logger.log(Level.DEBUG, "OrderServiceImpl/declineOrder/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
@@ -240,15 +240,15 @@ public class OrderServiceImpl implements OrderService {
             }
 
             if (orderDAO.delete(orderId)) {
-                logger.log(Level.DEBUG,"OrderServiceImpl/ order deleted");
-                logger.log(Level.DEBUG,"Deleted order: " +  order);
+                logger.log(Level.DEBUG, "OrderServiceImpl/ order deleted");
+                logger.log(Level.DEBUG, "Deleted order: " + order);
                 bookService.incrementBookQuantity(order.getBookId());
             }
 
             transactionManager.commit();
 
             logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
