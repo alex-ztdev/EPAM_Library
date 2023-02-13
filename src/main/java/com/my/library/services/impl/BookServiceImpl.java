@@ -43,15 +43,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findAll() throws ServiceException {
-        try {
-            return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, OrderDir.ASC, false);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while default findAll in BookServiceImpl", e);
-        }
-    }
-
-    @Override
     public List<Book> findAll(int from, int to, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException {
         try {
             return bookDAO.findAll(from, to, orderBy, dir, includeRemoved);
@@ -226,19 +217,4 @@ public class BookServiceImpl implements BookService {
             throw new ServiceException("error while executing countByAuthor method",e);
         }
     }
-
-    @Override
-    public void save(Book book) throws ServiceException {
-        try {
-            bookDAO.save(book);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while saving book BookService", e);
-        }
-    }
-
-    @Override
-    public boolean update(Book book) throws ServiceException {
-        throw new UnsupportedOperationException();
-    }
-
 }

@@ -354,9 +354,4 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
             throw new DaoException(e);
         }
     }
-
-
-//    public void update(Book book, int quantity) {
-//        throw new UnsupportedOperationException();
-//    }
 }
