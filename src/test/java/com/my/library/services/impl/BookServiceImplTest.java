@@ -10,6 +10,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -424,6 +427,7 @@ class BookServiceImplTest {
 
             verifyNoInteractions(bookDAO);
         }
+
         @Test
         void findByTitle_OffsetIsNegative_ShouldThrowServiceException() {
             String title = "My title";
@@ -437,6 +441,7 @@ class BookServiceImplTest {
 
             verifyNoInteractions(bookDAO);
         }
+
 
         @Test
         void findByTitle_BookDaoException_ShouldThrowServiceException() throws DaoException {
@@ -454,5 +459,20 @@ class BookServiceImplTest {
 
             verify(bookDAO, times(1)).findByTitle(title, start, offset, orderBy, dir, false);
         }
+
+        @ParameterizedTest
+        @NullSource
+        void findByTitle_WhenTitleIsNull_ShouldThrowServiceException(String title) {
+            int start = 0;
+            int offset = 5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
+
+            assertThatThrownBy(() -> bookServiceImpl.findByTitle(title, start, offset, orderBy, dir, false))
+                    .isExactlyInstanceOf(ServiceException.class);
+
+            verifyNoInteractions(bookDAO);
+        }
     }
+
 }
