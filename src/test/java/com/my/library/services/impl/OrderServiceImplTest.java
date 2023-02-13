@@ -635,7 +635,7 @@ class OrderServiceImplTest {
                     .isExactlyInstanceOf(ServiceException.class);
 
             verify(transactionManager, times(1)).beginTransaction();
-            verify(transactionManager, times(1)).commit();
+            verify(transactionManager, times(1)).rollback();
 
             verify(transactionManager, times(1)).endTransaction();
         }
@@ -809,7 +809,7 @@ class OrderServiceImplTest {
             verify(orderDAO, times(1)).find(orderId);
 
             verify(transactionManager, times(1)).beginTransaction();
-            verify(transactionManager, times(1)).commit();
+            verify(transactionManager, times(1)).rollback();
 
             verify(transactionManager, times(1)).endTransaction();
         }
@@ -963,7 +963,7 @@ class OrderServiceImplTest {
             verify(orderDAO, times(1)).find(orderId);
 
             verify(transactionManager, times(1)).beginTransaction();
-            verify(transactionManager, times(1)).commit();
+            verify(transactionManager, times(1)).rollback();
             verify(transactionManager, times(1)).endTransaction();
         }
 
@@ -986,7 +986,7 @@ class OrderServiceImplTest {
             verify(orderDAO, times(1)).find(orderId);
 
             verify(transactionManager, times(1)).beginTransaction();
-            verify(transactionManager, times(1)).commit();
+            verify(transactionManager, times(1)).rollback();
             verify(transactionManager, times(1)).endTransaction();
         }
     }
