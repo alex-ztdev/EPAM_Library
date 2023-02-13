@@ -1,0 +1,1922 @@
+* [33mcommit 874f92754709f8df958aca4db1e63eb8fbeb022f[m[33m ([m[1;36mHEAD -> [m[1;32mwip_feature_order_cancelation[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+[31m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[31m|[m Date:   Tue Feb 7 19:35:24 2023 +0200
+[31m|[m 
+[31m|[m     changed save method to placeOrder
+[31m|[m 
+* [33mcommit b0587c83ff7ed4cedbf1c2502ae2e259430ea42c[m
+[31m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[31m|[m Date:   Tue Feb 7 19:34:43 2023 +0200
+[31m|[m 
+[31m|[m     changed date format
+[31m|[m   
+*   [33mcommit 178584f1efddd9aa9dd57806f8910285707b3910[m
+[32m|[m[33m\[m  Merge: fd1b9fd 532097c
+[32m|[m [33m|[m Author: alex-ztdev <90183750+alex-ztdev@users.noreply.github.com>
+[32m|[m [33m|[m Date:   Tue Feb 7 00:02:45 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     Merge pull request #1 from alex-ztdev/wip_feature_order_confirming
+[32m|[m [33m|[m     
+[32m|[m [33m|[m     Wip feature order confirming
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 532097c5a0b4ac5ac96bd9eac9b25b06dc8f69b8[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 23:44:13 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added grey bg
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit cfce1530e5229229f8f6b8a2f5b8b4081bb608ec[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 23:36:27 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added link to request's page with msg
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit fb76a77365dc5b63493512d033806e09048534cf[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 23:35:23 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     set redirect to users_requests page
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit df4e70588ecd07ae52a8c08509471645ad4ecafb[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 23:34:55 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     implemented DisplayMyRequestsCommand
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 470ff6bd84b24ce1052ae3a4e4058c2c10647c5c[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 23:34:37 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added services to DeclineOrderCommand
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit f8a02948898dd5d8bd98ebbb9c67bcabfb30c202[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 23:34:02 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     removed redundant msg block
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit e2f6ace1895510a248186deeccd2a49b6a166843[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 23:33:43 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     centered title
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 006c0d7061a04b6d7525e5ddf63a5052edcdb583[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 23:33:18 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added paddings to title
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit e1d7cb81137ecc8ebc98f09fad5ab7242519427c[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 21:26:09 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     centered headers
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit ea8bf617650b9ff036fae025a1300d1ae20b014d[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 20:54:24 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added DisplayMyRequestsCommand
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit d917251efcea000c2dec25b7cb6c4c5c613ff22e[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 20:50:14 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added orderStatuses to countUsersOrders and findAllUsersOrders methods OrderService
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 95c268f27e32bd82ae9dee2b311b1aef04449ffd[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 15:20:04 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     changed sort
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 5bedd2b88a4ee8a5b9d1a04a4eaba49e56b22d85[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 15:19:55 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     changed orders.title and requests.title
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 557575a47c0793c36797bc47f4164186aedd93cf[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 01:24:22 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     merged acceptOrder and declineOrder methods into one  setOrderStatus method
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 99d8b07d06960d51fd27fe789e2142f26f9eca93[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 01:14:31 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added DeclineOrderCommand
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 8a0f7bf77221bf025e11e5214aedb485bd75031e[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 01:11:45 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added find by status and count by status
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 080615b68e3daca4f9ac80ab769d8f0bc73c8393[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 00:36:28 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added countOrdersByStatus method
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 85adf69436e2daf567c81bfe30dda4a53a3b3eef[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Mon Feb 6 00:33:28 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added findAllByStatus method
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 6fd52a952ed53448a9accf5d08044a285c07e207[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:51:34 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added 404 page, style and localization
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 24e8f67d365ebcd51b3d4485e983e3295d9b5b10[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:48:00 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added contextPath to redirect
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 1c03ca2899ad0815efbfc4c00b6a12defcb3ff07[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:42:02 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added ErrorPageCommand
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 97c1c0e062f4906e02e458b379d15e9dfa15418c[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:35:53 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     removed border from table
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit f89be2c157c1003667f19f68beb696bb171ade8a[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:35:43 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added current page tracking
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 4a923bb1860a4fb163ee3be9e77379bc6ff5e252[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:35:19 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added DISPLAY_USERS_REQUESTS_WITH_PARAMETERS redirect
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit a6e71ec049003b461ed3653029db74f43862d84b[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:35:00 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added translation to unsupported command
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit e67d676c15e5d31c78493b051efc57057e9ad8a8[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:20:06 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added acceptOrder method
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 93166054760257a55f9b094fcd1e5a0e48f620b9[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 21:00:07 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added redirect to unsupported operation page
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 45fbe88610d97cdbbbf0c0757532e3003855898b[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 20:53:09 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added check for null in IntegerParser and LongParser
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit df9005bcf239ca0aa665f94de28a87a9fbc671cf[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 20:50:49 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     removed ConfirmOrderCommand.java
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit d4293edff1326cb0b1d505e705a0089848323733[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 20:49:23 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     changed LongParser parseLong method to static
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit c9afd88a72f91936a4027b0c87675210d18e9cc0[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 20:44:55 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added AcceptOrderCommand
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 7a1f35f8f244ebe81e07083a52a993890dcf3759[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 20:43:22 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     changed admin-accept-order to lib-accept-order
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit a2970523458e952ef3d3a23419b58183edcc6007[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 20:28:50 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added style to return order
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit f1d9e055670c09f6a84f0aafc648fecf11a11bbb[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 20:28:31 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added style to accept decline order
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 65d554e59c03c261c165d5568e6f692b95604f40[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 20:27:51 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added style to return book
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit a1296da0b4a235ffcf262df3babbd7aa040b863d[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 19:43:25 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added style to accept and decline buttons
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 65cd4dd4c58fb97141921f45ce220fa3444b679a[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 19:39:48 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     changed order canceled to order declined
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 9bbeaa265a5f7c4f82637a3f08b497625a295182[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 18:57:56 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     changed page title
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit db678c0ab8359b6dc44995c179a62810fcaeb05a[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 18:57:36 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added requests.css
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit e88552dab8b7cb68e46134a5306d2eaa8e262324[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 18:46:03 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     fixed pagination
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 48e8418e4d00453702433cd9a1bde8c28dc42f2e[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 18:36:14 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added cancel and accept links to users_requests.jsp
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit f8f29d9fb0f0a2a5df7560b6f40919d0e30e7a9d[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 16:04:29 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     does not retrieve blocked users orders
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit c6198a34ce388fe9332558ff78de0014d782289c[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:29:41 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added getOrderStatus to Update
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit e8927f5fe08d368c0f875774ec1d6bd8e3abd274[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:28:07 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added default OrderStatus to PROCESSING
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit cfdf398319dbf2ebb389b209fb66c9826def9e47[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:26:16 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added OrderStatus to save method
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit ad2a63a76523abfaae794301b0fa0631195364e3[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:21:31 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added OrderStatus to OrderDTO.java
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit b740d79d92d8269453ec6001f49040889ef33024[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:20:20 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added OrderStatus to Order builder
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit a22d113223c0c0edfd376e7a14d49534893b45c5[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:15:01 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added OrderStatus to Order.java
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 1c0f423dcb6011565440042cd30aeb0702c547f9[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:14:04 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added OrderStatus.java
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 0263f4e8c5380de39ed8cd40e65863102f071f61[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:11:25 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     renamed from orders_processing.jsp to users_requests.jsp
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 571f9daae4e908510007c8e3b076b45c3cfabe02[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:10:40 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added USERS_REQUESTS page
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit e61914531fa3feb5974eae804f07192d903065cb[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:10:23 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added IntegerParser to DisplayUsersRequestedOrdersCommand
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit f8bfbdb796014da674b5ec4f91f4c7c5482e1407[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 15:04:13 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added page check DisplayBooksListCommand
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit a66125c7561c178ecb63d6c7341834606b0dd559[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 14:57:21 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added Redirect to user requested orders
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit c282e016e785649fa7d42466ffdd47211862dd40[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 14:56:57 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added IntegerParser
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 7659768f853bc479413c17c028d892d6dba6b1eb[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 14:51:23 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added DisplayUsersRequestedOrdersCommand to Factory, Filter
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 6c757de46b15847bb04576d4e5997c57a7bc7e88[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 14:44:10 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added DisplayUsersRequestedOrders
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit e7d65e48fece890d6f61d350eaee06ab173a5f8d[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 14:18:50 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added users requests to header
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 8b0d8f48386a5ae75a088655aa5e86cd113e0151[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 14:09:27 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added orders_processing.jsp
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 3a9a7bbbd4fc7da96ab4d3d6a1ce52932d8ba7b2[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sun Feb 5 13:46:44 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     changed Status column label
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 087c154a1f322bf968256d5a84a08f0d78d12cb1[m
+[32m|[m [33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m [33m|[m Date:   Sat Feb 4 19:25:45 2023 +0200
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     added logger
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 395f0f63a74ed5b35ab618c40b2124280829bd34[m
+[32m|[m[32m/[m  Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[32m|[m   Date:   Sat Feb 4 19:19:58 2023 +0200
+[32m|[m   
+[32m|[m       Added ConfirmOrderCommand
+[32m|[m 
+* [33mcommit fd1b9fd8c2152d312d53bda81de0a8198dca6d15[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 20:17:08 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug with blocking/unblocking users
+[33m|[m 
+* [33mcommit c7124756067331db70559a9425fd3d40d57d8351[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 19:58:52 2023 +0200
+[33m|[m 
+[33m|[m     added icon
+[33m|[m 
+* [33mcommit 618d795c33b3dcff91f917e60779efe0ed2a0ce6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 19:12:12 2023 +0200
+[33m|[m 
+[33m|[m     added readme.md
+[33m|[m 
+* [33mcommit 17d48ec6ea95059c587105b60d8cdf1b1cf68360[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 19:01:56 2023 +0200
+[33m|[m 
+[33m|[m     added 500 error page
+[33m|[m 
+* [33mcommit ba0cf5071845e0a203b1dcfa9f9e0e227d425254[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 18:54:29 2023 +0200
+[33m|[m 
+[33m|[m     added 500 page
+[33m|[m 
+* [33mcommit f9c91561d9533df4d02f1740dfe8823844186746[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 18:14:36 2023 +0200
+[33m|[m 
+[33m|[m     changed About link
+[33m|[m 
+* [33mcommit 7eace4ebf820073a1eb550fb378d22c6882a5cd7[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 18:14:19 2023 +0200
+[33m|[m 
+[33m|[m     added DISPLAY_USERS_WITH_PARAMETERS, DISPLAY_READERS_WITH_PARAMETERS
+[33m|[m 
+* [33mcommit 5f57bffe5f11b2e35ae816226e043a3f0ed4da36[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 18:13:36 2023 +0200
+[33m|[m 
+[33m|[m     added current page track
+[33m|[m 
+* [33mcommit 8d94f54326b6fd2f24e01385a1bbb155765f169d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 18:13:29 2023 +0200
+[33m|[m 
+[33m|[m     added current page track
+[33m|[m 
+* [33mcommit 8897983765be01c514130a63205cbe5acfae77b8[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 17:57:38 2023 +0200
+[33m|[m 
+[33m|[m     added icon to all pages
+[33m|[m 
+* [33mcommit 111318e0194c813df09ddc590706845a19acedca[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 17:43:49 2023 +0200
+[33m|[m 
+[33m|[m     added content and style to index.jsp
+[33m|[m 
+* [33mcommit a45be08a734c04f7f17d52a92ece5fbf3e95efa4[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 17:27:14 2023 +0200
+[33m|[m 
+[33m|[m     changed dateTime format
+[33m|[m 
+* [33mcommit f9d862780916237e8d4e9a1400b1db5b5bf3f64e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 17:23:55 2023 +0200
+[33m|[m 
+[33m|[m     added curr page tracking
+[33m|[m 
+* [33mcommit 488dd99f9ff9e8b1d9815bbf49badb576d17f22e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 15:52:53 2023 +0200
+[33m|[m 
+[33m|[m     added content to unsupported operation error page
+[33m|[m 
+* [33mcommit cd2b5a31b28edb6a143ca58f7cfc696048306a0f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 15:29:05 2023 +0200
+[33m|[m 
+[33m|[m     turned on error pages mapping
+[33m|[m 
+* [33mcommit c348a6f47f6e1b5dee7ca1c7bed3a655e0969e6f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 15:28:45 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug removed unnecessary char 's'
+[33m|[m 
+* [33mcommit fffa9aebb7171a3c1286c0dca184771d1c778bd7[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 15:27:39 2023 +0200
+[33m|[m 
+[33m|[m     added localization to search_by
+[33m|[m 
+* [33mcommit 58a24545d36fe809ba225113f74624268dee9401[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 14:55:47 2023 +0200
+[33m|[m 
+[33m|[m     fixed profile.css properties
+[33m|[m 
+* [33mcommit a25993176e0cc3bea4a6878201b64400ee09b335[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 14:24:22 2023 +0200
+[33m|[m 
+[33m|[m     added countFoundByAuthor method
+[33m|[m 
+* [33mcommit a61ea697f0076230961802880b956f83071bbad4[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 14:18:02 2023 +0200
+[33m|[m 
+[33m|[m     added findByAuthor method
+[33m|[m 
+* [33mcommit f829e31f8d013db86d3cecebe06b39ab1d684501[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 12:53:24 2023 +0200
+[33m|[m 
+[33m|[m     added currPage tracking
+[33m|[m 
+* [33mcommit ca069e9e469317d37f84e0e74a184b6e51c69ef4[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 12:38:07 2023 +0200
+[33m|[m 
+[33m|[m     added formatDateTime function + pagination when searching
+[33m|[m 
+* [33mcommit 190e57b5e6cc61862316a674a95781152596bb61[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 12:03:11 2023 +0200
+[33m|[m 
+[33m|[m     added pagination for search
+[33m|[m 
+* [33mcommit 4defc276eacef99e182262b1b3e396c655d479e9[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 10:29:21 2023 +0200
+[33m|[m 
+[33m|[m     added countFoundByTitle method
+[33m|[m 
+* [33mcommit f104b84dd2ca835a450edff21d7033775ef6a1dd[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 10:20:12 2023 +0200
+[33m|[m 
+[33m|[m     added findByTitle method
+[33m|[m 
+* [33mcommit 0cf6e67e582684207cd1134bd9ba7437946862f6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 01:23:26 2023 +0200
+[33m|[m 
+[33m|[m     added SearchBookCommand
+[33m|[m 
+* [33mcommit d3b573837f791fafc11d5573c41dc4466bddc8f9[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Feb 3 00:51:00 2023 +0200
+[33m|[m 
+[33m|[m     added custom function tag DateFormatter
+[33m|[m 
+* [33mcommit 5e691788d190e968d3ed466ec9e01086c399d13c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 22:19:06 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug books decremented when order returned
+[33m|[m 
+* [33mcommit 381d8bf0569693d15ec00627da77854770725871[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 21:39:20 2023 +0200
+[33m|[m 
+[33m|[m     added profile Command
+[33m|[m 
+* [33mcommit 78d3a5ee5b5c17c82cb5cecf8c15fb1a19384759[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 21:18:12 2023 +0200
+[33m|[m 
+[33m|[m     added profile page + localization
+[33m|[m 
+* [33mcommit 5269e040c41cd4aa6bc96be2b1da308faa2c29dc[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 21:07:16 2023 +0200
+[33m|[m 
+[33m|[m     removed flex from top-row
+[33m|[m 
+* [33mcommit 19f029891fa9b89ee4f0a01b2c63cd9839dbe0f6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 21:01:43 2023 +0200
+[33m|[m 
+[33m|[m     changed title from Users->Readers
+[33m|[m 
+* [33mcommit ba8ba8279a6a9fec8a8626ed7b9b98bccac42e0f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 20:41:52 2023 +0200
+[33m|[m 
+[33m|[m     added countReaders method
+[33m|[m 
+* [33mcommit 1a949c67ae959f7012639448bfb8ed1785d359d7[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 20:29:35 2023 +0200
+[33m|[m 
+[33m|[m     added findAllReaders method
+[33m|[m 
+* [33mcommit 8272b2e0047ef9a975552edc5b39faea4e3f7d51[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 20:21:00 2023 +0200
+[33m|[m 
+[33m|[m     added DisplayReadersCommand
+[33m|[m 
+* [33mcommit 6a027c7bfdeb3cdd57bdafe34a35af1702637c17[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 19:49:51 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug in ChangeRoleCommand.java userIdStr was assigned Role value
+[33m|[m 
+* [33mcommit 693a188e1f1d4d2759e240a8de5ba2e265115ced[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 19:48:38 2023 +0200
+[33m|[m 
+[33m|[m     set min-width to th in table
+[33m|[m 
+* [33mcommit 99bae067ccd852c2b20fba68df081183d60ded59[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 19:38:59 2023 +0200
+[33m|[m 
+[33m|[m     implemented ChangeRoleCommand
+[33m|[m 
+* [33mcommit b750271531489a85633b7895e9853734c9d8ca1f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 19:01:48 2023 +0200
+[33m|[m 
+[33m|[m     added LongParser changed request validation in Commands
+[33m|[m 
+* [33mcommit 683e20b538ee2aeeb1ced834b623b1ce989cb653[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 18:36:25 2023 +0200
+[33m|[m 
+[33m|[m     changed redirection from error page to unsupported_command page
+[33m|[m 
+* [33mcommit 6d0380d9d852596e8be938c9e9dffda632a73654[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 17:57:19 2023 +0200
+[33m|[m 
+[33m|[m     implemented UnblockUserCommand
+[33m|[m 
+* [33mcommit 57a898554b0ccb8ff28cf64dcb6bb35ca271a911[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 17:55:53 2023 +0200
+[33m|[m 
+[33m|[m     implemented UnblockUserCommand
+[33m|[m 
+* [33mcommit 5443c3009ff56cd84ae284611c7017f05b764a40[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 17:54:16 2023 +0200
+[33m|[m 
+[33m|[m     removed redundant code
+[33m|[m 
+* [33mcommit c553ad6ea2d3c5d4d410c812e03b3539061ab0dc[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 17:53:19 2023 +0200
+[33m|[m 
+[33m|[m     added UnblockUserCommand.java
+[33m|[m 
+* [33mcommit 1f4449e549b6e30bcc74a6a8e1f41e574a02c9f5[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 17:52:29 2023 +0200
+[33m|[m 
+[33m|[m     implemented block user process
+[33m|[m 
+* [33mcommit 47070eb6a8eac62e6bd4d50bf914d41a44946a47[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 17:48:00 2023 +0200
+[33m|[m 
+[33m|[m     added BlockUserCommand
+[33m|[m 
+* [33mcommit 3c2e50c7a6a916c9d8a27de9bc59c67de791ae22[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 17:19:31 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug with block on unblock button
+[33m|[m 
+* [33mcommit f982c6ad1157fcd685eb7cdc51b1d9a26db6fc94[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 17:09:28 2023 +0200
+[33m|[m 
+[33m|[m     fixed localization at display_users.jsp
+[33m|[m 
+* [33mcommit 536fcd816c645f342cda2723cbb26e0e169293c6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 14:13:33 2023 +0200
+[33m|[m 
+[33m|[m     implemented UserDTO transfer to display_users.jsp
+[33m|[m 
+* [33mcommit c567503ab74ad988235c8994815c7638ab32a00f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 13:28:19 2023 +0200
+[33m|[m 
+[33m|[m     implemented countTotalUsers method
+[33m|[m 
+* [33mcommit 69d90441bb68c881dd04931349c3dd35523ac859[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 13:24:52 2023 +0200
+[33m|[m 
+[33m|[m     implemented findAll method to UserService to implement pagination
+[33m|[m 
+* [33mcommit 66bb6b6335878921e91ccafe2de00e99d17ce280[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 13:14:02 2023 +0200
+[33m|[m 
+[33m|[m     added findAll method to UserService to implement pagination
+[33m|[m 
+* [33mcommit 7cb0ecd8480db666c0c87353aec0ed2d5553bcf3[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 13:06:18 2023 +0200
+[33m|[m 
+[33m|[m     added DisplayUsersCommand
+[33m|[m 
+* [33mcommit 8384e984ea83fd15116d50cf5327714443e4b47a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 12:27:25 2023 +0200
+[33m|[m 
+[33m|[m     changed order priority in orders
+[33m|[m 
+* [33mcommit 9093baf2060813c240521ac403ce49b2d3a0b8b9[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 12:20:14 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug with login_error
+[33m|[m 
+* [33mcommit cd55c6071d8d09e7d4472aa7c0aa28823169692e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 11:19:19 2023 +0200
+[33m|[m 
+[33m|[m     fixed bugs in login/registration PRG pattern
+[33m|[m 
+* [33mcommit 96c0e10e315c7950973a86c4930f31b748f6c3a6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 10:43:50 2023 +0200
+[33m|[m 
+[33m|[m     implemented PRG to login/registration
+[33m|[m 
+* [33mcommit dce0848471d6bb91e593d5e7d7abbe82940fae63[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 01:01:37 2023 +0200
+[33m|[m 
+[33m|[m     refactored code
+[33m|[m 
+* [33mcommit 4819e3d976e29d152f46006fab970118a7a8fb5c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 00:36:22 2023 +0200
+[33m|[m 
+[33m|[m     added PRG to login
+[33m|[m 
+* [33mcommit c2914ae9dfb1b09508f91ecbb3cdc25b48caebe5[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Feb 2 00:26:21 2023 +0200
+[33m|[m 
+[33m|[m     added LoginRedirectCommand
+[33m|[m 
+* [33mcommit 10340051e0020c3dad44b749c835c178af56031e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 23:02:06 2023 +0200
+[33m|[m 
+[33m|[m     added current page track
+[33m|[m 
+* [33mcommit 358d11e7d9f04ad93b57306366281232eefe4b3e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 22:27:26 2023 +0200
+[33m|[m 
+[33m|[m     implemented returnOrder method
+[33m|[m 
+* [33mcommit 7def0c0d26f4937e32b71cdd3523d30b53f10666[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 22:12:06 2023 +0200
+[33m|[m 
+[33m|[m     added returnOrder method to OrderService and OrderServiceImpl
+[33m|[m 
+* [33mcommit 5ee2f4bd04364b8c3d9d6db48ace64f87986256e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 21:49:52 2023 +0200
+[33m|[m 
+[33m|[m     fixed path to not-authorized
+[33m|[m 
+* [33mcommit 92448045f938684fd7b53288869cf1b4e2a7a99d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 21:46:39 2023 +0200
+[33m|[m 
+[33m|[m     Librarian commands added to Admin
+[33m|[m 
+* [33mcommit 88b858ebc0f5f4482875660fd2ac8cb65d8edc82[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 21:32:48 2023 +0200
+[33m|[m 
+[33m|[m     fixed some bugs
+[33m|[m 
+* [33mcommit 9275f1c2a1bc5953e8594d91587fa10936e591bd[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 21:19:09 2023 +0200
+[33m|[m 
+[33m|[m     added ReturnOrderCommand
+[33m|[m 
+* [33mcommit d937fb6eb1698bba2dcac267f8686718b851ea1e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 21:17:26 2023 +0200
+[33m|[m 
+[33m|[m     fixed bg in display_orders.jsp
+[33m|[m 
+* [33mcommit 9b23d5cde4b7dcca30c08fed8f2e5c516740f395[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 21:00:21 2023 +0200
+[33m|[m 
+[33m|[m     added green bg to User Orders
+[33m|[m 
+* [33mcommit c148027d4ed3f46697f3fe6bb39ed1b947f84d95[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 20:31:00 2023 +0200
+[33m|[m 
+[33m|[m     fixed minor bugs in pagination display_orders.jsp
+[33m|[m 
+* [33mcommit 0acd13c0b53552fa5a2faf72a15cd515d1625540[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 20:25:26 2023 +0200
+[33m|[m 
+[33m|[m     implemented countTotalOrders method OrderServiceImpl + OrderDaoImpl
+[33m|[m 
+* [33mcommit d3e7b317bb19a94e553caafefbb4d774b231deb1[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 20:20:26 2023 +0200
+[33m|[m 
+[33m|[m     added pagination to librarian orders list
+[33m|[m 
+* [33mcommit 1a8dc9f5d6781bd181a0af570d9a816b5e5ea199[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 19:47:55 2023 +0200
+[33m|[m 
+[33m|[m     added DisplayUsersOrdersCommand.java
+[33m|[m 
+* [33mcommit cd017849227575b26461502443deb93b1893c818[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 18:41:52 2023 +0200
+[33m|[m 
+[33m|[m     added success msg after book ordered
+[33m|[m 
+* [33mcommit 425c5277d67e96f586af9a1ee0ce4b34c5e2d008[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 16:22:39 2023 +0200
+[33m|[m 
+[33m|[m     fixed bugs in display_orders.jsp
+[33m|[m 
+* [33mcommit a76dd76b1e23df9f1910c4e8ff749721666c7ec2[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 16:13:39 2023 +0200
+[33m|[m 
+[33m|[m     added fine to orders in display_orders.jsp
+[33m|[m 
+* [33mcommit 4e1e28bfae66f394ff97651420b2f6afb79a5c4d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 14:57:32 2023 +0200
+[33m|[m 
+[33m|[m     added OrderMapper
+[33m|[m 
+* [33mcommit f4053dd02362d22e1a31336cb24bdde4d8365bfe[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 13:44:52 2023 +0200
+[33m|[m 
+[33m|[m     added countUserOrders method
+[33m|[m 
+* [33mcommit ab4fa708f6216e814f121179c96554428c69095a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 13:37:27 2023 +0200
+[33m|[m 
+[33m|[m     added pagination to UserOrders
+[33m|[m 
+* [33mcommit 0e819695b640177f9c294fb826aae5be2d69a1a8[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 13:28:33 2023 +0200
+[33m|[m 
+[33m|[m     added findAllUsersOrders method to OrderService
+[33m|[m 
+* [33mcommit cc55bf5adebb7513ffda48553f8404e9e2367242[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 13:12:23 2023 +0200
+[33m|[m 
+[33m|[m     changed is_returned to a returnDate Order entity
+[33m|[m 
+* [33mcommit 1c96c8b72a00aa66b636ab5bfbd92e6d9ae43208[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 12:01:00 2023 +0200
+[33m|[m 
+[33m|[m     refactored display_orders.jsp page
+[33m|[m 
+* [33mcommit 52f5c33aff4d88fe30c01596f5a07bc2692de97f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 11:02:12 2023 +0200
+[33m|[m 
+[33m|[m     added display_orders.jsp page
+[33m|[m 
+* [33mcommit 6f9b0e1509121bb4c24565794cb1bf4e308c8d18[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 00:40:16 2023 +0200
+[33m|[m 
+[33m|[m     fixed bugs in order_book method
+[33m|[m 
+* [33mcommit ff3d62a268087778d7cb145ca142f722fc9b573c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Feb 1 00:13:19 2023 +0200
+[33m|[m 
+[33m|[m     added order button to books_list
+[33m|[m 
+* [33mcommit dd30bf009936364ff5b3f0cb05368dfb311725b3[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 22:30:27 2023 +0200
+[33m|[m 
+[33m|[m     optimized imports
+[33m|[m 
+* [33mcommit beb7b43aad38e55a62e24dfdf33437c4d4cc0f2c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 22:14:39 2023 +0200
+[33m|[m 
+[33m|[m     implemented save method OrderServiceImpl
+[33m|[m 
+* [33mcommit 802d2ca1c6adfcf3f1950c838c9e020949e3a77a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 22:02:21 2023 +0200
+[33m|[m 
+[33m|[m     added OrderService
+[33m|[m 
+* [33mcommit 429ce97ec3ec0daebb3a181031f07272d88ec650[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 20:53:50 2023 +0200
+[33m|[m 
+[33m|[m     fixed bugs in order_book.jsp
+[33m|[m 
+* [33mcommit 12734cb74994775a4ba4dd5fd2010b1ebe2457da[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 20:29:31 2023 +0200
+[33m|[m 
+[33m|[m     added order button to user
+[33m|[m 
+* [33mcommit 1a0dee3fc84ab7c565aa6911e6414ed48b37c71d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 20:21:33 2023 +0200
+[33m|[m 
+[33m|[m     added order_book.jsp and OrderBookRedirect
+[33m|[m 
+* [33mcommit 3f6c0163543e4abbfd6a1b26b63ac4585875939c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 19:02:57 2023 +0200
+[33m|[m 
+[33m|[m     fixed bugs and added new error messages to add book command
+[33m|[m 
+* [33mcommit 7a157e96f3c58b9313fc2be6bb3fb532468d39f3[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 18:25:01 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug with addToStorageMethod
+[33m|[m 
+* [33mcommit 8e3896582d52d6b4d0ccb82ece4ad29300175424[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 15:24:33 2023 +0200
+[33m|[m 
+[33m|[m     implemented AddBookCommand
+[33m|[m 
+* [33mcommit 95d6488add38c95e59c3322c42ae09d70f422acb[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 13:22:46 2023 +0200
+[33m|[m 
+[33m|[m     added AddBookCommand
+[33m|[m 
+* [33mcommit 0c907716e88e771ddea56e8f26b5b77877095d3e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 11:53:36 2023 +0200
+[33m|[m 
+[33m|[m     changed background, added AddNewBook button
+[33m|[m 
+* [33mcommit 0883734ff86e2f2e07a7f935860a2eda15fa1f18[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 31 11:00:54 2023 +0200
+[33m|[m 
+[33m|[m     fixed bugs in UpdateBookCommand
+[33m|[m 
+* [33mcommit ce4f6df0923328eccd5113dc8306f1fc50366f43[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 22:37:11 2023 +0200
+[33m|[m 
+[33m|[m     fixed update book operation
+[33m|[m 
+* [33mcommit 6ca5b87d4c6ba0fe251b5cd84dd0524c5a478577[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 22:22:59 2023 +0200
+[33m|[m 
+[33m|[m     implemented error messages  for book update
+[33m|[m 
+* [33mcommit ed92c07442e26888ff6bc1739831d7773cda12fb[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 20:56:38 2023 +0200
+[33m|[m 
+[33m|[m     refactored methods of TransactionManager
+[33m|[m 
+* [33mcommit 1b73a6d8af994026c08330b4cd2480a65f0858cc[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 20:51:43 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug within alreadyExists method BookDaoImpl
+[33m|[m 
+* [33mcommit 25f1cdf356d140379d28a2fe8c8ca635b229290a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 20:34:09 2023 +0200
+[33m|[m 
+[33m|[m     implemented error message save to session
+[33m|[m 
+* [33mcommit 926d395be5e41d3375d0f925197d8f913ae7f4b5[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 19:51:18 2023 +0200
+[33m|[m 
+[33m|[m     implemented check for isBookAlreadyPresent
+[33m|[m 
+* [33mcommit 230c584a47c62645c1b0adce530d658b22c5489e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 19:32:04 2023 +0200
+[33m|[m 
+[33m|[m     implemented dependency injection into GenreService, PublisherService
+[33m|[m 
+* [33mcommit 33e7e294c3b533c9b616ca368608b9835bad4813[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 19:23:39 2023 +0200
+[33m|[m 
+[33m|[m     implemented AuthorServiceImpl methods
+[33m|[m 
+* [33mcommit 8ba50817f71abaa4f3030f9d713ad2bb8feb5efa[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 19:02:24 2023 +0200
+[33m|[m 
+[33m|[m     added AuthorService
+[33m|[m 
+* [33mcommit 7fb471abe0a8e30ba67147bfa37762c36d91f8b5[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 18:54:11 2023 +0200
+[33m|[m 
+[33m|[m     added Book validation
+[33m|[m 
+* [33mcommit 5d29ba102e34a4d8160719fd4d044df2ec7d17ce[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 17:52:37 2023 +0200
+[33m|[m 
+[33m|[m     refactored code added dependency injection to Factories and DAO classes
+[33m|[m 
+* [33mcommit 686efbe75b490f2181eab9350bc0d763c5dea1e4[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 17:36:52 2023 +0200
+[33m|[m 
+[33m|[m     refactored code added dependency injection to Factories and DAO classes
+[33m|[m 
+* [33mcommit 3be787a68fdb594b77f9f62dfa02b508571e50d1[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 30 14:09:51 2023 +0200
+[33m|[m 
+[33m|[m     added setBookCopies
+[33m|[m 
+* [33mcommit 7c8b1fac9b94ebbc1565f422946105095074d08f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 23:17:57 2023 +0200
+[33m|[m 
+[33m|[m     added UpdateBookCommand
+[33m|[m 
+* [33mcommit 71c21ba39e28fe7bf0e25d78de6677ed3c4183ef[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 22:50:01 2023 +0200
+[33m|[m 
+[33m|[m     implemented genres and publisher options
+[33m|[m 
+* [33mcommit 8b05e20edaf59a38551363b6d4f7a75cb9030e2f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 22:16:37 2023 +0200
+[33m|[m 
+[33m|[m     added and implemented GenreService
+[33m|[m 
+* [33mcommit 06925e5a3f8b58c14e0b26d9d17acc4bac5f20d6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 22:06:04 2023 +0200
+[33m|[m 
+[33m|[m     added publisher service
+[33m|[m 
+* [33mcommit 3538f6879c046fa3feafc4b314654baefba3d324[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 20:55:43 2023 +0200
+[33m|[m 
+[33m|[m     added localization to edit book page
+[33m|[m 
+* [33mcommit c280d38801e1131ce0608e6ac9f296c62fbdde6e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 19:53:23 2023 +0200
+[33m|[m 
+[33m|[m     added content to book_edit.jsp
+[33m|[m 
+* [33mcommit 3521deefddfe8e0a3e03526e7aa5881daa84747a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 16:46:03 2023 +0200
+[33m|[m 
+[33m|[m     added update and remove books commands, unsupported_command error page
+[33m|[m 
+* [33mcommit 45b36897abeb41acfe7c3451583454438a8f4427[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 15:35:38 2023 +0200
+[33m|[m 
+[33m|[m     removed birthDate from Author entity
+[33m|[m 
+* [33mcommit 2c412e3890af0b9040017686a46646e980ad004c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 15:19:38 2023 +0200
+[33m|[m 
+[33m|[m     added AddBookCommand to Factory
+[33m|[m 
+* [33mcommit 64bc3e72fb89ce60d4e3915d46021cbef68be87e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 14:50:05 2023 +0200
+[33m|[m 
+[33m|[m     added locale to 404 page
+[33m|[m 
+* [33mcommit fe779954f78d2c399ff778285491b2ed90f7169d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 14:40:15 2023 +0200
+[33m|[m 
+[33m|[m     added not_authorized.jsp page and logic
+[33m|[m 
+* [33mcommit a2fc55f30ce924ada9ecf98b46d252471a81eb7d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 29 00:15:59 2023 +0200
+[33m|[m 
+[33m|[m     added partially previousPage RegisterCommand
+[33m|[m 
+* [33mcommit a231d4e7a02869abb4ea9c17697fa552a79b3121[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 23:59:09 2023 +0200
+[33m|[m 
+[33m|[m     added previousPage to LoginCommand, DisplayBooksListCommand
+[33m|[m 
+* [33mcommit b4bdbc4cd413c7b160dd0628807bf08bbc0b2929[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 23:21:31 2023 +0200
+[33m|[m 
+[33m|[m     added RestoreBookCommand
+[33m|[m 
+* [33mcommit 9ae8becda1a988f9621c27b6f13563da3a46bd0e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 23:09:19 2023 +0200
+[33m|[m 
+[33m|[m     added session lifetime
+[33m|[m 
+* [33mcommit 48fe7768fc5235165d41bea10b0e8ab72b0315f0[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 22:25:17 2023 +0200
+[33m|[m 
+[33m|[m     implemented RemoveBookCommand
+[33m|[m 
+* [33mcommit 3007f02b70807c6b1a0dacf9c111ef16f99fc9f3[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 21:55:50 2023 +0200
+[33m|[m 
+[33m|[m     added RemoveBookCommand
+[33m|[m 
+* [33mcommit f7fb77ddf2972cc4c12aba08ee63d9f73b89d089[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 21:12:11 2023 +0200
+[33m|[m 
+[33m|[m     added remove and restore features added to books.jsp
+[33m|[m 
+* [33mcommit ef92e6b867962897551a494dc5243be4049d4949[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 19:45:59 2023 +0200
+[33m|[m 
+[33m|[m     added admin menu books page
+[33m|[m 
+* [33mcommit 07221ed6a12083a36ebd713de2f77e81cfb8c546[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 17:08:22 2023 +0200
+[33m|[m 
+[33m|[m     fixed bug, that order resets when changing pages
+[33m|[m 
+* [33mcommit ed793b93700488cdeb49770e457eadf8fcaf6017[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 15:58:43 2023 +0200
+[33m|[m 
+[33m|[m     added quantity filter and deleted filter
+[33m|[m 
+* [33mcommit ec5e7d81a4778b82e82f9a3ce6e2de4248ab2502[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 14:58:56 2023 +0200
+[33m|[m 
+[33m|[m     changed db structure and Data Access Layer
+[33m|[m 
+* [33mcommit 34c9a6fc2209fd56bf7684f7ec21aabb08b84582[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 13:32:23 2023 +0200
+[33m|[m 
+[33m|[m     added sort by genre
+[33m|[m 
+* [33mcommit bfcdafd6119b809bc8b26bc8975990ab58f6e5f3[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 12:03:08 2023 +0200
+[33m|[m 
+[33m|[m     added sort by title
+[33m|[m 
+* [33mcommit 3be75369b2ea72f4de0415fed8cef86b32ca3f26[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 10:57:22 2023 +0200
+[33m|[m 
+[33m|[m     added design for page switchers
+[33m|[m 
+* [33mcommit d492645f6b14f50ddd0bc51da064098fa2d429ad[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 28 00:31:23 2023 +0200
+[33m|[m 
+[33m|[m     added pagination to books.jsp
+[33m|[m 
+* [33mcommit 60b3d06a47bd79a54501f270c29054460133aef8[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Jan 27 23:09:27 2023 +0200
+[33m|[m 
+[33m|[m     added pagination to DisplayBooksListCommand
+[33m|[m 
+* [33mcommit e0699315c581ec5439ad54d078f200801d3b7d59[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Jan 27 22:54:01 2023 +0200
+[33m|[m 
+[33m|[m     styled booksTable
+[33m|[m 
+* [33mcommit 633121fc8f4c39c2db6f349e4a29b84f418084fb[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Jan 27 21:05:16 2023 +0200
+[33m|[m 
+[33m|[m     added booksTable
+[33m|[m 
+* [33mcommit 1b56540f4855cfbe33e21ec5aedafa20dcffdd67[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Jan 27 18:20:40 2023 +0200
+[33m|[m 
+[33m|[m     refactored code
+[33m|[m 
+* [33mcommit 14700ca069b88846b5e8336d226c760342ec3bf4[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Jan 27 11:36:44 2023 +0200
+[33m|[m 
+[33m|[m     added count books method
+[33m|[m 
+* [33mcommit 0e62898b0cee7b78e1fb2960121dd7def48366af[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Jan 27 11:33:27 2023 +0200
+[33m|[m 
+[33m|[m     added countBooks method
+[33m|[m 
+* [33mcommit cbd11200d0d0df14f2cb716c181cb6914ef66fbe[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Jan 27 11:15:26 2023 +0200
+[33m|[m 
+[33m|[m     added DisplayBooksListCommand command
+[33m|[m 
+* [33mcommit cee3290e9828cd448055fe371df3d797d24ec9c7[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Fri Jan 27 10:58:37 2023 +0200
+[33m|[m 
+[33m|[m     added ukrainian translations to locale_ua.properties
+[33m|[m 
+* [33mcommit 84b69fa2d49b0865e84b2532bec02a0d580e652c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Jan 26 22:24:14 2023 +0200
+[33m|[m 
+[33m|[m     implemented header response to different users
+[33m|[m 
+* [33mcommit 822cd58d291ec763d3c41eba92721c6d056cc4ce[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Jan 26 20:39:26 2023 +0200
+[33m|[m 
+[33m|[m     fixed BookDaoImpl build book method
+[33m|[m 
+* [33mcommit 25eecf62fd927232a2206385a2e75c4426e060c1[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Jan 26 19:00:23 2023 +0200
+[33m|[m 
+[33m|[m     removed feature that one Book can have more than one author
+[33m|[m 
+* [33mcommit bc9853dd2aa9683c954f02212364f9e477dde7d9[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Jan 26 18:47:27 2023 +0200
+[33m|[m 
+[33m|[m     implemented pagination BookDaoImpl methods
+[33m|[m 
+* [33mcommit 6e2c876855e439445bbdda4f21a3f3f63b3b5b59[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Jan 26 13:01:31 2023 +0200
+[33m|[m 
+[33m|[m     added BookService
+[33m|[m 
+* [33mcommit dc08386e91b590fed9661a53a921f88cb172103e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Jan 26 13:01:20 2023 +0200
+[33m|[m 
+[33m|[m     changed background style
+[33m|[m 
+* [33mcommit 95f4ae0f29c8dc8fdd55660e3a8832a6f61c5571[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 25 21:28:40 2023 +0200
+[33m|[m 
+[33m|[m     refactored code
+[33m|[m 
+* [33mcommit 9fbe02ad2dbbbb4de12f4e7fda48216f582b1519[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 25 21:23:05 2023 +0200
+[33m|[m 
+[33m|[m     separated footer from main
+[33m|[m 
+* [33mcommit 094249e0ae736c3407239e69212762c29a9c9b5d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 25 17:20:31 2023 +0200
+[33m|[m 
+[33m|[m     added tests for UserServiceImpl
+[33m|[m 
+* [33mcommit f31c36f04aad34c54e9cd9cb3f63e50297d4363b[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 25 15:46:18 2023 +0200
+[33m|[m 
+[33m|[m     removed singleton from UserServiceImpl
+[33m|[m 
+* [33mcommit 9363e3cc725b014010ff873df3ad3f35f74d1c0e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 24 20:34:47 2023 +0200
+[33m|[m 
+[33m|[m     implemented check for not registered user
+[33m|[m 
+* [33mcommit a213197fac4892cefcb30881aa0b95d5ca1ee8e8[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 24 20:24:50 2023 +0200
+[33m|[m 
+[33m|[m     CommandType splitted into GeneralCommands.java
+[33m|[m 
+* [33mcommit 28d6d9396bcf268a715a9abe958fd5b3d933e200[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 24 19:54:24 2023 +0200
+[33m|[m 
+[33m|[m     implemented DefaultCommand
+[33m|[m 
+* [33mcommit 54b8468f887702688fc443c2dadeb808234eb34a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 24 19:16:40 2023 +0200
+[33m|[m 
+[33m|[m     added AuthenticationFilter
+[33m|[m 
+* [33mcommit 60773a5ef9408ca9e7f510b6396d8185d2fa6bae[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 24 18:47:27 2023 +0200
+[33m|[m 
+[33m|[m     refactored code
+[33m|[m 
+* [33mcommit d7cf0fa775ee93d633cd8d9b651fdb1a6faa8088[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 24 00:17:10 2023 +0200
+[33m|[m 
+[33m|[m     refactored localization
+[33m|[m 
+* [33mcommit e5581d6000d91fdb3c30ab0c9439b849613accb6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 23:57:01 2023 +0200
+[33m|[m 
+[33m|[m     refactored code
+[33m|[m 
+* [33mcommit 4b6b23fac77c6aaf04833830218f4650c00df14a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 23:55:01 2023 +0200
+[33m|[m 
+[33m|[m     implemented ChangeLanguageCommand
+[33m|[m 
+* [33mcommit 43ac28d11e7d0d8a7762c0a8fd2ccbf14d272d3a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 23:27:02 2023 +0200
+[33m|[m 
+[33m|[m     added ChangeLanguageCommand
+[33m|[m 
+* [33mcommit deb44eb24dce2383e949ed89b32384b4a0924a00[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 23:25:55 2023 +0200
+[33m|[m 
+[33m|[m     added localization to index page
+[33m|[m 
+* [33mcommit 1282bd8f5ec70bfe60d736274e1dd2a793529138[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 23:22:18 2023 +0200
+[33m|[m 
+[33m|[m     refactored change language form
+[33m|[m 
+* [33mcommit 181e639182965b0fd2ff411ae0a2dcbb707c6052[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 21:30:57 2023 +0200
+[33m|[m 
+[33m|[m     added index.jsp
+[33m|[m 
+* [33mcommit bd2e8b5d1f123c1326817ea4556d18b5de0c0ae1[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 21:29:27 2023 +0200
+[33m|[m 
+[33m|[m     added header.jsp
+[33m|[m 
+* [33mcommit 2b417628d5c0dced8f6910c0feb05c2aff4f9764[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 21:04:19 2023 +0200
+[33m|[m 
+[33m|[m     added index.jsp, index.css
+[33m|[m 
+* [33mcommit 9f7b72a094d625c41c2a8cfb8f1f46cfa62410cf[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 20:01:27 2023 +0200
+[33m|[m 
+[33m|[m     fixed bugs in registration
+[33m|[m 
+* [33mcommit c4bf531e6f6c32c756acedcc7b5e5c7e7fbb7448[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 19:16:23 2023 +0200
+[33m|[m 
+[33m|[m     added validation messages to registration form
+[33m|[m 
+* [33mcommit c97d1bca30769ae59ef852f21062b5cab2b5b8d8[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 17:13:00 2023 +0200
+[33m|[m 
+[33m|[m     fixed registration form
+[33m|[m 
+* [33mcommit 5592bc1e50fd290b0e7a598bca938eb8f306e9ad[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 16:19:49 2023 +0200
+[33m|[m 
+[33m|[m     added firstName and secondName inputs register form
+[33m|[m 
+* [33mcommit 24ae5b2972166200027541b5ece11130514c756b[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 16:11:28 2023 +0200
+[33m|[m 
+[33m|[m     implemented validation on register form
+[33m|[m 
+* [33mcommit f5f77f4a07ffa55e456d742565893a25c9a431b7[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 14:39:45 2023 +0200
+[33m|[m 
+[33m|[m     implemented registerCommand
+[33m|[m 
+* [33mcommit 5cb68e73b66e7721557cce9c2f9031f1354e6598[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 12:21:14 2023 +0200
+[33m|[m 
+[33m|[m     implemented buildNewUser method in UserBuilder
+[33m|[m 
+* [33mcommit 3a2df26430e24ca6f130d76117033bd14ce5025b[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 12:08:36 2023 +0200
+[33m|[m 
+[33m|[m     implemented validateUserParameters method
+[33m|[m 
+* [33mcommit bf894b6193fdd78ecb45fd5f13ece3ebe1e01fa7[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 11:16:45 2023 +0200
+[33m|[m 
+[33m|[m     implemented canBeRegistered method
+[33m|[m 
+* [33mcommit 4430dc87cb36c401928e1a892113a8571ccb79ce[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 11:04:45 2023 +0200
+[33m|[m 
+[33m|[m     implemented findByPhone method
+[33m|[m 
+* [33mcommit 92ad093dee34578023be51acfa6b9d9c7e84b612[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 11:04:11 2023 +0200
+[33m|[m 
+[33m|[m     implemented findByEmail method
+[33m|[m 
+* [33mcommit 58c5f0c6a83b8ce3b14e858c94ace5108a1da07a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 11:03:34 2023 +0200
+[33m|[m 
+[33m|[m     implemented findByLogin method
+[33m|[m 
+* [33mcommit 2b7ea5a12e5819adb84bb4db00c958ad7a4da41c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 23 10:58:37 2023 +0200
+[33m|[m 
+[33m|[m     added findByLogin, findByEmail, findByPhone methods
+[33m|[m 
+* [33mcommit 78c4dc2c5f808c47ca09856fc3249ac534e9d648[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 21:57:52 2023 +0200
+[33m|[m 
+[33m|[m     refactored RegisterCommand
+[33m|[m 
+* [33mcommit 393d75b7cb9c209e437982f8426a95e2229d3128[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 21:26:43 2023 +0200
+[33m|[m 
+[33m|[m     added RegisterCommand
+[33m|[m 
+* [33mcommit deaf0783edae26f0cdbac3d0fe5a3f258af1bc6a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 21:23:44 2023 +0200
+[33m|[m 
+[33m|[m     implementing localization + configuration
+[33m|[m 
+* [33mcommit 0d99e75a2f854ea0bd35bcb0a6685bd25e11a71e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 19:41:34 2023 +0200
+[33m|[m 
+[33m|[m     implementing localization
+[33m|[m 
+* [33mcommit 481e584ff976b71b87cdf2e83500fce47e6c5709[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 18:20:05 2023 +0200
+[33m|[m 
+[33m|[m     added locale Resource bundle
+[33m|[m 
+* [33mcommit aa52727db2c63ba71fafa47b6f3bbb25d49bed39[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 17:41:46 2023 +0200
+[33m|[m 
+[33m|[m     fixed jstl dependency
+[33m|[m 
+* [33mcommit e4cd2acba38bb74526796196b26032dfc1f6737d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 17:28:23 2023 +0200
+[33m|[m 
+[33m|[m     added jstl dependency
+[33m|[m 
+* [33mcommit abbfc718a25f1525addc78e5ff3bbd9582d71042[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 17:24:48 2023 +0200
+[33m|[m 
+[33m|[m     added user_id to session listener
+[33m|[m 
+* [33mcommit edc7c0c0dad06e145f1dd7d3286e122974c2fb8e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 17:20:47 2023 +0200
+[33m|[m 
+[33m|[m     implemented user save to session
+[33m|[m 
+* [33mcommit 573534ebde7fe22d257f6e157dc9920af4444176[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 16:41:57 2023 +0200
+[33m|[m 
+[33m|[m     added 404.jsp error page
+[33m|[m 
+* [33mcommit cc275c7b8ab10dae72f67d4913d0b7f73ffe0d14[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 16:35:16 2023 +0200
+[33m|[m 
+[33m|[m     implemented login command check for blocked user
+[33m|[m 
+* [33mcommit d064a98e0f210af1c7dd71a8fc23ee1342ac0079[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 16:34:29 2023 +0200
+[33m|[m 
+[33m|[m     fixed authenticate method UserDaoImpl
+[33m|[m 
+* [33mcommit 28753eae0f893ff4936d2917ddb3b8501da53c3c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 16:01:04 2023 +0200
+[33m|[m 
+[33m|[m     changed authenticate method return parameter from boolean to Optional<User>
+[33m|[m 
+* [33mcommit a41d916f75fd67cec942b3d6ce59e8d5927b7171[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 14:49:44 2023 +0200
+[33m|[m 
+[33m|[m     added UserConstants
+[33m|[m 
+* [33mcommit 7b099c85c703994513b1a3b0350bb46983a9fc8b[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 13:56:44 2023 +0200
+[33m|[m 
+[33m|[m     fixed LibraryController
+[33m|[m 
+* [33mcommit d2c48019078b010e2abfb9bfa1017a69f4c4c9df[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 12:48:43 2023 +0200
+[33m|[m 
+[33m|[m     added request direction method
+[33m|[m 
+* [33mcommit e30e31890bd97a7bb32e297f07fe8d7f73743ee5[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 12:36:14 2023 +0200
+[33m|[m 
+[33m|[m     implemented execute method LoginCommand
+[33m|[m 
+* [33mcommit 7662bc793499c5b3f4910672852d78302040e2d8[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 12:28:38 2023 +0200
+[33m|[m 
+[33m|[m     added index.jsp
+[33m|[m 
+* [33mcommit 8dde3cc4397c0d1159a1896c75a43cdb57942b8e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 12:28:06 2023 +0200
+[33m|[m 
+[33m|[m     renamed index.jsp to login.jsp
+[33m|[m 
+* [33mcommit becf68bda8989778e87d61eb561b1242aaa29ce4[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 12:25:02 2023 +0200
+[33m|[m 
+[33m|[m     added CommandException, Pages interface
+[33m|[m 
+* [33mcommit 38e8433fd9f34eacd9ed0324f7eec20177cfc13a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 12:03:17 2023 +0200
+[33m|[m 
+[33m|[m     implemented CommandResult
+[33m|[m 
+* [33mcommit 6603b7d61021c53b51386f1728daf50559349c04[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 12:01:08 2023 +0200
+[33m|[m 
+[33m|[m     added Command pattern structure
+[33m|[m 
+* [33mcommit 5454f5a006d8774b06baadb91baa7259d0994596[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 10:29:29 2023 +0200
+[33m|[m 
+[33m|[m     implemented update method UserServiceImpl
+[33m|[m 
+* [33mcommit a60a319f7c367ee06d38efed1e3c56017a2b81e6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 10:27:56 2023 +0200
+[33m|[m 
+[33m|[m     implemented save method UserServiceImpl
+[33m|[m 
+* [33mcommit dc8dcb2f638b7c45b71f7133a5c3e81a37c9c64a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 10:25:36 2023 +0200
+[33m|[m 
+[33m|[m     changed msg in login.js
+[33m|[m 
+* [33mcommit b20c64e2e55569eaff541de2cf5454db3c9b48f4[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 10:20:04 2023 +0200
+[33m|[m 
+[33m|[m     configured log4j2 that it saves logs to tomcat/logs dir
+[33m|[m 
+* [33mcommit 0a076d359eaf722cfbdc0245ac7d1d571442ea5b[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 22 00:23:57 2023 +0200
+[33m|[m 
+[33m|[m     configured log4j2 added '.' to dir path
+[33m|[m 
+* [33mcommit ca5f7ef8acb7335f28166f4dd17e68fd81423be1[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 22:05:36 2023 +0200
+[33m|[m 
+[33m|[m     begin of implementing userBuilder
+[33m|[m 
+* [33mcommit 696a65eb338a1b6048c899d53bf05d0b1759f844[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 21:44:47 2023 +0200
+[33m|[m 
+[33m|[m     added UserBuilder
+[33m|[m 
+* [33mcommit d24842cb624a7ddcd3059bf0dd68c7602bf0a659[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 21:44:28 2023 +0200
+[33m|[m 
+[33m|[m     added names to form inputs
+[33m|[m 
+* [33mcommit 02511c0b3839fa136925c4148d4a9b07d2af4da3[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 21:43:56 2023 +0200
+[33m|[m 
+[33m|[m     implemented authenticate method UserServiceImpl
+[33m|[m 
+* [33mcommit e01e46243b83c2831168f4373b5f9dd855cce6e9[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 20:59:06 2023 +0200
+[33m|[m 
+[33m|[m     added authenticate method UserService
+[33m|[m 
+* [33mcommit c5591b196db77f6db6c95ff89ee7ed3a210c154d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 19:19:21 2023 +0200
+[33m|[m 
+[33m|[m     refactored project structure
+[33m|[m 
+* [33mcommit 499eecb221b4747a87385e51433099597b004db4[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 17:01:48 2023 +0200
+[33m|[m 
+[33m|[m     added UserValidator
+[33m|[m 
+* [33mcommit 3119f6ac33f005b1508fee2909bd97a0fc6e8b08[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 16:26:26 2023 +0200
+[33m|[m 
+[33m|[m     added authenticate, find, findAll methods
+[33m|[m 
+* [33mcommit c03e3f5f0e7a45647dcf50d8490d8554c149a56d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 14:49:18 2023 +0200
+[33m|[m 
+[33m|[m     removed PropertiesUtil.java
+[33m|[m 
+* [33mcommit 3a7135377110de4137f3125a55d6dcdd82b3255a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 21 14:45:53 2023 +0200
+[33m|[m 
+[33m|[m     major changes
+[33m|[m 
+* [33mcommit c372ea242688ef54efbeaa66229334a436164b8f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Jan 19 20:27:31 2023 +0200
+[33m|[m 
+[33m|[m     configured tomcat
+[33m|[m 
+* [33mcommit 8613d3b760986e154f96ff4da2cdd2e4d0a8f206[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Thu Jan 19 19:15:57 2023 +0200
+[33m|[m 
+[33m|[m     configured tomcat
+[33m|[m 
+* [33mcommit 9b8dd51dc950c8c6cf165f927fa6fb6c03afd900[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 18 19:00:43 2023 +0200
+[33m|[m 
+[33m|[m     fixed getUsersOrders method OrderDaoImpl
+[33m|[m 
+* [33mcommit 77e52d5df260edf1bf9287b2196bc2fd4ca0fb47[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 18 17:47:34 2023 +0200
+[33m|[m 
+[33m|[m     added getUsersOrders method OrderDaoImpl
+[33m|[m 
+* [33mcommit 2a4e7708432f7c95f93a1c7bf4ce89fd08c81f4f[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 18 17:35:13 2023 +0200
+[33m|[m 
+[33m|[m     implemented delete methods OrderDaoImpl
+[33m|[m 
+* [33mcommit 87d27d1f185471d2c925e071b436055f4017719a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 18 17:13:47 2023 +0200
+[33m|[m 
+[33m|[m     implemented save, update methods  OrderDaoImpl
+[33m|[m 
+* [33mcommit eabd8f61c3f04ef7c28bc365d93677104eea6411[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 18 12:20:09 2023 +0200
+[33m|[m 
+[33m|[m     implemented findAll method OrderDaoImpl
+[33m|[m 
+* [33mcommit e8664fe25ec5e64e2f324c816b01c423e4e54e7b[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 18 00:29:18 2023 +0200
+[33m|[m 
+[33m|[m     implemented find method OrderDaoImpl
+[33m|[m 
+* [33mcommit 0749b593d72285ed254f3952bcff8c602e8ea1ca[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Wed Jan 18 00:05:28 2023 +0200
+[33m|[m 
+[33m|[m     added Order entity, OrderDAO, OrderDaoImpl
+[33m|[m 
+* [33mcommit 80358aa9de7fb3d317ce75b61af9a4c019485c5a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 23:53:34 2023 +0200
+[33m|[m 
+[33m|[m     added block and unblock User methods
+[33m|[m 
+* [33mcommit 6510642d4ea97a07ffff96135fb7930598ce38aa[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 22:46:20 2023 +0200
+[33m|[m 
+[33m|[m     added update method
+[33m|[m 
+* [33mcommit 8d3fd5fedecc4867079549d97e7d9d25fdae62af[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 21:15:15 2023 +0200
+[33m|[m 
+[33m|[m     added save users method
+[33m|[m 
+* [33mcommit 32318bcde84163eea435e71477fade587883bcf6[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 19:57:15 2023 +0200
+[33m|[m 
+[33m|[m     added findAll users method
+[33m|[m 
+* [33mcommit 95b24d99177b78a558e4b60cca786a608af73568[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 19:50:40 2023 +0200
+[33m|[m 
+[33m|[m     added find by id user method
+[33m|[m 
+* [33mcommit 4e915a05eeaf4f090cb9000b5f784cdd612c0ab5[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 19:21:03 2023 +0200
+[33m|[m 
+[33m|[m     refactored dao
+[33m|[m 
+* [33mcommit 250be3a5a624be32b914f83c95c07784c63103ea[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 18:31:14 2023 +0200
+[33m|[m 
+[33m|[m     fixed bugs un BookDaoImpl
+[33m|[m 
+* [33mcommit f27fcacc3bdc23af52bad805e122418e47dfbd07[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 16:02:36 2023 +0200
+[33m|[m 
+[33m|[m     added getBookAuthors method BookDao
+[33m|[m 
+* [33mcommit 8cbe5fcf676acaf21b52c5128796de8ddac8997c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 15:51:29 2023 +0200
+[33m|[m 
+[33m|[m     added delete method BookDao
+[33m|[m 
+* [33mcommit c261f3b293fdff718800e875ce47e39fdd053f83[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 15:47:12 2023 +0200
+[33m|[m 
+[33m|[m     added save, update methods for Book DAO
+[33m|[m 
+* [33mcommit a1d6bc8d1c6081db3734cea11c3764c1e22dd124[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 14:42:19 2023 +0200
+[33m|[m 
+[33m|[m     added getAuthorsBooks method
+[33m|[m 
+* [33mcommit 0c7bb906be2d18f3f684d814e13571b56132e695[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 12:47:02 2023 +0200
+[33m|[m 
+[33m|[m     removed book list in Author
+[33m|[m 
+* [33mcommit 76d36a29850927a1d1d85674805f6831c2fc7e33[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Tue Jan 17 12:09:19 2023 +0200
+[33m|[m 
+[33m|[m     added book list to Author
+[33m|[m 
+* [33mcommit 6c8c0f4912ab0d68418d35fea27ab1b14b1f5d8e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 16 22:59:33 2023 +0200
+[33m|[m 
+[33m|[m     fixed find Book by id method
+[33m|[m 
+* [33mcommit 50506dbdf1bf24e05d31d83ae7787eba54ae0f81[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 16 22:47:45 2023 +0200
+[33m|[m 
+[33m|[m     added buildBook method
+[33m|[m 
+* [33mcommit 62b398e20758ee0b031622c9fd3796fff0df5ac8[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 16 22:37:56 2023 +0200
+[33m|[m 
+[33m|[m     added bookDAO
+[33m|[m 
+* [33mcommit 8dd6dc93a72192563834032d01690dbb8a29d90d[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 16 21:41:17 2023 +0200
+[33m|[m 
+[33m|[m     fixed exceptions handling in connection pool
+[33m|[m 
+* [33mcommit 38a962b0d414bfc234821706b60be57fe3db145e[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 16 16:30:38 2023 +0200
+[33m|[m 
+[33m|[m     edited connection pool
+[33m|[m 
+* [33mcommit 91174cf0edaca1ff584d9dd691a73dee04686672[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Mon Jan 16 15:53:05 2023 +0200
+[33m|[m 
+[33m|[m     added logger config
+[33m|[m 
+* [33mcommit 0fab0236710552329c222eb9c96456a42d682e56[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sun Jan 15 16:57:43 2023 +0200
+[33m|[m 
+[33m|[m     implemented AuthorDao save method
+[33m|[m 
+* [33mcommit 4ce98033dbb296fb4b65b63b437305c1f469538a[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 14 23:24:46 2023 +0200
+[33m|[m 
+[33m|[m     refactored constants, implemented find, findAll methods in AuthorsDAO
+[33m|[m 
+* [33mcommit c139d20595c2538c85e39eef161b3add6fbe3040[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 14 22:45:05 2023 +0200
+[33m|[m 
+[33m|[m     added ConnectionPool, ConnectionProxy
+[33m|[m 
+* [33mcommit 239b1244d1fa5cd44c2c09edd0b95b01c139e0c3[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 14 20:43:22 2023 +0200
+[33m|[m 
+[33m|[m     added DBManagerException
+[33m|[m 
+* [33mcommit 9437e2aed975f5d2a71e63ebf3892624f3c38246[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 14 20:42:06 2023 +0200
+[33m|[m 
+[33m|[m     added connection pool to DBManager
+[33m|[m 
+* [33mcommit f208cc2c11e2fb02a12fb6d0b673bc1678ca0cd7[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 14 20:18:22 2023 +0200
+[33m|[m 
+[33m|[m     added dao constants OrdersColumns, UserRolesColumns
+[33m|[m 
+* [33mcommit 50205a37dd48d03d63b0fd69f129caa6fac1699c[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 14 19:46:12 2023 +0200
+[33m|[m 
+[33m|[m     added dao constants BooksColumns, BooksInfoColumns, PublishersColumns
+[33m|[m 
+* [33mcommit 02c5b6bd3d07965d10780510b314b8c38d775c59[m
+[33m|[m Author: Alex Horobets <sgs.cat.fly@gmail.com>
+[33m|[m Date:   Sat Jan 14 19:23:21 2023 +0200
+[33m|[m 
+[33m|[m     added dao constants and modified DB connection
+[33m|[m 
+* [33mcommit a6b3c44b019cf94d6d8e4dca154f607eaa5e7814[m
+  Author: Alex Horobets <sgs.cat.fly@gmail.com>
+  Date:   Sat Jan 14 14:38:57 2023 +0200
+  
+      initial commit
