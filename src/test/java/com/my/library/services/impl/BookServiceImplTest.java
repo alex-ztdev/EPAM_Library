@@ -333,4 +333,20 @@ class BookServiceImplTest {
             verify(bookDAO).alreadyExists(book);
         }
     }
+
+    @Nested
+    @DisplayName("decrementBookQuantity")
+    class DecrementBookQuantity {
+        @Test
+        void decrementBookQuantity_BookExists_shouldDecrementQuantity() throws ServiceException, DaoException {
+            long bookId = 1L;
+            Book book = mock(Book.class);
+
+            bookServiceImpl.decrementBookQuantity(bookId);
+
+            verify(bookDAO, times(1)).decrementBookQuantity(bookId);
+        }
+    }
+
+
 }
