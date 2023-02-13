@@ -784,6 +784,7 @@ class BookServiceImplTest {
             verify(bookDAO, times(1)).addToStorage(validBookAfterSave.getBookId(), copies);
 
             verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).commit();
             verify(transactionManager, times(1)).endTransaction();
         }
 
@@ -805,6 +806,7 @@ class BookServiceImplTest {
             verify(bookDAO, times(1)).addToStorage(validBookAfterSave.getBookId(), copies);
 
             verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).commit();
             verify(transactionManager, times(1)).endTransaction();
         }
     }
@@ -912,6 +914,7 @@ class BookServiceImplTest {
             verify(bookDAO, times(1)).update(validBook);
 
             verify(transactionManager, times(1)).beginTransaction();
+            verify(transactionManager, times(1)).commit();
             verify(transactionManager, times(1)).endTransaction();
         }
 
