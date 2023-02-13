@@ -270,7 +270,7 @@ class BookServiceImplTest {
     @DisplayName("restore")
     class Restore {
         @Test
-        public void restore_withValidId_ShouldCallRestoreMethodOfBookDao() throws ServiceException, DaoException {
+        void restore_withValidId_ShouldCallRestoreMethodOfBookDao() throws ServiceException, DaoException {
             long id = 1L;
             bookServiceImpl.restore(id);
 
@@ -278,7 +278,7 @@ class BookServiceImplTest {
         }
 
         @Test
-        public void restore_BookDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        void restore_BookDaoThrowsException_ShouldThrowServiceException() throws DaoException {
             long id = -1L;
 
             doThrow(DaoException.class).when(bookDAO).restore(id);
@@ -321,7 +321,7 @@ class BookServiceImplTest {
         }
 
         @Test
-        public void alreadyExists_BookDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+        void alreadyExists_BookDaoThrowsException_ShouldThrowServiceException() throws DaoException {
             Book book = mock(Book.class);
 
             doThrow(DaoException.class).when(bookDAO).alreadyExists(book);
@@ -386,4 +386,73 @@ class BookServiceImplTest {
         }
     }
 
+    @Nested
+    @DisplayName("findByTitle")
+    class FindByTitle {
+        @Test
+        void findByTitle_ValidData_ShouldReturnListOfBooksWithMatchingTitle() throws ServiceException, DaoException {
+            String title = "My title";
+            int start = 0;
+            int offset = 5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
+
+            Book book = mock(Book.class);
+
+            var expectedBooksList = List.of(book, book, book);
+
+            doReturn(expectedBooksList).when(bookDAO).findByTitle(title, start, offset, orderBy, dir, false);
+
+            List<Book> actualBooksList = bookServiceImpl.findByTitle(title, start, offset, orderBy, dir, false);
+
+            assertThat(actualBooksList).isEqualTo(expectedBooksList);
+
+            verify(bookDAO, times(1)).findByTitle(title, start, offset, orderBy, dir, false);
+        }
+
+        @Test
+        void findByTitle_StartIsNegative_ShouldThrowServiceException() {
+            String title = "My title";
+            int start = -5;
+            int offset = 5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
+
+
+            assertThatThrownBy(() -> bookServiceImpl.findByTitle(title, start, offset, orderBy, dir, false))
+                    .isExactlyInstanceOf(ServiceException.class);
+
+            verifyNoInteractions(bookDAO);
+        }
+        @Test
+        void findByTitle_OffsetIsNegative_ShouldThrowServiceException() {
+            String title = "My title";
+            int start = 5;
+            int offset = -5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
+
+            assertThatThrownBy(() -> bookServiceImpl.findByTitle(title, start, offset, orderBy, dir, false))
+                    .isExactlyInstanceOf(ServiceException.class);
+
+            verifyNoInteractions(bookDAO);
+        }
+
+        @Test
+        void findByTitle_BookDaoException_ShouldThrowServiceException() throws DaoException {
+            String title = "My title";
+            int start = 0;
+            int offset = 5;
+            OrderDir dir = OrderDir.ASC;
+            BooksOrderTypes orderBy = BooksOrderTypes.BY_TITLE;
+
+            doThrow(DaoException.class).when(bookDAO).findByTitle(title, start, offset, orderBy, dir, false);
+
+            assertThatThrownBy(() -> bookServiceImpl.findByTitle(title, start, offset, orderBy, dir, false))
+                    .isExactlyInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(bookDAO, times(1)).findByTitle(title, start, offset, orderBy, dir, false);
+        }
+    }
 }
