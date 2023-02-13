@@ -24,18 +24,11 @@ public class BookServiceImpl implements BookService {
         this.bookDAO = bookDAO;
     }
 
-    @Override
-    public void delete(Book book) throws ServiceException {
-        try {
-            bookDAO.delete(book);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while deleting book in BookServiceImpl", e);
-        }
-    }
 
-    public void deleteById(long id) throws ServiceException {
+    @Override
+    public boolean deleteById(long id) throws ServiceException {
         try {
-            bookDAO.deleteById(id);
+            return bookDAO.deleteById(id);
         } catch (DaoException e) {
             throw new ServiceException("Error while deleting book by id in BookServiceImpl", e);
         }
@@ -47,15 +40,6 @@ public class BookServiceImpl implements BookService {
             return bookDAO.find(id);
         } catch (DaoException e) {
             throw new ServiceException("Error while deleting book in BookServiceImpl", e);
-        }
-    }
-
-    @Override
-    public List<Book> findAll() throws ServiceException {
-        try {
-            return bookDAO.findAll(1, Integer.MAX_VALUE, BooksOrderTypes.BY_TITLE, OrderDir.ASC, false);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while default findAll in BookServiceImpl", e);
         }
     }
 
@@ -111,7 +95,6 @@ public class BookServiceImpl implements BookService {
         } catch (DaoException e) {
             throw new ServiceException("Error while exec alreadyExists method in BookServiceImpl", e);
         }
-
     }
 
     @Override
@@ -133,7 +116,7 @@ public class BookServiceImpl implements BookService {
             logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction committed: operation_result=" + operationRes);
             return operationRes;
 
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
                 logger.log(Level.DEBUG, "BookServiceImpl/update/Transaction rolledBack successfully");
@@ -159,21 +142,21 @@ public class BookServiceImpl implements BookService {
             } else {
                 book.setAuthor(authorContainer.get());
             }
-            bookDAO.save(book);
+            book = bookDAO.save(book);
             logger.log(Level.DEBUG, "BookServiceImpl/save book_id after save:" + book.getBookId());
 
             bookDAO.addToStorage(book.getBookId(), bookCopies);
 
             transactionManager.commit();
             logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
                 logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction rolledBack successfully");
             } catch (DaoException ex) {
                 throw new ServiceException("Error while executing rollback in save method BookServiceImpl", e);
             }
-            throw new ServiceException("Error while executing update", e);
+            throw new ServiceException("Error while executing save", e);
         } finally {
             transactionManager.endTransaction();
             logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction ended successfully");
@@ -201,6 +184,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException {
         logger.log(Level.DEBUG, "findByTitle invoked with parameters: title=%s start=%s offset=%s orderBy=%s dir=%s includeRemoved=%s".formatted(title, start, offset, orderBy, dir, includeRemoved));
+        if (title == null) {
+            throw new ServiceException("error while executing findByTitle method: title may not be null!");
+        }
+        if (start < 0) {
+            throw new ServiceException("error while executing findByTitle method: start may not be negative!");
+        }
+        if (offset < 0) {
+            throw new ServiceException("error while executing findByTitle method: offset  must be greater then zero!");
+        }
+
         try {
             return bookDAO.findByTitle(title, start, offset, orderBy, dir, includeRemoved);
         } catch (DaoException e) {
@@ -210,6 +203,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int countFoundByTitle(String title, boolean includeRemoved) throws ServiceException {
+        if (title == null) {
+            throw new ServiceException("error while executing countFoundByTitle method: title may not be null!");
+        }
         try {
             return bookDAO.countFoundByTitle(title, includeRemoved);
         } catch (DaoException e) {
@@ -219,6 +215,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findByAuthor(String author, int start, int offset, BooksOrderTypes orderBy, OrderDir orderDir, boolean includeRemoved) throws ServiceException {
+        if (author == null) {
+            throw new ServiceException("error while executing findByAuthor method: author may not be null!");
+        }
+        if (start < 0) {
+            throw new ServiceException("error while executing findByAuthor method: start may not be negative!");
+        }
+        if (offset < 0) {
+            throw new ServiceException("error while executing findByAuthor method: offset  must be greater then zero!");
+        }
         try {
             return bookDAO.findByAuthor(author, start, offset, orderBy, orderDir, includeRemoved);
         } catch (DaoException e) {
@@ -229,25 +234,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int countFoundByAuthor(String author, boolean includeRemoved) throws ServiceException {
+        if (author == null) {
+            throw new ServiceException("error while executing countByAuthor method: author may not be null!");
+        }
         try {
             return bookDAO.countFoundByAuthor(author, includeRemoved);
         } catch (DaoException e) {
             throw new ServiceException("error while executing countByAuthor method",e);
         }
     }
-
-    @Override
-    public void save(Book book) throws ServiceException {
-        try {
-            bookDAO.save(book);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while saving book BookService", e);
-        }
-    }
-
-    @Override
-    public boolean update(Book book) throws ServiceException {
-        throw new UnsupportedOperationException();
-    }
-
 }

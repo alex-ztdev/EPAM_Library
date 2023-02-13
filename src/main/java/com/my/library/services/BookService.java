@@ -7,11 +7,12 @@ import com.my.library.entities.Book;
 import com.my.library.exceptions.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface BookService extends Service<Book> {
-    void delete(Book book) throws ServiceException;
+public interface BookService {
+    Optional<Book> find(long id) throws ServiceException;
 
-    void deleteById(long id) throws ServiceException;
+    boolean deleteById(long id) throws ServiceException;
 
     List<Book> findAll(int from, int to, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException;
 
@@ -25,11 +26,12 @@ public interface BookService extends Service<Book> {
 
     boolean alreadyExists(Book book) throws ServiceException;
 
-    boolean update(Book book,int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
+    boolean update(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
 
     void save(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
 
     void decrementBookQuantity(long id) throws ServiceException;
+
     void incrementBookQuantity(long id) throws ServiceException;
 
     List<Book> findByTitle(String title, int start, int offset, BooksOrderTypes orderBy, OrderDir dir, boolean includeRemoved) throws ServiceException;

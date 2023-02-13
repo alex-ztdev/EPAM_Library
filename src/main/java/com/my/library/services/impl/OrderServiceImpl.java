@@ -19,12 +19,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+import static com.my.library.services.constant.SubscriptionInfo.DAY_OVERDUE_FEE;
+import static com.my.library.services.constant.SubscriptionInfo.SUBSCRIPTION_DAYS;
+
 public class OrderServiceImpl implements OrderService {
     //TODO: Check if user is banned! Before returning orders!
     private static final Logger logger = LogManager.getLogger();
-
-    private static final int SUBSCRIPTION_DAYS = 30;
-    private static final double DAY_OVERDUE_FEE = 10;
 
     private final OrderDAO orderDAO;
 
@@ -39,16 +39,6 @@ public class OrderServiceImpl implements OrderService {
         } catch (DaoException e) {
             throw new ServiceException("OrderServiceImpl/ error while executing find method ", e);
         }
-    }
-
-    @Override
-    public List<Order> findAll() throws ServiceException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void save(Order order) throws ServiceException {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -71,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.commit();
 
             logger.log(Level.DEBUG, "OrderServiceImpl/placeOrder/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
@@ -86,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllUsersOrders(long userId, int start, int offset, OrderStatus... orderStatus) throws ServiceException {
-        if (orderStatus.length == 0 || orderStatus.length > 3) {
+        if (orderStatus.length == 0 || orderStatus.length > OrderStatus.values().length) {
             throw new ServiceException("Error while executing findAllUsersOrders method: orderStatus array must contain from one to three elements");
         }
         try {
@@ -96,14 +86,6 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    @Override
-    public List<Order> findAll(int start, int offset) throws ServiceException {
-        try {
-            return orderDAO.findAll(start, offset);
-        } catch (DaoException e) {
-            throw new ServiceException("OrderServiceImpl/error while executing findAll method", e);
-        }
-    }
 
     @Override
     public int countUsersOrders(long userId, OrderStatus... orderStatuses) throws ServiceException {
@@ -123,17 +105,9 @@ public class OrderServiceImpl implements OrderService {
         return daysPassed * DAY_OVERDUE_FEE;
     }
 
-    @Override
-    public int countTotalOrders() throws ServiceException {
-        try {
-            return orderDAO.countTotalOrders();
-        } catch (DaoException e) {
-            throw new ServiceException("OrderServiceImpl/error while executing countTotalOrders method", e);
-        }
-    }
 
     @Override
-    public void returnOrder(long orderId, BookService bookService, UserService userService, TransactionManager transactionManager) throws ServiceException {
+    public void returnOrder(long orderId, BookService bookService, TransactionManager transactionManager) throws ServiceException {
         try {
             logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder/Transaction started");
             transactionManager.beginTransaction();
@@ -153,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.commit();
 
             logger.log(Level.DEBUG, "OrderServiceImpl/returnOrder/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
@@ -169,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllByStatus(int start, int offset, OrderStatus... orderStatus) throws ServiceException {
-        if (orderStatus.length == 0 || orderStatus.length > 3) {
+        if (orderStatus.length == 0 || orderStatus.length > OrderStatus.values().length) {
             throw new ServiceException("Error while executing findAllByStatus method: orderStatus array must contain from one to three elements");
         }
         try {
@@ -182,7 +156,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int countOrdersByStatus(OrderStatus... orderStatus) throws ServiceException {
-        if (orderStatus.length == 0 || orderStatus.length > 3) {
+        if (orderStatus.length == 0 || orderStatus.length > OrderStatus.values().length) {
             throw new ServiceException("Error while executing findAllByStatus method: orderStatus array must contain from one to three elements");
         }
         try {
@@ -236,7 +210,7 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.commit();
 
             logger.log(Level.DEBUG, "OrderServiceImpl/declineOrder/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
@@ -266,15 +240,15 @@ public class OrderServiceImpl implements OrderService {
             }
 
             if (orderDAO.delete(orderId)) {
-                logger.log(Level.DEBUG,"OrderServiceImpl/ order deleted");
-                logger.log(Level.DEBUG,"Deleted order: " +  order);
+                logger.log(Level.DEBUG, "OrderServiceImpl/ order deleted");
+                logger.log(Level.DEBUG, "Deleted order: " + order);
                 bookService.incrementBookQuantity(order.getBookId());
             }
 
             transactionManager.commit();
 
             logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder/Transaction committed successfully");
-        } catch (DaoException e) {
+        } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();
             } catch (DaoException ex) {
@@ -285,11 +259,5 @@ public class OrderServiceImpl implements OrderService {
             transactionManager.endTransaction();
         }
         logger.log(Level.DEBUG, "OrderServiceImpl/cancelOrder executed successfully ");
-    }
-
-
-    @Override
-    public boolean update(Order order) throws ServiceException {
-        throw new UnsupportedOperationException();
     }
 }
