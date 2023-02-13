@@ -70,14 +70,6 @@ class UserServiceImplTest {
                     "Mike", "Tyson")
     );
 
-    private final List<User> invalidUsers = List.of(
-            new User("mikeLogin",
-                    "mikepass", UserRole.ADMIN,
-                    UserStatus.NORMAL, "mike@gmail.com",
-                    "380662222222",
-                    "Mike", "Tyson")
-    );
-
 
     @BeforeEach
     void setUp() {
@@ -180,6 +172,14 @@ class UserServiceImplTest {
             doThrow(DaoException.class).when(userDAO).save(usersToSave.get(0));
 
             assertThatThrownBy(() -> userService.save(usersToSave.get(0))).isExactlyInstanceOf(ServiceException.class);
+        }
+
+        @Test
+        void save_whenUserAlreadyExists_ShouldThrowServiceException() throws DaoException {
+            doReturn(Optional.of(mock(User.class))).when(userDAO).findByEmail(anyString());
+
+            assertThatThrownBy(() -> userService.save(usersToSave.get(0)))
+                    .isExactlyInstanceOf(ServiceException.class);
         }
     }
 
@@ -388,7 +388,7 @@ class UserServiceImplTest {
     @DisplayName("blockUser")
     class BlockUser {
         @Test
-        void blockUser_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException, ServiceException {
+        void blockUser_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
             doThrow(DaoException.class).when(userDAO).block(anyLong());
 
             assertThatThrownBy(() -> userService.blockUser(anyLong())).isExactlyInstanceOf(ServiceException.class);
@@ -420,7 +420,7 @@ class UserServiceImplTest {
     @DisplayName("unblockUser")
     class UnlockUser {
         @Test
-        void unblockUser_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException, ServiceException {
+        void unblockUser_whenDaoThrowsException_ShouldThrowServiceException() throws DaoException {
             doThrow(DaoException.class).when(userDAO).unblock(anyLong());
 
             assertThatThrownBy(() -> userService.unblockUser(anyLong())).isExactlyInstanceOf(ServiceException.class);
@@ -451,7 +451,7 @@ class UserServiceImplTest {
 
     @Nested
     @DisplayName("setUserRole")
-    class SetUserRole{
+    class SetUserRole {
         @ParameterizedTest
         @CsvSource({"1, ADMIN", "2, USER", "3, LIBRARIAN"})
         void setUserRole(long userId, UserRole newUserRole) throws ServiceException, DaoException {
@@ -545,4 +545,33 @@ class UserServiceImplTest {
         }
     }
 
+    @Nested
+    @DisplayName("update")
+    class Update {
+        @Test
+        public void update_whenUpdateCalled_ShouldUpdateUser() throws ServiceException, DaoException {
+            User user = mock(User.class);
+
+            doReturn(true).when(userDAO).update(any(User.class));
+
+
+            boolean result = userService.update(user);
+
+            assertThat(result).isTrue();
+
+            verify(userDAO,times(1)).update(user);
+        }
+        @Test
+        public void update_UserDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+            User user = mock(User.class);
+
+            doThrow(DaoException.class).when(userDAO).update(user);
+
+            assertThatThrownBy(() -> userService.update(user))
+                    .isInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(userDAO, times(1)).update(user);
+        }
+    }
 }
