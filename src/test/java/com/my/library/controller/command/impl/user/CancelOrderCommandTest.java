@@ -1,6 +1,5 @@
 package com.my.library.controller.command.impl.user;
 
-import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
@@ -78,7 +77,7 @@ class CancelOrderCommandTest {
     }
 
     @Test
-    void cancelOrder_OrderServiceThrowsServiceException_ShouldThrowCommandException() throws ServiceException, CommandException {
+    void cancelOrder_OrderServiceThrowsServiceException_ShouldThrowCommandException() throws ServiceException {
         User user = mock(User.class);
         when(request.getSession()).thenReturn(session);
         when(request.getParameter(Parameters.ORDER_ID)).thenReturn("1");
