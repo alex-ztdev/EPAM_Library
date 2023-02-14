@@ -20,8 +20,7 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CommandFactoryTest {
@@ -156,6 +155,15 @@ class CommandFactoryTest {
 
     @Test
     void closeMethod_Success() throws SQLException {
+        commandFactory.close();
+
+        verify(connection,times(1)).close();
+    }
+
+    @Test
+    void closeMethod_WhenConnectionThrowsException_ShouldLogIt() throws SQLException {
+        doThrow(SQLException.class).when(connection).close();
+
         commandFactory.close();
 
         verify(connection,times(1)).close();
