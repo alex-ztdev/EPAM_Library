@@ -1,6 +1,5 @@
 package com.my.library.controller.command;
 
-import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.constant.commands.LibrarianCommands;
@@ -9,7 +8,6 @@ import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
 import com.my.library.controller.command.impl.librarian.*;
 import com.my.library.controller.command.impl.user.*;
-import com.my.library.dao.DaoFactory;
 import com.my.library.dao.TransactionManager;
 import com.my.library.services.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +18,6 @@ import java.sql.SQLException;
 
 public class CommandFactory implements AutoCloseable {
     private final static Logger logger = LogManager.getLogger();
-
     private final ServiceFactory serviceFactory;
     private final Connection connection;
 
