@@ -27,22 +27,16 @@ import static org.mockito.Mockito.*;
 class CancelOrderCommandTest {
     @Mock
     private HttpServletRequest request;
-
     @Mock
     private HttpSession session;
-
     @Mock
     private OrderService orderService;
-
     @Mock
     private BookService bookService;
-
     @Mock
     private TransactionManager transactionManager;
-
     @Mock
     private User user;
-
     private CancelOrderCommand cancelOrderCommand;
 
     @BeforeEach
