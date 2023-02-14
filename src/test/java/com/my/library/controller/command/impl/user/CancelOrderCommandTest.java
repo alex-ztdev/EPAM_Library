@@ -71,7 +71,7 @@ class CancelOrderCommandTest {
     }
 
     @Test
-    void cancelOrder_OrderServiceThrowsServiceException_ShouldThrowCommandException() throws ServiceException {
+    void execute_OrderServiceThrowsServiceException_ShouldThrowCommandException() throws ServiceException {
         User user = mock(User.class);
         when(request.getSession()).thenReturn(session);
         when(request.getParameter(Parameters.ORDER_ID)).thenReturn("1");
