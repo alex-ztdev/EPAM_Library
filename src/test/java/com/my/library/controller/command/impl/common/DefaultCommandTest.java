@@ -37,7 +37,6 @@ class DefaultCommandTest {
         assertThat(result.getPage()).isEqualTo(RedirectToPage.UNSUPPORTED_OPERATION);
         assertThat(result.getAction()).isEqualTo(CommandDirection.REDIRECT);
 
-
         verify(request).getSession();
         verify(session).setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.UNSUPPORTED_OPERATION);
     }
