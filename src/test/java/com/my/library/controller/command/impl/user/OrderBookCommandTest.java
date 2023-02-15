@@ -21,10 +21,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.my.library.controller.command.constant.parameters.UserParameters.USER_IN_SESSION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -80,7 +78,7 @@ class OrderBookCommandTest {
     }
 
     @Test
-    public void execute_InvalidBookId_ShouldReturnCommandResultWithRedirectionToUnsupportedOperationPage() throws CommandException, ServiceException {
+    public void execute_InvalidBookId_ShouldReturnCommandResultWithRedirectionToUnsupportedOperationPage() throws CommandException {
 
         when(request.getSession()).thenReturn(session);
 
@@ -100,7 +98,7 @@ class OrderBookCommandTest {
     }
 
     @Test
-    public void execute_InvalidSubscriptionType_ShouldReturnCommandResultWithRedirectionToUnsupportedOperationPage() throws CommandException, ServiceException {
+    public void execute_InvalidSubscriptionType_ShouldReturnCommandResultWithRedirectionToUnsupportedOperationPage() throws CommandException {
 
         when(request.getSession()).thenReturn(session);
 
