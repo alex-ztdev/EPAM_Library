@@ -10,8 +10,6 @@ import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
 import com.my.library.services.OrderService;
-import com.my.library.services.UserService;
-import com.my.library.utils.Pages;
 import com.my.library.utils.LongParser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
@@ -47,7 +45,7 @@ public class ReturnOrderCommand implements Command {
 
         try{
             orderService.returnOrder(orderId, bookService, transactionManager);
-            return new CommandResult(RedirectToPage.DISPLAY_USERS_ORDERS);
+            return new CommandResult(RedirectToPage.DISPLAY_USERS_ORDERS, CommandDirection.REDIRECT);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing ReturnOrderCommand",e);
         }
