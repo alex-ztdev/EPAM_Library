@@ -23,7 +23,7 @@ public class LogoutCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
 
-        UserDTO userInSession = (UserDTO) request.getSession().getAttribute(UserParameters.USER_IN_SESSION);
+        UserDTO userInSession = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         logger.log(Level.DEBUG, "User logged out: " + (userInSession == null ? "unknown" : userInSession.getUserId()));
 
