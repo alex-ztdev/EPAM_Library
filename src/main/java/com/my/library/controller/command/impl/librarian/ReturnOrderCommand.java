@@ -22,13 +22,11 @@ public class ReturnOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     private final BookService bookService;
-    private final UserService userService;
     private final OrderService orderService;
     private final TransactionManager transactionManager;
 
-    public ReturnOrderCommand(BookService bookService, UserService userService, OrderService orderService, TransactionManager transactionManager) {
+    public ReturnOrderCommand(BookService bookService, OrderService orderService, TransactionManager transactionManager) {
         this.bookService = bookService;
-        this.userService = userService;
         this.orderService = orderService;
         this.transactionManager = transactionManager;
     }
