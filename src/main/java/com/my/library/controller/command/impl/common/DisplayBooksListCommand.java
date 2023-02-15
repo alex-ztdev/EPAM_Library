@@ -2,7 +2,9 @@ package com.my.library.controller.command.impl.common;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
-import com.my.library.controller.command.constant.*;
+import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.OrderDir;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
@@ -12,7 +14,6 @@ import com.my.library.dto.BookDTO;
 import com.my.library.dto.UserDTO;
 import com.my.library.dto.mapper.BookMapper;
 import com.my.library.entities.Book;
-import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
@@ -48,12 +49,11 @@ public class DisplayBooksListCommand implements Command {
         var reqOrderDir = request.getParameter(Parameters.ORDER_DIRECTION);
         var reqOrderBy = request.getParameter(Parameters.ORDER_BY);
 
-        if (reqCurrPage != null) {
-            var currPageContainer = IntegerParser.parseInt(reqCurrPage);
-            if (currPageContainer.isPresent()) {
-                currPage = currPageContainer.get();
-            }
+        var currPageContainer = IntegerParser.parseInt(reqCurrPage);
+        if (currPageContainer.isPresent()) {
+            currPage = currPageContainer.get();
         }
+
         if (reqOrderDir != null && !reqOrderDir.isBlank()) {
             orderDir = OrderDir.valueOf(reqOrderDir.toUpperCase());
         }
