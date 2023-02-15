@@ -45,6 +45,7 @@ public class ReturnOrderCommand implements Command {
 
         try{
             orderService.returnOrder(orderId, bookService, transactionManager);
+
             return new CommandResult(RedirectToPage.DISPLAY_USERS_ORDERS, CommandDirection.REDIRECT);
         } catch (ServiceException e) {
             throw new CommandException("Error while executing ReturnOrderCommand",e);
