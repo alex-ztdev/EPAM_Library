@@ -22,10 +22,8 @@ import static org.mockito.Mockito.verify;
 class ErrorPageCommandTest {
     @Mock
     private HttpServletRequest request;
-
     @Mock
     private HttpSession session;
-
     @InjectMocks
     private ErrorPageCommand errorPageCommand;
 
