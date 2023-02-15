@@ -59,9 +59,9 @@ public class LoginCommand implements Command {
                     res = new CommandResult(RedirectToPage.LOGIN_PAGE, CommandDirection.REDIRECT);
                     session.setAttribute(UserParameters.USER_IS_BLOCKED, UserParameters.USER_IS_BLOCKED);
                     logger.log(Level.INFO, "User: " + login + " is blocked!");
-                }
-                else {
+                } else {
                     res = new CommandResult(RedirectToPage.HOME, CommandDirection.REDIRECT);
+                    //TODO: Set UserDTO instead of user!
                     session.setAttribute(UserParameters.USER_IN_SESSION, user);
                     logger.log(Level.INFO, "User: " + login + " logged successfully");
                 }
