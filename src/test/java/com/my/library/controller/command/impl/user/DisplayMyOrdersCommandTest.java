@@ -5,6 +5,7 @@ import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.OrderStatus;
+import com.my.library.dto.UserDTO;
 import com.my.library.entities.Book;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
@@ -60,11 +61,15 @@ class DisplayMyOrdersCommandTest {
         User user = new User();
         user.setUserId(1L);
 
+        UserDTO userDTO = mock(UserDTO.class);
+
+        doReturn(1L).when(userDTO).getUserId();
+
         when(request.getParameter(Parameters.GENERAL_CURR_PAGE)).thenReturn("1");
         when(request.getParameter(Parameters.ORDER_SUCCESSFUL_MSG)).thenReturn(Parameters.ORDER_SUCCESSFUL_MSG);
         when(request.getSession()).thenReturn(session);
 
-        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(user);
+        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(userDTO);
         when(userService.find(anyLong())).thenReturn(Optional.of(user));
         when(bookService.find(anyLong())).thenReturn(Optional.of(mock(Book.class)));
 
@@ -94,11 +99,16 @@ class DisplayMyOrdersCommandTest {
         User user = new User();
         user.setUserId(1L);
 
+        UserDTO userDTO = mock(UserDTO.class);
+
+        doReturn(1L).when(userDTO).getUserId();
+
+
         when(request.getParameter(Parameters.GENERAL_CURR_PAGE)).thenReturn("1");
         when(request.getParameter(Parameters.ORDER_SUCCESSFUL_MSG)).thenReturn(Parameters.ORDER_SUCCESSFUL_MSG);
         when(request.getSession()).thenReturn(session);
 
-        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(user);
+        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(userDTO);
 
         doThrow(ServiceException.class).when(orderService).findAllUsersOrders(1L, 0, 10, OrderStatus.ACCEPTED);
 

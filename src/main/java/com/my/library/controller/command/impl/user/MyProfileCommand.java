@@ -5,6 +5,7 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
+import com.my.library.dto.UserDTO;
 import com.my.library.dto.mapper.UserMapper;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
@@ -28,13 +29,11 @@ public class MyProfileCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.MY_PROFILE);
-        User user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
 
-        logger.log(Level.DEBUG, "MyProfileCommand invoked for user: %s".formatted(user.getUserId()));
+        var userDTO = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
 
-        var userDTO = new UserMapper().toDTO(user);
+        logger.log(Level.DEBUG, "MyProfileCommand invoked for user: %s".formatted(userDTO.getUserId()));
 
         request.setAttribute(Parameters.USER_DTO, userDTO);
 

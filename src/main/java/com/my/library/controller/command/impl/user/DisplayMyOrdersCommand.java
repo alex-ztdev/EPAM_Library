@@ -8,6 +8,7 @@ import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.OrderStatus;
 import com.my.library.dto.OrderDTO;
+import com.my.library.dto.UserDTO;
 import com.my.library.dto.mapper.OrderMapper;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
@@ -55,7 +56,7 @@ public class DisplayMyOrdersCommand implements Command {
             currPage = Integer.parseInt(reqCurrPage);
         }
 
-        var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+        var user = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.MY_ORDERS_PAGE);
         var userId = user.getUserId();

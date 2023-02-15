@@ -11,6 +11,7 @@ import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dto.BookDTO;
+import com.my.library.dto.UserDTO;
 import com.my.library.dto.mapper.BookMapper;
 import com.my.library.entities.Book;
 import com.my.library.entities.User;
@@ -84,7 +85,7 @@ public class SearchBookCommand implements Command {
         if (reqOrderBy != null && !reqOrderBy.isBlank()) {
             orderBy = BooksOrderTypes.valueOf(reqOrderBy.toUpperCase());
         }
-        var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+        var user = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         boolean includeRemoved = user != null && user.getRole() == UserRole.ADMIN;
 

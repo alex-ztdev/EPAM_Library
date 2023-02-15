@@ -8,6 +8,7 @@ import com.my.library.controller.command.constant.commands.UserCommands;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.UserRole;
+import com.my.library.dto.UserDTO;
 import com.my.library.entities.User;
 import com.my.library.utils.Pages;
 import jakarta.servlet.*;
@@ -102,7 +103,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+        UserDTO user = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         String command = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
 
@@ -118,8 +119,6 @@ public class AuthenticationFilter implements Filter {
                 response.sendRedirect(request.getContextPath() + RedirectToPage.NOT_AUTHORIZED);
                 logger.log(Level.DEBUG, "No user in session! Tried to execute: " + command);
             } else {
-                //TODO: implement admin, librarian, user, (unknown?)
-
                 if (user.getRole() == UserRole.LIBRARIAN && LIBRARIAN_COMMANDS.contains(command)) {
                     logger.log(Level.DEBUG, "Librarian: " + user.getUserId() +" executed: " + command);
                     chain.doFilter(servletRequest, servletResponse);

@@ -6,7 +6,7 @@ import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.TransactionManager;
-import com.my.library.entities.User;
+import com.my.library.dto.UserDTO;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
@@ -36,7 +36,7 @@ class CancelOrderCommandTest {
     @Mock
     private TransactionManager transactionManager;
     @Mock
-    private User user;
+    private UserDTO userDTO;
     private CancelOrderCommand cancelOrderCommand;
 
     @BeforeEach
@@ -47,11 +47,11 @@ class CancelOrderCommandTest {
     @Test
     public void execute_WithValidOrderId_ShouldReturnCommandResultWithCorrectPageAndRedirectDirection() throws CommandException, ServiceException {
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(user);
+        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(userDTO);
 
         when(request.getParameter(Parameters.ORDER_ID)).thenReturn("1");
         when(session.getAttribute(Parameters.PREVIOUS_PAGE)).thenReturn("previous_page");
-        when(user.getUserId()).thenReturn(2L);
+        when(userDTO.getUserId()).thenReturn(2L);
 
         CommandResult result = cancelOrderCommand.execute(request);
 
@@ -72,10 +72,10 @@ class CancelOrderCommandTest {
 
     @Test
     void execute_OrderServiceThrowsServiceException_ShouldThrowCommandException() throws ServiceException {
-        User user = mock(User.class);
+        UserDTO userDTO = mock(UserDTO.class);
         when(request.getSession()).thenReturn(session);
         when(request.getParameter(Parameters.ORDER_ID)).thenReturn("1");
-        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(user);
+        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(userDTO);
 
         doThrow(ServiceException.class).when(orderService).cancelOrder(anyLong(), anyLong(), any(), any());
 
@@ -83,7 +83,7 @@ class CancelOrderCommandTest {
                 .isExactlyInstanceOf(CommandException.class)
                 .hasCauseExactlyInstanceOf(ServiceException.class);
 
-        verify(orderService, times(1)).cancelOrder(user.getUserId(), 1L, bookService, transactionManager);
+        verify(orderService, times(1)).cancelOrder(this.userDTO.getUserId(), 1L, bookService, transactionManager);
         verify(session, times(1)).getAttribute(UserParameters.USER_IN_SESSION);
     }
 

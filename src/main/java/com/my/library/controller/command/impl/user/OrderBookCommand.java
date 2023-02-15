@@ -9,6 +9,7 @@ import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.OrderStatus;
+import com.my.library.dto.UserDTO;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
@@ -54,7 +55,7 @@ public class OrderBookCommand implements Command {
 
         var onSubscription = Boolean.parseBoolean(onSubscriptionStr);
 
-        var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+        var user = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
         logger.log(Level.DEBUG, "OrderBookCommand: user_id: " + user);
 
         try {
