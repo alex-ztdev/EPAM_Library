@@ -6,10 +6,8 @@ import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.exceptions.CommandException;
-import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 
-//TODO: Make changeLanguageCommand redirect to the same page
 public class ChangeLanguageCommand implements Command {
     private final static String LANGUAGE_PARAMETER = "language";
 

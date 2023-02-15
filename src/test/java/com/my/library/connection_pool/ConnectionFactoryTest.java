@@ -8,7 +8,6 @@ import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,7 +20,7 @@ class ConnectionFactoryTest {
     private static MockedStatic<Class> mockedClass;
 
     @BeforeEach
-    void init() throws SQLException {
+    void init() {
         mockedDriverManager = mockStatic(DriverManager.class);
         mockedClass = mockStatic(Class.class);
     }
