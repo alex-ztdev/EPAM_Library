@@ -32,7 +32,11 @@ class MyProfileCommandTest {
     private HttpServletRequest request;
     @Mock
     private HttpSession session;
+
     @Mock
+    private UserService userService;
+
+    @InjectMocks
     private MyProfileCommand myProfileCommand;
 
 
