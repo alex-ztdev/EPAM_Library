@@ -37,12 +37,8 @@ public class DisplayReadersCommand implements Command {
         logger.log(Level.DEBUG, "DisplayReadersCommand invoked");
         HttpSession session = request.getSession();
 
-
-
-
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
         logger.log(Level.DEBUG, "DisplayReadersCommand/ current page: " + reqCurrPage);
-
 
         var currPageContainer = IntegerParser.parseInt(reqCurrPage);
         if (currPageContainer.isEmpty()) {
