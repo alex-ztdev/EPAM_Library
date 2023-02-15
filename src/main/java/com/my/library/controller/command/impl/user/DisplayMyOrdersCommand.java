@@ -57,10 +57,6 @@ public class DisplayMyOrdersCommand implements Command {
 
         var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
 
-        if (user == null) {
-            return new CommandResult(RedirectToPage.NOT_AUTHORIZED);
-        }
-
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.MY_ORDERS_PAGE);
         var userId = user.getUserId();
         logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ for user_id: "+userId);
