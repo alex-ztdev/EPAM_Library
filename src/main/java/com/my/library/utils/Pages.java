@@ -1,7 +1,7 @@
 package com.my.library.utils;
 
 public interface Pages {
-    String LOGIN_PAGE = "/login.jsp";
+    String LOGIN_PAGE = "/pages/login.jsp";
     String MAIN_PAGE = "/index.jsp";
     String ERROR_PAGE = "/pages/error/404.jsp";
     String NOT_AUTHORIZED = "/pages/not_authorized.jsp";
