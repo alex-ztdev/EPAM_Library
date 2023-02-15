@@ -80,7 +80,6 @@ public class UpdateBookRedirectCommand implements Command {
                     .sorted(Comparator.comparing(Genre::getTitle))
                     .toList();
 
-            //TODO: change to session scope?
             session.setAttribute(Parameters.BOOK_ID, reqBookId);
             session.setAttribute(Parameters.BOOKS_DTO, bookDTO);
             session.setAttribute(Parameters.GENRES_LIST, genresList);

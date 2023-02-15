@@ -23,7 +23,6 @@ import static com.my.library.services.constant.SubscriptionInfo.DAY_OVERDUE_FEE;
 import static com.my.library.services.constant.SubscriptionInfo.SUBSCRIPTION_DAYS;
 
 public class OrderServiceImpl implements OrderService {
-    //TODO: Check if user is banned! Before returning orders!
     private static final Logger logger = LogManager.getLogger();
 
     private final OrderDAO orderDAO;

@@ -9,7 +9,6 @@ import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dto.UserDTO;
-import com.my.library.entities.User;
 import com.my.library.utils.Pages;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -44,7 +43,6 @@ public class AuthenticationFilter implements Filter {
 
 
     private static final List<String> LIBRARIAN_COMMANDS = List.of(
-            //TODO: Add Librarian commands
             LibrarianCommands.DISPLAY_USERS_ORDERS,
             LibrarianCommands.RETURN_ORDER,
             LibrarianCommands.DISPLAY_READERS,
@@ -57,7 +55,6 @@ public class AuthenticationFilter implements Filter {
 
 
     private static final List<String> USER_COMMANDS = List.of(
-            //TODO: Add User commands
             UserCommands.ORDER_BOOK_REDIRECT,
             UserCommands.ORDER_BOOK,
             UserCommands.DISPLAY_MY_ORDERS,
@@ -93,7 +90,7 @@ public class AuthenticationFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override

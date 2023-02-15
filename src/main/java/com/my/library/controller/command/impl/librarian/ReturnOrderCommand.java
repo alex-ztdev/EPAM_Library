@@ -41,7 +41,6 @@ public class ReturnOrderCommand implements Command {
         var orderIdContainer = LongParser.parseLong(orderIdStr);
 
         if (orderIdContainer.isEmpty()) {
-            //FIXME: change to unsupported command page
             return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         var orderId = orderIdContainer.get();
