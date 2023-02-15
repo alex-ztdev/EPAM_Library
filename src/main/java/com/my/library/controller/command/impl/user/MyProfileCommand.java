@@ -12,6 +12,7 @@ import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +31,8 @@ public class MyProfileCommand implements Command {
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.MY_PROFILE);
         User user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+
+        logger.log(Level.DEBUG, "MyProfileCommand invoked for user: %s".formatted(user.getUserId()));
 
         var userDTO = new UserMapper().toDTO(user);
 
