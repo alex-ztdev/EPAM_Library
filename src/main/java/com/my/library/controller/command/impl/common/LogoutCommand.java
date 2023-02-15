@@ -18,13 +18,18 @@ import org.apache.logging.log4j.Logger;
 
 public class LogoutCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-        UserDTO userInSession = (UserDTO) request.getSession().getAttribute(UserParameters.USER_IN_SESSION);
         HttpSession session = request.getSession();
-        session.removeAttribute(UserParameters.USER_IN_SESSION);
+
+        UserDTO userInSession = (UserDTO) request.getSession().getAttribute(UserParameters.USER_IN_SESSION);
+
+        logger.log(Level.DEBUG, "User logged out: " + (userInSession == null ? "unknown" : userInSession.getUserId()));
+
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.LOGIN_PAGE);
-        logger.log(Level.DEBUG, "User logged out: "+ (userInSession == null ? "unknown" : userInSession.getUserId()));
-        return new CommandResult(Pages.LOGIN_PAGE, CommandDirection.REDIRECT);
+        session.removeAttribute(UserParameters.USER_IN_SESSION);
+
+        return new CommandResult(Pages.LOGIN_PAGE);
     }
 }
