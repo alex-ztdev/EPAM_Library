@@ -56,7 +56,7 @@ public class CommandFactory implements AutoCloseable {
             case AdminCommands.CHANGE_ROLE-> res = new ChangeRoleCommand(serviceFactory.getUserService());
 
             case UserCommands.ORDER_BOOK_REDIRECT -> res = new OrderBookRedirectCommand(serviceFactory.getBookService());
-            case UserCommands.MY_PROFILE -> res = new MyProfileCommand(serviceFactory.getUserService());
+            case UserCommands.MY_PROFILE -> res = new MyProfileCommand();
 
             case UserCommands.ORDER_BOOK ->
                     res = new OrderBookCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), new TransactionManager(connection));

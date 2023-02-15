@@ -96,9 +96,6 @@ class DisplayMyOrdersCommandTest {
 
     @Test
     public void execute_orderServiceThrowsException_ShouldReturnCommandResultThatRedirectToUnsupportedOperationPage() throws ServiceException {
-        User user = new User();
-        user.setUserId(1L);
-
         UserDTO userDTO = mock(UserDTO.class);
 
         doReturn(1L).when(userDTO).getUserId();

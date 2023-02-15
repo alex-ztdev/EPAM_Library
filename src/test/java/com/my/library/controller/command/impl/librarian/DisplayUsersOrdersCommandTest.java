@@ -55,10 +55,7 @@ class DisplayUsersOrdersCommandTest {
         user.setUserId(1L);
 
         when(request.getParameter(Parameters.GENERAL_CURR_PAGE)).thenReturn("1");
-//        when(request.getParameter(Parameters.ORDER_SUCCESSFUL_MSG)).thenReturn(Parameters.ORDER_SUCCESSFUL_MSG);
         when(request.getSession()).thenReturn(session);
-
-//        when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(userDTO);
 
         when(userService.find(anyLong())).thenReturn(Optional.of(user));
         when(bookService.find(anyLong())).thenReturn(Optional.of(mock(Book.class)));
@@ -86,9 +83,6 @@ class DisplayUsersOrdersCommandTest {
 
     @Test
     public void execute_orderServiceThrowsException_ShouldReturnCommandResultThatRedirectToUnsupportedOperationPage() throws ServiceException {
-        User user = new User();
-        user.setUserId(1L);
-
         when(request.getParameter(Parameters.GENERAL_CURR_PAGE)).thenReturn("1");
         when(request.getSession()).thenReturn(session);
 

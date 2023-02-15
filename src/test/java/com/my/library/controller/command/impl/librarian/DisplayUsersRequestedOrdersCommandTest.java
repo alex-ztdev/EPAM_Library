@@ -85,9 +85,6 @@ class DisplayUsersRequestedOrdersCommandTest {
 
     @Test
     public void execute_orderServiceThrowsException_ShouldReturnCommandResultThatRedirectToUnsupportedOperationPage() throws ServiceException {
-        User user = new User();
-        user.setUserId(1L);
-
         when(request.getParameter(Parameters.GENERAL_CURR_PAGE)).thenReturn("1");
         when(request.getSession()).thenReturn(session);
 
