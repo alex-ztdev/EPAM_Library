@@ -29,7 +29,13 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class DisplayMyOrdersCommandTest {
@@ -59,7 +65,6 @@ class DisplayMyOrdersCommandTest {
         when(request.getSession()).thenReturn(session);
 
         when(session.getAttribute(UserParameters.USER_IN_SESSION)).thenReturn(user);
-//        when(session.getAttribute(Parameters.PREVIOUS_PAGE)).thenReturn(RedirectToPage.MY_ORDERS_PAGE);
         when(userService.find(anyLong())).thenReturn(Optional.of(user));
         when(bookService.find(anyLong())).thenReturn(Optional.of(mock(Book.class)));
 
@@ -97,15 +102,11 @@ class DisplayMyOrdersCommandTest {
 
         doThrow(ServiceException.class).when(orderService).findAllUsersOrders(1L, 0, 10, OrderStatus.ACCEPTED);
 
-        assertThatThrownBy(()->displayMyOrdersCommand.execute(request))
+        assertThatThrownBy(() -> displayMyOrdersCommand.execute(request))
                 .isExactlyInstanceOf(CommandException.class)
                 .hasCauseExactlyInstanceOf(ServiceException.class);
 
 
         verify(request, atLeastOnce()).getParameter(anyString());
-
-//        assertThat(result).isNotNull();
-//        assertThat(result.getPage()).isEqualTo(Pages.DISPLAY_ORDERS_PAGE);
-//        assertThat(result.getAction()).isEqualTo(CommandDirection.FORWARD);
     }
 }
