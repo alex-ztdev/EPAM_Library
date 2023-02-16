@@ -4,7 +4,6 @@ import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
-import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.entities.Genre;
 import com.my.library.entities.Publisher;
@@ -41,8 +40,9 @@ public class AddBookRedirectCommand implements Command {
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.BOOKS_ADD_PAGE);
 
         if (TRUE.equals(request.getParameter(Parameters.ADD_NEW_BUTTON_PRESSED))) {
-            removeBook(session);
-            new MessagesRemover().removeBookErrors(session);
+            var messagesRemover = new MessagesRemover();
+            messagesRemover.removeBookErrors(session);
+            messagesRemover.removeBook(session);
         }
 
 
@@ -62,19 +62,8 @@ public class AddBookRedirectCommand implements Command {
 
             return new CommandResult(Pages.BOOK_EDIT, CommandDirection.FORWARD);
         } catch (ServiceException e) {
-            throw new CommandException("Error while executing AddBookRedirectCommand",e);
+            throw new CommandException("Error while executing AddBookRedirectCommand", e);
         }
     }
-    private void removeBook(HttpSession session) {
-        session.removeAttribute(Parameters.BOOK_ID);
-        session.removeAttribute(Parameters.BOOKS_DTO);
-        session.removeAttribute(Parameters.GENRES_LIST);
-        session.removeAttribute(Parameters.PUBLISHERS_LIST);
-        session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
-        session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
-        session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
-        session.removeAttribute(Parameters.OPERATION_TYPE);
-    }
-
 }
 

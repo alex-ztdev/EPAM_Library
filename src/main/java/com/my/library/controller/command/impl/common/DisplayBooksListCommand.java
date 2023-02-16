@@ -23,6 +23,7 @@ import com.my.library.utils.validator.MessagesRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DisplayBooksListCommand implements Command {
@@ -38,7 +39,7 @@ public class DisplayBooksListCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         new MessagesRemover().removeBookErrors(session);
-        removeBook(session);
+        new MessagesRemover().removeBook(session);
 
         int currPage = 1;
 
@@ -53,13 +54,14 @@ public class DisplayBooksListCommand implements Command {
         if (currPageContainer.isPresent()) {
             currPage = currPageContainer.get();
         }
-
-        if (reqOrderDir != null && !reqOrderDir.isBlank()) {
+        if ("ASC".equalsIgnoreCase(reqOrderDir) || "DESC".equalsIgnoreCase(reqOrderDir)) {
             orderDir = OrderDir.valueOf(reqOrderDir.toUpperCase());
         }
-        if (reqOrderBy != null && !reqOrderBy.isBlank()) {
+        if (Arrays.stream(BooksOrderTypes.values()).anyMatch(orderType -> orderType.toString().equalsIgnoreCase(reqOrderBy))) {
             orderBy = BooksOrderTypes.valueOf(reqOrderBy.toUpperCase());
         }
+
+
         var user = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         boolean includeRemoved = user != null && user.getRole() == UserRole.ADMIN;
@@ -92,14 +94,4 @@ public class DisplayBooksListCommand implements Command {
         return new CommandResult(Pages.BOOKS_LIST, CommandDirection.FORWARD);
     }
 
-    private void removeBook(HttpSession session) {
-        session.removeAttribute(Parameters.BOOK_ID);
-        session.removeAttribute(Parameters.BOOKS_DTO);
-        session.removeAttribute(Parameters.GENRES_LIST);
-        session.removeAttribute(Parameters.PUBLISHERS_LIST);
-        session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
-        session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
-        session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
-        session.removeAttribute(Parameters.OPERATION_TYPE);
-    }
 }
