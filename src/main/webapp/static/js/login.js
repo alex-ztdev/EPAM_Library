@@ -50,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
             setFormMessage(loginForm, "error", locale === 'en' ? en.login_error_msg : ua.login_error_msg);
             e.preventDefault();
         }
+
+        let error_msg = document.getElementById('login-error-msg');
+        error_msg.innerHTML = "";
     });
     createAccountForm.addEventListener("submit", e => {
         let signupUsername = document.getElementById('signupUsername').value;

@@ -40,7 +40,7 @@
                     <fmt:message key="registrationForm.msg.success"/>
                 </c:if>
             </div>
-            <div class="form__message form__message--error">
+            <div class="form__message form__message--error" id="login-error-msg">
                 <c:if test="${not empty sessionScope.invalidLoginPassword}">
                     <fmt:message key="loginForm.msg.loginError"/>
                 </c:if>
