@@ -14,33 +14,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
-//    private static final ConnectionPool dbm = ConnectionPool.getInstance();
-//    private static volatile AuthorDaoImpl INSTANCE;
-
     public AuthorDaoImpl(Connection connection) {
         this.connection = connection;
     }
-
-//    public static AuthorDaoImpl getInstance() {
-//        AuthorDaoImpl instance = INSTANCE;
-//        if (instance != null) {
-//            return instance;
-//        }
-//        synchronized (AuthorDaoImpl.class) {
-//            if (instance == null) {
-//                instance = new AuthorDaoImpl();
-//            }
-//            return instance;
-//        }
-//    }
-
+    
     @Override
     public Optional<Author> find(long id) throws DaoException {
         Author author = null;
         try (var statement = connection.prepareStatement(AuthorQueries.FIND_AUTHOR_BY_ID)) {
             statement.setLong(1, id);
 
-            try (var rs = statement.executeQuery();) {
+            try (var rs = statement.executeQuery()) {
                 if (rs.next()) {
                     author = buildAuthor(rs);
                 }
@@ -60,7 +44,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
         List<Author> authorList = new ArrayList<>();
         try (var statement = connection.createStatement()) {
 
-            try (var rs = statement.executeQuery(AuthorQueries.FIND_ALL_AUTHORS);) {
+            try (var rs = statement.executeQuery(AuthorQueries.FIND_ALL_AUTHORS)) {
                 while (rs.next()) {
                     authorList.add(buildAuthor(rs));
                 }
@@ -73,7 +57,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
     }
 
     @Override
-    public void save(Author author) throws DaoException {
+    public Author save(Author author) throws DaoException {
         try (var statement = connection.prepareStatement(AuthorQueries.INSERT_AUTHOR, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, author.getFirstName());
@@ -81,10 +65,9 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
 
             statement.executeUpdate();
 
-            try (var generatedKeys = statement.getGeneratedKeys();) {
-                if (generatedKeys.next()) {
-                    author.setAuthorId(generatedKeys.getLong(1));
-                }
+            try (var generatedKeys = statement.getGeneratedKeys()) {
+                author.setAuthorId(generatedKeys.getLong(1));
+                return author;
             }
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -109,7 +92,7 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
     @Override
     public Optional<Author> findByNames(String firstName, String secondName) throws DaoException {
         Author author = null;
-        try(var statement = connection.prepareStatement(AuthorQueries.FIND_BY_NAMES)) {
+        try (var statement = connection.prepareStatement(AuthorQueries.FIND_BY_NAMES)) {
             statement.setString(1, firstName);
             statement.setString(2, secondName);
 
@@ -123,24 +106,4 @@ public class AuthorDaoImpl extends AbstractDao implements AuthorDAO {
         }
         return author == null ? Optional.empty() : Optional.of(author);
     }
-
-//    @Override
-//    public List<Book> getAuthorBooks(long id) throws DaoException {
-//        List<Book> bookList = new ArrayList<>();
-//
-//        try(  var statement = connection.prepareStatement(AuthorQueries.FIND_ALL_AUTHORS_BOOKS)) {
-//            BookDaoImpl bookDao = BookDaoImpl.getInstance();
-//            statement.setLong(1, id);
-//
-//            try (var rs = statement.executeQuery()) {
-//                while (rs.next()) {
-//                    bookDao.find(rs.getLong(AuthorsColumns.AUTHORS_BOOK_ID)).ifPresent(bookList::add);
-//                }
-//            }
-//            return bookList;
-//        } catch (SQLException e) {
-//            throw new DaoException(e);
-//        }
-//    }
-
 }

@@ -9,11 +9,9 @@ import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
-import com.my.library.services.ServiceFactory;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
 import com.my.library.utils.builder.UserBuilder;
-import com.my.library.utils.validator.UserValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -41,9 +39,6 @@ public class RegisterCommand implements Command {
 
         logger.log(Level.DEBUG, "RegisterCommand: set curr page: " + Pages.LOGIN_PAGE);
 
-        //TODO: Make transition to registration page after language swap
-        // (add regForm parameter to session than remove it when logged successfully,
-        // probably wouldn't work, because of transition to other pages... )
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.REGISTRATION_PAGE);
 
         CommandResult res;
@@ -65,7 +60,7 @@ public class RegisterCommand implements Command {
                 logger.log(Level.DEBUG, "RegisterCommand/User validator return: " + validation);
 
                 if (validation.isEmpty()) {
-                    userService.save(user);
+                    user = userService.save(user);
                     logger.log(Level.DEBUG, "RegisterCommand/registration successful! User_id: " + user.getUserId());
                     res = new CommandResult(RedirectToPage.LOGIN_PAGE_WITH_SUCCESS, CommandDirection.REDIRECT);
                 } else {
@@ -86,7 +81,7 @@ public class RegisterCommand implements Command {
         logger.log(Level.DEBUG, "Register command result" + res);
         return res;
     }
-    public void setParameters(HttpSession session, List<String> validationList) {
+    private void setParameters(HttpSession session, List<String> validationList) {
         if (validationList.contains(UserParameters.USER_EMAIL_ALREADY_EXISTS)) {
             session.setAttribute(UserParameters.USER_EMAIL_ALREADY_EXISTS, UserParameters.USER_EMAIL_ALREADY_EXISTS);
         }

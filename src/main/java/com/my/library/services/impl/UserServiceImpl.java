@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) throws ServiceException {
+    public User save(User user) throws ServiceException {
         try {
             if (canBeRegistered(user).isEmpty()) {
                 user.setPassword(Encrypt.encryptWithSha512Hex(user.getPassword()) );
-                userDAO.save(user);
+                return userDAO.save(user);
             } else {
                 throw new ServiceException("User already exists!" + canBeRegistered(user));
             }

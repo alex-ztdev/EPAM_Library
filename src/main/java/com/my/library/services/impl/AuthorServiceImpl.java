@@ -49,9 +49,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void save(Author author) throws ServiceException {
+    public Author save(Author author) throws ServiceException {
         try {
-            authorDAO.save(author);
+            return authorDAO.save(author);
         } catch (DaoException e) {
             throw new ServiceException("Error while executing save method in AuthorServiceImpl",e);
         }

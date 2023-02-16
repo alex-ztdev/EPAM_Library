@@ -72,7 +72,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     }
 
     @Override
-    public void save(User user) throws DaoException {
+    public User save(User user) throws DaoException {
         try (var statement = connection.prepareStatement(UserQueries.INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             int k = 1;
             statement.setString(k++, user.getLogin());
@@ -87,9 +87,9 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
             statement.executeUpdate();
 
             try (var genKey = statement.getGeneratedKeys()) {
-                if (genKey.next()) {
-                    user.setUserId(genKey.getLong(1));
-                }
+                genKey.next();
+                user.setUserId(genKey.getLong(1));
+                return user;
             }
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -137,7 +137,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
             statement.setLong(1, UserStatus.NORMAL.ordinal() + 1);
             statement.setLong(2, id);
 
-           return statement.executeUpdate() == 1;
+            return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new DaoException(e);
         }
@@ -282,7 +282,7 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
     @Override
     public int countReaders(boolean includeBlocked) throws DaoException {
         try (var statement = connection.createStatement()) {
-            try (var rs = statement.executeQuery(includeBlocked?UserQueries.COUNT_ALL_READERS : UserQueries.COUNT_UNBLOCKED_READERS)) {
+            try (var rs = statement.executeQuery(includeBlocked ? UserQueries.COUNT_ALL_READERS : UserQueries.COUNT_UNBLOCKED_READERS)) {
                 rs.next();
                 return rs.getInt(1);
             }
