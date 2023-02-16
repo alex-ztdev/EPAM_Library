@@ -141,7 +141,7 @@ public class AuthorServiceImplTest {
         @Test
         void save_ValidAuthor_ShouldSaveAuthor() throws ServiceException, DaoException {
             Author author = new Author(1L, "John", "Doe");
-            doNothing().when(authorDAO).save(author);
+            doReturn(author).when(authorDAO).save(author);
 
             authorServiceImpl.save(author);
 
