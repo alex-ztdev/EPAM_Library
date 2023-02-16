@@ -43,17 +43,19 @@ public class RegisterCommand implements Command {
 
         CommandResult res;
         try {
-            session.setAttribute(UserParameters.REG_LOGIN_VAL, request.getParameter(UserParameters.REG_LOGIN));
-            session.setAttribute(UserParameters.REG_EMAIL_VAL, request.getParameter(UserParameters.REG_EMAIL));
-            session.setAttribute(UserParameters.REG_PHONE_VAL, request.getParameter(UserParameters.REG_PHONE));
-            session.setAttribute(UserParameters.REG_FIRST_NAME_VAL, request.getParameter(UserParameters.REG_FIRST_NAME));
-            session.setAttribute(UserParameters.REG_SECOND_NAME_VAL, request.getParameter(UserParameters.REG_SECOND_NAME));
 
             Optional<User> userOptional = new UserBuilder().buildNewUser(request);
 
             logger.log(Level.DEBUG, "RegisterCommand/User builder return: " + userOptional);
 
             if (userOptional.isPresent()) {
+                session.setAttribute(UserParameters.REG_LOGIN_VAL, request.getParameter(UserParameters.REG_LOGIN));
+                session.setAttribute(UserParameters.REG_EMAIL_VAL, request.getParameter(UserParameters.REG_EMAIL));
+                session.setAttribute(UserParameters.REG_PHONE_VAL, request.getParameter(UserParameters.REG_PHONE));
+                session.setAttribute(UserParameters.REG_FIRST_NAME_VAL, request.getParameter(UserParameters.REG_FIRST_NAME));
+                session.setAttribute(UserParameters.REG_SECOND_NAME_VAL, request.getParameter(UserParameters.REG_SECOND_NAME));
+
+
                 var user = userOptional.get();
                 List<String> validation = userService.canBeRegistered(user);
 
@@ -65,7 +67,6 @@ public class RegisterCommand implements Command {
                     res = new CommandResult(RedirectToPage.LOGIN_PAGE_WITH_SUCCESS, CommandDirection.REDIRECT);
                 } else {
                     logger.log(Level.DEBUG, "RegisterCommand/unique check failed! Errors list: " + validation);
-                    session.setAttribute(UserParameters.VALIDATION_LIST, validation);
                     setParameters(session, validation);
                     res = new CommandResult(RedirectToPage.REGISTRATION_PAGE, CommandDirection.REDIRECT);
                 }
