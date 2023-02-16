@@ -3,7 +3,6 @@ package com.my.library.controller.command.impl.common;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.OrderDir;
-import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.BooksOrderTypes;
@@ -55,7 +54,7 @@ class DisplayBooksListCommandTest {
         boolean includeRemoved = false;
         int currPage = 1;
         OrderDir orderDir = OrderDir.ASC;
-        BooksOrderTypes booksOrderTypes = BooksOrderTypes.BY_TITLE;
+        BooksOrderTypes booksOrderTypes = BooksOrderTypes.BY_AUTHOR;
 
         List<Book> booksList = List.of(
                 new Book(1L, "title1", "publisher1", "other", 101, LocalDate.now(), new Author("FirstName", "SecondName")),
@@ -95,7 +94,7 @@ class DisplayBooksListCommandTest {
         boolean includeRemoved = false;
         int currPage = 1;
         OrderDir orderDir = OrderDir.ASC;
-        BooksOrderTypes booksOrderTypes = BooksOrderTypes.BY_TITLE;
+        BooksOrderTypes booksOrderTypes = BooksOrderTypes.BY_AUTHOR;
 
         List<Book> booksList = List.of(
                 new Book(1L, "title1", "publisher1", "other", 101, LocalDate.now(), new Author("FirstName", "SecondName")),
@@ -132,7 +131,7 @@ class DisplayBooksListCommandTest {
 
 
     @Test
-    public void execute_WithInvalidOrderDir_ShouldReturn() throws CommandException, ServiceException {
+    public void execute_WithInvalidOrderDir_ShouldReturnToDefaultDisplayBooksPage() throws CommandException, ServiceException {
         UserDTO userDTO = mock(UserDTO.class);
         boolean includeRemoved = false;
         int currPage = 1;
@@ -172,18 +171,108 @@ class DisplayBooksListCommandTest {
 
     }
 
-//    @Test
-//    void execute_OrderServiceThrowsServiceException_ShouldThrowCommandException() throws ServiceException {
-//        when(request.getParameter(Parameters.ORDER_ID)).thenReturn("1");
-//
-////        doThrow(ServiceException.class).when(orderService).returnOrder(anyLong(), any(), any());
-//
-//        assertThatThrownBy(() -> displayBooksListCommand.execute(request))
-//                .isExactlyInstanceOf(CommandException.class)
-//                .hasCauseExactlyInstanceOf(ServiceException.class);
-//
-//        verify(request).getParameter(Parameters.ORDER_ID);
-//
-////        verify(orderService, times(1)).returnOrder(anyLong(), any(), any());
-//    }
+    @Test
+    public void execute_ShouldIgnoreOrderTypeCase() throws CommandException, ServiceException {
+        UserDTO userDTO = mock(UserDTO.class);
+        boolean includeRemoved = false;
+        int currPage = 1;
+        OrderDir orderDir = OrderDir.ASC;
+        String booksOrderTypes = "by_author";
+
+        List<Book> booksList = List.of(
+                new Book(1L, "title1", "publisher1", "other", 101, LocalDate.now(), new Author("FirstName", "SecondName")),
+                new Book(2L, "title2", "publisher2", "other", 102, LocalDate.now(), new Author("FirstName", "SecondName")),
+                new Book(3L, "title3", "publisher23", "other", 103, LocalDate.now(), new Author("FirstName", "SecondName"))
+        );
+
+        int totalRecords = booksList.size();
+
+        doReturn(session).when(request).getSession();
+        doReturn(userDTO).when(session).getAttribute(UserParameters.USER_IN_SESSION);
+
+        doReturn(booksList).when(bookService).findAll(0, RECORDS_PER_PAGE, BooksOrderTypes.valueOf(booksOrderTypes.toUpperCase()), orderDir, includeRemoved);
+        doReturn(totalRecords).when(bookService).countBooks(includeRemoved);
+
+        doReturn(String.valueOf(currPage)).when(request).getParameter(Parameters.GENERAL_CURR_PAGE);
+        doReturn(orderDir.toString()).when(request).getParameter(Parameters.ORDER_DIRECTION);
+        doReturn(booksOrderTypes).when(request).getParameter(Parameters.ORDER_BY);
+
+        CommandResult result = displayBooksListCommand.execute(request);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getPage()).isEqualTo(Pages.BOOKS_LIST);
+        assertThat(result.getAction()).isEqualTo(CommandDirection.FORWARD);
+
+        verify(request).setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
+        verify(request).setAttribute(Parameters.ORDER_DIRECTION, orderDir.toString());
+        verify(request).setAttribute(Parameters.ORDER_BY, booksOrderTypes.toUpperCase());
+        verify(request).setAttribute(Parameters.GENERAL_TOTAL_PAGES, 1);
+        verify(request).setAttribute(eq(Parameters.BOOKS_LIST), any());
+        verify(request).setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
+
+    }
+
+    @Test
+    public void execute_WithInvalidOrderBy_ShouldReturnToDefaultDisplayBooksPage() throws CommandException, ServiceException {
+        UserDTO userDTO = mock(UserDTO.class);
+        boolean includeRemoved = false;
+        int currPage = 1;
+        OrderDir orderDir = OrderDir.ASC;
+        BooksOrderTypes booksOrderTypes = BooksOrderTypes.BY_TITLE;
+
+        List<Book> booksList = List.of(
+                new Book(1L, "title1", "publisher1", "other", 101, LocalDate.now(), new Author("FirstName", "SecondName")),
+                new Book(2L, "title2", "publisher2", "other", 102, LocalDate.now(), new Author("FirstName", "SecondName")),
+                new Book(3L, "title3", "publisher23", "other", 103, LocalDate.now(), new Author("FirstName", "SecondName"))
+        );
+
+        int totalRecords = booksList.size();
+
+        doReturn(session).when(request).getSession();
+        doReturn(userDTO).when(session).getAttribute(UserParameters.USER_IN_SESSION);
+
+        doReturn(booksList).when(bookService).findAll(0, RECORDS_PER_PAGE, booksOrderTypes, orderDir, includeRemoved);
+
+        doReturn(totalRecords).when(bookService).countBooks(includeRemoved);
+
+        doReturn(String.valueOf(currPage)).when(request).getParameter(Parameters.GENERAL_CURR_PAGE);
+        doReturn(orderDir.toString()).when(request).getParameter(Parameters.ORDER_DIRECTION);
+        doReturn("InvalidOrderBy").when(request).getParameter(Parameters.ORDER_BY);
+
+        CommandResult result = displayBooksListCommand.execute(request);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getPage()).isEqualTo(Pages.BOOKS_LIST);
+        assertThat(result.getAction()).isEqualTo(CommandDirection.FORWARD);
+
+        verify(request).setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
+        verify(request).setAttribute(Parameters.ORDER_DIRECTION, orderDir.toString());
+        verify(request).setAttribute(Parameters.ORDER_BY, BooksOrderTypes.BY_TITLE.toString());
+        verify(request).setAttribute(Parameters.GENERAL_TOTAL_PAGES, 1);
+        verify(request).setAttribute(eq(Parameters.BOOKS_LIST), any());
+        verify(request).setAttribute(Parameters.BOOKS_PER_PAGE, RECORDS_PER_PAGE);
+
+    }
+
+    @Test
+    void execute_OrderServiceThrowsServiceException_ShouldThrowCommandException() throws ServiceException {
+        UserDTO userDTO = mock(UserDTO.class);
+        boolean includeRemoved = false;
+        int currPage = 1;
+        OrderDir orderDir = OrderDir.ASC;
+        BooksOrderTypes booksOrderTypes = BooksOrderTypes.BY_AUTHOR;
+
+        doReturn(session).when(request).getSession();
+        doReturn(userDTO).when(session).getAttribute(UserParameters.USER_IN_SESSION);
+
+        doThrow(ServiceException.class).when(bookService).findAll(0, RECORDS_PER_PAGE, booksOrderTypes, orderDir, includeRemoved);
+
+        doReturn(String.valueOf(currPage)).when(request).getParameter(Parameters.GENERAL_CURR_PAGE);
+        doReturn("InvalidDir").when(request).getParameter(Parameters.ORDER_DIRECTION);
+        doReturn(booksOrderTypes.toString()).when(request).getParameter(Parameters.ORDER_BY);
+
+        assertThatThrownBy(() -> displayBooksListCommand.execute(request))
+                .isExactlyInstanceOf(CommandException.class)
+                .hasCauseExactlyInstanceOf(ServiceException.class);
+    }
 }
