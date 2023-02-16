@@ -14,6 +14,7 @@ import com.my.library.exceptions.ServiceException;
 import com.my.library.services.UserService;
 import com.my.library.utils.Pages;
 import com.my.library.utils.validator.MessagesRemover;
+import com.my.library.utils.validator.UserValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -28,8 +29,6 @@ public class LoginCommand implements Command {
     public LoginCommand(UserService userService) {
         this.userService = userService;
     }
-
-    //TODO: Make case insensitive
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         logger.log(Level.DEBUG, "LoginCommand invoked");
@@ -43,7 +42,8 @@ public class LoginCommand implements Command {
 
         new MessagesRemover().removeLoginErrors(session);
 
-        if (login == null || login.isBlank() || password == null || password.isBlank()) {
+        UserValidator userValidator = new UserValidator();
+        if (!userValidator.isValidLogin(login) || !userValidator.isValidPassword(password)) {
             return new CommandResult(RedirectToPage.LOGIN_PAGE, CommandDirection.REDIRECT);
         }
 
@@ -53,7 +53,7 @@ public class LoginCommand implements Command {
 
             if (userContainer.isEmpty()) {
                 res = new CommandResult(RedirectToPage.LOGIN_PAGE, CommandDirection.REDIRECT);
-                session.setAttribute(UserParameters.INVALID_LOGIN_PASSWORD, UserParameters.USER_IS_BLOCKED);
+                session.setAttribute(UserParameters.INVALID_LOGIN_PASSWORD, UserParameters.INVALID_LOGIN_PASSWORD);
                 logger.log(Level.INFO, "User: " + login + " logging failed");
             } else {
                 var user = userContainer.get();
