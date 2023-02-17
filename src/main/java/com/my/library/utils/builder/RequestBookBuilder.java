@@ -5,6 +5,7 @@ import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.entities.Author;
 import com.my.library.entities.Book;
 import com.my.library.utils.IntegerParser;
+import com.my.library.utils.LocalDateParser;
 import com.my.library.utils.LongParser;
 import com.my.library.utils.validator.BookValidator;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,16 +50,28 @@ public class RequestBookBuilder {
         String secondName = request.getParameter(BookParameters.AUTHOR_SECOND_NAME);
         String genre = request.getParameter(BookParameters.GENRE);
         String publisher = request.getParameter(BookParameters.PUBLISHER);
-        int copies = Integer.parseInt(request.getParameter(BookParameters.COPIES));
-        int pages = Integer.parseInt(request.getParameter(BookParameters.PAGES));
-        LocalDate publicationDate = LocalDate.parse(request.getParameter(BookParameters.PUBLICATION_DATE));
+
+        Optional<Integer> copiesContainer = IntegerParser.parseInt(request.getParameter(BookParameters.COPIES));
+        Optional<Integer> pagesContainer = IntegerParser.parseInt(request.getParameter(BookParameters.PAGES));
+        Optional<LocalDate> publicationDateContainer = LocalDateParser.parseLocalDate(request.getParameter(BookParameters.PUBLICATION_DATE));
+
+        if (copiesContainer.isEmpty() || pagesContainer.isEmpty() || publicationDateContainer.isEmpty()) {
+            return Optional.empty();
+        }
+
+        int copies = copiesContainer.get();
+        int pages = pagesContainer.get();
+
+        LocalDate publicationDate = publicationDateContainer.get();
 
         Book book = new Book(title, publisher, genre, pages, publicationDate, new Author(firstName, secondName));
         logger.log(Level.INFO, "buildBookForSave was called. Received data: " + book + " copies: " + copies);
 
-        if (new BookValidator().validateBook(book)) {
+        if (new BookValidator().validateBook(book) && copies >= 0) {
             return Optional.of(book);
-        } else return Optional.empty();
+        } else {
+            return Optional.empty();
+        }
     }
 
 }
