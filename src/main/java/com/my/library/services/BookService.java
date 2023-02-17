@@ -28,7 +28,7 @@ public interface BookService {
 
     boolean update(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
 
-    void save(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
+    Book save(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException;
 
     void decrementBookQuantity(long id) throws ServiceException;
 
