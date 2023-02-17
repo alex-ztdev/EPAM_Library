@@ -1,6 +1,7 @@
 package com.my.library.utils;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
 public class LocalDateParser {
@@ -10,7 +11,7 @@ public class LocalDateParser {
         }
         try {
             return Optional.of(LocalDate.parse(localDate));
-        } catch (NumberFormatException e) {
+        } catch (DateTimeParseException e) {
             return Optional.empty();
         }
     }
