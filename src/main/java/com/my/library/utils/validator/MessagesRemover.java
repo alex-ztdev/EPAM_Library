@@ -37,9 +37,6 @@ public class MessagesRemover {
         session.removeAttribute(Parameters.BOOKS_DTO);
         session.removeAttribute(Parameters.GENRES_LIST);
         session.removeAttribute(Parameters.PUBLISHERS_LIST);
-        session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
-        session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
-        session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
         session.removeAttribute(Parameters.OPERATION_TYPE);
     }
 }
