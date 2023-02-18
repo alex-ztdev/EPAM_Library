@@ -106,8 +106,8 @@ public class AuthenticationFilter implements Filter {
 
         if (command == null || !ADMIN_COMMANDS.contains(command) && !USER_COMMANDS.contains(command) && !GENERAL_COMMANDS.contains(command) && !LIBRARIAN_COMMANDS.contains(command)) {
             logger.log(Level.DEBUG, "Unknown command: " +command + " was received");
-            session.setAttribute(Parameters.PREVIOUS_PAGE, Pages.UNSUPPORTED_COMMAND);
-            response.sendError(400);
+            session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.UNSUPPORTED_OPERATION);
+            response.sendRedirect(request.getContextPath() + RedirectToPage.UNSUPPORTED_OPERATION);
         }else if (GENERAL_COMMANDS.contains(command)) {
             chain.doFilter(servletRequest, servletResponse);
         } else {
