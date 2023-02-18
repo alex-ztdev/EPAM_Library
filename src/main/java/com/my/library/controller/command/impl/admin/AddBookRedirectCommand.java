@@ -15,6 +15,7 @@ import com.my.library.utils.Pages;
 import com.my.library.utils.validator.MessagesRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,7 +35,7 @@ public class AddBookRedirectCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-
+        logger.log(Level.DEBUG, "AddBookRedirectCommand invoked");
         HttpSession session = request.getSession();
         request.setAttribute(Parameters.OPERATION_TYPE, Parameters.ADD_BOOK);
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.BOOKS_ADD_PAGE);
@@ -44,7 +45,6 @@ public class AddBookRedirectCommand implements Command {
             messagesRemover.removeBookErrors(session);
             messagesRemover.removeBook(session);
         }
-
 
         try {
             List<Genre> genresList = genreService.findAll();
