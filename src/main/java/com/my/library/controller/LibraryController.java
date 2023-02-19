@@ -5,6 +5,7 @@ import com.my.library.controller.command.CommandFactory;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
+import com.my.library.controller.command.context.AppContext;
 import com.my.library.dao.DaoFactory;
 import com.my.library.exceptions.CommandException;
 import com.my.library.services.ServiceFactory;
@@ -35,13 +36,8 @@ public class LibraryController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandReq = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
-
-        //TODO: Add ApplicationContext
-
-        var connection = ConnectionPool.getInstance().getConnection();
-        var serviceFactory = new ServiceFactory(connection, new DaoFactory(connection));
-
-        try (var commandFactory = new CommandFactory(connection, serviceFactory)) {
+        
+        try (var commandFactory = AppContext.getInstance().getCommandFactory()) {
             var command = commandFactory.createCommand(commandReq);
 
             logger.log(Level.DEBUG, "Command " + command.getClass().getSimpleName() + " was received");
