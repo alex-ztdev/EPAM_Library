@@ -72,15 +72,32 @@ class DisplayUsersCommandTest {
 
 
     @Test
-    void execute_InvalidPageNumber_ShouldReturnCommandWithRedirectionToUnsupportedCommandPage() throws CommandException {
+    void execute_InvalidPageNumber_ShouldSetDefaultCurrPage() throws CommandException, ServiceException {
+        int currPage = 1;
+        int totalPages = 1;
+
+        List<User> usersList = List.of(new User(), new User(), new User());
+        int readersCount = usersList.size();
+
         doReturn(session).when(request).getSession();
         doReturn("NaN").when(request).getParameter(Parameters.GENERAL_CURR_PAGE);
+        doReturn(readersCount).when(userService).countTotalUsers();
+
+        doReturn(usersList).when(userService).findAll(0, RECORDS_PER_PAGE);
+
 
         CommandResult result = displayUsersCommand.execute(request);
 
         assertThat(result).isNotNull();
-        assertThat(result.getPage()).isEqualTo(RedirectToPage.UNSUPPORTED_OPERATION);
-        assertThat(result.getAction()).isEqualTo(CommandDirection.REDIRECT);
+        assertThat(result.getPage()).isEqualTo(Pages.DISPLAY_USERS_PAGE);
+        assertThat(result.getAction()).isEqualTo(CommandDirection.FORWARD);
+
+
+        verify(request).setAttribute(Parameters.GENERAL_CURR_PAGE, currPage);
+        verify(request).setAttribute(Parameters.GENERAL_TOTAL_PAGES, totalPages);
+        verify(request).setAttribute(eq(Parameters.USERS_LIST), anyList());
+        verify(request).setAttribute(Parameters.USERS_PER_PAGE, RECORDS_PER_PAGE);
+        verify(session).setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_WITH_PARAMETERS.formatted(currPage));
     }
 
     @Test
