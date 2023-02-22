@@ -4,7 +4,6 @@ import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
-import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.entities.Genre;
 import com.my.library.entities.Publisher;
@@ -16,6 +15,7 @@ import com.my.library.utils.Pages;
 import com.my.library.utils.validator.MessagesRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,16 +35,16 @@ public class AddBookRedirectCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
-
+        logger.log(Level.DEBUG, "AddBookRedirectCommand invoked");
         HttpSession session = request.getSession();
         request.setAttribute(Parameters.OPERATION_TYPE, Parameters.ADD_BOOK);
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.BOOKS_ADD_PAGE);
 
         if (TRUE.equals(request.getParameter(Parameters.ADD_NEW_BUTTON_PRESSED))) {
-            removeBook(session);
-            new MessagesRemover().removeBookErrors(session);
+            var messagesRemover = new MessagesRemover();
+            messagesRemover.removeBookErrors(session);
+            messagesRemover.removeBook(session);
         }
-
 
         try {
             List<Genre> genresList = genreService.findAll();
@@ -62,19 +62,8 @@ public class AddBookRedirectCommand implements Command {
 
             return new CommandResult(Pages.BOOK_EDIT, CommandDirection.FORWARD);
         } catch (ServiceException e) {
-            throw new CommandException("Error while executing AddBookRedirectCommand",e);
+            throw new CommandException("Error while executing AddBookRedirectCommand", e);
         }
     }
-    private void removeBook(HttpSession session) {
-        session.removeAttribute(Parameters.BOOK_ID);
-        session.removeAttribute(Parameters.BOOKS_DTO);
-        session.removeAttribute(Parameters.GENRES_LIST);
-        session.removeAttribute(Parameters.PUBLISHERS_LIST);
-        session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
-        session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
-        session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
-        session.removeAttribute(Parameters.OPERATION_TYPE);
-    }
-
 }
 

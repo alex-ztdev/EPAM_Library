@@ -7,7 +7,8 @@ import java.util.List;
 
 public class UserMapper {
     public UserDTO toDTO(User user) {
-        return new UserDTO(user.getUserId(),
+        return new UserDTO(
+                user.getUserId(),
                 user.getLogin(),
                 user.getRole(),
                 user.getStatus(),

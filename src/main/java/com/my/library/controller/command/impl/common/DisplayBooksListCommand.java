@@ -2,16 +2,18 @@ package com.my.library.controller.command.impl.common;
 
 import com.my.library.controller.command.Command;
 import com.my.library.controller.command.CommandResult;
-import com.my.library.controller.command.constant.*;
+import com.my.library.controller.command.constant.CommandDirection;
+import com.my.library.controller.command.constant.OrderDir;
+import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.BooksOrderTypes;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dto.BookDTO;
+import com.my.library.dto.UserDTO;
 import com.my.library.dto.mapper.BookMapper;
 import com.my.library.entities.Book;
-import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
@@ -21,6 +23,7 @@ import com.my.library.utils.validator.MessagesRemover;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DisplayBooksListCommand implements Command {
@@ -36,7 +39,7 @@ public class DisplayBooksListCommand implements Command {
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
         new MessagesRemover().removeBookErrors(session);
-        removeBook(session);
+        new MessagesRemover().removeBook(session);
 
         int currPage = 1;
 
@@ -47,19 +50,19 @@ public class DisplayBooksListCommand implements Command {
         var reqOrderDir = request.getParameter(Parameters.ORDER_DIRECTION);
         var reqOrderBy = request.getParameter(Parameters.ORDER_BY);
 
-        if (reqCurrPage != null) {
-            var currPageContainer = IntegerParser.parseInt(reqCurrPage);
-            if (currPageContainer.isPresent()) {
-                currPage = currPageContainer.get();
-            }
+        var currPageContainer = IntegerParser.parseInt(reqCurrPage);
+        if (currPageContainer.isPresent()) {
+            currPage = currPageContainer.get();
         }
-        if (reqOrderDir != null && !reqOrderDir.isBlank()) {
+        if ("ASC".equalsIgnoreCase(reqOrderDir) || "DESC".equalsIgnoreCase(reqOrderDir)) {
             orderDir = OrderDir.valueOf(reqOrderDir.toUpperCase());
         }
-        if (reqOrderBy != null && !reqOrderBy.isBlank()) {
+        if (Arrays.stream(BooksOrderTypes.values()).anyMatch(orderType -> orderType.toString().equalsIgnoreCase(reqOrderBy))) {
             orderBy = BooksOrderTypes.valueOf(reqOrderBy.toUpperCase());
         }
-        var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+
+
+        var user = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
 
         boolean includeRemoved = user != null && user.getRole() == UserRole.ADMIN;
 
@@ -91,14 +94,4 @@ public class DisplayBooksListCommand implements Command {
         return new CommandResult(Pages.BOOKS_LIST, CommandDirection.FORWARD);
     }
 
-    private void removeBook(HttpSession session) {
-        session.removeAttribute(Parameters.BOOK_ID);
-        session.removeAttribute(Parameters.BOOKS_DTO);
-        session.removeAttribute(Parameters.GENRES_LIST);
-        session.removeAttribute(Parameters.PUBLISHERS_LIST);
-        session.removeAttribute(BookParameters.BOOK_INVALID_DATA);
-        session.removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
-        session.removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
-        session.removeAttribute(Parameters.OPERATION_TYPE);
-    }
 }

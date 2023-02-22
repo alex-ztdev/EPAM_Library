@@ -1,6 +1,5 @@
 package com.my.library.controller.command;
 
-import com.my.library.connection_pool.ConnectionPool;
 import com.my.library.controller.command.constant.commands.AdminCommands;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.constant.commands.LibrarianCommands;
@@ -9,7 +8,6 @@ import com.my.library.controller.command.impl.admin.*;
 import com.my.library.controller.command.impl.common.*;
 import com.my.library.controller.command.impl.librarian.*;
 import com.my.library.controller.command.impl.user.*;
-import com.my.library.dao.DaoFactory;
 import com.my.library.dao.TransactionManager;
 import com.my.library.services.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -20,13 +18,12 @@ import java.sql.SQLException;
 
 public class CommandFactory implements AutoCloseable {
     private final static Logger logger = LogManager.getLogger();
+    private final ServiceFactory serviceFactory;
+    private final Connection connection;
 
-    private ServiceFactory serviceFactory;
-    private Connection connection;
-
-    public CommandFactory() {
-        this.connection = ConnectionPool.getInstance().getConnection();
-        this.serviceFactory = new ServiceFactory(connection, new DaoFactory(connection));
+    public CommandFactory(Connection connection, ServiceFactory serviceFactory) {
+        this.connection = connection;
+        this.serviceFactory = serviceFactory;
     }
 
     //TODO: implement initialization only when command need services!
@@ -59,7 +56,7 @@ public class CommandFactory implements AutoCloseable {
             case AdminCommands.CHANGE_ROLE-> res = new ChangeRoleCommand(serviceFactory.getUserService());
 
             case UserCommands.ORDER_BOOK_REDIRECT -> res = new OrderBookRedirectCommand(serviceFactory.getBookService());
-            case UserCommands.MY_PROFILE -> res = new MyProfileCommand(serviceFactory.getUserService());
+            case UserCommands.MY_PROFILE -> res = new MyProfileCommand();
 
             case UserCommands.ORDER_BOOK ->
                     res = new OrderBookCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), new TransactionManager(connection));
@@ -72,7 +69,7 @@ public class CommandFactory implements AutoCloseable {
             case LibrarianCommands.DISPLAY_USERS_ORDERS ->
                     res = new DisplayUsersOrdersCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService());
             case LibrarianCommands.RETURN_ORDER ->
-                    res = new ReturnOrderCommand(serviceFactory.getBookService(), serviceFactory.getUserService(), serviceFactory.getOrderService(), new TransactionManager(connection));
+                    res = new ReturnOrderCommand(serviceFactory.getBookService(), serviceFactory.getOrderService(), new TransactionManager(connection));
             case LibrarianCommands.DISPLAY_READERS -> res = new DisplayReadersCommand(serviceFactory.getUserService());
             case LibrarianCommands.DISPLAY_REQUESTED_ORDERS -> res = new DisplayUsersRequestedOrdersCommand(serviceFactory.getOrderService(), serviceFactory.getBookService(), serviceFactory.getUserService());
             case LibrarianCommands.ACCEPT_ORDER -> res = new AcceptOrderCommand(serviceFactory.getOrderService());
@@ -85,10 +82,8 @@ public class CommandFactory implements AutoCloseable {
 
     @Override
     public void close() {
-        //TODO: implement retrieve connection
         try {
             connection.close();
-//            logger.log(Level.DEBUG, "Connection successfully retrieved after CommandFactoryClosed");
         } catch (SQLException e) {
             logger.error("Error while closing connection", e);
         }

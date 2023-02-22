@@ -40,7 +40,7 @@ public interface UserQueries {
     String CHANGE_USER_STATUS_USER = """
             UPDATE Users SET
             status_id = ?
-            WHERE id = ?
+            WHERE id = ? AND role_id != 3
             """;
     //language=TSQL
     String AUTHENTICATE_BY_LOGIN_PASSWORD = FIND_ALL_USERS + "WHERE login=? AND password=?";
@@ -66,7 +66,7 @@ public interface UserQueries {
             """;
     //language=TSQL
     String SET_USER_ROLE = """
-             UPDATE Users SET 
+             UPDATE Users SET
              role_id=?
              WHERE id =?
             """;

@@ -31,4 +31,12 @@ public class MessagesRemover {
         session.removeAttribute(UserParameters.REG_FIRST_NAME_VAL);
         session.removeAttribute(UserParameters.REG_SECOND_NAME_VAL);
     }
+
+    public void removeBook(HttpSession session) {
+        session.removeAttribute(Parameters.BOOK_ID);
+        session.removeAttribute(Parameters.BOOKS_DTO);
+        session.removeAttribute(Parameters.GENRES_LIST);
+        session.removeAttribute(Parameters.PUBLISHERS_LIST);
+        session.removeAttribute(Parameters.OPERATION_TYPE);
+    }
 }

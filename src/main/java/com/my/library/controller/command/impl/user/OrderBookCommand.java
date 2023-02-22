@@ -9,8 +9,8 @@ import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.TransactionManager;
 import com.my.library.dao.constants.OrderStatus;
+import com.my.library.dto.UserDTO;
 import com.my.library.entities.Order;
-import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
 import com.my.library.services.BookService;
@@ -54,7 +54,7 @@ public class OrderBookCommand implements Command {
 
         var onSubscription = Boolean.parseBoolean(onSubscriptionStr);
 
-        var user = (User) session.getAttribute(UserParameters.USER_IN_SESSION);
+        var user = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
         logger.log(Level.DEBUG, "OrderBookCommand: user_id: " + user);
 
         try {
@@ -66,7 +66,7 @@ public class OrderBookCommand implements Command {
 
             if (bookService.getQuantity(bookId) <= 0) {
                 logger.log(Level.DEBUG, "OrderBookCommand: books quantity is 0 or less: redirect to error page");
-                return new CommandResult(RedirectToPage.ERROR_PAGE, CommandDirection.REDIRECT);
+                return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
             }
             orderService.placeOrder(orderToSave, bookService, transactionManager);
 

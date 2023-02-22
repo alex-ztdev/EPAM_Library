@@ -3,6 +3,7 @@ package com.my.library.dto;
 import com.my.library.entities.Author;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class BookDTO {
     private Long bookId;
@@ -108,6 +109,44 @@ public class BookDTO {
 
     public void setCopies(int copies) {
         this.copies = copies;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BookDTO bookDTO = (BookDTO) o;
+
+        if (pageNumber != bookDTO.pageNumber) return false;
+        if (isRemoved != bookDTO.isRemoved) return false;
+        if (copies != bookDTO.copies) return false;
+        if (!Objects.equals(bookId, bookDTO.bookId)) return false;
+        if (!Objects.equals(title, bookDTO.title)) return false;
+        if (!Objects.equals(publisherTitle, bookDTO.publisherTitle))
+            return false;
+        if (!Objects.equals(genre, bookDTO.genre)) return false;
+        if (!Objects.equals(publicationDate, bookDTO.publicationDate))
+            return false;
+        if (!Objects.equals(authorFirstName, bookDTO.authorFirstName))
+            return false;
+        return Objects.equals(authorSecondName, bookDTO.authorSecondName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = bookId != null ? bookId.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (publisherTitle != null ? publisherTitle.hashCode() : 0);
+        result = 31 * result + (genre != null ? genre.hashCode() : 0);
+        result = 31 * result + pageNumber;
+        result = 31 * result + (publicationDate != null ? publicationDate.hashCode() : 0);
+        result = 31 * result + (authorFirstName != null ? authorFirstName.hashCode() : 0);
+        result = 31 * result + (authorSecondName != null ? authorSecondName.hashCode() : 0);
+        result = 31 * result + (isRemoved ? 1 : 0);
+        result = 31 * result + copies;
+        return result;
     }
 
     @Override

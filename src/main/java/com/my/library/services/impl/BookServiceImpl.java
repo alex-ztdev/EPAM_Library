@@ -131,7 +131,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void save(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException {
+    public Book save(Book book, int bookCopies, AuthorService authorService, TransactionManager transactionManager) throws ServiceException {
         logger.log(Level.DEBUG, "Executing save for book: " + book);
         try {
             transactionManager.beginTransaction();
@@ -149,6 +149,8 @@ public class BookServiceImpl implements BookService {
 
             transactionManager.commit();
             logger.log(Level.DEBUG, "BookServiceImpl/save/Transaction committed successfully");
+
+            return book;
         } catch (ServiceException | DaoException e) {
             try {
                 transactionManager.rollback();

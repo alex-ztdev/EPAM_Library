@@ -11,7 +11,7 @@ public interface Service<T> {
 
     List<T> findAll() throws ServiceException;
 
-    void save(T entity) throws ServiceException;
+    T save(T entity) throws ServiceException;
 
     boolean update(T entity) throws ServiceException;
 }

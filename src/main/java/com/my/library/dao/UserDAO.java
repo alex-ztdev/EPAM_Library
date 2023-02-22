@@ -12,7 +12,7 @@ public interface UserDAO {
 
     List<User> findAll() throws DaoException;
 
-    void save(User user) throws DaoException;
+    User save(User user) throws DaoException;
 
     boolean update(User user) throws DaoException;
 

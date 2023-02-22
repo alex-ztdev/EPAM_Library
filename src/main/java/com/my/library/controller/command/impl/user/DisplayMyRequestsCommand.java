@@ -8,6 +8,7 @@ import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.OrderStatus;
 import com.my.library.dto.OrderDTO;
+import com.my.library.dto.UserDTO;
 import com.my.library.dto.mapper.OrderMapper;
 import com.my.library.entities.Order;
 import com.my.library.entities.User;
@@ -57,7 +58,7 @@ public class DisplayMyRequestsCommand implements Command {
             }
         }
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_MY_REQUESTS_WITH_PARAMETERS.formatted(currPage));
-        var user = (User)session.getAttribute(UserParameters.USER_IN_SESSION);
+        var user = (UserDTO) session.getAttribute(UserParameters.USER_IN_SESSION);
         try {
             List<Order> orderList = orderService.findAllUsersOrders(user.getUserId(),
                     (currPage - 1) * RECORDS_PER_PAGE,

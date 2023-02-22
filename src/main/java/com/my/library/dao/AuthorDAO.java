@@ -1,7 +1,6 @@
 package com.my.library.dao;
 
 import com.my.library.entities.Author;
-import com.my.library.entities.Book;
 import com.my.library.exceptions.DaoException;
 
 import java.util.List;
@@ -12,13 +11,9 @@ public interface AuthorDAO {
 
     List<Author> findAll() throws DaoException;
 
-    void save(Author entity) throws DaoException;
+    Author save(Author author) throws DaoException;
 
-    boolean update(Author entity) throws DaoException;
+    boolean update(Author author) throws DaoException;
 
     Optional<Author> findByNames(String firstName, String secondName) throws DaoException;
-
-
-//    List<Book> getAuthorBooks(long id) throws DaoException;
-
 }
