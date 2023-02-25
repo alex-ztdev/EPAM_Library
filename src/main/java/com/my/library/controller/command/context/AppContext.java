@@ -18,11 +18,10 @@ public class AppContext {
         return InstanceHolder.instance;
     }
 
-
-//    public ServiceFactory getServiceFactory() {
-//        var connection = ConnectionPool.getInstance().getConnection();
-//        return new ServiceFactory( new DaoFactory(connection));
-//    }
+    public ServiceFactory getServiceFactory() {
+        var connection = ConnectionPool.getInstance().getConnection();
+        return new ServiceFactory(new DaoFactory(connection));
+    }
 
     public CommandFactory getCommandFactory() {
         var connection = ConnectionPool.getInstance().getConnection();
