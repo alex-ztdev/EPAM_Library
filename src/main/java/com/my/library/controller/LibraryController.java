@@ -52,7 +52,6 @@ public class LibraryController extends HttpServlet {
             case FORWARD ->
                     request.getSession().getServletContext().getRequestDispatcher(commandResult.getPage()).forward(request, response);
             case REDIRECT -> response.sendRedirect(request.getContextPath() + commandResult.getPage());
-            default -> response.sendRedirect(request.getContextPath() + RedirectToPage.HOME);
         }
     }
 }
