@@ -11,6 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.Connection;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+
 @ExtendWith(MockitoExtension.class)
 public class ServiceFactoryTest {
 
@@ -62,6 +64,12 @@ public class ServiceFactoryTest {
         OrderService orderService = serviceFactory.getOrderService();
 
         assertThat(orderService).isInstanceOf(OrderServiceImpl.class);
+    }
+    @Test
+    public void testClose() {
+        serviceFactory.close();
+
+        verify(daoFactory).close();
     }
 }
 
