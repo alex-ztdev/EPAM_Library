@@ -15,10 +15,9 @@ public class ConnectionPool {
 
     private static final Logger logger = LogManager.getLogger();
     private static final Integer POOL_SIZE = 10;
-    private static ConnectionPool instance = new ConnectionPool();
+    private static volatile ConnectionPool instance;
 
     private BlockingQueue<ConnectionProxy> pool;
-
 
     private void initConnectionPool() {
         pool = new ArrayBlockingQueue<>(POOL_SIZE);
@@ -45,16 +44,14 @@ public class ConnectionPool {
     }
 
     public static ConnectionPool getInstance() {
-        ConnectionPool returnedInstance = instance;
-        if (returnedInstance != null) {
-            return returnedInstance;
-        }
-        synchronized (ConnectionPool.class) {
-            if (returnedInstance == null) {
-                returnedInstance = new ConnectionPool();
+        if (instance == null) {
+            synchronized (ConnectionPool.class) {
+                if (instance == null) {
+                    instance = new ConnectionPool();
+                }
             }
-            return returnedInstance;
         }
+        return instance;
     }
 
     public Connection getConnection() {
@@ -69,7 +66,7 @@ public class ConnectionPool {
     }
 
     void retrieveConnection(ConnectionProxy connection) {
-       var isPut =  pool.offer(connection);
+        var isPut = pool.offer(connection);
         if (!isPut) {
             logger.log(Level.ERROR, "Error while retrieve connection");
         }
@@ -81,7 +78,7 @@ public class ConnectionPool {
             try {
                 var connection = pool.take();
                 connection.reallyClose();
-                logger.log(Level.INFO, "Connection " + connection +"is closed");
+                logger.log(Level.INFO, "Connection " + connection + "is closed");
             } catch (InterruptedException | SQLException e) {
                 logger.log(Level.ERROR, "Error while destroying pool");
             }
@@ -90,7 +87,7 @@ public class ConnectionPool {
     }
 
     private void deregisterDrivers() {
-        DriverManager.getDrivers().asIterator().forEachRemaining(driver->{
+        DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
