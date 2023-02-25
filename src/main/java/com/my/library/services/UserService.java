@@ -1,7 +1,6 @@
 package com.my.library.services;
 
 import com.my.library.dao.constants.UserRole;
-import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.ServiceException;
 
@@ -26,4 +25,6 @@ public interface UserService extends Service<User> {
     List<User> findAllReaders(int start, int offset) throws ServiceException;
 
     int countReaders(boolean includeBlocked) throws ServiceException;
+
+    boolean isBanned(long userId) throws ServiceException;
 }
