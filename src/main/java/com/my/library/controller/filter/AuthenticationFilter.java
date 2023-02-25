@@ -7,9 +7,10 @@ import com.my.library.controller.command.constant.commands.LibrarianCommands;
 import com.my.library.controller.command.constant.commands.UserCommands;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
+import com.my.library.controller.command.context.AppContext;
 import com.my.library.dao.constants.UserRole;
 import com.my.library.dto.UserDTO;
-import com.my.library.utils.Pages;
+import com.my.library.exceptions.ServiceException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -107,7 +108,11 @@ public class AuthenticationFilter implements Filter {
                 response.sendRedirect(request.getContextPath() + RedirectToPage.NOT_AUTHORIZED);
                 logger.log(Level.DEBUG, "No user in session! Tried to execute: " + command);
             } else {
-                if (user.getRole() == UserRole.LIBRARIAN && LIBRARIAN_COMMANDS.contains(command)) {
+                if (isUserBanned(user)) {
+                    logger.log(Level.DEBUG, "User with id: " + user.getUserId() + " is banned! Invoked logout command");
+                    session.invalidate();
+                    response.sendRedirect(request.getContextPath() + RedirectToPage.LOGIN_PAGE);
+                } else if (user.getRole() == UserRole.LIBRARIAN && LIBRARIAN_COMMANDS.contains(command)) {
                     logger.log(Level.DEBUG, "Librarian: " + user.getUserId() + " executed: " + command);
                     chain.doFilter(servletRequest, servletResponse);
                 } else if (user.getRole() == UserRole.USER && USER_COMMANDS.contains(command)) {
@@ -122,5 +127,16 @@ public class AuthenticationFilter implements Filter {
                 }
             }
         }
+    }
+
+    private boolean isUserBanned(UserDTO user) {
+        try (var serviceFactory = AppContext.getInstance().getServiceFactory()) {
+            var userService = serviceFactory.getUserService();
+            return userService.isBanned(user.getUserId());
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, "AuthenticationFilter/ isUserBanned method userService throws exception");
+            throw new RuntimeException(e);
+        }
+
     }
 }
