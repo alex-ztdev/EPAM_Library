@@ -3,7 +3,7 @@ package com.my.library.services;
 import com.my.library.dao.DaoFactory;
 import com.my.library.services.impl.*;
 
-public class ServiceFactory {
+public class ServiceFactory implements AutoCloseable {
     private final DaoFactory daoFactory;
 
     public ServiceFactory(DaoFactory daoFactory) {
@@ -17,7 +17,6 @@ public class ServiceFactory {
     public BookService getBookService() {
         return new BookServiceImpl(daoFactory.getBookDao());
     }
-
 
     public AuthorService getAuthorService() {
         return new AuthorServiceImpl(daoFactory.getAuthorDao());
@@ -35,4 +34,8 @@ public class ServiceFactory {
         return new OrderServiceImpl(daoFactory.getOrderDao());
     }
 
+    @Override
+    public void close() {
+        daoFactory.close();
+    }
 }
