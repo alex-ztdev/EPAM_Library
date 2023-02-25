@@ -82,4 +82,6 @@ public interface UserQueries {
 
     //language=TSQL
     String COUNT_UNBLOCKED_READERS = "SELECT COUNT(id) FROM USERS WHERE role_id=1 AND status_id=1";
+    //language=TSQL
+    String IS_BANNED = "SELECT status_id FROM Users WHERE id = ?";
 }
