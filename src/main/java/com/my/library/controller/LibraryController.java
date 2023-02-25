@@ -1,14 +1,10 @@
 package com.my.library.controller;
 
-import com.my.library.connection_pool.ConnectionPool;
-import com.my.library.controller.command.CommandFactory;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
 import com.my.library.controller.command.context.AppContext;
-import com.my.library.dao.DaoFactory;
 import com.my.library.exceptions.CommandException;
-import com.my.library.services.ServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,7 +32,7 @@ public class LibraryController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandReq = request.getParameter(GeneralCommands.COMMAND_PARAMETER);
-        
+
         try (var commandFactory = AppContext.getInstance().getCommandFactory()) {
             var command = commandFactory.createCommand(commandReq);
 
@@ -54,7 +50,7 @@ public class LibraryController extends HttpServlet {
     private void direct(HttpServletRequest request, HttpServletResponse response, CommandResult commandResult) throws ServletException, IOException {
         switch (commandResult.getAction()) {
             case FORWARD ->
-                    getServletContext().getRequestDispatcher(commandResult.getPage()).forward(request, response);
+                    request.getSession().getServletContext().getRequestDispatcher(commandResult.getPage()).forward(request, response);
             case REDIRECT -> response.sendRedirect(request.getContextPath() + commandResult.getPage());
             default -> response.sendRedirect(request.getContextPath() + RedirectToPage.HOME);
         }
