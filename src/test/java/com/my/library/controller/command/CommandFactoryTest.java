@@ -69,7 +69,7 @@ class CommandFactoryTest {
         Command bookListCommand = commandFactory.createCommand(GeneralCommands.BOOKS_LIST);
         assertThat(bookListCommand).isInstanceOf(DisplayBooksListCommand.class);
 
-        Command defaultCommand = commandFactory.createCommand(GeneralCommands.DEFAULT_COMMAND);
+        Command defaultCommand = commandFactory.createCommand("Random input");
         assertThat(defaultCommand).isInstanceOf(DefaultCommand.class);
     }
 
@@ -107,9 +107,7 @@ class CommandFactoryTest {
     }
 
     @Test
-    void testCreateCommand_UserCommands() {
-
-
+    void createCommand_UserCommands() {
         Command orderBookRedirect = commandFactory.createCommand(UserCommands.ORDER_BOOK_REDIRECT);
         assertThat(orderBookRedirect).isInstanceOf(OrderBookRedirectCommand.class);
 
@@ -132,7 +130,7 @@ class CommandFactoryTest {
     }
 
     @Test
-    void testCreateCommand_LibrarianCommands() {
+    void createCommand_LibrarianCommands() {
         Command displayUsersOrders = commandFactory.createCommand(LibrarianCommands.DISPLAY_USERS_ORDERS);
         assertThat(displayUsersOrders).isInstanceOf(DisplayUsersOrdersCommand.class);
 
@@ -157,7 +155,7 @@ class CommandFactoryTest {
     void closeMethod_Success() throws SQLException {
         commandFactory.close();
 
-        verify(connection,times(1)).close();
+        verify(connection, times(1)).close();
     }
 
     @Test
@@ -166,7 +164,7 @@ class CommandFactoryTest {
 
         commandFactory.close();
 
-        verify(connection,times(1)).close();
+        verify(connection, times(1)).close();
     }
 
 }
