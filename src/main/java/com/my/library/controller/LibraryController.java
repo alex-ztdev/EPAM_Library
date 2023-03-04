@@ -3,7 +3,7 @@ package com.my.library.controller;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.commands.GeneralCommands;
-import com.my.library.controller.command.context.AppContext;
+import com.my.library.controller.context.AppContext;
 import com.my.library.exceptions.CommandException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
