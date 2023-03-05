@@ -28,7 +28,6 @@ import java.util.List;
 
 public class DisplayMyOrdersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    //TODO: change orders per page amount
     private static final int RECORDS_PER_PAGE = 10;
     private final BookService bookService;
     private final UserService userService;
@@ -51,7 +50,7 @@ public class DisplayMyOrdersCommand implements Command {
         int currPage = 1;
 
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
-        logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ current page: "+reqCurrPage);
+        logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ current page: " + reqCurrPage);
         if (reqCurrPage != null && !reqCurrPage.isBlank()) {
             currPage = Integer.parseInt(reqCurrPage);
         }
@@ -60,8 +59,8 @@ public class DisplayMyOrdersCommand implements Command {
 
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.MY_ORDERS_PAGE);
         var userId = user.getUserId();
-        logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ for user_id: "+userId);
-        try{
+        logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ for user_id: " + userId);
+        try {
             List<Order> orderList = orderService.findAllUsersOrders(userId,
                     (currPage - 1) * RECORDS_PER_PAGE,
                     RECORDS_PER_PAGE,
@@ -69,9 +68,9 @@ public class DisplayMyOrdersCommand implements Command {
 
             int totalRecords = orderService.countUsersOrders(userId, OrderStatus.ACCEPTED);
 
-            logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ total user orders: "+totalRecords);
+            logger.log(Level.DEBUG, "DisplayMyOrdersCommand/ total user orders: " + totalRecords);
 
-            var totalPages =(int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE) ;
+            var totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
 
             List<OrderDTO> orderDTOList = new OrderMapper(bookService, userService, orderService).toDTOList(orderList);
 

@@ -89,4 +89,19 @@ public class UserDTO {
     public void setSecondName(String secondName) {
         this.secondName = secondName;
     }
+
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "userId=" + userId +
+                ", login='" + login + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                '}';
+    }
 }

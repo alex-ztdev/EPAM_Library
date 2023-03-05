@@ -36,10 +36,8 @@ public class AddBookCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) throws CommandException {
         HttpSession session = request.getSession();
-//        new LoginCommand.MessageRemover().removeMessages(session);
 
         var bookContainer = new RequestBookBuilder().buildBookForSave(request);
-
 
         new MessagesRemover().removeBookErrors(session);
 
@@ -56,10 +54,11 @@ public class AddBookCommand implements Command {
             try {
                 if (bookService.alreadyExists(book)) {
                     logger.log(Level.INFO, "AddBookCommand book_id:" + book.getBookId() + " book with such parameters already exists");
-                    request.getSession().setAttribute(BookParameters.BOOK_ALREADY_EXISTS, BookParameters.BOOK_ALREADY_EXISTS);
+                    session.setAttribute(BookParameters.BOOK_ALREADY_EXISTS, BookParameters.BOOK_ALREADY_EXISTS);
                 } else {
+                    book = bookService.save(book, copies, authorService, transactionManager);
+
                     logger.log(Level.INFO, "AddBookCommand book_id:" + book.getBookId());
-                    bookService.save(book, copies, authorService, transactionManager);
 
                     session.setAttribute(BookParameters.SUCCESSFULLY_ADDED, BookParameters.SUCCESSFULLY_ADDED);
                 }

@@ -5,17 +5,13 @@ import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.RedirectToPage;
 import com.my.library.controller.command.constant.parameters.Parameters;
-import com.my.library.dto.OrderDTO;
 import com.my.library.dto.UserDTO;
-import com.my.library.dto.mapper.OrderMapper;
 import com.my.library.dto.mapper.UserMapper;
-import com.my.library.entities.Order;
 import com.my.library.entities.User;
 import com.my.library.exceptions.CommandException;
 import com.my.library.exceptions.ServiceException;
-import com.my.library.services.BookService;
-import com.my.library.services.OrderService;
 import com.my.library.services.UserService;
+import com.my.library.utils.IntegerParser;
 import com.my.library.utils.Pages;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DisplayUsersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -45,10 +42,12 @@ public class DisplayUsersCommand implements Command {
         var reqCurrPage = request.getParameter(Parameters.GENERAL_CURR_PAGE);
         logger.log(Level.DEBUG, "DisplayUsersCommand/ current page: " + reqCurrPage);
 
+        Optional<Integer> currPageContainer = IntegerParser.parseInt(reqCurrPage);
 
-        if (reqCurrPage != null && !reqCurrPage.isBlank()) {
-            currPage = Integer.parseInt(reqCurrPage);
+        if (currPageContainer.isPresent()) {
+            currPage = currPageContainer.get();
         }
+
         session.setAttribute(Parameters.PREVIOUS_PAGE, RedirectToPage.DISPLAY_USERS_WITH_PARAMETERS.formatted(currPage));
         try {
             List<User> usersList = userService.findAll(

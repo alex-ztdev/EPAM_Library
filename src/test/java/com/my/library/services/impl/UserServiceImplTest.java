@@ -559,8 +559,9 @@ class UserServiceImplTest {
 
             assertThat(result).isTrue();
 
-            verify(userDAO,times(1)).update(user);
+            verify(userDAO, times(1)).update(user);
         }
+
         @Test
         public void update_UserDaoThrowsException_ShouldThrowServiceException() throws DaoException {
             User user = mock(User.class);
@@ -572,6 +573,49 @@ class UserServiceImplTest {
                     .hasCauseExactlyInstanceOf(DaoException.class);
 
             verify(userDAO, times(1)).update(user);
+        }
+    }
+
+    @Nested
+    @DisplayName("isBanned")
+    class IsBanned {
+        @Test
+        public void isBanned_WhenUserIsBanned_ShouldReturnTrue() throws ServiceException, DaoException {
+            long userId = 1;
+
+            doReturn(true).when(userDAO).isBanned(userId);
+
+            boolean result = userService.isBanned(userId);
+
+            assertThat(result).isTrue();
+
+            verify(userDAO, times(1)).isBanned(userId);
+        }
+
+        @Test
+        public void isBanned_WhenUserIsNotBanned_ShouldReturnFalse() throws ServiceException, DaoException {
+            long userId = 1;
+
+            doReturn(false).when(userDAO).isBanned(userId);
+
+            boolean result = userService.isBanned(userId);
+
+            assertThat(result).isFalse();
+
+            verify(userDAO, times(1)).isBanned(userId);
+        }
+
+        @Test
+        public void isBanned_UserDaoThrowsException_ShouldThrowServiceException() throws DaoException {
+            long userId = 1;
+
+            doThrow(DaoException.class).when(userDAO).isBanned(anyLong());
+
+            assertThatThrownBy(() -> userService.isBanned(userId))
+                    .isInstanceOf(ServiceException.class)
+                    .hasCauseExactlyInstanceOf(DaoException.class);
+
+            verify(userDAO, times(1)).isBanned(userId);
         }
     }
 }

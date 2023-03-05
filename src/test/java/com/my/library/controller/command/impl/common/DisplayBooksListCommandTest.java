@@ -3,6 +3,7 @@ package com.my.library.controller.command.impl.common;
 import com.my.library.controller.command.CommandResult;
 import com.my.library.controller.command.constant.CommandDirection;
 import com.my.library.controller.command.constant.OrderDir;
+import com.my.library.controller.command.constant.parameters.BookParameters;
 import com.my.library.controller.command.constant.parameters.Parameters;
 import com.my.library.controller.command.constant.parameters.UserParameters;
 import com.my.library.dao.constants.BooksOrderTypes;
@@ -274,5 +275,31 @@ class DisplayBooksListCommandTest {
         assertThatThrownBy(() -> displayBooksListCommand.execute(request))
                 .isExactlyInstanceOf(CommandException.class)
                 .hasCauseExactlyInstanceOf(ServiceException.class);
+    }
+
+    @Test
+    void execute_ShouldRemoveBooksErrorMessages() throws CommandException {
+        UserDTO userDTO = mock(UserDTO.class);
+
+
+        doReturn(session).when(request).getSession();
+        doReturn(userDTO).when(session).getAttribute(UserParameters.USER_IN_SESSION);
+
+
+        displayBooksListCommand.execute(request);
+
+        verify(session).removeAttribute(Parameters.BOOK_ID);
+        verify(session).removeAttribute(Parameters.BOOKS_DTO);
+        verify(session).removeAttribute(Parameters.GENRES_LIST);
+        verify(session).removeAttribute(Parameters.PUBLISHERS_LIST);
+        verify(session).removeAttribute(Parameters.OPERATION_TYPE);
+
+        verify(session).removeAttribute(BookParameters.BOOK_INVALID_DATA);
+        verify(session).removeAttribute(BookParameters.BOOK_ALREADY_EXISTS);
+        verify(session).removeAttribute(BookParameters.SUCCESSFULLY_UPDATED);
+        verify(session).removeAttribute(BookParameters.SUCCESSFULLY_ADDED);
+
+        verify(session).removeAttribute(Parameters.UPDATE_BOOK);
+        verify(session).removeAttribute(Parameters.ADD_BOOK);
     }
 }

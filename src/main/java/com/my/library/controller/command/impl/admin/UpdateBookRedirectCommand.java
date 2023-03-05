@@ -27,7 +27,6 @@ import java.util.Optional;
 
 public class UpdateBookRedirectCommand implements Command {
     private final static Logger logger = LogManager.getLogger();
-
     private final BookService bookService;
     private final GenreService genreService;
     private final PublisherService publisherService;
@@ -44,13 +43,13 @@ public class UpdateBookRedirectCommand implements Command {
         HttpSession session = request.getSession();
 
 
-        logger.log(Level.DEBUG,"UpdateBookRedirectCommand: request book_id: " + reqBookId);
+        logger.log(Level.DEBUG, "UpdateBookRedirectCommand: request book_id: " + reqBookId);
         session.setAttribute(Parameters.OPERATION_TYPE, Parameters.UPDATE_BOOK);
 
         var bookIdContainer = LongParser.parseLong(reqBookId);
 
         if (bookIdContainer.isEmpty()) {
-            logger.log(Level.DEBUG, "UpdateBookRedirectCommand: empty book_id: " + reqBookId);
+            logger.log(Level.DEBUG, "UpdateBookRedirectCommand: invalid book_id: " + reqBookId);
             return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         long bookId = bookIdContainer.get();
@@ -62,7 +61,7 @@ public class UpdateBookRedirectCommand implements Command {
 
             boolean isPresentBook = book.isPresent();
             if (!isPresentBook) {
-                logger.log(Level.DEBUG,"UpdateBookRedirectCommand: Book with such book_id: " + reqBookId + " doesn't found!");
+                logger.log(Level.DEBUG, "UpdateBookRedirectCommand: Book with such book_id: " + reqBookId + " doesn't found!");
                 return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
             }
 
@@ -87,7 +86,7 @@ public class UpdateBookRedirectCommand implements Command {
 
             return new CommandResult(Pages.BOOK_EDIT);
         } catch (ServiceException e) {
-            throw new CommandException("Error while finding book by id while executing UpdateBookRedirectCommand",e);
+            throw new CommandException("Error while finding book by id while executing UpdateBookRedirectCommand", e);
         }
     }
 }

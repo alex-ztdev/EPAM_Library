@@ -35,7 +35,7 @@ public class RestoreBookCommand implements Command {
 
         if (bookIdContainer.isEmpty()) {
             logger.log(Level.DEBUG,"RestoreBookCommand: empty book_id: " + reqBookId);
-            throw new CommandException("RestoreBookCommand book_id is empty! Failed to execute command!");
+            return new CommandResult(RedirectToPage.UNSUPPORTED_OPERATION, CommandDirection.REDIRECT);
         }
         long bookId = bookIdContainer.get();
         try {
