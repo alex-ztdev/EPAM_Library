@@ -53,6 +53,7 @@ class UserValidatorTest {
             assertEquals(UserParameters.REG_INVALID_LOGIN, validationList.get(0));
         }
 
+
         @Test
         void InvalidPasswordTest() {
             User user = new User();
@@ -66,6 +67,23 @@ class UserValidatorTest {
             List<String> validationList = userValidator.validateUserParameters(user);
             assertThat(validationList).hasSize(1);
             assertThat(validationList).containsOnly(UserParameters.REG_INVALID_PASSWORD);
+        }
+
+
+        @Test
+        void validateUserParameters_InvalidName_ReturnsInvalidNameMsg() {
+            User user = new User();
+            user.setLogin("validLogin");
+            user.setEmail("validEmail@example.com");
+            user.setPhoneNumber("380950000000");
+            user.setFirstName("123");
+            user.setSecondName("123");
+            user.setPassword("validPassword123");
+
+            List<String> validationList = userValidator.validateUserParameters(user);
+
+            assertThat(validationList).hasSize(1);
+            assertThat(validationList).element(0).isEqualTo(UserParameters.REG_INVALID_NAME);
         }
     }
 
