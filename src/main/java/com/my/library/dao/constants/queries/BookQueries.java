@@ -89,7 +89,7 @@ public interface BookQueries {
             """;
     //language=TSQL
     String RESTORE_BOOK = """
-            UPDATE Storage 
+            UPDATE Storage
             SET isRemoved=0
             WHERE book_id=?
             """;
@@ -155,6 +155,7 @@ public interface BookQueries {
 
 //    language=TSQL
     String FIND_BY_AUTHOR_INCLUDE_REMOVED = FIND_ALL_BOOKS +  """
+            INNER JOIN Storage S on Books.id = S.book_id
             WHERE  (A.first_name +' ' + A.second_name) LIKE ?
             ORDER BY %s %s
             OFFSET ? ROWS
@@ -170,7 +171,7 @@ public interface BookQueries {
             """;
 
     //language=TSQL
-    String COUNT_FIND_BY_AUTHOR = """
+    String COUNT_FIND_BY_AUTHOR_INCLUDE_REMOVED = """
             SELECT
             	COUNT(Books.id)
             FROM Books
@@ -179,6 +180,6 @@ public interface BookQueries {
             WHERE  (A.first_name +' ' + A.second_name) LIKE ?
             """;
     //language=TSQL
-    String COUNT_FIND_BY_AUTHOR_INCLUDE_REMOVED = COUNT_FIND_BY_AUTHOR + "AND isRemoved=0";
+    String COUNT_FIND_BY_AUTHOR = COUNT_FIND_BY_AUTHOR_INCLUDE_REMOVED + "AND isRemoved=0";
 
 }

@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
     private static final Logger logger = LogManager.getLogger();
 
     private final UserDAO userDAO;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public User save(User user) throws ServiceException {
         try {
             if (canBeRegistered(user).isEmpty()) {
-                user.setPassword(Encrypt.encryptWithSha512Hex(user.getPassword()) );
+                user.setPassword(Encrypt.encryptWithSha512Hex(user.getPassword()));
                 return userDAO.save(user);
             } else {
                 throw new ServiceException("User already exists!" + canBeRegistered(user));
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean blockUser(long userId) throws ServiceException {
         try {
-           return userDAO.block(userId);
+            return userDAO.block(userId);
         } catch (DaoException e) {
             throw new ServiceException("Error while executing blockUser method", e);
         }
@@ -162,7 +162,16 @@ public class UserServiceImpl implements UserService {
         try {
             return userDAO.countReaders(includeBlocked);
         } catch (DaoException e) {
-            throw new ServiceException("Error while executing countReaders method",e);
+            throw new ServiceException("Error while executing countReaders method", e);
+        }
+    }
+
+    @Override
+    public boolean isBanned(long userId) throws ServiceException {
+        try {
+            return userDAO.isBanned(userId);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while executing isBanned method", e);
         }
     }
 }

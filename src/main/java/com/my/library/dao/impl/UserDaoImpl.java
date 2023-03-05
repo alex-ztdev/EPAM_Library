@@ -291,19 +291,20 @@ public class UserDaoImpl extends AbstractDao implements UserDAO {
         }
     }
 
-//    String msg = "User with such ";
-//    String defaultMsg = msg;
-//
-//            if (e.getMessage().contains(Constraints.UQ_USER_LOGIN)) {
-//        msg += "login ";
-//    }
-//            if (e.getMessage().contains(Constraints.UQ_USER_EMAIL)) {
-//        msg += "email ";
-//    }
-//            if (e.getMessage().contains(Constraints.UQ_USER_PHONE_NUMBER)) {
-//        msg += "phone number ";
-//    }
-//    String s = defaultMsg.equals(msg) ? "Error in UserDao while saving user" : msg + "already exists";
-
-
+    @Override
+    public boolean isBanned(long id) throws DaoException {
+        try (var statement = connection.prepareStatement(UserQueries.IS_BANNED)) {
+            statement.setLong(1, id);
+            try (var rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    var userStatus = rs.getInt(UsersColumns.STATUS_ID);
+                    return userStatus == 2;
+                } else {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
 }

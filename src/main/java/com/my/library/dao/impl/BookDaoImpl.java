@@ -32,7 +32,7 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
         try (var statement = connection.prepareStatement(BookQueries.FIND_BOOK_BY_ID)) {
             statement.setLong(1, id);
 
-            try (var rs = statement.executeQuery();) {
+            try (var rs = statement.executeQuery()) {
                 if (rs.next()) {
                     book = buildBook(rs);
                 }
@@ -347,7 +347,8 @@ public class BookDaoImpl extends AbstractDao implements BookDAO {
 
     @Override
     public int countFoundByAuthor(String author, boolean includeRemoved) throws DaoException {
-        try (var statement = connection.prepareStatement(BookQueries.COUNT_FIND_BY_TITLE)) {
+        try (var statement = connection.prepareStatement(
+                includeRemoved ? BookQueries.COUNT_FIND_BY_AUTHOR_INCLUDE_REMOVED : BookQueries.COUNT_FIND_BY_AUTHOR)) {
             statement.setString(1, "%" + author + "%");
 
             try (var rs = statement.executeQuery()) {

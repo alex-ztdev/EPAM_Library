@@ -37,4 +37,6 @@ public interface UserDAO {
     List<User> findAllReaders(int start, int offset) throws DaoException;
 
     int countReaders(boolean includeBlocked) throws DaoException;
+
+    boolean isBanned(long id) throws DaoException;
 }
